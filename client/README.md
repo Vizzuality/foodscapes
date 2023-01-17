@@ -15,7 +15,7 @@ This is a project template which could be used to the creation of new projects. 
 
 ## Getting Started
 
-Check our [documentation](https://front-end-scaffold-docs.vercel.app/?path=/story/intro--page).
+Check our [documentation](https://foodscapes-docs.vercel.app/?path=/story/intro--page).
 
 ### Quick start
 
