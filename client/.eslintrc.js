@@ -73,7 +73,7 @@ module.exports = {
             position: 'after',
           },
           {
-            pattern: 'lodash-es/**',
+            pattern: 'lodash/**',
             group: 'builtin',
             position: 'after',
           },
@@ -87,7 +87,12 @@ module.exports = {
             group: 'builtin',
           },
           {
-            pattern: 'hoc/**',
+            pattern: 'lib/**',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'store',
             group: 'external',
             position: 'before',
           },
@@ -97,7 +102,22 @@ module.exports = {
             position: 'before',
           },
           {
+            pattern: 'types/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
             pattern: 'hooks/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: 'constants/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: 'layouts/**',
             group: 'internal',
             position: 'before',
           },

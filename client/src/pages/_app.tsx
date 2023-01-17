@@ -6,13 +6,15 @@ import { Provider as ReduxProvider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
+import { GAPage } from 'lib/analytics/ga';
+
+import store from 'store';
+
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 
 import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
-import { GAPage } from 'lib/analytics/ga';
-import store from 'store';
 
 import 'styles/globals.css';
 
