@@ -10298,7 +10298,7 @@ __metadata:
     framer-motion: 7.0.0
     jsona: 1.9.2
     jsonwebtoken: 8.5.1
-    lefthook: 1.2.7
+    lefthook: ^1.2.7
     maplibre-gl: 2.1.9
     next: 13.0.7
     next-auth: 4.3.4
@@ -12791,7 +12791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lefthook@npm:1.2.7":
+"lefthook@npm:^1.2.7":
   version: 1.2.7
   resolution: "lefthook@npm:1.2.7"
   dependencies:

@@ -95,7 +95,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
-    "lefthook": "1.2.7",
+    "lefthook": "^1.2.7",
     "prettier": "2.3.0",
     "prettier-plugin-tailwindcss": "0.1.13",
     "start-server-and-test": "1.12.1",
