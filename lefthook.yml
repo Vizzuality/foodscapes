@@ -1,10 +1,10 @@
-pre-push:
+pre-commit:
   parallel: true
   commands:
     eslint:
       root: "client/"
       glob: "*.{js,ts,jsx,tsx}"
-      run: yarn lint {push_files}
+      run: yarn lint {staged_files}
     types:
       root: "client/"
       glob: "*.{js,ts,jsx,tsx}"
