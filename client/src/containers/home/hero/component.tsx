@@ -1,27 +1,34 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { useWindowSize } from 'usehooks-ts';
+import { useWindowSize, useInterval } from 'usehooks-ts';
 
 // const BACKGROUNDS = ['url(/images/avatar.png)', null, null, null, null, null, null, null];
 
 const Hero = () => {
+  const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
+
+  useInterval(() => {
+    setCount(count + 1);
+  }, 2000);
 
   const ITEMS = useMemo(() => {
     const w = width || 1;
     const h = height || 1;
-    const SIZE = height / 3;
-    const COUNT = Math.ceil((w / h) * 5 * 3);
+    const SIZE = h / 3;
+    const COUNT = Math.ceil(((w * 1.5) / SIZE) * 3);
+    const THRESHOLD = 0.75;
 
     return [...Array(COUNT)].map((_, i) => {
       const random = Math.random();
+      const mid = Math.round(COUNT / 2) - 1;
 
-      // const bg = BACKGROUNDS[Math.floor(random * BACKGROUNDS.length)];
+      const visible = random > THRESHOLD && (i < mid - 1 || i > mid + 1);
 
       return (
         <div
-          key={i}
+          key={`${i}-${count}`}
           className="relative"
           style={{
             width: SIZE,
@@ -33,25 +40,19 @@ const Hero = () => {
               opacity: 0,
             }}
             animate={{
-              opacity: [0, 1, 1, 1, 1, 0],
+              opacity: visible ? [0, 1, 1, 1, 0] : 0,
+              backgroundColor: `hsl(${random * 360}, 100%, 50%)`,
             }}
             transition={{
               duration: 2,
               ease: 'linear',
-              repeat: Infinity,
-              repeatDelay: 5 + random * 5,
-              repeatType: 'reverse',
-              delay: random * 10,
             }}
             className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
-            style={{
-              backgroundColor: `hsl(${Math.floor(random * 360)}, 100%, 50%)`,
-            }}
           />
         </div>
       );
     });
-  }, [width, height]);
+  }, [width, height, count]);
 
   return (
     <section className="relative flex h-screen w-full items-center justify-center overflow-hidden">
