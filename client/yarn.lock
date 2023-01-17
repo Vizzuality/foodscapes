@@ -11144,9 +11144,9 @@ __metadata:
     eslint-plugin-react-hooks: 4.3.0
     final-form: 4.20.2
     framer-motion: 7.0.0
-    husky: 6.0.0
     jsona: 1.9.2
     jsonwebtoken: 8.5.1
+    lefthook: 1.2.7
     maplibre-gl: 2.1.9
     next: 13.0.7
     next-auth: 4.3.4
@@ -12124,15 +12124,6 @@ __metadata:
   dependencies:
     ms: ^2.0.0
   checksum: 9c7a74a2827f9294c009266c82031030eae811ca87b0da3dceb8d6071b9bde22c9f3daef0469c3c533cc67a97d8a167cd9fc0389350e5f415f61a79b171ded16
-  languageName: node
-  linkType: hard
-
-"husky@npm:6.0.0":
-  version: 6.0.0
-  resolution: "husky@npm:6.0.0"
-  bin:
-    husky: lib/bin.js
-  checksum: db6da76a670b2cd1e967990decfd291e6f35a5aee4d362208a51771474d3b4896d526acb4bf0413c2d7154716e42a4d8b6cc19f2bb108e48d1f554624c723a00
   languageName: node
   linkType: hard
 
@@ -13423,6 +13414,97 @@ __metadata:
     dotenv: ^8.0.0
     dotenv-expand: ^5.1.0
   checksum: a80509d8cb40dafcfab5859335920754a21814320aa16115e58c0ae5ef3b1d8bd4daa96349ea548e2833f2f89269ddbb103ebd55be06cfdba00e0af6785b5ba7
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-arm64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-darwin-arm64@npm:1.2.7"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-x64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-darwin-x64@npm:1.2.7"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-arm64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-freebsd-arm64@npm:1.2.7"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-x64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-freebsd-x64@npm:1.2.7"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-arm64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-linux-arm64@npm:1.2.7"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-x64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-linux-x64@npm:1.2.7"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-arm64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-windows-arm64@npm:1.2.7"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-x64@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook-windows-x64@npm:1.2.7"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook@npm:1.2.7":
+  version: 1.2.7
+  resolution: "lefthook@npm:1.2.7"
+  dependencies:
+    lefthook-darwin-arm64: 1.2.7
+    lefthook-darwin-x64: 1.2.7
+    lefthook-freebsd-arm64: 1.2.7
+    lefthook-freebsd-x64: 1.2.7
+    lefthook-linux-arm64: 1.2.7
+    lefthook-linux-x64: 1.2.7
+    lefthook-windows-arm64: 1.2.7
+    lefthook-windows-x64: 1.2.7
+  dependenciesMeta:
+    lefthook-darwin-arm64:
+      optional: true
+    lefthook-darwin-x64:
+      optional: true
+    lefthook-freebsd-arm64:
+      optional: true
+    lefthook-freebsd-x64:
+      optional: true
+    lefthook-linux-arm64:
+      optional: true
+    lefthook-linux-x64:
+      optional: true
+    lefthook-windows-arm64:
+      optional: true
+    lefthook-windows-x64:
+      optional: true
+  bin:
+    lefthook: bin/index.js
+  checksum: cfc386663363c56d7931feacdc9f76ab8dc78e7d4984fbb7f023672fb012e176a34b6c1a2aa7a514e754948aaf046e2954625cb2424cb79fd11bd0c10fefa2aa
   languageName: node
   linkType: hard
 
