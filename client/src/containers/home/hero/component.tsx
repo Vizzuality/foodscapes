@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { useWindowSize, useInterval } from 'usehooks-ts';
@@ -8,9 +8,14 @@ const BACKGROUNDS = [
   'url(/images/hero/hero-2.jpg)',
   'url(/images/hero/hero-3.jpg)',
   'url(/images/hero/hero-4.jpg)',
+  'url(/images/hero/hero-5.jpg)',
+  'url(/images/hero/hero-6.jpg)',
+  'url(/images/hero/hero-7.jpg)',
+  'url(/images/hero/hero-8.jpg)',
 ];
 
 const Hero = () => {
+  const backgroundsRef = useRef<string[]>([]);
   const DURATION = 2;
   const TOTAL_DURATION = 8;
   const [count, setCount] = useState<number>(0);
@@ -21,7 +26,14 @@ const Hero = () => {
   }, TOTAL_DURATION * 1000);
 
   const randomImage = () => {
-    return BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
+    const bg = BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
+
+    if (backgroundsRef.current.includes(bg)) {
+      return null;
+    }
+
+    backgroundsRef.current.push(bg);
+    return bg;
   };
 
   const ITEMS = useMemo(() => {
@@ -36,16 +48,15 @@ const Hero = () => {
     const SIZE = h / ROW_COUNT;
     const ITEMS_PER_ROW = Math.floor((w * 1.5) / SIZE);
     const COUNT = ITEMS_PER_ROW * ROW_COUNT;
-    const MID = Math.floor((COUNT - 1) / 2);
+
+    backgroundsRef.current = [];
 
     return [...Array(COUNT)].map((_, i) => {
       const random = Math.random();
 
       const backgroundColor = `hsl(${random * 360}, 100%, 50%)`;
       const backgroundImage = randomImage();
-      const backgroundImageThreshold = 0.7;
-
-      const visible = i < MID - 1 || i > MID + 1;
+      const backgroundImageThreshold = 0.25;
 
       return (
         <div
@@ -61,7 +72,7 @@ const Hero = () => {
               opacity: 0,
             }}
             animate={{
-              opacity: visible ? [0, 1, 1, 1, 0] : 0,
+              opacity: [0, 1, 1, 1, 0],
             }}
             transition={{
               duration: DURATION,
@@ -71,9 +82,10 @@ const Hero = () => {
             className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
             style={{
               backgroundColor,
-              ...(Math.random() >= backgroundImageThreshold && {
-                backgroundImage,
-              }),
+              ...(Math.random() >= backgroundImageThreshold &&
+                backgroundImage && {
+                  backgroundImage,
+                }),
             }}
           />
         </div>
