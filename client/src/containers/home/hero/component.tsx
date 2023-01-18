@@ -3,7 +3,12 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
-// const BACKGROUNDS = ['url(/images/avatar.png)', null, null, null, null, null, null, null];
+const BACKGROUNDS = [
+  'url(/images/hero/hero-1.jpg)',
+  'url(/images/hero/hero-2.jpg)',
+  'url(/images/hero/hero-3.jpg)',
+  'url(/images/hero/hero-4.jpg)',
+];
 
 const Hero = () => {
   const DURATION = 2;
@@ -15,6 +20,10 @@ const Hero = () => {
     setCount(count + 1);
   }, TOTAL_DURATION * 1000);
 
+  const randomImage = () => {
+    return BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
+  };
+
   const ITEMS = useMemo(() => {
     const w = width;
     const h = height;
@@ -23,14 +32,20 @@ const Hero = () => {
       return null;
     }
 
-    const SIZE = h / 3;
-    const COUNT = Math.ceil(((w * 1.5) / SIZE) * 3);
+    const ROW_COUNT = 3;
+    const SIZE = h / ROW_COUNT;
+    const ITEMS_PER_ROW = Math.floor((w * 1.5) / SIZE);
+    const COUNT = ITEMS_PER_ROW * ROW_COUNT;
+    const MID = Math.floor((COUNT - 1) / 2);
 
     return [...Array(COUNT)].map((_, i) => {
       const random = Math.random();
-      const mid = Math.round(COUNT / 2) - 1;
 
-      const visible = i < mid - 1 || i > mid + 1;
+      const backgroundColor = `hsl(${random * 360}, 100%, 50%)`;
+      const backgroundImage = randomImage();
+      const backgroundImageThreshold = 0.7;
+
+      const visible = i < MID - 1 || i > MID + 1;
 
       return (
         <div
@@ -55,7 +70,10 @@ const Hero = () => {
             }}
             className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
             style={{
-              backgroundColor: `hsl(${random * 360}, 100%, 50%)`,
+              backgroundColor,
+              ...(Math.random() >= backgroundImageThreshold && {
+                backgroundImage,
+              }),
             }}
           />
         </div>
