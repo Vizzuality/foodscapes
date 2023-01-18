@@ -7,12 +7,13 @@ import { useWindowSize, useInterval } from 'usehooks-ts';
 
 const Hero = () => {
   const DURATION = 2;
+  const TOTAL_DURATION = 8;
   const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
 
   useInterval(() => {
     setCount(count + 1);
-  }, DURATION * 1000);
+  }, TOTAL_DURATION * 1000);
 
   const ITEMS = useMemo(() => {
     const w = width;
@@ -24,13 +25,12 @@ const Hero = () => {
 
     const SIZE = h / 3;
     const COUNT = Math.ceil(((w * 1.5) / SIZE) * 3);
-    const THRESHOLD = 0.75;
 
     return [...Array(COUNT)].map((_, i) => {
       const random = Math.random();
       const mid = Math.round(COUNT / 2) - 1;
 
-      const visible = random > THRESHOLD && (i < mid - 1 || i > mid + 1);
+      const visible = i < mid - 1 || i > mid + 1;
 
       return (
         <div
@@ -46,11 +46,12 @@ const Hero = () => {
               opacity: 0,
             }}
             animate={{
-              opacity: visible ? [0, 1, 1, 1, 1, 1, 0] : 0,
+              opacity: visible ? [0, 1, 1, 1, 0] : 0,
             }}
             transition={{
-              duration: DURATION - DURATION * 0.05,
+              duration: DURATION,
               ease: 'linear',
+              delay: random * (TOTAL_DURATION - DURATION),
             }}
             className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
             style={{
