@@ -56,7 +56,6 @@ const Hero = () => {
 
       const backgroundColor = `hsl(${random * 360}, 100%, 50%)`;
       const backgroundImage = randomImage();
-      const backgroundImageThreshold = 0.25;
 
       return (
         <div
@@ -82,10 +81,7 @@ const Hero = () => {
             className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
             style={{
               backgroundColor,
-              ...(Math.random() >= backgroundImageThreshold &&
-                backgroundImage && {
-                  backgroundImage,
-                }),
+              backgroundImage,
             }}
           />
         </div>
