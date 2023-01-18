@@ -91,9 +91,11 @@ const Hero = () => {
 
   return (
     <section className="relative flex h-screen w-full items-center justify-center overflow-hidden">
-      <div className="relative z-10 text-center">
-        <h1 className="text-8xl">Foodscapes</h1>
-        <h2 className="uppercase">Accelerating a global food system transfomation</h2>
+      <div className="relative z-10 space-y-2 text-center">
+        <h1 className="font-display text-9xl">Foodscapes</h1>
+        <h2 className="text-xl font-bold uppercase tracking-widest">
+          Accelerating a global food system transfomation
+        </h2>
       </div>
 
       <div className="absolute top-0 -left-1/4 z-0 h-full w-[150%]">
