@@ -6,16 +6,22 @@ import { useWindowSize, useInterval } from 'usehooks-ts';
 // const BACKGROUNDS = ['url(/images/avatar.png)', null, null, null, null, null, null, null];
 
 const Hero = () => {
+  const DURATION = 2;
   const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
 
   useInterval(() => {
     setCount(count + 1);
-  }, 2000);
+  }, DURATION * 1000);
 
   const ITEMS = useMemo(() => {
-    const w = width || 1;
-    const h = height || 1;
+    const w = width;
+    const h = height;
+
+    if (!w || !h) {
+      return null;
+    }
+
     const SIZE = h / 3;
     const COUNT = Math.ceil(((w * 1.5) / SIZE) * 3);
     const THRESHOLD = 0.75;
@@ -40,14 +46,16 @@ const Hero = () => {
               opacity: 0,
             }}
             animate={{
-              opacity: visible ? [0, 1, 1, 1, 0] : 0,
-              backgroundColor: `hsl(${random * 360}, 100%, 50%)`,
+              opacity: visible ? [0, 1, 1, 1, 1, 1, 0] : 0,
             }}
             transition={{
-              duration: 2,
+              duration: DURATION - DURATION * 0.05,
               ease: 'linear',
             }}
             className="absolute top-0 left-0 h-full w-full bg-cover bg-center"
+            style={{
+              backgroundColor: `hsl(${random * 360}, 100%, 50%)`,
+            }}
           />
         </div>
       );
