@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  tiler:
+    container_name: tiler
+    build:
+      context: ./tiler
+    env_file: .env
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+    ports:
+      - "${TILER_SERVICE_PORT}:3000"
+    volumes:
+      - ./tiler/data:/opt/foodscapes-tiler/data
