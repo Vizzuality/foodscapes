@@ -16,8 +16,8 @@ const BACKGROUNDS = [
 
 const Hero = () => {
   const backgroundsRef = useRef<string[]>([]);
-  const DURATION = 2;
-  const TOTAL_DURATION = 8;
+  const DURATION = 4;
+  const TOTAL_DURATION = 12;
   const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
 
