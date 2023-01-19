@@ -19,18 +19,20 @@ import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
 
-const domine = Domine({
-  weight: ['400', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
-  variable: '--font-domine',
-});
-
 const publicSans = Public_Sans({
   weight: ['300', '400', '600', '700'],
   style: ['normal'],
   subsets: ['latin'],
   variable: '--font-public-sans',
+  display: 'block',
+});
+
+const domine = Domine({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--font-domine',
+  display: 'block',
 });
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {

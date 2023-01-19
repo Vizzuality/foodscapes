@@ -3,6 +3,10 @@ import { useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
+import Icon from 'components/icon';
+
+import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+
 const BACKGROUNDS = [
   'url(/images/hero/hero-1.jpg)',
   'url(/images/hero/hero-2.jpg)',
@@ -16,7 +20,7 @@ const BACKGROUNDS = [
 
 const Hero = () => {
   const backgroundsRef = useRef<string[]>([]);
-  const DURATION = 4;
+  const DURATION = 3;
   const TOTAL_DURATION = 12;
   const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
@@ -54,7 +58,11 @@ const Hero = () => {
     return [...Array(COUNT)].map((_, i) => {
       const random = Math.random();
 
-      const backgroundColor = `hsl(${random * 360}, 100%, 50%)`;
+      // Generate a random color for the background but keep it light
+      const backgroundColor = `hsl(${Math.floor(random * 360)}, 100%, ${
+        Math.floor(random * 50) + 50
+      }%)`;
+
       const backgroundImage = randomImage();
 
       return (
@@ -104,6 +112,12 @@ const Hero = () => {
           {ITEMS}
         </div>
       </div>
+
+      <button className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
+        <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
+
+        <span className="text-xxs font-bold uppercase">scroll to explore</span>
+      </button>
     </section>
   );
 };
