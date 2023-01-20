@@ -1,15 +1,34 @@
 version: '3.8'
 
 services:
+  app:
+    build:
+      context: ./client
+    ports:
+      - "${APP_SERVICE_PORT}:3000"
   tiler:
     container_name: tiler
     build:
       context: ./tiler
+      args:
+        - TILER_FOODSCAPES_COG_FILENAME=${TILER_FOODSCAPES_COG_FILENAME:-foodscapes_stack_cog_lzw.tif}
+        - DATA_CORE_COG_SOURCE_URL=${DATA_CORE_COG_SOURCE_URL}
+        - DATA_CORE_COG_CHECKSUM=${DATA_CORE_COG_CHECKSUM}
     env_file: .env
-    environment:
-      - HOST=0.0.0.0
-      - PORT=3000
     ports:
       - "${TILER_SERVICE_PORT}:3000"
     volumes:
-      - ./tiler/data:/opt/foodscapes-tiler/data
+      - ./tiler/data:/opt/foodscapes-tiler/data/local-dev
+  datasette:
+    container_name: datasette
+    build:
+      context: ./datasette
+      args:
+        - DATASETTE_SQLITE_DB_FILENAME=${DATASETTE_SQLITE_DB_FILENAME:-foodscapes.db}
+        - DATA_CORE_SQLITE_DB_SOURCE_URL=${DATA_CORE_SQLITE_DB_SOURCE_URL}
+        - DATA_CORE_SQLITE_DB_CHECKSUM=${DATA_CORE_SQLITE_DB_CHECKSUM}
+    env_file: .env
+    ports:
+      - "${DATASETTE_SERVICE_PORT}:3000"
+    volumes:
+      - ./datasette/data:/opt/foodscapes-datasette/data/local-dev
