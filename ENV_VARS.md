@@ -21,9 +21,57 @@ file.
   FastAPI process for TiTiler will always be listening on port 3000 internally,
   and this is mapped to `TILER_SERVICE_PORT` when exposed outside of the
   container.
-- `TILER_FOODSCAPES_COG_URL` (URL or filesystem path as string, optional,
-  default is `/opt/foodscapes-tiler/data/foodscapes.tif`): the URL where the
-  core Cloud-Optimized GeoTIFF (COG) file used by the tiler service can be read
-  from; this will typically be a path on the local filesystem of the Docker
-  image, where the file should be `COPY`-ed during the build of the container
-  image.
+- `TILER_FOODSCAPES_COG_FILENAME` (string, optional, default is
+  `foodscapes_stack_cog_lzw.tif`): the filename part of the absolute file path
+  where the core Cloud-Optimized GeoTIFF (COG) file used by the tiler service
+  can be read from; the full path will is assembled by prepending the path of
+  the folder on the container's local filesystem where the file will be `ADD`-ed
+  during the build of the container image and where TiTiler will read it when
+  processing requests.
+
+## Datasette service
+
+- `DATASETTE_SERVICE_PORT` (number, required, default is 3203): the port exposed
+  by Docker for the Datasette service; when running an instance under Docker
+  Compose, the Datasette service will always be listening on port 3000
+  internally, and this is mapped to `DATASETTE_SERVICE_PORT` when exposed
+  outside of the container.
+- `DATASETTE_SQLITE_DB_FILENAME` (string, optional, default is 'foodscapes.db'):
+  the filename part of the absolute file path where the core SQLite data file
+  used by the Datasette service can be read from; the full path will is
+  assembled by prepending the path of the folder on the container's local
+  filesystem where the file will be `ADD`-ed during the build of the container
+  image and where Datasette will read it when processing requests.
+
+## Source data
+
+- `DATA_CORE_COG_SOURCE_URL` (URL, required): the URL from which the Docker
+  image build process can fetch the source COG file for the TiTiler service;
+  this needs to be an HTTPS source with no authentication required, such as an
+  URL for an asset on a public S3 bucket.
+- `DATA_CORE_COG_CHECKSUM` (string, required): the checksum (see [Checksums for
+  source data](#checksums-for-source-data) section below for details) of the
+  file above.
+- `DATA_CORE_SQLITE_DB_SOURCE_URL` (URL, required):t he URL from which the
+  Docker image build process can fetch the source SQLite file for the Foodscapes
+  tabular data served by the Datasette service; this needs to be an HTTPS source
+  with no authentication required, such as an URL for an asset on a public S3
+  bucket.
+- `DATA_CORE_SQLITE_DB_CHECKSUM` (string, required): the checksum (see
+  [Checksums for source data](#checksums-for-source-data) section below for
+  details) of the file above.
+
+### Checksums for source data
+
+COG and tabular data are added to the TiTiler and Datasette service container
+images, respectively, fetching them from a remote location through an `ADD`
+Docker build step.
+
+In order to make sure that the files being added are the ones expected (i.e.
+they are the exact revision of the data that is needed, they have not been
+tampered with - either accidentally or maliciously, etc.), a checksum is
+calculated by the Docker build process and this is compared to the checksum
+configured via environment variables. For details about the syntax for this
+checksum and how to calculate it, please see the relevant Dockerfile reference
+here:
+https://docs.docker.com/engine/reference/builder/#verifying-a-remote-file-checksum-add---checksumchecksum-http-src-dest.

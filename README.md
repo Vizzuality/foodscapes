@@ -35,3 +35,15 @@ by other services in your local development environment).
 From the root of the repository:
 
 `docker-compose up`
+
+Once all the container images are (re)built and the services start successfully,
+the components of the platform should be available on the ports configured in
+`.env`.
+
+If using the default settings from `env.default` and if Docker binds on
+`localhost` the exposed ports of the services it runs, the services will be
+available at the following URLs:
+
+- App: http://localhost:3200
+- Tiler: http://localhost:3201
+- Datasette: http://localhost:3203
