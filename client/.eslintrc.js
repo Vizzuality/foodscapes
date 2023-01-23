@@ -22,7 +22,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    'no-console': [1, { allow: ['info', 'error'] }],
+    'no-console': [1, { allow: ['info', 'error', 'time', 'timeEnd'] }],
     // NextJs specific fix: allow jsx syntax in js and ts files
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/jsx-props-no-spreading': [

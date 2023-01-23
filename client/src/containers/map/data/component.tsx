@@ -2,7 +2,7 @@ import useFoodscapes from 'hooks/foodscapes';
 
 const Data = () => {
   const { data, isFetched, isFetching } = useFoodscapes();
-  console.log({ data, isFetched, isFetching });
+  console.info({ data, isFetched, isFetching });
 
   return <></>;
 };
