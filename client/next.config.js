@@ -6,7 +6,11 @@ const nextConfig = {
   // ? https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files
   output: 'standalone',
   poweredByHeader: false,
-  webpack(config) {
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
+
     config.module.rules.push({
       test: /\.svg$/,
       use: [

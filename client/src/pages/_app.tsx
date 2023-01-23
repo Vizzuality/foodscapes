@@ -61,8 +61,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
           <MediaContextProvider>
             <MapProvider>
-              <ThirdParty />
               <main className={`${domine.variable} ${publicSans.variable} font-sans`}>
+                <ThirdParty />
                 <Component {...pageProps} />
               </main>
             </MapProvider>
