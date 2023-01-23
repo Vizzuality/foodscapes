@@ -7,6 +7,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useComlink } from 'react-use-comlink';
 
 import type { Remote } from 'comlink';
+
 import { SQLComlink } from 'workers/sql';
 
 const SQLContext = createContext<SQLComlink>(null);

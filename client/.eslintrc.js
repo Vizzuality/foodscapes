@@ -136,6 +136,11 @@ module.exports = {
             position: 'after',
           },
           {
+            pattern: 'workers/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
             pattern: 'images/**',
             group: 'internal',
             position: 'after',
