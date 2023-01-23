@@ -21,8 +21,13 @@ they may need some adaptation to run on Windows systems.
 
 ### Set up docker
 
-- Install Docker (19.03+):
-- Install [Docker Compose](https://docs.docker.com/compose/install/)
+- Install Docker (**version 20.10 or later**). Earlier versions of Docker may
+  not be able to build some of the Dockerfiles in this repository; building with
+  earlier versions may be possible if BuildKit is supported, but setting the
+  environment variable `DOCKER_BUILDKIT=1` may be needed. Likewise newer Docker
+  versions that have been upgraded from older ones may need default settings to
+  be changed if BuildKit had ever been disabled by default.
+- Install [Docker Compose](https://docs.docker.com/compose/install/).
 - Create an `.env` at the root of the repository, defining all the required
   [environment variables](./ENV_VARS.md).
   
