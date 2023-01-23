@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./foodscapes.db"
+}
+
+model foodscapes_filter_table {
+  id                                   Int @id @default(autoincrement())
+  foodscapes                           Int
+  soil_group                           Int
+  intensity_group                      Int
+  dominant_crop                        Int
+  dominant_crop_group                  Int
+  country                              String
+  province                             String
+  critically_endangered_ecosystems     Int
+  high_conservation_value_areas        Int
+  agricultural_frontier_zones          Int
+  soil_erosion                         Int
+  water_scarcity                       Int
+  climate_risk                         Int
+  population_change                    Int
+  pesticide_risk                       Int
+  pixel_count                          Int
+  staple_crop_production               Float
+  cereals_oil_production               Float
+  roots_tubers_production              Float
+  legume_pulses_production             Float
+  perrenials_production                Float
+  vegetables_production                Float
+  other_crops_production               Float
+  cropland_restoration_area            Float
+  grassland_restoration_area           Float
+  cropland_to_silvoarable_area         Float
+  grassland_to_silvopastoral_area_low  Float
+  grassland_to_silvopastoral_area_high Float
+  cover_crops_area                     Float
+}
