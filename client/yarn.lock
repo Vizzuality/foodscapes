@@ -7726,6 +7726,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"comlink@npm:4.3.1":
+  version: 4.3.1
+  resolution: "comlink@npm:4.3.1"
+  checksum: 557360a6558708c55aff74a25f834bfb9bfca8a42444682c4d5aead57681534a0206202be2a2760b4de124c3ba6d485b08978b6d5469cb3d26bf1438ee28a4f1
+  languageName: node
+  linkType: hard
+
 "comma-separated-tokens@npm:^1.0.0":
   version: 1.0.8
   resolution: "comma-separated-tokens@npm:1.0.8"
@@ -10157,6 +10164,7 @@ __metadata:
     autoprefixer: 10.4.7
     axios: 0.21.1
     classnames: 2.3.1
+    comlink: 4.3.1
     cypress: 12.1.0
     d3-ease: 2.0.0
     eslint: 7.32.0
@@ -10185,6 +10193,7 @@ __metadata:
     react-final-form: 6.5.3
     react-map-gl: 7.0.17
     react-redux: 7.2.4
+    react-use-comlink: 2.0.1
     react-use-cookie: 1.4.0
     start-server-and-test: 1.12.1
     storybook-addon-swc: 1.1.8
@@ -15495,6 +15504,17 @@ __metadata:
   version: 0.11.0
   resolution: "react-refresh@npm:0.11.0"
   checksum: 112178a05b1e0ffeaf5d9fb4e56b4410a34a73adeb04dbf13abdc50d9ac9df2ada83e81485156cca0b3fa296aa3612751b3d6cd13be4464642a43679b819cbc7
+  languageName: node
+  linkType: hard
+
+"react-use-comlink@npm:2.0.1":
+  version: 2.0.1
+  resolution: "react-use-comlink@npm:2.0.1"
+  peerDependencies:
+    "@types/react": ">=16.8"
+    comlink: ">=4.1"
+    react: ">=16.8"
+  checksum: 52725fe1e188269b4882cf9b362f20fabb40e4b8b785e308aad7d82c1ae4c04bf48a162292beff55aca51d479c61ba2d28434f9e7394f459fb43613882aaef8a
   languageName: node
   linkType: hard
 
