@@ -8,14 +8,16 @@ import Icon from 'components/icon';
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 
 const BACKGROUNDS = [
-  'url(/images/hero/hero-1.jpg)',
-  'url(/images/hero/hero-2.jpg)',
-  'url(/images/hero/hero-3.jpg)',
-  'url(/images/hero/hero-4.jpg)',
-  'url(/images/hero/hero-5.jpg)',
-  'url(/images/hero/hero-6.jpg)',
-  'url(/images/hero/hero-7.jpg)',
-  'url(/images/hero/hero-8.jpg)',
+  'url(/images/hero/home1.jpg)',
+  'url(/images/hero/home2.jpg)',
+  'url(/images/hero/home3.jpg)',
+  'url(/images/hero/home4.jpg)',
+  'url(/images/hero/home5.jpg)',
+  'url(/images/hero/home6.jpg)',
+  'url(/images/hero/home7.jpg)',
+  'url(/images/hero/home8.jpg)',
+  'url(/images/hero/home9.jpg)',
+  'url(/images/hero/home10.jpg)',
 ];
 
 const Hero = () => {
