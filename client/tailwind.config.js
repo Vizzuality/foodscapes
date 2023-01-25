@@ -37,6 +37,9 @@ module.exports = {
       '4xl': ['2.5rem', { lineHeight: '3rem' }],
       '5xl': ['3.5rem', { lineHeight: '4rem' }],
       '6xl': ['5rem', { lineHeight: '5.7rem' }],
+      '7xl': ['6rem', { lineHeight: '1' }],
+      '8xl': ['7rem', { lineHeight: '1' }],
+      '9xl': ['7.675rem', { lineHeight: '1' }],
     },
     colors: {
       transparent: 'transparent',

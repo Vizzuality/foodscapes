@@ -34,9 +34,9 @@ const Header = () => {
                     <Link
                       href={href}
                       className={cx({
-                        'block py-2 px-4 text-base font-semibold transition-colors': true,
+                        'block py-2 px-4 text-base font-semibold text-navy transition-colors': true,
                         'hover:bg-slate-500/25': !pathname.includes(href),
-                        'bg-blue-500 text-white': filled,
+                        'bg-navy text-white': filled,
                       })}
                     >
                       {label}

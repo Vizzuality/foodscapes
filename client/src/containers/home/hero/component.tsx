@@ -102,7 +102,7 @@ const Hero = () => {
   return (
     <section className="relative flex h-screen w-full items-center justify-center overflow-hidden">
       <div className="relative z-10 space-y-2 text-center">
-        <h1 className="text-9xl font-display">Foodscapes</h1>
+        <h1 className="font-display text-9xl">Foodscapes</h1>
         <h2 className="text-xl font-bold uppercase tracking-widest">
           Accelerating a global food system transfomation
         </h2>
