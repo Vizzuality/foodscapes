@@ -31,7 +31,7 @@ const Template: Story<TooltipProps> = (args: TooltipProps) => (
       trigger="click"
       content={
         <div className="text-gray-500 rounded bg-white p-5">
-          <h2 className="text-blue-500 text-lg">Title</h2>
+          <h2 className="text-lg text-blue-500">Title</h2>
           <p>This is a content. We could have whateveryouwant</p>
         </div>
       }
