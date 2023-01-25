@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
     >
       <Header />
 
-      <div className="grow">
+      <div className="relative grow">
         {/* Content */}
         {children}
       </div>
