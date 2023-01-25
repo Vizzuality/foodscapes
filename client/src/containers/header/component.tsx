@@ -1,7 +1,7 @@
-import cx from 'classnames';
-
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+import cn from 'lib/classnames';
 
 import { NAV } from 'constants/nav';
 
@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <header
-      className={cx({
+      className={cn({
         'fixed top-0 z-30 w-full py-6': true,
       })}
     >
@@ -33,10 +33,10 @@ const Header = () => {
                   <li key={href}>
                     <Link
                       href={href}
-                      className={cx({
+                      className={cn({
                         'block py-2 px-4 text-base font-semibold text-navy transition-colors': true,
-                        'hover:bg-slate-500/25': !pathname.includes(href),
-                        'bg-navy text-white': filled,
+                        'hover:bg-gray-500/10': !pathname.includes(href),
+                        'bg-navy text-white hover:bg-navy/75': filled,
                       })}
                     >
                       {label}
