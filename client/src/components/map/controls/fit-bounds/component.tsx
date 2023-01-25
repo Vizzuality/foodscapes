@@ -22,7 +22,7 @@ export const FitBoundsControl: FC<FitBoundsControlProps> = ({
       aria-label="Fit to bounds"
       className={cx({
         'mb-0.5 rounded-3xl bg-black px-0.5 py-1 text-white': true,
-        'hover:bg-gray-700 active:bg-gray-600': !!bounds,
+        'active:bg-gray-600 hover:bg-gray-700': !!bounds,
         'cursor-default opacity-50': !bounds,
         [className]: !!className,
       })}
