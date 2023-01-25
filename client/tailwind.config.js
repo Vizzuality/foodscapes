@@ -14,6 +14,13 @@ module.exports = {
   ],
   plugins: [forms, lineClamp],
   theme: {
+    extend: {
+      height: {
+        screen: ['100vh /* fallback for Opera, IE and etc. */', '100dvh'],
+        'small-screen': ['100vh /* fallback for Opera, IE and etc. */', '100svh'],
+        'large-screen': ['100vh /* fallback for Opera, IE and etc. */', '100lvh'],
+      },
+    },
     fontFamily: {
       sans: ['var(--font-public-sans)', ...fontFamily.sans],
       display: ['var(--font-domine)', ...fontFamily.sans],
