@@ -10,30 +10,15 @@ import { GAPage } from 'lib/analytics/ga';
 
 import store from 'store';
 
-import { Domine, Public_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+
+import Layout from 'layouts';
 
 import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
-
-const publicSans = Public_Sans({
-  weight: ['300', '400', '600', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
-  variable: '--font-public-sans',
-  display: 'block',
-});
-
-const domine = Domine({
-  weight: ['400', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
-  variable: '--font-domine',
-  display: 'block',
-});
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -61,10 +46,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
           <MediaContextProvider>
             <MapProvider>
-              <ThirdParty />
-              <main className={`${domine.variable} ${publicSans.variable} font-sans`}>
+              {/* Layout */}
+              <Layout>
                 <Component {...pageProps} />
-              </main>
+                <ThirdParty />
+              </Layout>
             </MapProvider>
           </MediaContextProvider>
         </Hydrate>

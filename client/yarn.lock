@@ -10191,6 +10191,7 @@ __metadata:
     svg-sprite-loader: 6.0.11
     svgo: 3.0.2
     svgo-loader: 3.0.3
+    tailwind-merge: 1.8.1
     tailwindcss: 3.1.7
     typescript: 4.9.4
     use-debounce: 6.0.1
@@ -17210,6 +17211,13 @@ __metadata:
     string-width: ^4.2.3
     strip-ansi: ^6.0.1
   checksum: 08249c7046125d9d0a944a6e96cfe9ec66908d6b8a9db125531be6eb05fa0de047fd5542e9d43b4f987057f00a093b276b8d3e19af162a9c40db2681058fd306
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:1.8.1":
+  version: 1.8.1
+  resolution: "tailwind-merge@npm:1.8.1"
+  checksum: ec1320c07aab3803845b9e4df6e3e96c86ddeeb6ed00c13f6040e6612655c74c98f9275d7ae13c8110cc2c9f9a591d5e3d3225794aea465b6b8434c3bf654641
   languageName: node
   linkType: hard
 
