@@ -8,6 +8,7 @@ export const step = atom({
   effects: [
     urlSyncEffect({
       refine: number(),
+      history: 'push',
     }),
   ],
 });

@@ -4,7 +4,14 @@ import { useRouter } from 'next/router';
 
 import { BrowserInterface, RecoilURLSyncOptions } from 'recoil-sync';
 
-export function useSyncURLNext(): Partial<Omit<RecoilURLSyncOptions, 'children'>> {
+type UseSyncURLNextOptions = {
+  decodedQueryParams?: boolean;
+};
+
+export function useSyncURLNext(
+  options: UseSyncURLNextOptions
+): Partial<Omit<RecoilURLSyncOptions, 'children'>> {
+  const { decodedQueryParams } = options;
   const { isReady, asPath, replace, push, events } = useRouter();
 
   const urlRef = useRef<{
@@ -31,9 +38,21 @@ export function useSyncURLNext(): Partial<Omit<RecoilURLSyncOptions, 'children'>
   }, []);
 
   const browserInterface: BrowserInterface = {
-    replaceURL: useCallback((url: string) => replace(url, undefined, { shallow: true }), [replace]),
+    replaceURL: useCallback(
+      (url: string) => {
+        const u = decodedQueryParams ? decodeURIComponent(url) : url;
+        return replace(u, undefined, { shallow: true });
+      },
+      [decodedQueryParams, replace]
+    ),
 
-    pushURL: useCallback((url: string) => push(url, undefined, { shallow: true }), [push]),
+    pushURL: useCallback(
+      (url: string) => {
+        const u = decodedQueryParams ? decodeURIComponent(url) : url;
+        return push(u, undefined, { shallow: true });
+      },
+      [decodedQueryParams, push]
+    ),
 
     getURL: useCallback(() => {
       const url = new URL(
