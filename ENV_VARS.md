@@ -28,6 +28,44 @@ file.
   the folder on the container's local filesystem where the file will be `ADD`-ed
   during the build of the container image and where TiTiler will read it when
   processing requests.
+- `TILER_ROOT_PATH` (string, optional, default is None): when the tiler service
+  is behind a reverse proxy configured to use a path prefix for the tiler URLs
+  (for example `/tiler`), the same prefix _must_ also be set through this
+  environment variable, so that the FastAPI framework can generate internal URLs
+  correctly.
+
+As setting things up across reverse proxies, load balancers and so on may get
+complicated rather quickly: given a value of `TILER_ROOT_PATH=/tiler` and the
+following reverse proxy setup (using
+[Caddy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#reverse-proxy)
+syntax)
+
+```
+app.foodscapes.tld {
+  handle_path /tiler/* {
+    reverse_proxy localhost:3201
+  }
+}
+```
+
+The tiler service will be accessible at the following base URL:
+https://app.foodscapes.tld/tiler/
+
+For example, the OpenAPI documentation will be available at https://app.foodscapes.tld/tiler/docs.
+
+Behind the reverse proxy, the tiler service will be available at the following
+base URL (for example, exposed by Docker with no TLS internally behind a
+firewall): http://tiler:3201/. Likewise the OpenAPI documentation, again as an
+example, will be available at http://tiler:3201/docs.
+
+Different setups are possible, and may be preferable over the one above
+depending on specific deployment scenarios.
+
+The `root_path` mechanism when running behind reverse proxies is described in
+great detail in the [FastAPI
+documentation](https://fastapi.tiangolo.com/advanced/behind-a-proxy/): when
+setting up the Foodscapes services behind a reverse proxy, please make sure to
+familiarise yourself with it.
 
 ## Datasette service
 
