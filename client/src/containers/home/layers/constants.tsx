@@ -10,7 +10,7 @@ export const LAYERS = [
         context can be clustered into three main layers.
       </p>
     ),
-    backgroundColor: 'bg-white',
+    backgroundColor: '',
     imageUrl: '/images/layers/empty.png',
   },
   {
@@ -29,7 +29,7 @@ export const LAYERS = [
         </p>
       </>
     ),
-    backgroundColor: 'bg-green-500',
+    backgroundColor: 'bg-green-500 before:bg-green-500',
     imageUrl: '/images/layers/physical.png',
   },
   {
@@ -49,7 +49,7 @@ export const LAYERS = [
         </p>
       </>
     ),
-    backgroundColor: 'bg-red-500',
+    backgroundColor: 'bg-red-500 before:bg-red-500',
     imageUrl: '/images/layers/management.png',
   },
   {
@@ -69,7 +69,7 @@ export const LAYERS = [
         <p className="italic">Source: Soy - Our World in Data.</p>
       </>
     ),
-    backgroundColor: 'bg-yellow-500',
+    backgroundColor: 'bg-yellow-500 before:bg-yellow-500',
     imageUrl: '/images/layers/socio.png',
   },
 ];

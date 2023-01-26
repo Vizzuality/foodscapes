@@ -13,15 +13,13 @@ function preloadImage(src: string) {
   });
 }
 
-export default function useImagePreloader(imageList: string[]) {
+export default function useImagesPreloader(imageList: string[]) {
   const [imagesPreloaded, setImagesPreloaded] = useState<boolean>(false);
 
   useEffect(() => {
     let isCancelled = false;
 
     async function effect() {
-      console.log('PRELOAD');
-
       if (isCancelled) {
         return;
       }

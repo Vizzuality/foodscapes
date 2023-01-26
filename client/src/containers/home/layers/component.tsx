@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { motion } from 'framer-motion';
 
-import useImagePreloader from 'hooks/image-preloader';
+import useImagesPreloader from 'hooks/images-preloader';
 
 import Wrapper from 'containers/wrapper';
 
@@ -23,8 +23,7 @@ const Layers = () => {
     return layer;
   }, [layerId]);
 
-  const preloadedImg = useImagePreloader([LAYER.imageUrl]);
-  console.log({ preloadedImg });
+  useImagesPreloader(LAYERS.map((l) => l.imageUrl));
 
   const onClick = useCallback((id) => {
     return setLayerId(id);
@@ -36,6 +35,7 @@ const Layers = () => {
         <div
           className={cn({
             'relative col-span-5': true,
+            'before:absolute before:top-0 before:right-full before:h-full before:w-[50vw]': true,
             [LAYER.backgroundColor]: true,
           })}
         >
