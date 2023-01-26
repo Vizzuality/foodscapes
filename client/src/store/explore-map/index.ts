@@ -27,13 +27,4 @@ const exploreMapStore = {
   steps,
 };
 
-export const initializeState =
-  (query) =>
-  ({ set }) => {
-    const keys = Object.keys(query);
-    keys.forEach((key) => {
-      set(exploreMapStore[key], query[key]);
-    });
-  };
-
 export default exploreMapStore;

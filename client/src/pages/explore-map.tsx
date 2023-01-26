@@ -1,24 +1,38 @@
-import { initializeState } from 'store/explore-map';
+import { useCallback } from 'react';
+
+import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
 
 import { RecoilRoot } from 'recoil';
-import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
 import ExploreMap from 'containers/explore-map';
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps() {
   return {
-    props: {
-      query,
-    },
+    props: {},
   };
 }
 
-const ExploreMapPage = ({ query }) => (
-  <RecoilRoot initializeState={initializeState(query)}>
-    <RecoilURLSyncJSONNext location={{ part: 'queryParams' }}>
-      <ExploreMap />
-    </RecoilURLSyncJSONNext>
-  </RecoilRoot>
-);
+const ExploreMapPage = () => {
+  const serialize: Serialize = useCallback((x) => {
+    return x === undefined ? '' : JSON.stringify(x);
+  }, []);
+
+  //Demo of custom deserialization
+  const deserialize: Deserialize = useCallback((x: string) => {
+    return JSON.parse(x);
+  }, []);
+
+  return (
+    <RecoilRoot>
+      <RecoilURLSyncNext
+        location={{ part: 'queryParams' }}
+        serialize={serialize}
+        deserialize={deserialize}
+      >
+        <ExploreMap />
+      </RecoilURLSyncNext>
+    </RecoilRoot>
+  );
+};
 
 export default ExploreMapPage;
