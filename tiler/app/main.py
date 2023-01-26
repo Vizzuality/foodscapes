@@ -1,10 +1,13 @@
 from fastapi import FastAPI
-from titiler.core import TilerFactory, MultiBandTilerFactory
+from os import getenv
+from titiler.core import TilerFactory
 from titiler.core.errors import DEFAULT_STATUS_CODES, add_exception_handlers
 
 from titiler.core.middleware import TotalTimeMiddleware, LoggerMiddleware
 
-app = FastAPI(title="Tiler!")
+root_path = getenv("TILER_ROOT_PATH", "")
+
+app = FastAPI(title="Tiler!", root_path=root_path)
 app.add_middleware(TotalTimeMiddleware)
 app.add_middleware(LoggerMiddleware)
 
