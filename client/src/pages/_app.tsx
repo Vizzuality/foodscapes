@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { GAPage } from 'lib/analytics/ga';
 
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
 
 import Layout from 'layouts';
 
@@ -37,20 +38,22 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   }, [router.events, handleRouteChangeCompleted]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
-        <MediaContextProvider>
-          <MapProvider>
-            {/* Layout */}
-            <Layout>
-              <Component {...pageProps} />
-              <ThirdParty />
-            </Layout>
-          </MapProvider>
-        </MediaContextProvider>
-      </Hydrate>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
+          <MediaContextProvider>
+            <MapProvider>
+              {/* Layout */}
+              <Layout>
+                <Component {...pageProps} />
+                <ThirdParty />
+              </Layout>
+            </MapProvider>
+          </MediaContextProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 
