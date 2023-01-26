@@ -1,6 +1,7 @@
 import { STEPS } from './constants';
 import Globe from './globe';
 import Hero from './hero';
+import Layers from './layers';
 import ScrollSection from './scroll-section';
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
     <>
       <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
         <Hero />
+        <Layers />
         <Globe />
       </div>
 
