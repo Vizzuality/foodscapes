@@ -1,16 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
-import { Provider as ReduxProvider } from 'react-redux';
 
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
 
-import store from 'store';
-
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { RecoilRoot } from 'recoil';
 
 import Layout from 'layouts';
 
@@ -40,7 +38,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   }, [router.events, handleRouteChangeCompleted]);
 
   return (
-    <ReduxProvider store={store}>
+    <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
@@ -55,7 +53,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           </MediaContextProvider>
         </Hydrate>
       </QueryClientProvider>
-    </ReduxProvider>
+    </RecoilRoot>
   );
 };
 
