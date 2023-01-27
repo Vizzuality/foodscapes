@@ -15,7 +15,7 @@ const Home = () => {
         {STEPS.map((step) => {
           const { id } = step;
 
-          return <ScrollSection key={id} step={id} />;
+          return <ScrollSection key={id} id={id} />;
         })}
       </div>
     </>
