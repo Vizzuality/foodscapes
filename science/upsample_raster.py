@@ -9,11 +9,12 @@ from rasterio.vrt import WarpedVRT
 from tqdm import tqdm
 
 
-def upscale(file: Path, upscale_factor: int = 2) -> MemoryFile:
-    """Upscales raster to an aligned exact division.
+def disaggregate(file: Path, factor: int = 2) -> MemoryFile:
+    """Downscales (or upsample) raster
 
-    Also divides the values by the suqre of the upscale factor.
+    by splitting pixels into factor^2 pixels and accordingly scaling the value
 
+    For example a pixel of value 1 disaggregated using a factor of 2 will yield:
     +---+---+
     |1/4|1/4|
     +---+---+
@@ -22,28 +23,35 @@ def upscale(file: Path, upscale_factor: int = 2) -> MemoryFile:
     """
     nodata: int = 0
     with rasterio.open(file) as src:
-        # upscale the data to a perfect aligned partition of 1/4
-        # use nearest resampling so new pixels have the exact value as the
-        # "parent" pixel. Then divide by 4 to get the exact proportional value
-        upscale_height = int(src.height * upscale_factor)
-        upscale_width = int(src.width * upscale_factor)
-        data = src.read(out_shape=(src.count, upscale_height, upscale_width), resampling=Resampling.nearest)
-        # divide each pixel value by the square of the factor
+        new_height = int(src.height * factor)
+        new_width = int(src.width * factor)
+        # use nearest resampling so new pixels have the exact value as the "parent" pixel.
+        # Then divide by factor^2 to get the exact proportional value for the new pixels
+        data = src.read(out_shape=(src.count, new_height, new_width), resampling=Resampling.nearest)
+        # TODO: mask nodata to keep original nodata or add parameter to change it on demand
+        # deal with nodata to avoid overflows
         data = np.where(data == src.nodata, nodata, data)
-        data /= upscale_factor**2
-        # scale image transform
+        data /= factor ** 2
         upscale_transform = src.transform * src.transform.scale(
             (src.width / data.shape[-1]), (src.height / data.shape[-2])
         )
         upscale_kwargs = src.meta.copy()
-
     upscale_kwargs.update(
-        {"transform": upscale_transform, "height": upscale_height, "width": upscale_width, "nodata": nodata}
+        {"transform": upscale_transform, "height": new_height, "width": new_width, "nodata": nodata}
     )
     mem_file = MemoryFile()
     with mem_file.open(**upscale_kwargs) as dest:
         dest.write(data)
     return mem_file
+
+
+def check_sum(original: Path, resampled: Path) -> float:
+    with rasterio.open(original) as orig_dataset, rasterio.open(resampled) as res_dataset:
+        orig_data = orig_dataset.read()
+        res_data = res_dataset.read()
+        orig_sum = np.where(orig_data == orig_dataset.nodata, 0, orig_data).sum()
+        res_sum = np.where(res_data == res_dataset.nodata, 0, res_data).sum()
+        return round(100 * (orig_sum - res_sum) / orig_sum, 6)
 
 
 @click.command(help="Upscale raster files according to a given reference file.")
@@ -72,14 +80,16 @@ def upscale(file: Path, upscale_factor: int = 2) -> MemoryFile:
     type=click.Path(exists=True),
     help="Reference file to align rasters with",
 )
-def main(files: list[Path], suffix: str, ref_file: Path, out_dir: Path):
+@click.option("--check", is_flag=True, help="Compute the rasters sum to check if resampling worked well", )
+def main(files: list[Path], suffix: str, ref_file: Path, out_dir: Path, check: bool):
     """ Upsample a raster
+    Works by applying first a disaggregation (upsampling) by partitioning the original pixel by a factor
+    so that the resulting pixels are smaller than the target pixel size. Then rescale (downsample)
+    to the desired pixel size by applying a weighted sum. This way we can upsample any raster with absolute values
+    to any small pixel size and maintain the proportions of the values per pixel. It should result in a raster that has
+    the same `sum()` value.
 
-    Works by applying first a controlled upsample by partitioning the original pixel by 4
-    and scaling the data by 4. Then it is downsampled using a weighted `sum` to correct resolution.
-
-    Why? Call me and I will explain it to you
-    TODO: FIX DOCUMENTATION
+    TODO: Mask resampled files with the reference so that they have the same data pixels
     """
     with rasterio.open(ref_file) as ref:
         dst_crs = ref.crs
@@ -103,7 +113,7 @@ def main(files: list[Path], suffix: str, ref_file: Path, out_dir: Path):
     for file in pbar:
         file = Path(file)
         pbar.set_description(file.name)
-        with upscale(file).open() as upscaled_raster:
+        with disaggregate(file).open() as upscaled_raster:
             with WarpedVRT(upscaled_raster, **vrt_options) as vrt:
                 outfile = out_dir / (file.stem + suffix + file.suffix)
                 dst_profile.update(
@@ -112,6 +122,8 @@ def main(files: list[Path], suffix: str, ref_file: Path, out_dir: Path):
                     count=upscaled_raster.profile["count"],
                 )
                 rasterio.shutil.copy(vrt, outfile, **dst_profile)
+        if check:
+            pbar.write(f"Resampling error: {check_sum(file, outfile)} % ")
 
 
 if __name__ == "__main__":
