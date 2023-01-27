@@ -1,12 +1,12 @@
 import { atom } from 'recoil';
 
-export const step = atom({
+export const stepAtom = atom({
   key: 'step',
   default: 0,
 });
 
-const exploreMapStore = {
-  step,
+const homeStore = {
+  step: stepAtom,
 };
 
-export default exploreMapStore;
+export default homeStore;

@@ -1,6 +1,9 @@
 import { useMemo, useRef, useState } from 'react';
 
-import { motion } from 'framer-motion';
+import { stepAtom } from 'store/home';
+
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
 import Icon from 'components/icon';
@@ -24,8 +27,11 @@ const Hero = () => {
   const backgroundsRef = useRef<string[]>([]);
   const DURATION = 3;
   const TOTAL_DURATION = 12;
+
   const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
+
+  const step = useRecoilValue(stepAtom);
 
   useInterval(() => {
     setCount(count + 1);
@@ -100,27 +106,40 @@ const Hero = () => {
   }, [width, height, count]);
 
   return (
-    <section className="relative flex h-screen w-full items-center justify-center overflow-hidden">
-      <div className="relative z-10 space-y-2 text-center">
-        <h1 className="font-display text-9xl">Foodscapes</h1>
-        <h2 className="text-xl font-bold uppercase tracking-widest">
-          Accelerating a global food system transfomation
-        </h2>
-      </div>
+    <AnimatePresence>
+      {step === 0 && (
+        <motion.section
+          key="hero"
+          className="absolute flex h-full w-full items-center justify-center overflow-hidden"
+          initial={{ opacity: 0, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{
+            opacity: 0,
+            y: -100,
+          }}
+        >
+          <div className="relative z-10 space-y-2 text-center">
+            <h1 className="font-display text-9xl">Foodscapes</h1>
+            <h2 className="text-xl font-bold uppercase tracking-widest">
+              Accelerating a global food system transfomation
+            </h2>
+          </div>
 
-      <div className="absolute top-0 -left-1/4 z-0 h-full w-[150%]">
-        <div className="flex h-full flex-wrap items-center justify-center">
-          {/* Create an array of 15 eelement and loop over it */}
-          {ITEMS}
-        </div>
-      </div>
+          <div className="absolute top-0 -left-1/4 z-0 h-full w-[150%]">
+            <div className="flex h-full flex-wrap items-center justify-center">
+              {/* Create an array of 15 eelement and loop over it */}
+              {ITEMS}
+            </div>
+          </div>
 
-      <button className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
-        <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
+          <button className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
+            <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
 
-        <span className="text-xxs font-bold uppercase">scroll to explore</span>
-      </button>
-    </section>
+            <span className="text-xxs font-bold uppercase">scroll to explore</span>
+          </button>
+        </motion.section>
+      )}
+    </AnimatePresence>
   );
 };
 

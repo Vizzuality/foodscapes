@@ -1,24 +1,21 @@
 import { useEffect, useRef } from 'react';
 
-import { step } from 'store/home';
-
 import { useInView } from 'framer-motion';
-import { useSetRecoilState } from 'recoil';
 
-export interface ScrollSectionProps {
+export interface ScrollItemProps {
   id: number;
+  onChange: (id: number) => void;
 }
 
-const ScrollSection = ({ id }: ScrollSectionProps) => {
+const ScrollItem = ({ id, onChange }: ScrollItemProps) => {
   const ref = useRef();
   const isInView = useInView(ref, { amount: 0.5 });
-  const setStep = useSetRecoilState(step);
 
   useEffect(() => {
     if (isInView) {
-      setStep(id);
+      onChange(id);
     }
-  }, [id, isInView, setStep]);
+  }, [id, isInView, onChange]);
 
   return (
     <div
@@ -29,4 +26,4 @@ const ScrollSection = ({ id }: ScrollSectionProps) => {
   );
 };
 
-export default ScrollSection;
+export default ScrollItem;
