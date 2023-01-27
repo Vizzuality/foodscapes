@@ -5,6 +5,11 @@ export const stepAtom = atom({
   default: 0,
 });
 
+export const lastStepAtom = atom({
+  key: 'lastStep',
+  default: 0,
+});
+
 const homeStore = {
   step: stepAtom,
 };

@@ -32,10 +32,14 @@ const Hero = () => {
   const { width, height } = useWindowSize();
 
   const step = useRecoilValue(stepAtom);
+  const inView = step === 0;
 
-  useInterval(() => {
-    setCount(count + 1);
-  }, TOTAL_DURATION * 1000);
+  useInterval(
+    () => {
+      setCount(count + 1);
+    },
+    inView ? TOTAL_DURATION * 1000 : null
+  );
 
   const randomImage = () => {
     const bg = BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
@@ -107,7 +111,7 @@ const Hero = () => {
 
   return (
     <AnimatePresence>
-      {step === 0 && (
+      {inView && (
         <motion.section
           key="hero"
           className="absolute flex h-full w-full items-center justify-center overflow-hidden"
@@ -117,6 +121,7 @@ const Hero = () => {
             opacity: 0,
             y: -100,
           }}
+          transition={{ duration: 0.5 }}
         >
           <div className="relative z-10 space-y-2 text-center">
             <h1 className="font-display text-9xl">Foodscapes</h1>

@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 
 import Wrapper from 'containers/wrapper';
 
-const Globe = () => {
+const How = () => {
   const step = useRecoilValue(stepAtom);
   const lastStep = useRecoilValue(lastStepAtom);
 
@@ -19,6 +19,9 @@ const Globe = () => {
     animate: {
       opacity: 1,
       y: 0,
+      transition: {
+        duration: 0.5,
+      },
     },
     exit: (direction: number) => ({
       opacity: 0,
@@ -40,7 +43,7 @@ const Globe = () => {
 
   return (
     <AnimatePresence custom={direction}>
-      {(step === 2 || step === 3 || step === 4) && (
+      {step === 1 && (
         <motion.section
           key="how"
           className="absolute flex h-full w-full items-center justify-center overflow-hidden pt-20 text-navy"
@@ -59,7 +62,7 @@ const Globe = () => {
                 custom={direction}
                 transition={{ duration: 0.5 }}
               >
-                <h2 className="font-display text-6xl">Globe do we feed the world?</h2>
+                <h2 className="font-display text-6xl">How do we feed the world?</h2>
                 <div className="space-y-4">
                   <p className="font-light">
                     The need for food is a universal constant, but how it’s produced is different
@@ -82,4 +85,4 @@ const Globe = () => {
   );
 };
 
-export default Globe;
+export default How;
