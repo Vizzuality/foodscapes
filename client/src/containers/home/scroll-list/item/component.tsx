@@ -2,27 +2,28 @@ import { useEffect, useRef } from 'react';
 
 import { useInView } from 'framer-motion';
 
-export interface ScrollSectionProps {
-  step: number;
+export interface ScrollItemProps {
+  id: number;
+  onChange: (id: number) => void;
 }
 
-const ScrollSection = ({ step }: ScrollSectionProps) => {
+const ScrollItem = ({ id, onChange }: ScrollItemProps) => {
   const ref = useRef();
   const isInView = useInView(ref, { amount: 0.5 });
 
   useEffect(() => {
     if (isInView) {
-      console.info(step);
+      onChange(id);
     }
-  }, [step, isInView]);
+  }, [id, isInView, onChange]);
 
   return (
     <div
-      id={`scroll-${step}`}
+      id={`scroll-${id}`}
       ref={ref}
       className="pointer-events-none relative h-small-screen w-full snap-start snap-always"
     />
   );
 };
 
-export default ScrollSection;
+export default ScrollItem;

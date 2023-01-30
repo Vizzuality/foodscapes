@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import FadeY from 'containers/home/animations/fadeY';
 import Wrapper from 'containers/wrapper';
 
-const Globe = () => {
+const How = () => {
   return (
     <motion.section
       key="how"
@@ -17,7 +17,7 @@ const Globe = () => {
           <div className="col-span-6">
             <FadeY>
               <div className="space-y-10">
-                <h2 className="font-display text-6xl">Globe do we feed the world?</h2>
+                <h2 className="font-display text-6xl">How do we feed the world?</h2>
                 <div className="space-y-4">
                   <p className="font-light">
                     The need for food is a universal constant, but how it’s produced is different
@@ -40,4 +40,4 @@ const Globe = () => {
   );
 };
 
-export default Globe;
+export default How;

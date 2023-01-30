@@ -9,7 +9,7 @@ export const NAV = [
   },
   {
     label: 'Explore Map',
-    href: '/map',
+    href: '/explore-map',
     filled: true,
   },
 ];

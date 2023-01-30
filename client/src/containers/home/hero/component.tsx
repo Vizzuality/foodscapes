@@ -1,7 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
 
+import { stepAtom } from 'store/home';
+
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
+
+import { STEPS } from 'containers/home/constants';
 
 import Icon from 'components/icon';
 
@@ -24,12 +29,21 @@ const Hero = () => {
   const backgroundsRef = useRef<string[]>([]);
   const DURATION = 3;
   const TOTAL_DURATION = 12;
+
   const [count, setCount] = useState<number>(0);
   const { width, height } = useWindowSize();
 
-  useInterval(() => {
-    setCount(count + 1);
-  }, TOTAL_DURATION * 1000);
+  const step = useRecoilValue(stepAtom);
+  const STEP = STEPS.find((s) => s.id === step);
+
+  const inView = STEP.section === 'hero';
+
+  useInterval(
+    () => {
+      setCount(count + 1);
+    },
+    inView ? TOTAL_DURATION * 1000 : null
+  );
 
   const randomImage = () => {
     const bg = BACKGROUNDS[Math.floor(Math.random() * BACKGROUNDS.length)];
@@ -100,7 +114,17 @@ const Hero = () => {
   }, [width, height, count]);
 
   return (
-    <section className="relative flex h-screen w-full items-center justify-center overflow-hidden">
+    <motion.section
+      key="hero"
+      className="absolute flex h-full w-full items-center justify-center overflow-hidden"
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{
+        opacity: 0,
+        y: -100,
+      }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="relative z-10 space-y-2 text-center">
         <h1 className="font-display text-9xl">Foodscapes</h1>
         <h2 className="text-xl font-bold uppercase tracking-widest">
@@ -115,12 +139,18 @@ const Hero = () => {
         </div>
       </div>
 
-      <button className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
+      <button
+        className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
+        onClick={() => {
+          const el = document.querySelector('#scroll-1');
+          el?.scrollIntoView({ behavior: 'auto' });
+        }}
+      >
         <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
 
         <span className="text-xxs font-bold uppercase">scroll to explore</span>
       </button>
-    </section>
+    </motion.section>
   );
 };
 
