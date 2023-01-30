@@ -1,20 +1,16 @@
-import { useMemo } from 'react';
-
-import { lastStepAtom, stepAtom } from 'store/home';
-
 import { motion } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
+
+import { useScrollDirection } from 'hooks/home';
 
 import Wrapper from 'containers/wrapper';
 
 const How = () => {
-  const step = useRecoilValue(stepAtom);
-  const lastStep = useRecoilValue(lastStepAtom);
+  const { direction } = useScrollDirection();
 
   const variants = {
-    initial: (direction: number) => ({
+    initial: (d: number) => ({
       opacity: 0,
-      y: direction * 100,
+      y: d * 100,
     }),
     animate: {
       opacity: 1,
@@ -23,23 +19,11 @@ const How = () => {
         duration: 0.5,
       },
     },
-    exit: (direction: number) => ({
+    exit: (d: number) => ({
       opacity: 0,
-      y: -direction * 100,
+      y: -d * 100,
     }),
   };
-
-  const direction = useMemo(() => {
-    if (step < lastStep) {
-      return -1;
-    }
-
-    if (step > lastStep) {
-      return 1;
-    }
-
-    return 0;
-  }, [step, lastStep]);
 
   return (
     <motion.section

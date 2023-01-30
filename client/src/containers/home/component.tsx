@@ -3,6 +3,7 @@ import { stepAtom } from 'store/home';
 import { AnimatePresence } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
+import Circles from './circles';
 import { STEPS } from './constants';
 import Globe from './globe';
 import Hero from './hero';
@@ -19,6 +20,7 @@ const Home = () => {
         <AnimatePresence>
           {STEP.section === 'hero' && <Hero key="hero" />}
           {STEP.section === 'how' && <How key="how" />}
+          {STEP.section === 'circle' && <Circles key="circles" />}
           {STEP.section === 'globe' && <Globe key="globe" />}
         </AnimatePresence>
       </div>

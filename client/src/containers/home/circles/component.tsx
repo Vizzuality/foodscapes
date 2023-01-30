@@ -4,7 +4,7 @@ import { useScrollDirection } from 'hooks/home';
 
 import Wrapper from 'containers/wrapper';
 
-const Globe = () => {
+const Circles = () => {
   const { direction } = useScrollDirection();
 
   const variants = {
@@ -41,20 +41,28 @@ const Globe = () => {
             custom={direction}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="font-display text-6xl">Globe do we feed the world?</h2>
+            <h2 className="font-display text-3xl">In 2010</h2>
             <div className="space-y-4">
               <p className="font-light">
-                The need for food is a universal constant, but how it’s produced is different across
-                the globe.
-              </p>
-              <p className="font-light">
-                To understand this, let’s explore the{' '}
-                <strong className="font-semibold">production of soy.</strong>
+                More than <strong className="font-semibold">240 million tons of soy</strong> was
+                produced across nearly all 83 different foodscapes. Of that, almost{' '}
+                <strong className="font-semibold">
+                  68% comes from intensive production systems
+                </strong>
+                , where field size is large and agricultural inputs are high.
               </p>
             </div>
           </motion.div>
           <div className="col-span-6">
-            <video src="/videos/plant.m4v" muted autoPlay />
+            <motion.div
+              className="relative aspect-square w-full rounded-full bg-navy"
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              custom={direction}
+              transition={{ duration: 0.5 }}
+            />
           </div>
         </div>
       </Wrapper>
@@ -62,4 +70,4 @@ const Globe = () => {
   );
 };
 
-export default Globe;
+export default Circles;
