@@ -8,12 +8,16 @@ import useImagesPreloader from 'hooks/images-preloader';
 
 import Wrapper from 'containers/wrapper';
 
-import Button from 'components/button';
 import Icon from 'components/icon';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 
+import Button from './button';
 import { LAYERS } from './constants';
+
+const MANAGEMENT = 'management';
+const PHYSICAL = 'physical';
+const SOCIO = 'socio';
 
 const Layers = () => {
   const [layerId, setLayerId] = useState('empty');
@@ -45,7 +49,7 @@ const Layers = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
           >
-            <h3 className="text-4xl">{LAYER.title}</h3>
+            <h3 className="font-display text-5xl">{LAYER.title}</h3>
             <>{LAYER.content}</>
           </motion.div>
           <button className="absolute bottom-9 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
@@ -55,18 +59,20 @@ const Layers = () => {
 
         <div className="relative col-span-7 flex flex-col items-center justify-center">
           <Button
-            theme="primary"
+            theme="green"
             size="base"
-            className="absolute top-1/4 left-28 z-10 uppercase"
-            onClick={() => onClick('physical')}
+            className="absolute top-52 left-0 z-10 uppercase"
+            onClick={() => onClick(PHYSICAL)}
+            disabled={layerId !== PHYSICAL}
           >
             Physical Geography
           </Button>
           <Button
-            theme="secondary"
+            theme="yellow"
             size="base"
-            className="absolute top-1/4 right-10 z-10 uppercase"
-            onClick={() => onClick('socio')}
+            className="absolute top-36 right-20 z-10 uppercase"
+            onClick={() => onClick(SOCIO)}
+            disabled={layerId !== SOCIO}
           >
             Socioeconomic Influence
           </Button>
@@ -86,10 +92,11 @@ const Layers = () => {
             }}
           />
           <Button
-            theme="primary-alt"
+            theme="red"
             size="base"
-            className="absolute bottom-28 left-1/2 uppercase"
-            onClick={() => onClick('management')}
+            className="absolute bottom-36 left-40 uppercase"
+            onClick={() => onClick(MANAGEMENT)}
+            disabled={layerId !== MANAGEMENT}
           >
             Management Patterns
           </Button>
