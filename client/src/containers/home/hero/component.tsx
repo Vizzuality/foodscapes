@@ -2,9 +2,11 @@ import { useMemo, useRef, useState } from 'react';
 
 import { stepAtom } from 'store/home';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
+
+import { STEPS } from 'containers/home/constants';
 
 import Icon from 'components/icon';
 
@@ -32,7 +34,9 @@ const Hero = () => {
   const { width, height } = useWindowSize();
 
   const step = useRecoilValue(stepAtom);
-  const inView = step === 0;
+  const STEP = STEPS.find((s) => s.id === step);
+
+  const inView = STEP.section === 'hero';
 
   useInterval(
     () => {
@@ -110,41 +114,43 @@ const Hero = () => {
   }, [width, height, count]);
 
   return (
-    <AnimatePresence>
-      {inView && (
-        <motion.section
-          key="hero"
-          className="absolute flex h-full w-full items-center justify-center overflow-hidden"
-          initial={{ opacity: 0, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{
-            opacity: 0,
-            y: -100,
-          }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="relative z-10 space-y-2 text-center">
-            <h1 className="font-display text-9xl">Foodscapes</h1>
-            <h2 className="text-xl font-bold uppercase tracking-widest">
-              Accelerating a global food system transfomation
-            </h2>
-          </div>
+    <motion.section
+      key="hero"
+      className="absolute flex h-full w-full items-center justify-center overflow-hidden"
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{
+        opacity: 0,
+        y: -100,
+      }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="relative z-10 space-y-2 text-center">
+        <h1 className="font-display text-9xl">Foodscapes</h1>
+        <h2 className="text-xl font-bold uppercase tracking-widest">
+          Accelerating a global food system transfomation
+        </h2>
+      </div>
 
-          <div className="absolute top-0 -left-1/4 z-0 h-full w-[150%]">
-            <div className="flex h-full flex-wrap items-center justify-center">
-              {/* Create an array of 15 eelement and loop over it */}
-              {ITEMS}
-            </div>
-          </div>
+      <div className="absolute top-0 -left-1/4 z-0 h-full w-[150%]">
+        <div className="flex h-full flex-wrap items-center justify-center">
+          {/* Create an array of 15 eelement and loop over it */}
+          {ITEMS}
+        </div>
+      </div>
 
-          <button className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
-            <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
+      <button
+        className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
+        onClick={() => {
+          const el = document.querySelector('#scroll-1');
+          el?.scrollIntoView({ behavior: 'auto' });
+        }}
+      >
+        <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
 
-            <span className="text-xxs font-bold uppercase">scroll to explore</span>
-          </button>
-        </motion.section>
-      )}
-    </AnimatePresence>
+        <span className="text-xxs font-bold uppercase">scroll to explore</span>
+      </button>
+    </motion.section>
   );
 };
 
