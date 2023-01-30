@@ -7,8 +7,8 @@ import Circles from './circles';
 import { STEPS } from './constants';
 import Globe from './globe';
 import Hero from './hero';
-import Layers from './layers';
 import How from './how';
+import Layers from './layers';
 import ScrollList from './scroll-list';
 
 const Home = () => {
@@ -21,6 +21,7 @@ const Home = () => {
         <AnimatePresence>
           {STEP.section === 'hero' && <Hero key="hero" />}
           {STEP.section === 'how' && <How key="how" />}
+          {STEP.section === 'layers' && <Layers key="layers" />}
           {STEP.section === 'circle' && <Circles key="circles" />}
           {STEP.section === 'globe' && <Globe key="globe" />}
         </AnimatePresence>

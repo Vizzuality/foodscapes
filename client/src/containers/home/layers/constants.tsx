@@ -2,7 +2,6 @@ export const LAYERS = [
   {
     id: 'empty',
     title: 'Think of it in layers.',
-    // Content
     content: (
       <p>
         Food production is defined by a region’s environmental conditions, farming practices, market

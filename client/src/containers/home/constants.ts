@@ -9,7 +9,7 @@ export const STEPS = [
   },
   {
     id: 2,
-    section: 'circle',
+    section: 'layers',
   },
   {
     id: 3,
