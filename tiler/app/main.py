@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from os import getenv
 from titiler.core import TilerFactory
 from titiler.core.errors import DEFAULT_STATUS_CODES, add_exception_handlers
@@ -6,11 +6,17 @@ from titiler.core.errors import DEFAULT_STATUS_CODES, add_exception_handlers
 from titiler.core.middleware import TotalTimeMiddleware, LoggerMiddleware
 
 ROOT_PATH = getenv("TILER_ROOT_PATH", "")
-COG_PATH = getenv("TILER_FOODSCAPES_COG_FILENAME", )
+COG_PATH = getenv("TILER_FOODSCAPES_COG_FILENAME", "")
 
 
-def default_cog_url() -> str:
-    return COG_PATH
+def default_cog_url(url: str | None = Query(default=None, description="Optional dataset URL")) -> str:
+    """Makes the cog path url parameter optional.
+    Defaults to the env var TILER_FOODSCAPES_COG_FILENAME
+    """
+    if url:
+        return url
+    else:
+        return COG_PATH
 
 
 app = FastAPI(title="Tiler!", root_path=ROOT_PATH)
