@@ -1,27 +1,9 @@
 import { motion } from 'framer-motion';
 
-import { useScrollDirection } from 'hooks/home';
-
+import FadeY from 'containers/home/animations/fadeY';
 import Wrapper from 'containers/wrapper';
 
 const Globe = () => {
-  const { direction } = useScrollDirection();
-
-  const variants = {
-    initial: (d: number) => ({
-      opacity: 0,
-      y: d * 100,
-    }),
-    animate: {
-      opacity: 1,
-      y: 0,
-    },
-    exit: (d: number) => ({
-      opacity: 0,
-      y: -d * 100,
-    }),
-  };
-
   return (
     <motion.section
       key="how"
@@ -32,27 +14,23 @@ const Globe = () => {
     >
       <Wrapper>
         <div className="grid grid-cols-12 items-center">
-          <motion.div
-            className="col-span-6 space-y-10"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            custom={direction}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="font-display text-6xl">Globe do we feed the world?</h2>
-            <div className="space-y-4">
-              <p className="font-light">
-                The need for food is a universal constant, but how it’s produced is different across
-                the globe.
-              </p>
-              <p className="font-light">
-                To understand this, let’s explore the{' '}
-                <strong className="font-semibold">production of soy.</strong>
-              </p>
-            </div>
-          </motion.div>
+          <div className="col-span-6">
+            <FadeY>
+              <div className="space-y-10">
+                <h2 className="font-display text-6xl">Globe do we feed the world?</h2>
+                <div className="space-y-4">
+                  <p className="font-light">
+                    The need for food is a universal constant, but how it’s produced is different
+                    across the globe.
+                  </p>
+                  <p className="font-light">
+                    To understand this, let’s explore the{' '}
+                    <strong className="font-semibold">production of soy.</strong>
+                  </p>
+                </div>
+              </div>
+            </FadeY>
+          </div>
           <div className="col-span-6">
             <video src="/videos/plant.m4v" muted autoPlay />
           </div>
