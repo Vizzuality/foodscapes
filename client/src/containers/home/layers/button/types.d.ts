@@ -1,13 +1,10 @@
 import { ButtonHTMLAttributes } from 'react';
 
-export interface AnchorButtonProps {
+// Button props
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   theme: 'green' | 'red' | 'yellow' | 'danger';
   size: 'xs' | 's' | 'base' | 'l' | 'xl';
   className?: string;
-}
-
-// Button props
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
-  AnchorButtonProps & {
-    href?: undefined;
-  };
+  selected?: boolean;
+  unselected?: boolean;
+};

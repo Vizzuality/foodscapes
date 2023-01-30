@@ -13,13 +13,13 @@ const Home = () => {
         <Globe />
       </div>
 
-      {/* <div className="-mt-[100svh]">
+      <div className="-mt-[100svh]">
         {STEPS.map((step) => {
           const { id } = step;
 
           return <ScrollSection key={id} step={id} />;
         })}
-      </div> */}
+      </div>
     </>
   );
 };

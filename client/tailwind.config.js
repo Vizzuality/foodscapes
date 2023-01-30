@@ -20,6 +20,19 @@ module.exports = {
         'small-screen': ['100vh /* fallback for Opera, IE and etc. */', '100svh'],
         'large-screen': ['100vh /* fallback for Opera, IE and etc. */', '100lvh'],
       },
+      animation: {
+        ping1: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+        ping2: 'ping 1.75s cubic-bezier(0, 0, 0.2, 1) infinite 0.25s',
+        ping3: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite 0.5s',
+      },
+      keyframes: {
+        ping: {
+          '75%, 100%': {
+            transform: 'scaleY(1.75) scaleX(1.15)',
+            opacity: 0,
+          },
+        },
+      },
     },
     fontFamily: {
       sans: ['var(--font-public-sans)', ...fontFamily.sans],
@@ -53,8 +66,8 @@ module.exports = {
         300: '#F6EAB9',
         400: '#F3E3A2',
         500: '#F0DC8B',
-        700: '#F3ECBE',
-        900: '#F7F2D4',
+        700: '#E8CC6B',
+        900: '#E2BE4C',
       },
       red: {
         100: '#FCEDE8',
