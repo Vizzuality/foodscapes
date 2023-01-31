@@ -12,6 +12,16 @@ const Charts = () => {
 
   const counter = useHomeCounter(substep);
 
+  const variants = {
+    initial: { x: 0, y: 0 },
+    step0: { x: 0, y: 0 },
+    step1: { x: 0, y: 0 },
+    step2: {
+      x: `${(0.5 - 0.19 / 2) * 100}%`,
+      y: `${(-0.5 + 0.19 / 2) * 100}%`,
+    },
+  };
+
   const bgVariants = {
     initial: {
       opacity: 0,
@@ -48,9 +58,15 @@ const Charts = () => {
   };
 
   return (
-    <motion.div className="absolute z-0 flex h-full w-full items-center justify-center rounded-full font-display text-4xl">
+    <motion.div
+      className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full font-display text-4xl"
+      variants={variants}
+      initial="initial"
+      animate={`step${substep}`}
+      transition={{ duration: 0.5 }}
+    >
       <motion.div
-        className="absolute z-0 h-full w-full rounded-full border-2"
+        className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
         variants={bgVariants}
         initial="initial"
         animate={`step${substep}`}
@@ -61,6 +77,7 @@ const Charts = () => {
         variants={numberVariants}
         initial="initial"
         animate={`step${substep}`}
+        transition={{ duration: 0.5 }}
       >
         {`${counter}%`}
       </motion.div>
