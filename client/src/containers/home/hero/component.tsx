@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
 import { STEPS } from 'containers/home/constants';
 
 import Icon from 'components/icon';
@@ -91,6 +92,7 @@ const Hero = () => {
           }}
         >
           <motion.div
+            key={`${i}-${count}`}
             initial={{
               opacity: 0,
             }}
@@ -123,7 +125,7 @@ const Hero = () => {
         opacity: 0,
         y: -100,
       }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: STEP_DURATION * 0.5 }}
     >
       <div className="relative z-10 space-y-2 text-center">
         <h1 className="font-display text-9xl">Foodscapes</h1>

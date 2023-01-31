@@ -1,29 +1,12 @@
 import { motion } from 'framer-motion';
 
-import { useScrollDirection } from 'hooks/home';
-
+import { STEP_DURATION } from 'containers/home/animations/constants';
 import Wrapper from 'containers/wrapper';
 
+import Charts from './charts';
 import Texts from './texts';
 
 const Circles = () => {
-  const { direction } = useScrollDirection();
-
-  const variants = {
-    initial: (d: number) => ({
-      opacity: 0,
-      y: d * 100,
-    }),
-    animate: {
-      opacity: 1,
-      y: 0,
-    },
-    exit: (d: number) => ({
-      opacity: 0,
-      y: -d * 100,
-    }),
-  };
-
   return (
     <motion.section
       key="how"
@@ -31,23 +14,18 @@ const Circles = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: STEP_DURATION * 0.5 }}
     >
       <Wrapper>
-        <div className="grid w-full grid-cols-12 items-center">
+        <div className="grid w-full grid-cols-12 items-center gap-20">
           <div className="relative col-span-6 h-full">
             <Texts />
           </div>
 
           <div className="col-span-6">
-            <motion.div
-              className="relative aspect-square w-full rounded-full bg-navy"
-              variants={variants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              custom={direction}
-              transition={{ duration: 0.5 }}
-            />
+            <div className="relative aspect-square w-full rounded-full">
+              <Charts />
+            </div>
           </div>
         </div>
       </Wrapper>
