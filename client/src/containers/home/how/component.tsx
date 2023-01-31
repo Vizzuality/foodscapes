@@ -13,10 +13,10 @@ const How = () => {
       exit={{ opacity: 0 }}
     >
       <Wrapper>
-        <div className="grid grid-cols-12 items-center">
+        <div className="grid grid-cols-12 items-center gap-20">
           <div className="col-span-6">
             <FadeY>
-              <div className="space-y-10">
+              <div className="space-y-10 xl:pl-20">
                 <h2 className="font-display text-6xl">How do we feed the world?</h2>
                 <div className="space-y-4">
                   <p className="font-light">

@@ -19,10 +19,18 @@ const FadeY = ({ className, children }: FadeYProps) => {
     animate: {
       opacity: 1,
       y: 0,
+      transition: {
+        duration: 0.25,
+        delay: 0.125,
+      },
     },
     exit: (d: number) => ({
       opacity: 0,
       y: -d * 100,
+      transition: {
+        duration: 0.25,
+        delay: 0,
+      },
     }),
   };
 
@@ -33,8 +41,10 @@ const FadeY = ({ className, children }: FadeYProps) => {
       animate="animate"
       exit="exit"
       custom={direction}
-      transition={{ duration: 0.5 }}
       className={className}
+      transition={{
+        duration: 0.5,
+      }}
     >
       {children}
     </motion.div>

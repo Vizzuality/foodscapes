@@ -33,7 +33,7 @@ const Circles = () => {
       exit={{ opacity: 0 }}
     >
       <Wrapper>
-        <div className="grid w-full grid-cols-12 items-center">
+        <div className="grid w-full grid-cols-12 items-center gap-20">
           <div className="relative col-span-6 h-full">
             <Texts />
           </div>

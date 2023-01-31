@@ -12,7 +12,7 @@ const Circles = () => {
     <AnimatePresence>
       {step === 2 && (
         <FadeY key="text-2" className="absolute flex h-full w-full items-center">
-          <div className="space-y-10">
+          <div className="space-y-10 xl:pl-20">
             <h2 className="font-display text-3xl">In 2010</h2>
             <div className="space-y-4">
               <p className="font-light">
@@ -30,7 +30,7 @@ const Circles = () => {
 
       {step === 3 && (
         <FadeY key="text-3" className="absolute flex h-full w-full items-center">
-          <div className="space-y-10">
+          <div className="space-y-10 xl:pl-20">
             <h2 className="font-display text-3xl">In 2010</h2>
             <div className="space-y-4">
               <p className="font-light">
