@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 
 import { useScrollDirection } from 'hooks/home';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
+
 interface FadeYProps extends PropsWithChildren {
   className?: string;
 }
@@ -20,15 +22,15 @@ const FadeY = ({ className, children }: FadeYProps) => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.25,
-        delay: 0.125,
+        duration: STEP_DURATION,
+        delay: STEP_DURATION / 4,
       },
     },
     exit: (d: number) => ({
       opacity: 0,
       y: -d * 100,
       transition: {
-        duration: 0.25,
+        duration: STEP_DURATION,
         delay: 0,
       },
     }),
@@ -42,9 +44,6 @@ const FadeY = ({ className, children }: FadeYProps) => {
       exit="exit"
       custom={direction}
       className={className}
-      transition={{
-        duration: 0.5,
-      }}
     >
       {children}
     </motion.div>

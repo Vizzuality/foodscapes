@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
 import Wrapper from 'containers/wrapper';
 
 import Charts from './charts';
@@ -13,6 +14,7 @@ const Circles = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: STEP_DURATION * 0.5 }}
     >
       <Wrapper>
         <div className="grid w-full grid-cols-12 items-center gap-20">

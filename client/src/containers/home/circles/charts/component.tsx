@@ -3,12 +3,13 @@ import { stepAtom } from 'store/home';
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
 import { useHomeCounter } from 'containers/home/animations/hooks';
 
 const Charts = () => {
   const stepStart = 2;
   const step = useRecoilValue(stepAtom);
-  const substep = Math.min(Math.max(step - stepStart, 0), 3);
+  const substep = Math.min(Math.max(step - stepStart, 0), 2);
 
   const counter = useHomeCounter(substep);
 
@@ -63,21 +64,21 @@ const Charts = () => {
       variants={variants}
       initial="initial"
       animate={`step${substep}`}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: STEP_DURATION * 2 }}
     >
       <motion.div
         className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
         variants={bgVariants}
         initial="initial"
         animate={`step${substep}`}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: STEP_DURATION * 2 }}
       />
       <motion.div
         className="relative z-10"
         variants={numberVariants}
         initial="initial"
         animate={`step${substep}`}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: STEP_DURATION * 2 }}
       >
         {`${counter}%`}
       </motion.div>

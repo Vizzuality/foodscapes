@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import { useAnimatedCounter } from 'hooks/animations';
 import { useScrollDirection } from 'hooks/home';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
+
 export const useHomeCounter = (substep) => {
   const { direction } = useScrollDirection();
 
@@ -32,7 +34,7 @@ export const useHomeCounter = (substep) => {
     }
   }, [substep]);
 
-  const counter = useAnimatedCounter(from, to, 0.5, (v) => parseInt(v.toFixed(0)));
+  const counter = useAnimatedCounter(from, to, STEP_DURATION * 2, (v) => parseInt(v.toFixed(0)));
 
   return counter;
 };

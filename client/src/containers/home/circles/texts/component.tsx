@@ -8,7 +8,7 @@ import FadeY from 'containers/home/animations/fadeY';
 const Texts = () => {
   const stepStart = 2;
   const step = useRecoilValue(stepAtom);
-  const substep = Math.min(Math.max(step - stepStart, 0), 3);
+  const substep = Math.min(Math.max(step - stepStart, 0), Infinity);
 
   return (
     <AnimatePresence>
