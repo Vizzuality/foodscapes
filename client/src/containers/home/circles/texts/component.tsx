@@ -5,13 +5,15 @@ import { useRecoilValue } from 'recoil';
 
 import FadeY from 'containers/home/animations/fadeY';
 
-const Circles = () => {
+const Texts = () => {
+  const stepStart = 2;
   const step = useRecoilValue(stepAtom);
+  const substep = Math.min(Math.max(step - stepStart, 0), 3);
 
   return (
     <AnimatePresence>
-      {step === 2 && (
-        <FadeY key="text-2" className="absolute flex h-full w-full items-center">
+      {substep === 0 && (
+        <FadeY key="text-0" className="absolute flex h-full w-full items-center">
           <div className="space-y-10 xl:pl-20">
             <h2 className="font-display text-3xl">In 2010</h2>
             <div className="space-y-4">
@@ -28,8 +30,8 @@ const Circles = () => {
         </FadeY>
       )}
 
-      {step === 3 && (
-        <FadeY key="text-3" className="absolute flex h-full w-full items-center">
+      {substep === 1 && (
+        <FadeY key="text-1" className="absolute flex h-full w-full items-center">
           <div className="space-y-10 xl:pl-20">
             <h2 className="font-display text-3xl">In 2010</h2>
             <div className="space-y-4">
@@ -44,8 +46,27 @@ const Circles = () => {
           </div>
         </FadeY>
       )}
+
+      {substep === 2 && (
+        <FadeY key="text-2" className="absolute flex h-full w-full items-center">
+          <div className="space-y-10 xl:pl-20">
+            <h2 className="font-display text-4xl">A Globally Distributed Foodscape</h2>
+            <div className="space-y-4">
+              <p className="font-light">
+                It is interesting to note that{' '}
+                <strong className="font-semibold">the same foodscape</strong> favored by soy{' '}
+                <strong className="font-semibold">
+                  accounts for 1.4% of the global agricultural landscape, spanning 5 continents.
+                </strong>{' '}
+                These similarities offer a good starting point to learn from and apply to similar
+                foodscapes across the globe.
+              </p>
+            </div>
+          </div>
+        </FadeY>
+      )}
     </AnimatePresence>
   );
 };
 
-export default Circles;
+export default Texts;
