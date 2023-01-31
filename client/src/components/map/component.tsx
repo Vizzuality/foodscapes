@@ -53,7 +53,7 @@ export const CustomMap: FC<CustomMapProps> = ({
    * CALLBACKS
    */
   const debouncedViewStateChange = useDebouncedCallback((_viewState: ViewState) => {
-    onMapViewStateChange(_viewState);
+    if (onMapViewStateChange) onMapViewStateChange(_viewState);
   }, 250);
 
   const handleFitBounds = useCallback(() => {

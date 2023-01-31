@@ -1,53 +1,43 @@
-import { step, steps } from 'store/explore-map';
+import { useCallback, useState } from 'react';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { ViewState } from 'react-map-gl';
 
-import Wrapper from 'containers/wrapper/component';
+import Map from 'components/map';
+import { CustomMapProps } from 'components/map/types';
 
-import Button from 'components/button';
+const DEFAULT_PROPS: CustomMapProps = {
+  id: 'default',
+  initialViewState: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 1,
+  },
+  bounds: undefined,
+  maxZoom: 20,
+};
 
 const ExploreMap = () => {
-  const s = useRecoilValue(step);
-  const setStep = useSetRecoilState(step);
+  const { id, initialViewState, bounds, maxZoom } = DEFAULT_PROPS;
+  const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
-  const ss = useRecoilValue(steps);
-  const setSteps = useSetRecoilState(steps);
+  const handleViewState = useCallback((vw: ViewState) => {
+    setViewState(vw);
+  }, []);
 
   return (
-    <section className="pt-24">
-      <Wrapper>
-        <div className="flex space-x-5">
-          <Button
-            theme="primary"
-            size="base"
-            onClick={() => {
-              setStep((prev) => prev + 1);
-            }}
-          >
-            <span>{s}</span>
-          </Button>
-
-          <Button
-            theme="primary"
-            size="base"
-            onClick={() => {
-              const s1 = s + 1;
-              setStep(() => s1);
-
-              //
-              const newSteps = [...ss, s1];
-              setSteps(newSteps);
-            }}
-          >
-            <span>Add step</span>
-          </Button>
-        </div>
-
-        {ss.map((st, i) => {
-          return <div key={`${st}-${i}`}>{st}</div>;
-        })}
-      </Wrapper>
-    </section>
+    <div className="relative h-screen w-full">
+      <Map
+        id={id}
+        maxZoom={maxZoom}
+        bounds={bounds}
+        initialViewState={initialViewState}
+        viewState={viewState}
+        mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+        onMapViewStateChange={handleViewState}
+      >
+        {() => null}
+      </Map>
+    </div>
   );
 };
 
