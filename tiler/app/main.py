@@ -1,23 +1,27 @@
 from fastapi import FastAPI, Query
-from os import getenv
+from os import getenv, environ
 from titiler.core import TilerFactory
 from titiler.core.errors import DEFAULT_STATUS_CODES, add_exception_handlers
 
 from titiler.core.middleware import TotalTimeMiddleware, LoggerMiddleware
 
 ROOT_PATH = getenv("TILER_ROOT_PATH", "")
-COG_PATH = getenv("TILER_FOODSCAPES_COG_FILENAME", "")
+
+# If a COG filename is supplied, compose its absolute path as COG_PATH,
+# otherwise leave COG_PATH empty. DATA_HOME should always be defined (it's baked
+# in the Docker image), so we can let getenv fail if it happens to be not
+# defined as that would be an unexpected situation.
+COG_PATH = f"{environ['DATA_HOME']}/{getenv('TILER_FOODSCAPES_COG_FILENAME', '')}" if getenv("TILER_FOODSCAPES_COG_FILENAME", "") else ""
 
 
 def default_cog_url(url: str | None = Query(default=None, description="Optional dataset URL")) -> str:
     """Makes the cog path url parameter optional.
-    Defaults to the env var TILER_FOODSCAPES_COG_FILENAME
+    If no url is provided, default to COG_PATH defined at app startup.
     """
     if url:
         return url
     else:
         return COG_PATH
-
 
 app = FastAPI(title="Tiler!", root_path=ROOT_PATH)
 app.add_middleware(TotalTimeMiddleware)
