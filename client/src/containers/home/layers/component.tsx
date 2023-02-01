@@ -62,7 +62,7 @@ const Layers = () => {
         <div className="grid h-small-screen grid-cols-12 gap-20">
           <div
             className={cn({
-              'relative col-span-5': true,
+              'relative col-span-5 -mt-20': true,
               'before:absolute before:top-0 before:right-full before:h-full before:w-[50vw]': true,
               [LAYER.backgroundColor]: true,
             })}
