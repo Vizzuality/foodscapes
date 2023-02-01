@@ -2,8 +2,9 @@ from fastapi import FastAPI, Query
 from os import getenv, environ
 from titiler.core import TilerFactory
 from titiler.core.errors import DEFAULT_STATUS_CODES, add_exception_handlers
-
 from titiler.core.middleware import TotalTimeMiddleware, LoggerMiddleware
+
+from .utils.cors_middleware import add_cors_middleware
 
 ROOT_PATH = getenv("TILER_ROOT_PATH", "")
 
@@ -26,6 +27,7 @@ def default_cog_url(url: str | None = Query(default=None, description="Optional 
 app = FastAPI(title="Tiler!", root_path=ROOT_PATH)
 app.add_middleware(TotalTimeMiddleware)
 app.add_middleware(LoggerMiddleware)
+app = add_cors_middleware(app)
 
 # single COG tiler. One file can have multiple bands
 cog = TilerFactory(router_prefix="/cog", path_dependency=default_cog_url)
