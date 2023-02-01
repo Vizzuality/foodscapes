@@ -4,7 +4,6 @@ import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-g
 
 import cx from 'classnames';
 
-import MapLibreGL from 'maplibre-gl';
 import { useDebouncedCallback } from 'use-debounce';
 
 // * If you plan to use Mapbox (and not a fork):
@@ -31,6 +30,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   dragRotate,
   scrollZoom,
   doubleClickZoom,
+  onLoad,
   ...mapboxProps
 }: CustomMapProps) => {
   /**
@@ -48,12 +48,13 @@ export const CustomMap: FC<CustomMapProps> = ({
     }
   );
   const [isFlying, setFlying] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   /**
    * CALLBACKS
    */
   const debouncedViewStateChange = useDebouncedCallback((_viewState: ViewState) => {
-    onMapViewStateChange(_viewState);
+    if (onMapViewStateChange) onMapViewStateChange(_viewState);
   }, 250);
 
   const handleFitBounds = useCallback(() => {
@@ -77,6 +78,17 @@ export const CustomMap: FC<CustomMapProps> = ({
       debouncedViewStateChange(_viewState);
     },
     [debouncedViewStateChange]
+  );
+
+  const handleMapLoad = useCallback(
+    (e) => {
+      setLoaded(true);
+
+      if (onLoad) {
+        onLoad(e);
+      }
+    },
+    [onLoad]
   );
 
   useEffect(() => {
@@ -121,20 +133,19 @@ export const CustomMap: FC<CustomMapProps> = ({
     >
       <ReactMapGL
         id={id}
-        // ! if you're using Mapbox (and not a fork), remove the below property
-        // ! and replace with the according map styles
-        mapLib={MapLibreGL}
-        mapStyle="https://demotiles.maplibre.org/style.json"
+        mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
         initialViewState={initialViewState}
         dragPan={!isFlying && dragPan}
         dragRotate={!isFlying && dragRotate}
         scrollZoom={!isFlying && scrollZoom}
         doubleClickZoom={!isFlying && doubleClickZoom}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMove={handleMapMove}
+        onLoad={handleMapLoad}
         {...mapboxProps}
         {...localViewState}
       >
-        {!!mapRef && children(mapRef.getMap())}
+        {!!mapRef && loaded && children(mapRef.getMap())}
       </ReactMapGL>
     </div>
   );
