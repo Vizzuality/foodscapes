@@ -133,7 +133,6 @@ export const CustomMap: FC<CustomMapProps> = ({
     >
       <ReactMapGL
         id={id}
-        mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
         initialViewState={initialViewState}
         dragPan={!isFlying && dragPan}
         dragRotate={!isFlying && dragRotate}

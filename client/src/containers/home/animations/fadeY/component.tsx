@@ -17,21 +17,32 @@ const FadeY = ({ className, children }: FadeYProps) => {
     initial: (d: number) => ({
       opacity: 0,
       y: d * 100,
+      scale: 0.9,
     }),
     animate: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
         duration: STEP_DURATION,
         delay: STEP_DURATION / 4,
+        ease: 'easeOut',
+        opacity: {
+          ease: 'linear',
+        },
       },
     },
     exit: (d: number) => ({
       opacity: 0,
       y: -d * 100,
+      scale: 0.9,
       transition: {
         duration: STEP_DURATION,
         delay: 0,
+        ease: 'anticipate',
+        opacity: {
+          ease: 'linear',
+        },
       },
     }),
   };

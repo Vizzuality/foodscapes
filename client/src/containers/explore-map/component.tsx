@@ -16,10 +16,35 @@ const DEFAULT_PROPS: CustomMapProps = {
     zoom: 1,
   },
   maxZoom: 20,
+  mapStyle: 'mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6',
+  // mapStyle: 'mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz',
+  // mapStyle: {
+  //   version: 8,
+  //   name: 'Custom',
+  //   sources: {},
+  //   layers: [
+  //     {
+  //       id: 'background',
+  //       type: 'background',
+  //       paint: {
+  //         'background-color': '#000',
+  //         'background-opacity': 0,
+  //       },
+  //     },
+  //     {
+  //       id: 'custom-layers',
+  //       type: 'background',
+  //       paint: {
+  //         'background-color': '#000',
+  //         'background-opacity': 0,
+  //       },
+  //     },
+  //   ],
+  // },
 };
 
 const ExploreMap = () => {
-  const { id, initialViewState, maxZoom } = DEFAULT_PROPS;
+  const { id, initialViewState, maxZoom, mapStyle } = DEFAULT_PROPS;
   const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
   const handleViewState = useCallback((vw: ViewState) => {
@@ -30,6 +55,9 @@ const ExploreMap = () => {
     <div className="relative h-screen w-full">
       <Map
         id={id}
+        // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
+        // mapStyle="mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz"
+        mapStyle={mapStyle}
         maxZoom={maxZoom}
         initialViewState={initialViewState}
         viewState={viewState}
