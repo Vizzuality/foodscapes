@@ -24,8 +24,8 @@ file.
 - `TILER_FOODSCAPES_COG_FILENAME` (string, optional, default is
   `foodscapes_stack_cog_lzw.tif`): the filename part of the absolute file path
   where the core Cloud-Optimized GeoTIFF (COG) file used by the tiler service
-  can be read from; the full path will is assembled by prepending the path of
-  the folder on the container's local filesystem where the file will be `ADD`-ed
+  can be read from; the full path is assembled by prepending the path of the
+  folder on the container's local filesystem where the file will be `ADD`-ed
   during the build of the container image and where TiTiler will read it when
   processing requests.
 - `TILER_ROOT_PATH` (string, optional, default is None): when the tiler service
@@ -113,3 +113,22 @@ configured via environment variables. For details about the syntax for this
 checksum and how to calculate it, please see the relevant Dockerfile reference
 here:
 https://docs.docker.com/engine/reference/builder/#verifying-a-remote-file-checksum-add---checksumchecksum-http-src-dest.
+
+## Other settings
+
+* `NETWORK_CORS_ORIGINS_REGEX` (regular expression, optional, default is an
+  empty string): whitelisted app origins for requests from the in-browser
+  frontend app to all the backend services (i.e. Datasette and TiTiler).
+
+  If not provided, no origins will be whitelisted.
+
+  Allowed origins are set via `allow_origin_regex` (see the [Starlette
+  documentation for the underlying CORS
+  middleware](https://www.starlette.io/middleware/#corsmiddleware)), so multiple
+  origins must be listed as a valid regular expression: for example
+  `(https?:\/\/example\.com|https:\/\/localhost)` will match all of
+  `http://example.com`, `https://example.com` and `https://localhost`.
+
+  The special value `\*` (regexp for the `*` character) will allow any origin
+  (this is handled by using the `allow_origins=['*']` argument for the Starlette
+  `CORSMiddleware`).
