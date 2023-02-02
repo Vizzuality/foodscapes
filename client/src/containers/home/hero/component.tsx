@@ -144,8 +144,8 @@ const Hero = () => {
       <button
         className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
         onClick={() => {
-          const el = document.querySelector('#scroll-1');
-          el?.scrollIntoView({ behavior: 'auto' });
+          const el = document.querySelector(`#scroll-${step + 1}`);
+          el?.scrollIntoView({ behavior: 'smooth' });
         }}
       >
         <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />

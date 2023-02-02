@@ -1,1 +1,1 @@
-export const STEP_DURATION = 0.4;
+export const STEP_DURATION = 0.5;

@@ -2,7 +2,10 @@ import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { stepAtom } from 'store/home';
+
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
 import useImagesPreloader from 'hooks/images-preloader';
 
@@ -22,6 +25,7 @@ const PHYSICAL = 'physical';
 const SOCIO = 'socio';
 
 const Layers = () => {
+  const step = useRecoilValue(stepAtom);
   const [layerId, setLayerId] = useState('empty');
 
   const LAYER = useMemo(() => {
@@ -29,7 +33,7 @@ const Layers = () => {
     return layer;
   }, [layerId]);
 
-  const FILTERED_LAYERS = useMemo(() => {
+  const SELECTED = useMemo(() => {
     return LAYERS.filter((l) => l.id === layerId);
   }, [layerId]);
 
@@ -52,46 +56,49 @@ const Layers = () => {
   return (
     <motion.section
       key="layers"
-      className="absolute flex h-full w-full items-center justify-center overflow-hidden pt-20 text-navy"
+      className="absolute flex h-full w-full justify-center overflow-hidden pt-20 text-navy"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: STEP_DURATION * 0.5 }}
     >
       <Wrapper>
-        <div className="grid h-small-screen grid-cols-12 gap-20">
-          <div
+        <div className="grid h-full grid-cols-12 gap-20">
+          <motion.div
             className={cn({
-              'relative col-span-5 -mt-20': true,
+              'relative col-span-6 -mt-20 pt-20': true,
               'before:absolute before:top-0 before:right-full before:h-full before:w-[50vw]': true,
               [LAYER.backgroundColor]: true,
             })}
           >
-            <FadeY className="h-full">
-              <AnimatePresence>
-                <motion.div
-                  key={LAYER.id}
-                  className="flex h-full flex-col justify-center space-y-10 pr-20"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{
-                    ease: 'linear',
-                    duration: 0.1,
-                  }}
-                >
-                  <h3 className="font-display text-5xl">{LAYER.title}</h3>
-                  <>{LAYER.content}</>
-                </motion.div>
-              </AnimatePresence>
-            </FadeY>
+            <AnimatePresence>
+              {SELECTED.map((l) => {
+                return (
+                  <FadeY key={l.id} className="absolute top-0 left-0 h-full pt-20">
+                    <div
+                      key={l.id}
+                      className="flex h-full flex-col justify-center space-y-10 p-20 xl:pl-20"
+                    >
+                      <h3 className="font-display text-5xl">{l.title}</h3>
+                      <>{l.content}</>
+                    </div>
+                  </FadeY>
+                );
+              })}
+            </AnimatePresence>
 
-            <button className="absolute bottom-20 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full">
+            <button
+              className="absolute bottom-20 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
+              onClick={() => {
+                const el = document.querySelector(`#scroll-${step + 1}`);
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
               <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
             </button>
-          </div>
+          </motion.div>
 
-          <div className="col-span-7 flex flex-col items-center justify-center">
+          <div className="col-span-6 flex flex-col items-center justify-center">
             <div className="relative aspect-square w-full">
               <Button
                 theme="green"
@@ -141,7 +148,7 @@ const Layers = () => {
                   }}
                 />
 
-                {FILTERED_LAYERS.map((l) => {
+                {SELECTED.map((l) => {
                   return (
                     <motion.div
                       key={l.id}

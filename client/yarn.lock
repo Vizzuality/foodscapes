@@ -5368,6 +5368,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/leaflet@npm:^0":
+  version: 0.7.35
+  resolution: "@types/leaflet@npm:0.7.35"
+  dependencies:
+    "@types/geojson": "*"
+  checksum: b6de50784d52d7f5a6c2281eb9cb9d6c9b2ff36c0f2e9ba7ef8c4db21a8d191048a47fa37eeaeddb4a3f37f6a6fa53604f9ee2ce868c56904cce4b2fc65cb65c
+  languageName: node
+  linkType: hard
+
 "@types/lodash@npm:^4.14.167":
   version: 4.14.191
   resolution: "@types/lodash@npm:4.14.191"
@@ -5381,6 +5390,15 @@ __metadata:
   dependencies:
     "@types/geojson": "*"
   checksum: 0ee433fa7510733fd7744796d8b04c9bbc6e087a3b46a114433528bd7f64b2b475a245bda3598d7cd1db5a9cf5ea93567d234594b7cd3106d32b0c9cbe333888
+  languageName: node
+  linkType: hard
+
+"@types/mapbox@npm:1.6.42":
+  version: 1.6.42
+  resolution: "@types/mapbox@npm:1.6.42"
+  dependencies:
+    "@types/leaflet": ^0
+  checksum: 0ecdbe90b97c210568ac5cd319b531b5514651177e61c09b4e34aa7a59030f9bc926bc8ce038af437fd197066830678088da9e32753449776d2103d07379381a
   languageName: node
   linkType: hard
 
@@ -10093,6 +10111,7 @@ __metadata:
     "@tailwindcss/line-clamp": 0.4.0
     "@tanstack/react-query": 4.0.10
     "@types/google.analytics": 0.0.42
+    "@types/mapbox": 1.6.42
     "@types/react": 18.0.15
     "@types/react-dom": 18.0.6
     "@typescript-eslint/eslint-plugin": 5.48.2
@@ -10131,7 +10150,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-final-form: 6.5.3
-    react-map-gl: 7.0.17
+    react-map-gl: 7.0.21
     react-use-cookie: 1.4.0
     recoil: 0.7.6
     recoil-sync: 0.2.0
@@ -15361,15 +15380,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-map-gl@npm:7.0.17":
-  version: 7.0.17
-  resolution: "react-map-gl@npm:7.0.17"
+"react-map-gl@npm:7.0.21":
+  version: 7.0.21
+  resolution: "react-map-gl@npm:7.0.21"
   dependencies:
     "@types/mapbox-gl": ^2.6.0
   peerDependencies:
     mapbox-gl: "*"
     react: ">=16.3.0"
-  checksum: 33edb863766a57464d1f449292faf5bf7ab151e91fd713e77f8e61ed895f15a932fd00c7a075b73af90c3ee382bde245517ba73bd059bd7531522f31136a84ce
+  checksum: 9c182fc0ab612d965baf53da5a977f06a466634f65932527f1ee447b7eac880c4abfc6c87572a8193664aa3c2d854243e4e37a421d7b22bb4a5f1419b547b250
   languageName: node
   linkType: hard
 
