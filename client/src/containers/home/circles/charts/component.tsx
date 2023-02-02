@@ -8,7 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { useScrollDirection } from 'hooks/home';
 
 import { STEP_DURATION } from 'containers/home/animations/constants';
-import { useHomeCounter } from 'containers/home/animations/hooks';
+import { useSoyCounter, useSoyFavoredCounter } from 'containers/home/animations/hooks';
 
 const Charts = () => {
   const { direction } = useScrollDirection();
@@ -16,19 +16,22 @@ const Charts = () => {
   const step = useRecoilValue(stepAtom);
   const substep = Math.min(Math.max(step - stepStart, 0), 3);
 
-  const counter = useHomeCounter(step - stepStart);
+  const soyCounter = useSoyCounter(step - stepStart);
+  const soyFavoredCounter = useSoyFavoredCounter(step - stepStart);
 
   const variants = {
     initial: (d) => ({
       x: d === 1 ? 0 : `${(0.5 - 0.19 / 2) * 100}%`,
       y: d === 1 ? 0 : `${(-0.5 + 0.19 / 2) * 100}%`,
+      scale: 0,
     }),
-    step0: { x: 0, y: 0 },
-    step1: { x: 0, y: 0 },
-    step2: { x: 0, y: 0 },
+    step0: { x: 0, y: 0, scale: 1 },
+    step1: { x: 0, y: 0, scale: 1 },
+    step2: { x: 0, y: 0, scale: 1 },
     step3: {
       x: `${(0.5 - 0.19 / 2) * 100}%`,
       y: `${(-0.5 + 0.19 / 2) * 100}%`,
+      scale: 1,
     },
   };
 
@@ -113,6 +116,22 @@ const Charts = () => {
     step3: { color: '#1C274A', opacity: 1 },
   };
 
+  const bgYellowVariants = {
+    initial: { opacity: 0, scale: 0 },
+    step0: { opacity: 0, scale: 0 },
+    step1: { opacity: 0, scale: 0 },
+    step2: { opacity: 0, scale: 0 },
+    step3: { opacity: 1, scale: 0.68 },
+  };
+
+  const numberYellowVariants = {
+    initial: { opacity: 0 },
+    step0: { opacity: 0 },
+    step1: { opacity: 0 },
+    step2: { opacity: 0 },
+    step3: { opacity: 1 },
+  };
+
   return (
     <>
       {/* IMAGE */}
@@ -129,7 +148,7 @@ const Charts = () => {
 
       {/* CIRCLE and NUMBER */}
       <motion.div
-        className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full font-display text-4xl"
+        className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full"
         variants={variants}
         initial="initial"
         animate={`step${substep}`}
@@ -153,15 +172,37 @@ const Charts = () => {
           custom={direction}
         />
         <motion.div
-          className="relative z-10"
+          className="relative z-10 font-display text-4xl"
           variants={numberVariants}
           initial="initial"
           animate={`step${substep}`}
           transition={{ duration: STEP_DURATION }}
         >
-          {`${counter}%`}
+          {`${soyCounter}%`}
         </motion.div>
       </motion.div>
+
+      {/* YELLOW CIRCLE and NUMBER */}
+      <div className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full">
+        <motion.div
+          className="absolute top-0 left-0 z-0 h-full w-full rounded-full bg-yellow-500"
+          variants={bgYellowVariants}
+          initial="initial"
+          animate={`step${substep}`}
+          transition={{ duration: STEP_DURATION }}
+          custom={direction}
+        />
+
+        <motion.div
+          className="relative z-10 font-display text-4xl text-navy-500"
+          variants={numberYellowVariants}
+          initial="initial"
+          animate={`step${substep}`}
+          transition={{ duration: STEP_DURATION }}
+        >
+          {`${soyFavoredCounter}%`}
+        </motion.div>
+      </div>
     </>
   );
 };
