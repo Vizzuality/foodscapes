@@ -59,7 +59,10 @@ module.exports = {
       current: 'currentColor',
       black: '#000000',
       white: '#FFFFFF',
-      navy: '#1C274A',
+      navy: {
+        500: '#1C274A',
+        400: '#8D92A4',
+      },
       yellow: {
         100: '#FCF8E8',
         200: '#F9F1D1',

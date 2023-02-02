@@ -8,7 +8,7 @@ const Globe = () => {
   return (
     <motion.section
       key="how"
-      className="absolute flex h-full w-full items-center justify-center overflow-hidden pt-20 text-navy"
+      className="absolute flex h-full w-full items-center justify-center overflow-hidden pt-20 text-navy-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

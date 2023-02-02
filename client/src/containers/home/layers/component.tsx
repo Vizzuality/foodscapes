@@ -56,7 +56,7 @@ const Layers = () => {
   return (
     <motion.section
       key="layers"
-      className="absolute flex h-full w-full justify-center overflow-hidden pt-20 text-navy"
+      className="absolute flex h-full w-full justify-center overflow-hidden pt-20 text-navy-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
