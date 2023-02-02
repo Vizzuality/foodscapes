@@ -13,10 +13,12 @@ export const useHomeCounter = (substep) => {
   const from = useMemo(() => {
     switch (substep) {
       case 0:
-        return direction === 1 ? 100 : 19;
+        return direction === 1 ? 100 : 68;
       case 1:
-        return direction === 1 ? 68 : 19;
+        return direction === 1 ? 100 : 19;
       case 2:
+        return direction === 1 ? 68 : 19;
+      case 3:
         return direction === 1 ? 19 : 19;
       default:
         return lastFrom.current;
@@ -30,6 +32,8 @@ export const useHomeCounter = (substep) => {
       case 1:
         return 19;
       case 2:
+        return 19;
+      case 3:
         return 19;
       default:
         return lastTo.current;

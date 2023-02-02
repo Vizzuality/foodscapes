@@ -7,7 +7,8 @@ import type { ButtonProps } from './types';
 
 function buildClassName({ disabled, selected, unselected, size, theme }) {
   return cn({
-    'flex items-center justify-center rounded-3xl relative z-10 whitespace-nowrap': true,
+    'flex items-center justify-center rounded-3xl relative z-10 whitespace-nowrap transition-colors':
+      true,
     [THEME[theme].default]: true,
     [THEME[theme].selected]: selected,
     [THEME[theme].unselected]: unselected,
