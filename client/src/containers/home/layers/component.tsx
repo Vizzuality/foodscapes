@@ -2,20 +2,13 @@ import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import { stepAtom } from 'store/home';
-
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
 
 import useImagesPreloader from 'hooks/images-preloader';
 
 import { STEP_DURATION } from 'containers/home/animations/constants';
 import FadeY from 'containers/home/animations/fadeY';
 import Wrapper from 'containers/wrapper';
-
-import Icon from 'components/icon';
-
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 
 import Button from './button';
 import { LAYERS } from './constants';
@@ -25,7 +18,6 @@ const PHYSICAL = 'physical';
 const SOCIO = 'socio';
 
 const Layers = () => {
-  const step = useRecoilValue(stepAtom);
   const [layerId, setLayerId] = useState('empty');
 
   const LAYER = useMemo(() => {
@@ -86,16 +78,6 @@ const Layers = () => {
                 );
               })}
             </AnimatePresence>
-
-            <button
-              className="absolute bottom-20 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
-              onClick={() => {
-                const el = document.querySelector(`#scroll-${step + 1}`);
-                el?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
-            </button>
           </motion.div>
 
           <div className="col-span-6 flex flex-col items-center justify-center">

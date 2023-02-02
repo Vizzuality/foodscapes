@@ -19,22 +19,22 @@ const Globe = () => {
           <div className="col-span-6">
             <FadeY>
               <div className="space-y-10 xl:pl-20">
-                <h2 className="font-display text-6xl">Globe do we feed the world?</h2>
+                <h2 className="font-display text-5xl">Why think of soy in foodscapes?</h2>
                 <div className="space-y-4">
                   <p className="font-light">
-                    The need for food is a universal constant, but how it’s produced is different
-                    across the globe.
-                  </p>
-                  <p className="font-light">
-                    To understand this, let’s explore the{' '}
-                    <strong className="font-semibold">production of soy.</strong>
+                    Mapping and analyzing foodscapes reveal the{' '}
+                    <strong className="font-semibold">
+                      food system transitions needed to meet this century’s most pressing challenges
+                    </strong>
+                    : the threats posed by the climate crisis, biodiversity loss, and increased
+                    demand for the integrity of the global food system.
                   </p>
                 </div>
               </div>
             </FadeY>
           </div>
           <div className="col-span-6">
-            <video src="/videos/plant.m4v" muted autoPlay />
+            <div className="relative aspect-square w-full rounded-full bg-navy-500" />
           </div>
         </div>
       </Wrapper>
