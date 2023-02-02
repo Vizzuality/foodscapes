@@ -1,5 +1,35 @@
+import { stepAtom } from 'store/home';
+
+import { AnimatePresence } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+
+import Circles from './circles';
+import { STEPS } from './constants';
+import Globe from './globe';
+import Hero from './hero';
+import How from './how';
+import Layers from './layers';
+import ScrollList from './scroll-list';
+
 const Home = () => {
-  return <h1>Home</h1>;
+  const step = useRecoilValue(stepAtom);
+  const STEP = STEPS.find((s) => s.id === step);
+
+  return (
+    <>
+      <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
+        <AnimatePresence>
+          {STEP.section === 'hero' && <Hero key="hero" />}
+          {STEP.section === 'how' && <How key="how" />}
+          {STEP.section === 'layers' && <Layers key="layers" />}
+          {STEP.section === 'circle' && <Circles key="circles" />}
+          {STEP.section === 'globe' && <Globe key="globe" />}
+        </AnimatePresence>
+      </div>
+
+      <ScrollList />
+    </>
+  );
 };
 
 export default Home;

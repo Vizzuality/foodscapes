@@ -117,6 +117,11 @@ module.exports = {
             position: 'before',
           },
           {
+            pattern: 'layouts',
+            group: 'internal',
+            position: 'before',
+          },
+          {
             pattern: 'layouts/**',
             group: 'internal',
             position: 'before',
