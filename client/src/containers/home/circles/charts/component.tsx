@@ -57,9 +57,9 @@ const Charts = () => {
     },
     step1: {
       opacity: 1,
-      borderColor: '#F0A38B',
-      backgroundColor: '#F0A38B',
-      scale: 0.19,
+      borderColor: '#1C274A',
+      backgroundColor: '#B7F08B',
+      scale: 0.68,
       color: '#1C274A',
     },
     step2: {

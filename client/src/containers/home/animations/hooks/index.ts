@@ -28,9 +28,9 @@ export const useHomeCounter = (substep) => {
   const to = useMemo(() => {
     switch (substep) {
       case 0:
-        return 68;
+        return 100;
       case 1:
-        return 19;
+        return 68;
       case 2:
         return 19;
       case 3:
