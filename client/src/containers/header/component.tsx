@@ -62,6 +62,9 @@ const Header = () => {
                           THEME === 'light' || THEME === 'dark-light',
 
                         // Selected
+                        'text-navy-500 hover:text-navy-500 active:text-navy-500':
+                          pathname === href && (THEME === 'dark' || THEME === 'light-dark'),
+
                         'after:absolute after:bottom-0 after:left-4 after:h-0.5 after:w-[calc(100%_-_theme(space.8))] after:bg-navy-500':
                           pathname === href && (THEME === 'dark' || THEME === 'light-dark'),
 
