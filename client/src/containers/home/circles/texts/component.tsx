@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import FadeY from 'containers/home/animations/fadeY';
 
 const Texts = () => {
-  const stepStart = 2;
+  const stepStart = 3;
   const step = useRecoilValue(stepAtom);
   const substep = Math.min(Math.max(step - stepStart, 0), Infinity);
 

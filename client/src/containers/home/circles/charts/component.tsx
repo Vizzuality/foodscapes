@@ -10,7 +10,7 @@ import { useHomeCounter } from 'containers/home/animations/hooks';
 
 const Charts = () => {
   const { direction } = useScrollDirection();
-  const stepStart = 2;
+  const stepStart = 3;
   const step = useRecoilValue(stepAtom);
   const substep = Math.min(Math.max(step - stepStart, 0), 2);
 
