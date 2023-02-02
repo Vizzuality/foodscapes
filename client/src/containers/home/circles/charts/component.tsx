@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { stepAtom } from 'store/home';
 
 import { motion } from 'framer-motion';
@@ -12,7 +14,7 @@ const Charts = () => {
   const { direction } = useScrollDirection();
   const stepStart = 3;
   const step = useRecoilValue(stepAtom);
-  const substep = Math.min(Math.max(step - stepStart, 0), 2);
+  const substep = Math.min(Math.max(step - stepStart, 0), 3);
 
   const counter = useHomeCounter(step - stepStart);
 
@@ -23,10 +25,19 @@ const Charts = () => {
     }),
     step0: { x: 0, y: 0 },
     step1: { x: 0, y: 0 },
-    step2: {
+    step2: { x: 0, y: 0 },
+    step3: {
       x: `${(0.5 - 0.19 / 2) * 100}%`,
       y: `${(-0.5 + 0.19 / 2) * 100}%`,
     },
+  };
+
+  const imgVariants = {
+    initial: { opacity: 0, scale: 0.75 },
+    step0: { opacity: 1, scale: 1 },
+    step1: { opacity: 0, scale: 0.75 },
+    step2: { opacity: 0, scale: 0.75 },
+    step3: { opacity: 0, scale: 0.75 },
   };
 
   const bgVariants = {
@@ -40,18 +51,25 @@ const Charts = () => {
     step0: {
       opacity: 1,
       borderColor: '#1C274A',
+      backgroundColor: '#1C274A',
+      scale: 1,
+      color: '#FFF',
+    },
+    step1: {
+      opacity: 1,
+      borderColor: '#1C274A',
       backgroundColor: '#B7F08B',
       scale: 0.68,
       color: '#1C274A',
     },
-    step1: {
+    step2: {
       opacity: 1,
       borderColor: '#F0A38B',
       backgroundColor: '#F0A38B',
       scale: 0.19,
       color: '#1C274A',
     },
-    step2: {
+    step3: {
       opacity: 1,
       borderColor: '#F0A38B',
       backgroundColor: '#F0A38B',
@@ -73,9 +91,14 @@ const Charts = () => {
     step1: {
       opacity: 1,
       borderColor: '#1C274A',
-      scale: 0.68,
+      scale: 1,
     },
     step2: {
+      opacity: 1,
+      borderColor: '#1C274A',
+      scale: 0.68,
+    },
+    step3: {
       opacity: 0,
       borderColor: '#F0A38B',
       scale: 0.19,
@@ -83,47 +106,63 @@ const Charts = () => {
   };
 
   const numberVariants = {
-    initial: { color: '#fff' },
-    step0: { color: '#fff' },
-    step1: { color: '#1C274A' },
-    step2: { color: '#1C274A' },
+    initial: { color: '#fff', opacity: 0 },
+    step0: { color: '#fff', opacity: 0 },
+    step1: { color: '#fff', opacity: 1 },
+    step2: { color: '#1C274A', opacity: 1 },
+    step3: { color: '#1C274A', opacity: 1 },
   };
 
   return (
-    <motion.div
-      className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full font-display text-4xl"
-      variants={variants}
-      initial="initial"
-      animate={`step${substep}`}
-      transition={{ duration: STEP_DURATION * 2 }}
-      custom={direction}
-    >
+    <>
+      {/* IMAGE */}
       <motion.div
-        className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy"
-        variants={borderVariants}
+        className="absolute top-0 left-0 z-10 h-full w-full"
+        variants={imgVariants}
         initial="initial"
         animate={`step${substep}`}
-        transition={{ duration: STEP_DURATION * 2 }}
+        transition={{ duration: STEP_DURATION }}
         custom={direction}
-      />
-      <motion.div
-        className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
-        variants={bgVariants}
-        initial="initial"
-        animate={`step${substep}`}
-        transition={{ duration: STEP_DURATION * 2 }}
-        custom={direction}
-      />
-      <motion.div
-        className="relative z-10"
-        variants={numberVariants}
-        initial="initial"
-        animate={`step${substep}`}
-        transition={{ duration: STEP_DURATION * 2 }}
       >
-        {`${counter}%`}
+        <Image src="/images/layers/all.png" alt="All layers" fill />
       </motion.div>
-    </motion.div>
+
+      {/* CIRCLE and NUMBER */}
+      <motion.div
+        className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full font-display text-4xl"
+        variants={variants}
+        initial="initial"
+        animate={`step${substep}`}
+        transition={{ duration: STEP_DURATION * 2 }}
+        custom={direction}
+      >
+        <motion.div
+          className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy"
+          variants={borderVariants}
+          initial="initial"
+          animate={`step${substep}`}
+          transition={{ duration: STEP_DURATION }}
+          custom={direction}
+        />
+        <motion.div
+          className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
+          variants={bgVariants}
+          initial="initial"
+          animate={`step${substep}`}
+          transition={{ duration: STEP_DURATION }}
+          custom={direction}
+        />
+        <motion.div
+          className="relative z-10"
+          variants={numberVariants}
+          initial="initial"
+          animate={`step${substep}`}
+          transition={{ duration: STEP_DURATION * 2 }}
+        >
+          {`${counter}%`}
+        </motion.div>
+      </motion.div>
+    </>
   );
 };
 

@@ -25,6 +25,10 @@ export const STEPS = [
   },
   {
     id: 6,
+    section: 'circle',
+  },
+  {
+    id: 7,
     section: 'globe',
   },
 ];
