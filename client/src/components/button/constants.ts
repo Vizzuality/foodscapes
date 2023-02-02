@@ -1,8 +1,8 @@
 export const THEME = {
   primary:
-    'text-navy bg-green-500 hover:bg-green-200 active:text-green-500 active:font-semibold active:bg-navy border border-green-500 hover:border-green-200 active:border-navy',
+    'text-navy-500 bg-green-500 hover:bg-green-200 active:text-green-500 active:font-semibold active:bg-navy-500 border border-green-500 hover:border-green-200 active:border-navy-500',
   'primary-alt':
-    'text-navy bg-green-200 font-semibold hover:bg-green-500 active:text-green-500 active:bg-navy border border-green-200 hover:border-green-500 active:border-navy',
+    'text-navy-500 bg-green-200 font-semibold hover:bg-green-500 active:text-green-500 active:bg-navy-500 border border-green-200 hover:border-green-500 active:border-navy-500',
 
   secondary:
     'text-white bg-gray-500 hover:bg-gray-400 active:bg-gray-300 border border-gray-500 hover:border-gray-400 active:border-gray-300',
