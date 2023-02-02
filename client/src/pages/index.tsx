@@ -4,7 +4,7 @@ import Home from 'containers/home';
 
 const HomePage: React.FC = () => {
   return (
-    <RecoilRoot>
+    <RecoilRoot override={false}>
       <Home />
     </RecoilRoot>
   );

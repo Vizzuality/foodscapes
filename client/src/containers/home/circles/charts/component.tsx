@@ -133,11 +133,11 @@ const Charts = () => {
         variants={variants}
         initial="initial"
         animate={`step${substep}`}
-        transition={{ duration: STEP_DURATION * 2 }}
+        transition={{ duration: STEP_DURATION }}
         custom={direction}
       >
         <motion.div
-          className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy"
+          className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy-500"
           variants={borderVariants}
           initial="initial"
           animate={`step${substep}`}
@@ -157,7 +157,7 @@ const Charts = () => {
           variants={numberVariants}
           initial="initial"
           animate={`step${substep}`}
-          transition={{ duration: STEP_DURATION * 2 }}
+          transition={{ duration: STEP_DURATION }}
         >
           {`${counter}%`}
         </motion.div>
