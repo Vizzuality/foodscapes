@@ -1,31 +1,21 @@
-import { stepAtom, lastStepAtom } from 'store/home';
+import { Children, isValidElement, PropsWithChildren } from 'react';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useDebouncedCallback } from 'use-debounce';
+import ScrollItem from './item';
 
-import { STEPS } from 'containers/home/constants';
+interface ScrollListProps extends PropsWithChildren {}
 
-import ScrollSection from './item';
-
-const SrollList = () => {
-  const step = useRecoilValue(stepAtom);
-  const setStep = useSetRecoilState(stepAtom);
-  const setLastStep = useSetRecoilState(lastStepAtom);
-
-  const onChangeDebounced = useDebouncedCallback((id) => {
-    setLastStep(step);
-    setStep(id);
-  }, 150);
-
+const ScrollList = ({ children }: ScrollListProps) => {
   return (
-    <div className="-mt-[100svh]">
-      {STEPS.map((s) => {
-        const { id } = s;
+    <>
+      {Children.map(children, (child, index) => {
+        if (!child || !isValidElement(child)) {
+          return null;
+        }
 
-        return <ScrollSection key={id} id={id} onChange={onChangeDebounced} />;
+        return <ScrollItem step={index}>{child}</ScrollItem>;
       })}
-    </div>
+    </>
   );
 };
 
-export default SrollList;
+export default ScrollList;

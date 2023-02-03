@@ -12,7 +12,7 @@ import { useSoyCounter, useSoyFavoredCounter } from 'containers/home/animations/
 
 const Charts = () => {
   const { direction } = useScrollDirection();
-  const stepStart = 3;
+  const stepStart = 2;
   const step = useRecoilValue(stepAtom);
   const substep = Math.min(Math.max(step - stepStart, 0), 3);
 
@@ -133,77 +133,79 @@ const Charts = () => {
   };
 
   return (
-    <>
-      {/* IMAGE */}
-      <motion.div
-        className="absolute top-0 left-0 z-10 h-full w-full"
-        variants={imgVariants}
-        initial="initial"
-        animate={`step${substep}`}
-        transition={{ duration: STEP_DURATION }}
-        custom={direction}
-      >
-        <Image src="/images/layers/all.png" alt="All layers" fill />
-      </motion.div>
-
-      {/* CIRCLE and NUMBER */}
-      <motion.div
-        className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full"
-        variants={variants}
-        initial="initial"
-        animate={`step${substep}`}
-        transition={{ duration: STEP_DURATION }}
-        custom={direction}
-      >
+    <div className="flex h-full items-center">
+      <div className="relative aspect-square w-full rounded-full">
+        {/* IMAGE */}
         <motion.div
-          className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy-500"
-          variants={borderVariants}
+          className="absolute top-0 left-0 z-10 h-full w-full"
+          variants={imgVariants}
           initial="initial"
           animate={`step${substep}`}
           transition={{ duration: STEP_DURATION }}
           custom={direction}
-        />
-        <motion.div
-          className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
-          variants={bgVariants}
-          initial="initial"
-          animate={`step${substep}`}
-          transition={{ duration: STEP_DURATION }}
-          custom={direction}
-        />
-        <motion.div
-          className="relative z-10 font-display text-4xl"
-          variants={numberVariants}
-          initial="initial"
-          animate={`step${substep}`}
-          transition={{ duration: STEP_DURATION }}
         >
-          {`${soyCounter}%`}
+          <Image src="/images/layers/all.png" alt="All layers" fill />
         </motion.div>
-      </motion.div>
 
-      {/* YELLOW CIRCLE and NUMBER */}
-      <div className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full">
+        {/* CIRCLE and NUMBER */}
         <motion.div
-          className="absolute top-0 left-0 z-0 h-full w-full rounded-full bg-yellow-500"
-          variants={bgYellowVariants}
+          className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full"
+          variants={variants}
           initial="initial"
           animate={`step${substep}`}
           transition={{ duration: STEP_DURATION }}
           custom={direction}
-        />
-
-        <motion.div
-          className="relative z-10 font-display text-4xl text-navy-500"
-          variants={numberYellowVariants}
-          initial="initial"
-          animate={`step${substep}`}
-          transition={{ duration: STEP_DURATION }}
         >
-          {`${soyFavoredCounter}%`}
+          <motion.div
+            className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy-500"
+            variants={borderVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION }}
+            custom={direction}
+          />
+          <motion.div
+            className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
+            variants={bgVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION }}
+            custom={direction}
+          />
+          <motion.div
+            className="relative z-10 font-display text-4xl"
+            variants={numberVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION }}
+          >
+            {`${soyCounter}%`}
+          </motion.div>
         </motion.div>
+
+        {/* YELLOW CIRCLE and NUMBER */}
+        <div className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full">
+          <motion.div
+            className="absolute top-0 left-0 z-0 h-full w-full rounded-full bg-yellow-500"
+            variants={bgYellowVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION }}
+            custom={direction}
+          />
+
+          <motion.div
+            className="relative z-10 font-display text-4xl text-navy-500"
+            variants={numberYellowVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION }}
+          >
+            {`${soyFavoredCounter}%`}
+          </motion.div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

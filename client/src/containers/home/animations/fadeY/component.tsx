@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
 
+import cn from 'lib/classnames';
+
 import { motion } from 'framer-motion';
 
 import { useScrollDirection } from 'hooks/home';
@@ -54,7 +56,10 @@ const FadeY = ({ className, children }: FadeYProps) => {
       animate="animate"
       exit="exit"
       custom={direction}
-      className={className}
+      className={cn({
+        'absolute z-0 h-full w-full': true,
+        [className]: className,
+      })}
     >
       {children}
     </motion.div>

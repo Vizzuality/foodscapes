@@ -1,29 +1,26 @@
-import { useEffect, useRef } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
+
+import { stepAtom } from 'store/home';
 
 import { useInView } from 'framer-motion';
+import { useSetRecoilState } from 'recoil';
 
-export interface ScrollItemProps {
-  id: number;
-  onChange: (id: number) => void;
+interface ScrollItemProps extends PropsWithChildren {
+  step: number;
 }
 
-const ScrollItem = ({ id, onChange }: ScrollItemProps) => {
-  const ref = useRef();
-  const isInView = useInView(ref, { amount: 0.5 });
+const ScrollItem = ({ children, step }: ScrollItemProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.75 });
+  const setStep = useSetRecoilState(stepAtom);
 
   useEffect(() => {
-    if (isInView) {
-      onChange(id);
+    if (inView) {
+      setStep(step);
     }
-  }, [id, isInView, onChange]);
+  }, [step, setStep, inView]);
 
-  return (
-    <div
-      id={`scroll-${id}`}
-      ref={ref}
-      className="pointer-events-none relative h-small-screen w-full snap-start snap-always"
-    />
-  );
+  return <section ref={ref}>{children}</section>;
 };
 
 export default ScrollItem;

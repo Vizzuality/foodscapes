@@ -25,8 +25,7 @@ const Header = () => {
     <header
       className={cn({
         'fixed top-0 z-30 w-full py-6': true,
-        'bg-white/10 backdrop-blur-sm':
-          THEME === 'light' || THEME === 'dark-light' || THEME === 'light-dark',
+        'bg-white/10 backdrop-blur-sm': true,
       })}
     >
       <Wrapper>
