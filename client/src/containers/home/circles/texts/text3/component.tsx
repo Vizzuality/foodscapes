@@ -1,6 +1,6 @@
 const Text2 = () => {
   return (
-    <div className="flex h-small-screen flex-col justify-center space-y-10 xl:pl-20">
+    <div className="sticky top-0 flex h-small-screen flex-col justify-center space-y-10 xl:pl-20">
       <h2 className="font-display text-3xl">In 2010</h2>
       <div className="space-y-4">
         <p className="font-light">

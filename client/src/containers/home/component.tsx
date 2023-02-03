@@ -39,34 +39,36 @@ const Home = () => {
       <Wrapper>
         <div className="grid grid-cols-12 gap-20">
           <div className="relative z-10 col-span-6">
+            <HowText />
+          </div>
+          <div className="relative z-0 col-span-6">
+            <HowChart />
+          </div>
+        </div>
+        <div className="grid grid-cols-12 gap-20">
+          <div className="relative z-10 col-span-6">
             <ScrollList>
-              <HowText />
-              <LayersText />
-              <CirclesText1 />
-              <CirclesText2 />
-              <CirclesText3 />
-              <CirclesText4 />
-              <GlobeText />
+              <LayersText key="text-layers-1" />
+              <CirclesText1 key="text-circles-1" />
+              <CirclesText2 key="text-circles-2" />
+              <CirclesText3 key="text-circles-3" />
+              <CirclesText4 key="text-circles-4" />
+              <GlobeText key="text-globe-1" />
             </ScrollList>
           </div>
           <div className="sticky top-0 z-0 col-span-6 h-small-screen">
             <AnimatePresence>
               {step === 0 && (
-                <FadeY key="how-chart">
-                  <HowChart />
-                </FadeY>
-              )}
-              {step === 1 && (
                 <FadeY key="layers-chart">
                   <LayersChart />
                 </FadeY>
               )}
-              {(step === 2 || step === 3 || step === 4 || step === 5) && (
+              {(step === 1 || step === 2 || step === 3 || step === 4) && (
                 <FadeY key="circles-chart">
                   <CirclesChart />
                 </FadeY>
               )}
-              {step === 6 && (
+              {step === 5 && (
                 <FadeY key="globe-chart">
                   <GlobeChart />
                 </FadeY>

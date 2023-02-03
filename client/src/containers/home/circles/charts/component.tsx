@@ -12,7 +12,7 @@ import { useSoyCounter, useSoyFavoredCounter } from 'containers/home/animations/
 
 const Charts = () => {
   const { direction } = useScrollDirection();
-  const stepStart = 2;
+  const stepStart = 1;
   const step = useRecoilValue(stepAtom);
   const substep = Math.min(Math.max(step - stepStart, 0), 3);
 
@@ -186,11 +186,14 @@ const Charts = () => {
         {/* YELLOW CIRCLE and NUMBER */}
         <div className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full">
           <motion.div
-            className="absolute top-0 left-0 z-0 h-full w-full rounded-full bg-yellow-500"
+            className="absolute top-0 left-0 z-0 h-full w-full rounded-full bg-yellow-500 bg-contain"
             variants={bgYellowVariants}
             initial="initial"
             animate={`step${substep}`}
             transition={{ duration: STEP_DURATION }}
+            style={{
+              backgroundImage: `url('/images/layers/globe-distributed-foodscape.png')`,
+            }}
             custom={direction}
           />
 
