@@ -5,6 +5,8 @@
 // import Circles from './circles';
 // import { STEPS } from './constants';
 // import Globe from './globe';
+import dynamic from 'next/dynamic';
+
 import { stepAtom } from 'store/home';
 
 import { AnimatePresence } from 'framer-motion';
@@ -25,9 +27,17 @@ import GlobeText from './globe/text';
 import Hero from './hero';
 import HowChart from './how/chart';
 import HowText from './how/text';
-import LayersChart from './layers/chart';
-import LayersText from './layers/text';
+import {
+  Text1 as LayersText1,
+  Text2 as LayersText2,
+  Text3 as LayersText3,
+  Text4 as LayersText4,
+} from './layers/texts';
 import ScrollList from './scroll-list';
+
+const LayersChart = dynamic(() => import('./layers/charts'), {
+  ssr: false,
+});
 
 const Home = () => {
   const step = useRecoilValue(stepAtom);
@@ -48,7 +58,10 @@ const Home = () => {
         <div className="grid grid-cols-12 gap-20">
           <div className="relative z-10 col-span-6">
             <ScrollList>
-              <LayersText key="text-layers-1" />
+              <LayersText1 key="text-layers-1" />
+              <LayersText2 key="text-layers-2" />
+              <LayersText3 key="text-layers-3" />
+              <LayersText4 key="text-layers-4" />
               <CirclesText1 key="text-circles-1" />
               <CirclesText2 key="text-circles-2" />
               <CirclesText3 key="text-circles-3" />
@@ -58,18 +71,15 @@ const Home = () => {
           </div>
           <div className="sticky top-0 z-0 col-span-6 h-small-screen">
             <AnimatePresence>
-              {step === 0 && (
-                <FadeY key="layers-chart">
-                  <LayersChart />
-                </FadeY>
-              )}
-              {(step === 1 || step === 2 || step === 3 || step === 4) && (
+              <LayersChart />
+
+              {(step === 4 || step === 5 || step === 6 || step === 7) && (
                 <FadeY key="circles-chart">
                   <CirclesChart />
                 </FadeY>
               )}
-              {step === 5 && (
-                <FadeY key="globe-chart">
+              {step === 8 && (
+                <FadeY key="globe-chart" className="z-20">
                   <GlobeChart />
                 </FadeY>
               )}

@@ -12,7 +12,7 @@ import { useSoyCounter, useSoyFavoredCounter } from 'containers/home/animations/
 
 const Charts = () => {
   const { direction } = useScrollDirection();
-  const stepStart = 1;
+  const stepStart = 4;
   const step = useRecoilValue(stepAtom);
   const substep = Math.min(Math.max(step - stepStart, 0), 3);
 
