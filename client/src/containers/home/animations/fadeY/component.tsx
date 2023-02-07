@@ -57,7 +57,7 @@ const FadeY = ({ className, children }: FadeYProps) => {
       exit="exit"
       custom={direction}
       className={cn({
-        'absolute z-0 h-full w-full pt-20': true,
+        'absolute top-0 left-0 z-0 h-full w-full pt-20': true,
         [className]: className,
       })}
     >

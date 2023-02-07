@@ -2733,7 +2733,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@motionone/animation@npm:^10.13.1":
+"@motionone/animation@npm:^10.13.1, @motionone/animation@npm:^10.15.1":
   version: 10.15.1
   resolution: "@motionone/animation@npm:10.15.1"
   dependencies:
@@ -2759,6 +2759,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@motionone/dom@npm:^10.15.3":
+  version: 10.15.5
+  resolution: "@motionone/dom@npm:10.15.5"
+  dependencies:
+    "@motionone/animation": ^10.15.1
+    "@motionone/generators": ^10.15.1
+    "@motionone/types": ^10.15.1
+    "@motionone/utils": ^10.15.1
+    hey-listen: ^1.0.8
+    tslib: ^2.3.1
+  checksum: 2453fe3df6a2b4b339d075bcd598bda1eee1926ba0ad881edfd154362b0992c91f31c08d83c469c7e8cb8bf8ebc0ed5530972673cf5c74d99e46e3772cf5f1cb
+  languageName: node
+  linkType: hard
+
 "@motionone/easing@npm:^10.15.1":
   version: 10.15.1
   resolution: "@motionone/easing@npm:10.15.1"
@@ -2769,7 +2783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@motionone/generators@npm:^10.13.1":
+"@motionone/generators@npm:^10.13.1, @motionone/generators@npm:^10.15.1":
   version: 10.15.1
   resolution: "@motionone/generators@npm:10.15.1"
   dependencies:
@@ -10830,6 +10844,7 @@ __metadata:
     eslint-plugin-react-hooks: 4.3.0
     final-form: 4.20.2
     framer-motion: 7.0.0
+    framer-motion-3d: 9.0.1
     glsl-noise: 0.0.0
     glslify: 7.1.1
     jsona: 1.9.2
@@ -10988,6 +11003,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion-3d@npm:9.0.1":
+  version: 9.0.1
+  resolution: "framer-motion-3d@npm:9.0.1"
+  dependencies:
+    framer-motion: ^9.0.1
+    react-merge-refs: ^2.0.1
+  peerDependencies:
+    "@react-three/fiber": ^8.2.2
+    react: ">=18.0"
+    react-dom: ">=18.0"
+    three: ">=0.133"
+  checksum: 3c6c8eefdce0179643cfc73696bf7e458572552cc362b76580cae7948de9bdcdd21dd9af353da67c1de5583b7006ba382a74d80c54ecbd2393ab4a76f5f1ea58
+  languageName: node
+  linkType: hard
+
 "framer-motion@npm:7.0.0":
   version: 7.0.0
   resolution: "framer-motion@npm:7.0.0"
@@ -11006,6 +11036,24 @@ __metadata:
     "@emotion/is-prop-valid":
       optional: true
   checksum: 13d4f1e0a74025404fc09665f5e54ed99a7f0a33a89accdd9f96be1686725620b73a92f922ecb2a48618529aca61b0a95be1de06f823ee784442caba88c38064
+  languageName: node
+  linkType: hard
+
+"framer-motion@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "framer-motion@npm:9.0.1"
+  dependencies:
+    "@emotion/is-prop-valid": ^0.8.2
+    "@motionone/dom": ^10.15.3
+    hey-listen: ^1.0.8
+    tslib: ^2.4.0
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  dependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+  checksum: e4e47bad607ad9882c515223dab2357203812039bb47f2787a29b9e951299cb6b94d18a46989bb6fc6a5a31a417a58c3cf210e2e6867d2ab85190550767465de
   languageName: node
   linkType: hard
 
@@ -16479,6 +16527,13 @@ __metadata:
   version: 1.1.0
   resolution: "react-merge-refs@npm:1.1.0"
   checksum: 90884352999002d868ab9f1bcfe3222fb0f2178ed629f1da7e98e5a9b02a2c96b4aa72800db92aabd69d2483211b4be57a2088e89a11a0b660e7ada744d4ddf7
+  languageName: node
+  linkType: hard
+
+"react-merge-refs@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "react-merge-refs@npm:2.0.1"
+  checksum: c0b6fdb384a92e9b2bb7d56128244a2db97b9343c0dcae70f172352c3732312266c078495902707e45f523625afcba78996a22edea3a8e7b2b17fe97347059fe
   languageName: node
   linkType: hard
 
