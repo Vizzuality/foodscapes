@@ -7,6 +7,8 @@ import { useGLTF } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { useRecoilValue } from 'recoil';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
+
 import { GLTFResult } from '../types';
 
 export function SocioEconomic() {
@@ -31,6 +33,9 @@ export function SocioEconomic() {
           step2: { color: '#FFF' },
           step3: { color: '#E8CC6B' },
           step4: { color: '#E8CC6B' },
+        }}
+        transition={{
+          duration: STEP_DURATION,
         }}
       />
     </mesh>

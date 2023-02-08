@@ -7,6 +7,8 @@ import { useGLTF } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { useRecoilValue } from 'recoil';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
+
 import { GLTFResult } from '../types';
 
 export function Model() {
@@ -22,6 +24,8 @@ export function Model() {
       receiveShadow
     >
       <motion.meshStandardMaterial
+        roughness={0.5}
+        metalness={0}
         animate={`step${step}`}
         variants={{
           initial: { color: '#FFF' },
@@ -30,6 +34,9 @@ export function Model() {
           step2: { color: '#FFF' },
           step3: { color: '#FFF' },
           step4: { color: '#38661F' },
+        }}
+        transition={{
+          duration: STEP_DURATION,
         }}
       />
     </mesh>

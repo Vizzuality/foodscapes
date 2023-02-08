@@ -7,6 +7,8 @@ import { useGLTF } from '@react-three/drei';
 import { motion } from 'framer-motion-3d';
 import { useRecoilValue } from 'recoil';
 
+import { STEP_DURATION } from 'containers/home/animations/constants';
+
 import { GLTFResult } from '../types';
 
 export function Management() {
@@ -31,6 +33,9 @@ export function Management() {
           step2: { color: '#E8856B' },
           step3: { color: '#FFF' },
           step4: { color: '#E8856B' },
+        }}
+        transition={{
+          duration: STEP_DURATION,
         }}
       />
     </mesh>
