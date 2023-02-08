@@ -7,7 +7,7 @@
 
 LAYOUT_LEFT_RIGHT()
 
-Container(app, "Frontend App", "", "","react")
+Container(app, "Frontend App", "NextJS", "","react")
 
 System_Boundary(c2, "Backend") {
   Container(tiler, "Tile server", "TiTiler", "Main API and gateway to backend data/metadata/processing", "python")
