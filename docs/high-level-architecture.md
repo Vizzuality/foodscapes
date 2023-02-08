@@ -60,6 +60,20 @@ Their interaction is shown in the following diagram:
 
 ![Foodscapes app - containers](./high-level-architecture/high-level-architecture.png)
 
+## Operating the Foodscapes platform
+
+The minimalistic architecture of the application allows to keep operational
+requirement to a minimum, while allowing for suitable degrees of scalability to
+accommodate peaks in the use of the application.
+
+All the services that make up the application are built as OCI/Docker images and
+these are then run on the AWS Fargate serverless, pay-as-you go compute engine.
+
+The following diagram positions the high-level architecture shown above within
+the AWS Fargate service where the services run:
+
+![Foodscapes app - operations](./high-level-architecture/cloud-operations.png)
+
 ## Data layer
 
 Data for Foodscapes maps and widgets is managed through lean backend services
@@ -87,13 +101,3 @@ database file.
 The Datasette service accepts requests for data (filtering, faceting, counting,
 etc.) from the frontend application and translates them to queries to its
 embedded SQLite system.
-
-## Operating the Foodscapes platform
-
-The minimalistic architecture of the application allows to keep operational
-requirement to a minimum, while allowing for suitable degrees of scalability to
-accommodate peaks in the use of the application.
-
-All the services that make up the application are built as OCI/Docker images and
-these are then run on the AWS Fargate serverless, pay-as-you go compute engine.
-

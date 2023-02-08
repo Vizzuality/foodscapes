@@ -1,0 +1,26 @@
+@startuml "Foodscapes"
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+
+!include DEVICONS/python.puml
+!include DEVICONS/react.puml
+
+LAYOUT_LEFT_RIGHT()
+
+System_Boundary(aws_fargate, "AWS Fargate container compute service") {
+  Container(app, "Frontend App", "", "","react")
+
+  System_Boundary(c2, "Backend") {
+    Container(tiler, "Tile server", "TiTiler", "Main API and gateway to backend data/metadata/processing", "python")
+    Container(datasette, "Data service", "Datasette", "Provides data for widgets (with filtering, aggregation, counts...)", "python")
+  }
+
+  Lay_U(c2, app)
+
+  Rel_R(app, tiler, "Retrieves tiles for maps from raster data", "")
+
+  Rel(app, datasette, "Queries data for widgets")
+}
+
+@enduml
+
