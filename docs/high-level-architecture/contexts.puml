@@ -1,0 +1,20 @@
+@startuml "Foodscapes contexts"
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "Users of the application", "", person)
+
+Boundary(app, "Foodscapes application", "Web application and associated backend services")
+
+Person(sci_eng_teams, "Science and engineering teams", "", person)
+
+Boundary(devops, "DevOps infrastructure", "Supporting services for development and deployment")
+
+Rel_R(user, app, "", "Users explore Foodscapes maps, data and case studies through the web application")
+
+Rel_U(sci_eng_teams, devops, "", "Science and engineering teams push Foodscapes feature and data updates to the DevOps infrastructure")
+
+Rel(devops, app, "", "Updates to the application are deployed through the supporting DevOps infrastructure")
+
+Rel(sci_eng_teams, app, "", "Science and engineering teams oversee the running application")
+
+@enduml
