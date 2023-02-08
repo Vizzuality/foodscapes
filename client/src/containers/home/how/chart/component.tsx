@@ -10,7 +10,7 @@ const HowChart = () => {
   }, []);
 
   return (
-    <div className="relative flex h-full items-center">
+    <div className="relative flex h-full items-center overflow-hidden">
       <video className="scale-150" ref={videoRef} src="/videos/plant.m4v" muted autoPlay />
     </div>
   );

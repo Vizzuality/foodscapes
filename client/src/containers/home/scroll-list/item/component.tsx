@@ -31,7 +31,7 @@ const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
   const s = useRecoilValue(stepAtom);
 
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.25 });
+  const inView = useInView(ref, { amount: 0.5 });
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -49,7 +49,7 @@ const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
   return (
     <motion.section
       ref={ref}
-      className="h-[200vh]"
+      className="h-small-screen"
       style={{
         opacity,
       }}

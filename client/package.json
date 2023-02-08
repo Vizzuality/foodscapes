@@ -39,7 +39,7 @@
     "@react-aria/searchfield": "3.4.0",
     "@react-aria/utils": "3.13.2",
     "@react-stately/searchfield": "3.3.0",
-    "@react-three/drei": "9.56.17",
+    "@react-three/drei": "9.56.18",
     "@react-three/fiber": "8.10.4",
     "@react-types/searchfield": "3.3.2",
     "@recoiljs/refine": "0.1.1",

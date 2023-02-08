@@ -18,7 +18,7 @@ export function Water() {
     >
       <meshStandardMaterial
         attach="material"
-        color="#00CCFF"
+        color="#003388"
         transparent
         opacity={0.75}
         side={DoubleSide}

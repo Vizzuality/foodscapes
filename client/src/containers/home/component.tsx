@@ -56,7 +56,7 @@ const Home = () => {
           </div>
         </div>
         <div className="grid grid-cols-12 gap-20">
-          <div className="relative z-10 col-span-6">
+          <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
             <ScrollList>
               <LayersText1 key="text-layers-1" />
               <LayersText2 key="text-layers-2" />
@@ -69,7 +69,7 @@ const Home = () => {
               <GlobeText key="text-globe-1" />
             </ScrollList>
           </div>
-          <div className="sticky top-0 z-0 col-span-6 h-small-screen">
+          <div className="sticky top-0 z-0 col-span-7 h-small-screen">
             <AnimatePresence>
               <LayersChart />
 
