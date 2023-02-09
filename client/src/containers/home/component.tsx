@@ -57,8 +57,8 @@ const Home = () => {
           </div>
           <div className="sticky top-0 z-0 col-span-5 col-start-7 h-small-screen">
             <AnimatePresence>
-              {/* {(step === 0 || step === 1 || step === 2 || step === 3 || step === 4) && ( */}
-              {step === -1 && (
+              {(step === 0 || step === 1 || step === 2 || step === 3 || step === 4) && (
+                // {step === -1 && (
                 <FadeY key="layers-chart">
                   <LayersChart />
                 </FadeY>
