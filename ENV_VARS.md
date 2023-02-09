@@ -67,6 +67,23 @@ documentation](https://fastapi.tiangolo.com/advanced/behind-a-proxy/): when
 setting up the Foodscapes services behind a reverse proxy, please make sure to
 familiarise yourself with it.
 
+* `TILER_CORS_ORIGINS_REGEX` (regular expression, optional, default is an
+  empty string): whitelisted app origins for requests from the in-browser
+  frontend app to the TiTiler service.
+
+  If not provided, no origins will be whitelisted.
+
+  Allowed origins are set via `allow_origin_regex` (see the [Starlette
+  documentation for the underlying CORS
+  middleware](https://www.starlette.io/middleware/#corsmiddleware)), so multiple
+  origins must be listed as a valid regular expression: for example
+  `(https?:\/\/example\.com|https:\/\/localhost)` will match all of
+  `http://example.com`, `https://example.com` and `https://localhost`.
+
+  The special value `\*` (regexp for the `*` character) will allow any origin
+  (this is handled by using the `allow_origins=['*']` argument for the Starlette
+  `CORSMiddleware`).
+
 ## Datasette service
 
 - `DATASETTE_SERVICE_PORT` (number, required, default is 3203): the port exposed
@@ -80,6 +97,17 @@ familiarise yourself with it.
   assembled by prepending the path of the folder on the container's local
   filesystem where the file will be `ADD`-ed during the build of the container
   image and where Datasette will read it when processing requests.
+- `DATASETTE_CORS_ORIGINS` (string, optional, comma-separated list of origins,
+  default is an empty string): whitelisted app origins for requests from the
+  in-browser frontend app to the Datasette service.
+
+  If not provided, no origins will be whitelisted.
+
+  The syntax for these origins is defined in the
+  [asgi-cors](https://github.com/simonw/asgi-cors) package.
+
+  Multiple origins from the comma-separated list are parsed into JSON array
+  items and added during the OCI image build to the Datasette metadata file.
 
 ## Source data
 
@@ -113,22 +141,3 @@ configured via environment variables. For details about the syntax for this
 checksum and how to calculate it, please see the relevant Dockerfile reference
 here:
 https://docs.docker.com/engine/reference/builder/#verifying-a-remote-file-checksum-add---checksumchecksum-http-src-dest.
-
-## Other settings
-
-* `NETWORK_CORS_ORIGINS_REGEX` (regular expression, optional, default is an
-  empty string): whitelisted app origins for requests from the in-browser
-  frontend app to all the backend services (i.e. Datasette and TiTiler).
-
-  If not provided, no origins will be whitelisted.
-
-  Allowed origins are set via `allow_origin_regex` (see the [Starlette
-  documentation for the underlying CORS
-  middleware](https://www.starlette.io/middleware/#corsmiddleware)), so multiple
-  origins must be listed as a valid regular expression: for example
-  `(https?:\/\/example\.com|https:\/\/localhost)` will match all of
-  `http://example.com`, `https://example.com` and `https://localhost`.
-
-  The special value `\*` (regexp for the `*` character) will allow any origin
-  (this is handled by using the `allow_origins=['*']` argument for the Starlette
-  `CORSMiddleware`).

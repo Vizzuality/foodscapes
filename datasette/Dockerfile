@@ -9,6 +9,7 @@ ENV APP_HOME /opt/$NAME
 ARG DATASETTE_SQLITE_DB_FILENAME
 ARG DATA_CORE_SQLITE_DB_SOURCE_URL
 ARG DATA_CORE_SQLITE_DB_CHECKSUM
+ARG DATASETTE_CORS_ORIGINS
 
 RUN addgroup $USER && useradd --shell /bin/bash --gid $USER $USER
 
@@ -18,10 +19,19 @@ COPY --chown=$USER:$USER data ./data
 ADD --chown=$USER:$USER --checksum=${DATA_CORE_SQLITE_DB_CHECKSUM} ${DATA_CORE_SQLITE_DB_SOURCE_URL} ./data/${DATASETTE_SQLITE_DB_FILENAME}
 RUN find ./data -type f -exec chmod ugo-w '{}' \;
 
+COPY metadata.json.template ./
+COPY scripts ./scripts
+ENV DATASETTE_CORS_ORIGINS $DATASETTE_CORS_ORIGINS
+RUN scripts/set-cors-origins-in-metadata.sh > metadata.json
+RUN chmod ugo-w metadata.json
+RUN rm metadata.json.template
+
+# install Datasette plugins and any other libraries needed
+RUN pip install datasette-cors
+
 EXPOSE 3000
 USER $USER
 
 # @todo Consider whether to use a shell script as entrypoint to allow for
 # different run modes (e.g. debug, dev, prod, etc.) via Docker commands
-
-CMD datasette --host 0.0.0.0 --port 3000 --setting base_url /data/ data/${DATASETTE_SQLITE_DB_FILENAME}
+CMD datasette --metadata metadata.json --host 0.0.0.0 --port 3000 --setting base_url /data/ data/${DATASETTE_SQLITE_DB_FILENAME}
