@@ -1,28 +1,61 @@
-import { useEffect, useRef } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 
-import { useInView } from 'framer-motion';
+import { stepAtom } from 'store/home';
 
-export interface ScrollItemProps {
-  id: number;
-  onChange: (id: number) => void;
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+
+const threshold = 0.4;
+const clamp = (v) => {
+  if (v < threshold) {
+    const p = (threshold - v) * (1 / threshold) * 2;
+
+    // clamp value between 0 and 1
+    return 1 - Math.min(Math.max(p, 0), 1);
+  }
+
+  if (v > 1 - threshold) {
+    const p = (threshold - (1 - v)) * (1 / threshold) * 2;
+    return 1 - Math.min(Math.max(p, 0), 1);
+  }
+
+  return 1;
+};
+
+interface ScrollItemProps extends PropsWithChildren {
+  step: number;
+  onChange: (step: number) => void;
 }
 
-const ScrollItem = ({ id, onChange }: ScrollItemProps) => {
-  const ref = useRef();
-  const isInView = useInView(ref, { amount: 0.5 });
+const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
+  const s = useRecoilValue(stepAtom);
+
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.5 });
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+
+  const opacity = useTransform(scrollYProgress, (v) => clamp(v));
 
   useEffect(() => {
-    if (isInView) {
-      onChange(id);
+    if (inView && s !== step) {
+      onChange(step);
     }
-  }, [id, isInView, onChange]);
+  }, [s, step, inView, onChange]);
 
   return (
-    <div
-      id={`scroll-${id}`}
+    <motion.section
       ref={ref}
-      className="pointer-events-none relative h-small-screen w-full snap-start snap-always"
-    />
+      className="h-small-screen"
+      style={{
+        opacity,
+      }}
+    >
+      {children}
+    </motion.section>
   );
 };
 

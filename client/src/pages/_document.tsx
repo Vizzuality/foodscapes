@@ -12,7 +12,7 @@ class MyDocument extends Document {
 
   render(): JSX.Element {
     return (
-      <Html className="snap-y snap-mandatory">
+      <Html>
         <Head>
           <style type="text/css" dangerouslySetInnerHTML={{ __html: mediaStyles }} />
         </Head>
