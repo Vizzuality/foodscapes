@@ -1,17 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useRive } from '@rive-app/react-canvas';
 
 const HowChart = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 3;
-    }
-  }, []);
+  const { RiveComponent } = useRive({
+    src: '/images/how/hero.riv',
+    autoplay: true,
+  });
 
   return (
     <div className="relative flex h-full items-center overflow-hidden">
-      <video className="scale-150" ref={videoRef} src="/videos/plant.m4v" muted autoPlay />
+      <RiveComponent />
     </div>
   );
 };
