@@ -30,6 +30,11 @@ export function LayerChart() {
         step2: { opacity: 1 },
         step3: { opacity: 1 },
         step4: { opacity: 1 },
+        step5: { opacity: 0 },
+        step6: { opacity: 0 },
+        step7: { opacity: 0 },
+        step8: { opacity: 0 },
+        step9: { opacity: 0 },
       }}
       transition={{
         duration: STEP_DURATION,

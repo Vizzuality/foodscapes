@@ -1,6 +1,6 @@
 const HowText = () => {
   return (
-    <div className="flex h-small-screen flex-col justify-center space-y-10 xl:pl-20">
+    <div className="flex h-small-screen flex-col justify-center space-y-10">
       <h2 className="font-display text-6xl">How do we feed the world?</h2>
       <div className="space-y-4">
         <p className="font-light">

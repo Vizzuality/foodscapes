@@ -1,10 +1,3 @@
-// import { stepAtom } from 'store/home';
-
-// import { useRecoilValue } from 'recoil';
-
-// import Circles from './circles';
-// import { STEPS } from './constants';
-// import Globe from './globe';
 import dynamic from 'next/dynamic';
 
 import { stepAtom } from 'store/home';
@@ -25,8 +18,7 @@ import {
 import GlobeChart from './globe/chart';
 import GlobeText from './globe/text';
 import Hero from './hero';
-import HowChart from './how/chart';
-import HowText from './how/text';
+import How from './how';
 import {
   Text1 as LayersText1,
   Text2 as LayersText2,
@@ -46,15 +38,9 @@ const Home = () => {
     <>
       <Hero key="hero" />
 
+      <How />
+
       <Wrapper>
-        <div className="grid grid-cols-12 gap-20">
-          <div className="relative z-10 col-span-6">
-            <HowText />
-          </div>
-          <div className="relative z-0 col-span-6">
-            <HowChart />
-          </div>
-        </div>
         <div className="grid grid-cols-12 gap-6">
           <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
             <ScrollList>
