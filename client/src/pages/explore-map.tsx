@@ -1,8 +1,10 @@
-import { useCallback } from 'react';
+import { ReactElement, useCallback } from 'react';
 
 import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
 
 import { RecoilRoot } from 'recoil';
+
+import LayoutMap from 'layouts/map';
 
 import ExploreMap from 'containers/explore-map';
 
@@ -33,6 +35,10 @@ const ExploreMapPage = () => {
       </RecoilURLSyncNext>
     </RecoilRoot>
   );
+};
+
+ExploreMapPage.getLayout = function getLayout(page: ReactElement) {
+  return <LayoutMap>{page}</LayoutMap>;
 };
 
 export default ExploreMapPage;

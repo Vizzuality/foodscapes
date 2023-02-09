@@ -2,7 +2,7 @@ import { RecoilRoot } from 'recoil';
 
 import Home from 'containers/home';
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   return (
     <RecoilRoot override={false}>
       <Home />

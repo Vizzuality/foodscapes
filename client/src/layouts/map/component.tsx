@@ -1,9 +1,9 @@
 // import Footer from 'containers/footer';
 import { Domine, Public_Sans } from '@next/font/google';
 
-import Header from 'containers/header';
+import Header from 'containers/header/map';
 
-type LayoutProps = {
+type LayoutMapProps = {
   children: React.ReactNode;
 };
 
@@ -23,7 +23,7 @@ const domine = Domine({
   display: 'block',
 });
 
-const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
+const LayoutMap: React.FC<LayoutMapProps> = (props: LayoutMapProps) => {
   const { children } = props;
 
   return (
@@ -42,4 +42,4 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default LayoutMap;

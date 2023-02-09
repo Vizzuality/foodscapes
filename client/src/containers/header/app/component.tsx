@@ -35,7 +35,7 @@ const Header = () => {
           <Link
             href="/"
             className={cn({
-              'font-display text-2xl text-navy-500 transition-colors': true,
+              'py-1 font-display text-2xl text-navy-500 transition-colors': true,
               'text-white': THEME === 'light' || THEME === 'light-dark',
             })}
           >

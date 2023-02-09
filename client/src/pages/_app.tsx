@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
 
@@ -8,9 +8,10 @@ import { useRouter } from 'next/router';
 import { GAPage } from 'lib/analytics/ga';
 
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { NextPage } from 'next';
 import { RecoilRoot } from 'recoil';
 
-import Layout from 'layouts';
+import Layout from 'layouts/app';
 
 import ThirdParty from 'containers/third-party';
 
@@ -18,7 +19,18 @@ import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout) => {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+
   const router = useRouter();
 
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
@@ -45,10 +57,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           <MediaContextProvider>
             <MapProvider>
               {/* Layout */}
-              <Layout>
-                <Component {...pageProps} />
-                <ThirdParty />
-              </Layout>
+              {getLayout(<Component {...pageProps} />)}
+              <ThirdParty />
             </MapProvider>
           </MediaContextProvider>
         </Hydrate>

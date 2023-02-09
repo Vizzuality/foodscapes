@@ -11,9 +11,9 @@ import { CustomMapProps } from 'components/map/types';
 const DEFAULT_PROPS: CustomMapProps = {
   id: 'default',
   initialViewState: {
-    latitude: 0,
+    latitude: 20,
     longitude: 0,
-    zoom: 1,
+    zoom: 2,
   },
   maxZoom: 20,
   mapStyle: 'mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6',
