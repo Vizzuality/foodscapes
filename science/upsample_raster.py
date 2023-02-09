@@ -31,14 +31,12 @@ def disaggregate(file: Path, factor: int = 2) -> MemoryFile:
         # TODO: mask nodata to keep original nodata or add parameter to change it on demand
         # deal with nodata to avoid overflows
         data = np.where(data == src.nodata, nodata, data)
-        data /= factor ** 2
+        data /= factor**2
         upscale_transform = src.transform * src.transform.scale(
             (src.width / data.shape[-1]), (src.height / data.shape[-2])
         )
         upscale_kwargs = src.meta.copy()
-    upscale_kwargs.update(
-        {"transform": upscale_transform, "height": new_height, "width": new_width, "nodata": nodata}
-    )
+    upscale_kwargs.update({"transform": upscale_transform, "height": new_height, "width": new_width, "nodata": nodata})
     mem_file = MemoryFile()
     with mem_file.open(**upscale_kwargs) as dest:
         dest.write(data)
@@ -80,9 +78,13 @@ def check_sum(original: Path, resampled: Path) -> float:
     type=click.Path(exists=True),
     help="Reference file to align rasters with",
 )
-@click.option("--check", is_flag=True, help="Compute the rasters sum to check if resampling worked well", )
+@click.option(
+    "--check",
+    is_flag=True,
+    help="Compute the rasters sum to check if resampling worked well",
+)
 def main(files: list[Path], suffix: str, ref_file: Path, out_dir: Path, check: bool):
-    """ Upsample a raster
+    """Upsample a raster
     Works by applying first a disaggregation (upsampling) by partitioning the original pixel by a factor
     so that the resulting pixels are smaller than the target pixel size. Then rescale (downsample)
     to the desired pixel size by applying a weighted sum. This way we can upsample any raster with absolute values

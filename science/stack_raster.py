@@ -56,7 +56,14 @@ def main(files: tuple[click.Path], output: click.Path, nodata: int | None, cog: 
             # TODO: find the way to do it fine grained with the gdal ?
             # Since GDAL 3.2 includes the COG driver rio cogeo doesn't make that much sense
             cog_translate(
-                mem_dst, output, dest_kwargs, in_memory=True, quiet=False, web_optimized=True, use_cog_driver=True
+                mem_dst,
+                output,
+                dest_kwargs,
+                in_memory=True,
+                quiet=False,
+                web_optimized=True,
+                use_cog_driver=True,
+                zoom_level_strategy="upper",
             )
         else:
             print(f"Writing file {output} ...")
