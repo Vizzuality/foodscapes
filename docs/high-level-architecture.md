@@ -17,21 +17,21 @@ We aim to balance complex requirements with the goal of keeping implementation
 complexity to a suitable minimum.
 
 For example, given the requirements and expected performance envelope for the
-application, we identified the [baked
-data](https://simonwillison.net/2021/Jul/28/baked-data/) architectural pattern
-as a suitable way to colocate data and processing, using SQLite as backend data
-layer, without the need to deploy and manage a database server.
+application, we identified the
+[baked data](https://simonwillison.net/2021/Jul/28/baked-data/) architectural
+pattern as a suitable way to colocate data and processing, using SQLite as
+backend data layer, without the need to deploy and manage a database server.
 
 - Reliance on open source projects
 
 Wherever possible, we rely on widely adopted open source projects and
 components, such as the [NextJS](https://nextjs.org/) framework for the frontend
 application, the SQLite-based [Datasette application](https://datasette.io/) to
-access data, the [TiTiler tiler
-application](https://developmentseed.org/titiler/), and [OCI/Docker
-containers](https://www.docker.com/) (simply referred to as "[OCI
-containers](https://opencontainers.org/)" in the rest of this document) for
-deployment.
+access data, the
+[TiTiler tiler application](https://developmentseed.org/titiler/), and
+[OCI/Docker containers](https://www.docker.com/) (simply referred to as
+"[OCI containers](https://opencontainers.org/)" in the rest of this document)
+for deployment.
 
 Besides the operational leverage, these and other frameworks we choose should
 also help both onboard developers to the project, as well as making it easier to
@@ -87,7 +87,8 @@ the AWS Fargate service where the services run:
 
 The source code for the Foodscapes application components outlined above as well
 as for the application infrastructure (defined as Infrastructure as Code, IaC)
-is managed in a single git repository (https://github.com/Vizzuality/foodscapes).
+is managed in a single git repository
+(https://github.com/Vizzuality/foodscapes).
 
 Live environments of the application (notably, staging and production
 environments, as well as any development, QA, etc. environments) are deployed
@@ -117,8 +118,8 @@ In broad terms, the Terraform IaC (Infrastructure as Code) setup for the
 Foodscapes platform takes care of:
 
 - creating an AWS Elastic Container Registry
-- creating the AWS Fargate infrastructure where the live services
-  will be deployed
+- creating the AWS Fargate infrastructure where the live services will be
+  deployed
 - creating any other cloud services needed to operate the platform (for example,
   networking between application components, firewalls, load balancers, TLS
   certificates, etc.)
@@ -172,8 +173,8 @@ included in the OCI container image for the TiTiler tiler service, rather than
 being stored on separate cloud storage or in a cloud database.
 
 Colocating raster data and raster computations (aggregation, filtering, etc.)
-allows to minimise operational complexity (no further cloud systems need to
-be managed) and query latency, as well as to maximise data throughput.
+allows to minimise operational complexity (no further cloud systems need to be
+managed) and query latency, as well as to maximise data throughput.
 
 Furthermore, the baked data pattern allows to configure the TiTiler service to
 scale out as desired to match peaks in the use of the application, for example

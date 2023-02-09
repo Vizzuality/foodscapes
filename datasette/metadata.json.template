@@ -1,7 +1,7 @@
 {
   "plugins": {
     "datasette-cors": {
-      "host_wildcards": ["CORS_ORIGINS"]
+      "host_wildcards": ["{{CORS_ORIGINS}}"]
     }
   }
 }
