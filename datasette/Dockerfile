@@ -15,19 +15,22 @@ RUN addgroup $USER && useradd --shell /bin/bash --gid $USER $USER
 
 WORKDIR $APP_HOME
 RUN chown $USER:$USER $APP_HOME
+
+# install Datasette plugins and any other libraries needed
+RUN pip install datasette-cors
+
+# populate data folder
 COPY --chown=$USER:$USER data ./data
 ADD --chown=$USER:$USER --checksum=${DATA_CORE_SQLITE_DB_CHECKSUM} ${DATA_CORE_SQLITE_DB_SOURCE_URL} ./data/${DATASETTE_SQLITE_DB_FILENAME}
 RUN find ./data -type f -exec chmod ugo-w '{}' \;
 
+# handle Datasette configuration via metadata.json
 COPY metadata.json.template ./
 COPY scripts ./scripts
 ENV DATASETTE_CORS_ORIGINS $DATASETTE_CORS_ORIGINS
 RUN scripts/set-cors-origins-in-metadata.sh > metadata.json
 RUN chmod ugo-w metadata.json
 RUN rm metadata.json.template
-
-# install Datasette plugins and any other libraries needed
-RUN pip install datasette-cors
 
 EXPOSE 3000
 USER $USER

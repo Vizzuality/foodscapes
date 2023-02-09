@@ -1,8 +1,8 @@
 # Environment variables
 
-This document covers the different [environment
-variables](https://en.wikipedia.org/wiki/Environment_variable) used by the
-Foodscapes application.
+This document covers the different
+[environment variables](https://en.wikipedia.org/wiki/Environment_variable) used
+by the Foodscapes application.
 
 Defaults for settings other than secrets are available in the `env.default`
 file.
@@ -51,7 +51,8 @@ app.foodscapes.tld {
 The tiler service will be accessible at the following base URL:
 https://app.foodscapes.tld/tiler/
 
-For example, the OpenAPI documentation will be available at https://app.foodscapes.tld/tiler/docs.
+For example, the OpenAPI documentation will be available at
+https://app.foodscapes.tld/tiler/docs.
 
 Behind the reverse proxy, the tiler service will be available at the following
 base URL (for example, exposed by Docker with no TLS internally behind a
@@ -62,19 +63,19 @@ Different setups are possible, and may be preferable over the one above
 depending on specific deployment scenarios.
 
 The `root_path` mechanism when running behind reverse proxies is described in
-great detail in the [FastAPI
-documentation](https://fastapi.tiangolo.com/advanced/behind-a-proxy/): when
-setting up the Foodscapes services behind a reverse proxy, please make sure to
-familiarise yourself with it.
+great detail in the
+[FastAPI documentation](https://fastapi.tiangolo.com/advanced/behind-a-proxy/):
+when setting up the Foodscapes services behind a reverse proxy, please make sure
+to familiarise yourself with it.
 
-* `TILER_CORS_ORIGINS_REGEX` (regular expression, optional, default is an
-  empty string): whitelisted app origins for requests from the in-browser
-  frontend app to the TiTiler service.
+- `TILER_CORS_ORIGINS_REGEX` (regular expression, optional, default is an empty
+  string): whitelisted app origins for requests from the in-browser frontend app
+  to the TiTiler service.
 
   If not provided, no origins will be whitelisted.
 
-  Allowed origins are set via `allow_origin_regex` (see the [Starlette
-  documentation for the underlying CORS
+  Allowed origins are set via `allow_origin_regex` (see the
+  [Starlette documentation for the underlying CORS
   middleware](https://www.starlette.io/middleware/#corsmiddleware)), so multiple
   origins must be listed as a valid regular expression: for example
   `(https?:\/\/example\.com|https:\/\/localhost)` will match all of
@@ -106,6 +107,16 @@ familiarise yourself with it.
   The syntax for these origins is defined in the
   [asgi-cors](https://github.com/simonw/asgi-cors) package.
 
+  In summary: the `host_wildcards` parameter to `asgi_cors` is used (via the
+  `plugins.datasette-cors.host_wildcards` setting in the Datasette metadata
+  file), so `*` can be used as part of an origin as a wildcard; for example
+  `https://*.example.com` will match origins such as
+  `https://staging.example.com` and `https://staging.api.example.com`, but not
+  `https://example.com` nor `http://staging.example.com` (will only match `http`
+  protocol part, unless `http*` is used for it).
+
+  The special value `*` origin (literal `*` character) will allow any origin.
+
   Multiple origins from the comma-separated list are parsed into JSON array
   items and added during the OCI image build to the Datasette metadata file.
 
@@ -115,9 +126,9 @@ familiarise yourself with it.
   image build process can fetch the source COG file for the TiTiler service;
   this needs to be an HTTPS source with no authentication required, such as an
   URL for an asset on a public S3 bucket.
-- `DATA_CORE_COG_CHECKSUM` (string, required): the checksum (see [Checksums for
-  source data](#checksums-for-source-data) section below for details) of the
-  file above.
+- `DATA_CORE_COG_CHECKSUM` (string, required): the checksum (see
+  [Checksums for source data](#checksums-for-source-data) section below for
+  details) of the file above.
 - `DATA_CORE_SQLITE_DB_SOURCE_URL` (URL, required):t he URL from which the
   Docker image build process can fetch the source SQLite file for the Foodscapes
   tabular data served by the Datasette service; this needs to be an HTTPS source
