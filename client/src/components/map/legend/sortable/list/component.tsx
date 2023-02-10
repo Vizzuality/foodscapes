@@ -1,4 +1,13 @@
-import { Children, cloneElement, FC, isValidElement, useCallback, useMemo, useState } from 'react';
+import {
+  Children,
+  cloneElement,
+  FC,
+  isValidElement,
+  useCallback,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
 
 import cx from 'classnames';
 
@@ -31,6 +40,7 @@ export const SortableList: FC<SortableListProps> = ({
   children,
   onChangeOrder,
 }: SortableListProps) => {
+  const rid = useId();
   const [activeId, setActiveId] = useState(null);
 
   const ActiveItem = useMemo(() => {
@@ -94,6 +104,7 @@ export const SortableList: FC<SortableListProps> = ({
 
   return (
     <DndContext
+      id={rid}
       sensors={sensors}
       collisionDetection={closestCenter}
       modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
