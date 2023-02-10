@@ -36,9 +36,7 @@ def disaggregate(file: Path, factor: int = 2) -> MemoryFile:
             (src.width / data.shape[-1]), (src.height / data.shape[-2])
         )
         upscale_kwargs = src.meta.copy()
-    upscale_kwargs.update(
-        {"transform": upscale_transform, "height": new_height, "width": new_width, "nodata": nodata}
-    )
+    upscale_kwargs.update({"transform": upscale_transform, "height": new_height, "width": new_width, "nodata": nodata})
     mem_file = MemoryFile()
     with mem_file.open(**upscale_kwargs) as dest:
         dest.write(data)
