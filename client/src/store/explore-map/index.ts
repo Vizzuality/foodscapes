@@ -1,31 +1,11 @@
-import { number, array } from '@recoiljs/refine';
 import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
 
-export const step = atom({
-  key: 'step',
-  default: 0,
-  effects: [
-    urlSyncEffect({
-      refine: number(),
-      history: 'push',
-    }),
-  ],
+export const menuOpen = atom({
+  key: 'menu-open',
+  default: false,
 });
 
-export const steps = atom({
-  key: 'steps',
-  default: [],
-  effects: [
-    urlSyncEffect({
-      refine: array(number()),
-    }),
-  ],
+export const layersOpen = atom({
+  key: 'layers-open',
+  default: false,
 });
-
-const exploreMapStore = {
-  step,
-  steps,
-};
-
-export default exploreMapStore;

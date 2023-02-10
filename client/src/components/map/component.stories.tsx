@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { useMap, ViewState, MapProvider } from 'react-map-gl';
+import { ViewState, MapProvider } from 'react-map-gl';
 
 import { Story } from '@storybook/react/types-6-0';
 // Layer manager
@@ -10,7 +10,6 @@ import { LayerManager, Layer } from '@vizzuality/layer-manager-react';
 
 // Controls
 import Controls from 'components/map/controls';
-import FitBoundsControl from 'components/map/controls/fit-bounds';
 import ZoomControl from 'components/map/controls/zoom';
 
 // Map
@@ -68,26 +67,10 @@ const cartoProvider = new CartoProvider();
 const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
   const { id, initialViewState, bounds, maxZoom } = args;
   const [viewState, setViewState] = useState<Partial<ViewState>>({});
-  const { [id]: mapRef } = useMap();
 
   const handleViewState = useCallback((vw: ViewState) => {
     setViewState(vw);
   }, []);
-
-  const handleFitBoundsChange = useCallback(
-    (_bounds: CustomMapProps['bounds']) => {
-      const { bbox, options } = _bounds;
-
-      mapRef.fitBounds(
-        [
-          [bbox[0], bbox[1]],
-          [bbox[2], bbox[3]],
-        ],
-        options
-      );
-    },
-    [mapRef]
-  );
 
   return (
     <div className="relative h-screen w-full">
@@ -101,23 +84,25 @@ const Template: Story<CustomMapProps> = (args: CustomMapProps) => {
         onMapViewStateChange={handleViewState}
       >
         {(map) => (
-          <LayerManager
-            map={map}
-            plugin={PluginMapboxGl}
-            providers={{
-              [cartoProvider.name]: cartoProvider.handleData,
-            }}
-          >
-            {LAYERS.map((l) => (
-              <Layer key={l.id} {...l} />
-            ))}
-          </LayerManager>
+          <>
+            <LayerManager
+              map={map}
+              plugin={PluginMapboxGl}
+              providers={{
+                [cartoProvider.name]: cartoProvider.handleData,
+              }}
+            >
+              {LAYERS.map((l) => (
+                <Layer key={l.id} {...l} />
+              ))}
+            </LayerManager>
+
+            <Controls>
+              <ZoomControl />
+            </Controls>
+          </>
         )}
       </Map>
-      <Controls>
-        <ZoomControl mapRef={mapRef} />
-        <FitBoundsControl bounds={bounds} onFitBoundsChange={handleFitBoundsChange} />
-      </Controls>
     </div>
   );
 };

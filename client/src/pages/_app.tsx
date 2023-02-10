@@ -18,6 +18,7 @@ import ThirdParty from 'containers/third-party';
 import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
+import 'styles/mapbox.css';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

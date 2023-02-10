@@ -62,6 +62,7 @@ module.exports = {
       navy: {
         500: '#1C274A',
         400: '#8D92A4',
+        200: '#D2D4DB',
       },
       yellow: {
         100: '#FCF8E8',
