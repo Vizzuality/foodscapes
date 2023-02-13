@@ -28,7 +28,7 @@ const BasemapItem = ({ label, value, preview }) => {
   }, [value, setBasemap]);
 
   return (
-    <div className="flex items-center justify-between space-x-2">
+    <div className="flex items-center justify-between space-x-8">
       <button className="grow" type="button" onClick={handleToggleBasemap}>
         <div className="flex items-center space-x-4">
           <div
@@ -44,7 +44,7 @@ const BasemapItem = ({ label, value, preview }) => {
         </div>
       </button>
 
-      <button type="button" className="h-3 w-3">
+      <button type="button" className="h-3 w-3 shrink-0">
         <Icon
           icon={INFO_SVG}
           className={cn({

@@ -1,4 +1,4 @@
-import { string } from '@recoiljs/refine';
+import { array, string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
@@ -20,6 +20,16 @@ export const basemapAtom = atom({
   effects: [
     urlSyncEffect({
       refine: string(),
+    }),
+  ],
+});
+
+export const layersAtom = atom({
+  key: 'layers',
+  default: ['foodscapes'],
+  effects: [
+    urlSyncEffect({
+      refine: array(string()),
     }),
   ],
 });

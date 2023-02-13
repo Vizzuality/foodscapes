@@ -8,7 +8,7 @@ import { THEME } from './constants';
 import type { CheckboxProps } from './types';
 
 export const Checkbox: FC<CheckboxProps> = ({
-  theme = 'dark',
+  theme = 'light',
   input,
   meta = {},
   disabled = false,
@@ -24,7 +24,7 @@ export const Checkbox: FC<CheckboxProps> = ({
       type="checkbox"
       disabled={disabled}
       className={cx({
-        'form-checkbox': true,
+        'form-checkbox transition-all': true,
         [THEME[theme].base]: true,
         [THEME[theme].status[st]]: true,
         [className]: !!className,
