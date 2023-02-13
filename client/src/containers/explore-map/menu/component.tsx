@@ -58,7 +58,7 @@ const Menu = () => {
           animate="animate"
           exit="exit"
           variants={overlayVariants}
-          className="bg-blur absolute top-0 left-0 h-full w-full bg-black/20"
+          className="bg-blur absolute top-0 left-0 z-10 h-full w-full bg-black/20"
           onClick={handleClose}
         />
       )}
@@ -69,36 +69,56 @@ const Menu = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="absolute top-0 right-0 h-full min-w-[300px] bg-white"
+          className="absolute top-0 right-0 z-20 h-full w-full max-w-[300px] bg-white"
           variants={sidebarVariants}
         >
-          <div className="flex items-center justify-between p-6">
-            <Link
-              href="/"
-              className={cn({
-                'py-1 font-display text-2xl text-navy-500 transition-colors': true,
-              })}
-            >
-              Foodscapes
-            </Link>
+          <div className="flex h-full flex-col justify-between space-y-10">
+            <nav>
+              <div className="flex items-center justify-between p-6">
+                <Link
+                  href="/"
+                  className={cn({
+                    'py-1 font-display text-2xl text-navy-500 transition-colors': true,
+                  })}
+                >
+                  Foodscapes
+                </Link>
 
-            <button className="h-6 w-6 text-navy-500" onClick={handleClose}>
-              <Icon icon={CLOSE_SVG} />
-            </button>
-          </div>
+                <button className="h-6 w-6 text-navy-500" onClick={handleClose}>
+                  <Icon icon={CLOSE_SVG} />
+                </button>
+              </div>
 
-          <div>
-            <ul className="space-y-6 px-6">
-              {NAV.map((item) => {
-                const { label, href } = item;
+              <div>
+                <ul className="space-y-6 px-6">
+                  {NAV.map((item) => {
+                    const { label, href } = item;
 
-                return (
-                  <li key={href} className="">
-                    <Link href={href}>{label}</Link>
-                  </li>
-                );
-              })}
-            </ul>
+                    return (
+                      <li key={href} className="">
+                        <Link href={href}>{label}</Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </nav>
+
+            <footer className="space-y-10 p-6 text-sm font-light text-navy-500">
+              <div className="space-y-2">
+                <p>If you would like to provide feedback please contact us at xxxxx@xxxxxxxx.</p>
+                <p>© {new Date().getFullYear()} Foodscapes by The Nature Conservancy</p>
+              </div>
+
+              <div className="flex divide-x">
+                <Link href="/terms-of-use" className="pr-2">
+                  Terms of Use
+                </Link>
+                <Link href="/privacy-policy" className="pl-2">
+                  Privacy policy
+                </Link>
+              </div>
+            </footer>
           </div>
         </motion.div>
       )}

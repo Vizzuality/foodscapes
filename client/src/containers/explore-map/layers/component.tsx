@@ -57,7 +57,7 @@ const Layers = () => {
           animate="animate"
           exit="exit"
           variants={overlayVariants}
-          className="bg-blur absolute top-0 left-0 h-full w-full bg-black/20"
+          className="bg-blur absolute top-0 left-0 z-10 h-full w-full bg-black/20"
           onClick={handleClose}
         />
       )}
@@ -68,7 +68,7 @@ const Layers = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="absolute top-0 right-0 h-full min-w-[300px] bg-white"
+          className="absolute top-0 right-0 z-20 h-full min-w-[300px] bg-white"
           variants={sidebarVariants}
         >
           <div className="flex items-center justify-between p-6">
