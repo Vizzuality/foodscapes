@@ -50,6 +50,7 @@ const LayeItem = ({ label, value, disabled }) => {
       >
         <Checkbox
           checked={layers.includes(value)}
+          readOnly
           className="pointer-events-none mt-1 h-3 w-3 rounded-sm"
         />
         <span className="text-sm font-light">{label}</span>

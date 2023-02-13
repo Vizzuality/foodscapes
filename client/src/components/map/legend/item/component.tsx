@@ -22,11 +22,11 @@ export const LegendItem: FC<LegendItemPropsWithChildren> = ({
         })}
       >
         {icon && <div className="absolute top-0 left-0">{icon}</div>}
-        <div className="font-heading text-sm text-white">{name}</div>
+        <div className="font-heading text-sm text-navy-500">{name}</div>
       </div>
     </div>
 
-    <div className="text-sm text-gray-300">{description}</div>
+    <div className="text-sm text-navy-400">{description}</div>
 
     {children && <div className="mt-2.5">{children}</div>}
   </div>
