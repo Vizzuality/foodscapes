@@ -1,3 +1,4 @@
+import Layers from './layers';
 import Legend from './legend';
 import Map from './map';
 import Menu from './menu';
@@ -8,6 +9,7 @@ const ExploreMap = () => {
       <Map />
       <Legend />
       <Menu />
+      <Layers />
     </div>
   );
 };

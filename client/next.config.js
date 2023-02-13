@@ -10,6 +10,9 @@ const nextConfig = {
     // @see https://github.com/facebookexperimental/Recoil/issues/2135#issuecomment-1362197710
     RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED: 'false',
   },
+  images: {
+    domains: ['api.mapbox.com'],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
