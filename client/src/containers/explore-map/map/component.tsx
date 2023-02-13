@@ -1,9 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { ViewState } from 'react-map-gl';
 
+import { basemapAtom } from 'store/explore-map';
+
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import { Layer, LayerManager } from '@vizzuality/layer-manager-react';
+import { useRecoilValue } from 'recoil';
+
+import { BASEMAPS } from 'constants/basemaps';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
@@ -50,6 +55,12 @@ const MapContainer = () => {
   const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
   const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
+  const basemap = useRecoilValue(basemapAtom);
+
+  const MAP_STYLE = useMemo(() => {
+    return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
+  }, [basemap, mapStyle]);
+
   const handleViewState = useCallback((vw: ViewState) => {
     setViewState(vw);
   }, []);
@@ -60,7 +71,7 @@ const MapContainer = () => {
         id={id}
         // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
         // mapStyle="mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz"
-        mapStyle={mapStyle}
+        mapStyle={MAP_STYLE}
         minZoom={minZoom}
         maxZoom={maxZoom}
         initialViewState={initialViewState}
