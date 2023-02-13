@@ -1,11 +1,11 @@
 import { atom } from 'recoil';
 
-export const menuOpen = atom({
+export const menuOpenAtom = atom({
   key: 'menu-open',
   default: false,
 });
 
-export const layersOpen = atom({
+export const layersOpenAtom = atom({
   key: 'layers-open',
   default: false,
 });

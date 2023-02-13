@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
-import { layersOpen } from 'store/explore-map';
+import { layersOpenAtom } from 'store/explore-map';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -12,7 +12,7 @@ import { CONTROL_BUTTON_STYLES } from 'components/map/controls/constants';
 import LAYERS_SVG from 'svgs/map/layers.svg?sprite';
 
 const LayersControlsContainer = () => {
-  const setLayersOpen = useSetRecoilState(layersOpen);
+  const setLayersOpen = useSetRecoilState(layersOpenAtom);
 
   const onToogleLayers = useCallback(() => {
     setLayersOpen(true);

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
-import { menuOpen } from 'store/explore-map';
+import { menuOpenAtom } from 'store/explore-map';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -12,7 +12,7 @@ import { CONTROL_BUTTON_STYLES } from 'components/map/controls/constants';
 import MENU_SVG from 'svgs/map/menu.svg?sprite';
 
 const MenuControlsContainer = () => {
-  const setMenuOpen = useSetRecoilState(menuOpen);
+  const setMenuOpen = useSetRecoilState(menuOpenAtom);
 
   const onToogleMenu = useCallback(() => {
     setMenuOpen(true);
