@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
@@ -16,6 +17,8 @@ import Icon from 'components/icon';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const Menu = () => {
+  const { pathname } = useRouter();
+
   const menuOpen = useRecoilValue(menuOpenAtom);
   const setMenuOpen = useSetRecoilState(menuOpenAtom);
 
@@ -58,7 +61,7 @@ const Menu = () => {
           animate="animate"
           exit="exit"
           variants={overlayVariants}
-          className="bg-blur absolute top-0 left-0 z-10 h-full w-full bg-black/20"
+          className="absolute top-0 left-0 z-10 h-full w-full"
           onClick={handleClose}
         />
       )}
@@ -69,7 +72,7 @@ const Menu = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="absolute top-0 right-0 z-20 h-full w-full max-w-[300px] bg-white"
+          className="absolute top-0 right-0 z-20 h-full w-full max-w-[300px] bg-white shadow-lg"
           variants={sidebarVariants}
         >
           <div className="flex h-full flex-col justify-between space-y-10">
@@ -96,7 +99,21 @@ const Menu = () => {
 
                     return (
                       <li key={href} className="">
-                        <Link href={href}>{label}</Link>
+                        <Link
+                          href={href}
+                          className={cn({
+                            // Default: dark
+                            'relative text-navy-500 hover:text-navy-400 active:text-navy-500': true,
+
+                            // Selected
+                            'text-navy-500 hover:text-navy-500 active:text-navy-500':
+                              pathname === href,
+                            'after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:bg-navy-500':
+                              pathname === href,
+                          })}
+                        >
+                          {label}
+                        </Link>
                       </li>
                     );
                   })}

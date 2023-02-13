@@ -45,7 +45,7 @@ const Header = () => {
           {/* NAV */}
           <nav className="flex items-center justify-between">
             <ul className="flex items-center justify-between space-x-4">
-              {NAV.map((item) => {
+              {NAV.filter((i) => i.href !== '/').map((item) => {
                 const { href, label, filled } = item;
 
                 return (
