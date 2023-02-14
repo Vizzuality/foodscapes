@@ -14,7 +14,8 @@ const HeaderMap = () => {
       <Link
         href="/"
         className={cn({
-          'py-1 font-display text-2xl text-navy-500 transition-colors': true,
+          'py-1 font-display text-2xl text-white transition-colors': true,
+          '[text-shadow:0_0_2px_rgba(0,0,0,1)]': true,
         })}
       >
         Foodscapes
