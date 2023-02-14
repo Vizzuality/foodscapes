@@ -38,7 +38,7 @@ const LayeItem = ({ label, value, disabled }) => {
   return (
     <div
       className={cn({
-        'flex items-center justify-between space-x-8': true,
+        'group flex items-center justify-between space-x-8': true,
         'pointer-events-none opacity-25': disabled,
       })}
     >
@@ -51,9 +51,17 @@ const LayeItem = ({ label, value, disabled }) => {
         <Checkbox
           checked={layers.includes(value)}
           readOnly
-          className="pointer-events-none mt-1 h-3 w-3 rounded-sm"
+          className="pointer-events-none mt-1 h-3 w-3 rounded-sm group-hover:border-navy-400 group-hover:bg-navy-400"
         />
-        <span className="text-sm font-light">{label}</span>
+
+        <span
+          className={cn({
+            'text-sm font-light text-navy-500 transition-colors': true,
+            'group-hover:text-navy-400': true,
+          })}
+        >
+          {label}
+        </span>
       </button>
 
       <button type="button" className="h-3 w-3 shrink-0" disabled={disabled}>
