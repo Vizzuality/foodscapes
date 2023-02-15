@@ -33,18 +33,24 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
               />
             </PopoverTrigger>
 
-            <PopoverContent side="top" className="border-navy-500 bg-navy-500">
-              <Slider
-                className="w-full"
-                defaultValue={[opacity]}
-                min={0}
-                max={1}
-                step={0.01}
-                onValueChange={(value) => {
-                  if (onChangeOpacity) onChangeOpacity(value[0], settings);
-                }}
-              />
+            <PopoverContent
+              side="top"
+              className="max-w-[122px] border-navy-500 bg-navy-500 px-2.5 pt-1 pb-2.5"
+            >
+              <div className="space-y-5">
+                <h4 className="font-sans text-xxs text-white">Opacity</h4>
 
+                <Slider
+                  className="w-full"
+                  defaultValue={[opacity]}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  onValueChange={(value) => {
+                    if (onChangeOpacity) onChangeOpacity(value[0], settings);
+                  }}
+                />
+              </div>
               <PopoverArrow className="fill-navy-500" width={11} height={5} />
             </PopoverContent>
           </Popover>
