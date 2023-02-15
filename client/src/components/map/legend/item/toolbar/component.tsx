@@ -7,8 +7,9 @@ import { LegendItemToolbarProps } from 'components/map/legend/types';
 import Slider from 'components/slider';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 
+import HIDDEN_SVG from 'svgs/legend/hidden.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
-import VISIBILITY_SVG from 'svgs/legend/visibility.svg?sprite';
+import VISIBLE_SVG from 'svgs/legend/visible.svg?sprite';
 
 export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   settingsManager,
@@ -27,7 +28,6 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
               <Icon
                 className={cn({
                   'flex h-4 w-4 items-center justify-center text-navy-500': true,
-                  'text-gray-300': !visibility,
                 })}
                 icon={OPACITY_SVG}
               />
@@ -62,9 +62,8 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
             <Icon
               className={cn({
                 'flex h-4 w-4 items-center justify-center text-navy-500': true,
-                'text-gray-300': !visibility,
               })}
-              icon={visibility ? VISIBILITY_SVG : VISIBILITY_SVG}
+              icon={visibility ? VISIBLE_SVG : HIDDEN_SVG}
             />
           </button>
         </div>

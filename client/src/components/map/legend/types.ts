@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
@@ -13,12 +13,12 @@ type OnChangeOrder = (id: string[]) => void;
 type OnChangeOpacity = (opacity: number, settings: Settings) => void;
 type OnChangeVisibility = (visibility: boolean, settings: Settings) => void;
 
-type Settings = {
+export type Settings = {
   opacity: number;
   visibility: boolean;
 };
 
-type SettingsManager = {
+export type SettingsManager = {
   opacity: boolean;
   visibility: boolean;
 };
@@ -36,7 +36,6 @@ export interface LegendItemProps extends PropsWithChildren {
   id: string;
   name: string;
   description?: string;
-  icon?: ReactNode;
   // sortable
   sortable?: Sortable;
   listeners?: SyntheticListeners;

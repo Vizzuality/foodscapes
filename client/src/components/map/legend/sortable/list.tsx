@@ -9,8 +9,6 @@ import {
   useState,
 } from 'react';
 
-import cx from 'classnames';
-
 import {
   DndContext,
   DragOverlay,
@@ -108,28 +106,22 @@ export const SortableList: React.FC<SortableListProps> = ({
       onDragCancel={() => setActiveId(null)}
     >
       <SortableContext items={itemsIds} strategy={verticalListSortingStrategy}>
-        <div
-          className={cx({
-            'w-full': true,
-          })}
-        >
-          {Children.map(children, (Child) => {
-            if (isValidElement(Child)) {
-              const {
-                props: { id },
-              } = Child;
+        {Children.map(children, (Child) => {
+          if (isValidElement(Child)) {
+            const {
+              props: { id },
+            } = Child;
 
-              return (
-                <SortableItem id={id} sortable={sortable}>
-                  {cloneElement(Child as ReactElement, {
-                    sortable,
-                  })}
-                </SortableItem>
-              );
-            }
-            return null;
-          })}
-        </div>
+            return (
+              <SortableItem id={id} sortable={sortable}>
+                {cloneElement(Child as ReactElement, {
+                  sortable,
+                })}
+              </SortableItem>
+            );
+          }
+          return null;
+        })}
       </SortableContext>
 
       <DragOverlay>
