@@ -1,8 +1,8 @@
 import {
   Children,
   cloneElement,
-  FC,
   isValidElement,
+  ReactElement,
   useCallback,
   useId,
   useMemo,
@@ -28,19 +28,16 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
+import { SortableListProps } from 'components/map/legend/types';
+
 import SortableItem from './item';
 
-export interface SortableListProps {
-  className?: string;
-  children: React.ReactNode;
-  onChangeOrder: (id: string[]) => void;
-}
-
-export const SortableList: FC<SortableListProps> = ({
+export const SortableList: React.FC<SortableListProps> = ({
   children,
+  sortable,
   onChangeOrder,
 }: SortableListProps) => {
-  const rid = useId();
+  const uid = useId();
   const [activeId, setActiveId] = useState(null);
 
   const ActiveItem = useMemo(() => {
@@ -60,19 +57,17 @@ export const SortableList: FC<SortableListProps> = ({
     return activeChildArray[0] || null;
   }, [children, activeId]);
 
-  const itemsIds = useMemo(
-    () =>
-      Children.map(children, (Child) => {
-        if (isValidElement(Child)) {
-          const { props } = Child;
-          const { id } = props;
-          return id;
-        }
+  const itemsIds = useMemo(() => {
+    return Children.map(children, (Child) => {
+      if (isValidElement(Child)) {
+        const { props } = Child;
+        const { id } = props;
+        return id;
+      }
 
-        return null;
-      }),
-    [children]
-  );
+      return null;
+    });
+  }, [children]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -104,7 +99,7 @@ export const SortableList: FC<SortableListProps> = ({
 
   return (
     <DndContext
-      id={rid}
+      id={uid}
       sensors={sensors}
       collisionDetection={closestCenter}
       modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
@@ -123,14 +118,27 @@ export const SortableList: FC<SortableListProps> = ({
               const {
                 props: { id },
               } = Child;
-              return <SortableItem id={id}>{cloneElement(Child)}</SortableItem>;
+
+              return (
+                <SortableItem id={id} sortable={sortable}>
+                  {cloneElement(Child as ReactElement, {
+                    sortable,
+                  })}
+                </SortableItem>
+              );
             }
             return null;
           })}
         </div>
       </SortableContext>
 
-      <DragOverlay>{isValidElement(ActiveItem) ? cloneElement(ActiveItem) : null}</DragOverlay>
+      <DragOverlay>
+        {isValidElement(ActiveItem)
+          ? cloneElement(ActiveItem as ReactElement, {
+              sortable,
+            })
+          : null}
+      </DragOverlay>
     </DndContext>
   );
 };

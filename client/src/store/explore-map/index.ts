@@ -1,4 +1,4 @@
-import { array, string } from '@recoiljs/refine';
+import { array, bool, dict, number, object, string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
@@ -30,6 +30,21 @@ export const layersAtom = atom({
   effects: [
     urlSyncEffect({
       refine: array(string()),
+    }),
+  ],
+});
+
+export const layersSettingsAtom = atom({
+  key: 'layers-settings',
+  default: {},
+  effects: [
+    urlSyncEffect({
+      refine: dict(
+        object({
+          opacity: number(),
+          visibility: bool(),
+        })
+      ),
     }),
   ],
 });

@@ -16,6 +16,7 @@ import Layout from 'layouts/app';
 import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
+import { TooltipProvider } from 'components/ui/tooltip';
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
@@ -56,11 +57,13 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
         <Hydrate state={pageProps.dehydratedState}>
           {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
           <MediaContextProvider>
-            <MapProvider>
-              {/* Layout */}
-              {getLayout(<Component {...pageProps} />)}
-              <ThirdParty />
-            </MapProvider>
+            <TooltipProvider delayDuration={750}>
+              <MapProvider>
+                {/* Layout */}
+                {getLayout(<Component {...pageProps} />)}
+                <ThirdParty />
+              </MapProvider>
+            </TooltipProvider>
           </MediaContextProvider>
         </Hydrate>
       </QueryClientProvider>

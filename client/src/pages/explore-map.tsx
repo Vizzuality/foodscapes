@@ -1,6 +1,7 @@
 import { ReactElement, useCallback } from 'react';
 
 import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
+import RecoilDevTools from 'lib/recoil/devtools';
 
 import { RecoilRoot } from 'recoil';
 
@@ -31,6 +32,8 @@ const ExploreMapPage = () => {
         serialize={serialize}
         deserialize={deserialize}
       >
+        <RecoilDevTools />
+
         <ExploreMap />
       </RecoilURLSyncNext>
     </RecoilRoot>

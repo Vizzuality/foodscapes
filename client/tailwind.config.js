@@ -1,5 +1,6 @@
 const forms = require('@tailwindcss/forms');
 const lineClamp = require('@tailwindcss/line-clamp');
+const animate = require('tailwindcss-animate');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 /**
@@ -12,7 +13,7 @@ module.exports = {
     './src/containers/**/*.@(tsx|ts)',
     './src/pages/**/*.tsx',
   ],
-  plugins: [forms, lineClamp],
+  plugins: [forms, lineClamp, animate],
   theme: {
     extend: {
       height: {
