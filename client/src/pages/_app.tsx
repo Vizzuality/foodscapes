@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
 
+import { Domine, Public_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import { RecoilRoot } from 'recoil';
@@ -17,6 +18,22 @@ import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
 import { TooltipProvider } from 'components/ui/tooltip';
+
+const publicSans = Public_Sans({
+  weight: ['300', '400', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--font-public-sans',
+  display: 'block',
+});
+
+const domine = Domine({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--font-domine',
+  display: 'block',
+});
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
@@ -52,22 +69,30 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
   }, [router.events, handleRouteChangeCompleted]);
 
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
-          <MediaContextProvider>
-            <TooltipProvider delayDuration={750}>
+    <>
+      <style jsx global>{`
+        :root {
+          --font-public-sans: ${publicSans.style.fontFamily};
+          --font-domine: ${domine.style.fontFamily};
+        }
+      `}</style>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
+            <MediaContextProvider>
               <MapProvider>
-                {/* Layout */}
-                {getLayout(<Component {...pageProps} />)}
-                <ThirdParty />
+                <TooltipProvider delayDuration={750}>
+                  {/* Layout */}
+                  {getLayout(<Component {...pageProps} />)}
+                  <ThirdParty />
+                </TooltipProvider>
               </MapProvider>
-            </TooltipProvider>
-          </MediaContextProvider>
-        </Hydrate>
-      </QueryClientProvider>
-    </RecoilRoot>
+            </MediaContextProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </RecoilRoot>
+    </>
   );
 };
 

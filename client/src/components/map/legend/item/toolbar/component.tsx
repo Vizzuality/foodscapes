@@ -38,7 +38,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
               className="max-w-[122px] border-navy-500 bg-navy-500 px-2.5 pt-1 pb-2.5"
             >
               <div className="space-y-5">
-                <h4 className="font-sans text-xxs text-white">Opacity</h4>
+                <div className="text-xxs text-white">Opacity</div>
 
                 <Slider
                   className="w-full"
