@@ -55,7 +55,7 @@ const BasemapItem = ({ label, value, preview }) => {
         </div>
       </button>
 
-      <button type="button" className="h-3 w-3 shrink-0">
+      <button type="button" className="h-4 w-4 shrink-0">
         <Icon
           icon={INFO_SVG}
           className={cn({

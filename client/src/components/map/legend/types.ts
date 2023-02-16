@@ -3,6 +3,8 @@ import { PropsWithChildren } from 'react';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
+import { IconProps } from 'components/icon/types';
+
 type Sortable = {
   enabled: boolean;
   handle?: boolean;
@@ -12,15 +14,19 @@ type Sortable = {
 type OnChangeOrder = (id: string[]) => void;
 type OnChangeOpacity = (opacity: number, settings: Settings) => void;
 type OnChangeVisibility = (visibility: boolean, settings: Settings) => void;
+type OnChangeExpand = (expand: boolean, settings: Settings) => void;
 
 export type Settings = {
   opacity: number;
   visibility: boolean;
+  expand: boolean;
 };
 
 export type SettingsManager = {
   opacity: boolean;
   visibility: boolean;
+  expand: boolean;
+  info?: boolean;
 };
 /*
  * Legend
@@ -44,10 +50,10 @@ export interface LegendItemProps extends PropsWithChildren {
   // settings
   settings?: Settings;
   settingsManager?: SettingsManager;
-  theme?: 'dark' | 'light';
   className?: string;
   onChangeOpacity?: OnChangeOpacity;
   onChangeVisibility?: OnChangeVisibility;
+  onChangeExpand?: OnChangeExpand;
 }
 
 export interface LegendItemToolbarProps {
@@ -55,10 +61,16 @@ export interface LegendItemToolbarProps {
   settings?: Settings;
   settingsManager?: SettingsManager;
 
-  theme?: 'dark' | 'light';
   className?: string;
   onChangeOpacity?: OnChangeOpacity;
   onChangeVisibility?: OnChangeVisibility;
+  onChangeExpand?: OnChangeExpand;
+}
+
+export interface LegendItemButtonProps {
+  icon: IconProps['icon'];
+  selected?: boolean;
+  className?: string;
 }
 
 /*

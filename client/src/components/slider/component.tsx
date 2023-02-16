@@ -29,8 +29,20 @@ const Slider = React.forwardRef<
       defaultValue={defaultValue}
       {...props}
     >
-      <SliderPrimitive.Track className="relative h-0.5 w-full grow overflow-hidden rounded-full bg-white/20">
-        <SliderPrimitive.Range className="absolute h-full bg-white/80" />
+      <SliderPrimitive.Track
+        className={cn({
+          'relative h-4 w-full grow overflow-hidden rounded-full': true,
+          'z-10 after:absolute after:top-1/2 after:h-0.5 after:w-full after:-translate-y-1/2 after:bg-white/20':
+            true,
+        })}
+      >
+        <SliderPrimitive.Range
+          className={cn({
+            'absolute h-full': true,
+            'z-10 after:absolute after:top-1/2 after:h-0.5 after:w-full after:-translate-y-1/2 after:bg-white/80':
+              true,
+          })}
+        />
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb asChild>
         <span className="relative block h-2 w-2 rounded-full bg-white transition-colors focus:outline-none focus:ring-1 focus:ring-gray-400 disabled:pointer-events-none disabled:opacity-50">

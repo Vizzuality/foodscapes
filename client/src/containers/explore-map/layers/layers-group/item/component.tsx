@@ -64,7 +64,7 @@ const LayeItem = ({ label, value, disabled }) => {
         </span>
       </button>
 
-      <button type="button" className="h-3 w-3 shrink-0" disabled={disabled}>
+      <button type="button" className="h-4 w-4 shrink-0" disabled={disabled}>
         <Icon
           icon={INFO_SVG}
           className={cn({

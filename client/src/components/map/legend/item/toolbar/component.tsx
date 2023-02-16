@@ -1,79 +1,194 @@
+import { useState } from 'react';
+
 import cn from 'lib/classnames';
 
 import { PopoverArrow } from '@radix-ui/react-popover';
 
-import Icon from 'components/icon';
 import { LegendItemToolbarProps } from 'components/map/legend/types';
 import Slider from 'components/slider';
+import { Dialog, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
+import EXPAND_SVG from 'svgs/legend/expand.svg?sprite';
 import HIDDEN_SVG from 'svgs/legend/hidden.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import VISIBLE_SVG from 'svgs/legend/visible.svg?sprite';
+import INFO_SVG from 'svgs/ui/info.svg?sprite';
+
+import LegendItemButton from './button';
 
 export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   settingsManager,
   settings,
   onChangeOpacity,
   onChangeVisibility,
+  onChangeExpand,
 }: LegendItemToolbarProps) => {
-  const { opacity = 1, visibility = true } = settings || {};
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const { opacity = 1, visibility = true, expand = true } = settings || {};
 
   return (
-    <div className="flex space-x-1">
-      {settingsManager?.opacity && (
-        <div className="flex">
-          <Popover>
-            <PopoverTrigger type="button">
-              <Icon
-                className={cn({
-                  'flex h-4 w-4 items-center justify-center text-navy-500': true,
-                })}
-                icon={OPACITY_SVG}
-              />
-            </PopoverTrigger>
-
-            <PopoverContent
-              side="top"
-              className="max-w-[122px] border-navy-500 bg-navy-500 px-2.5 pt-1 pb-2.5"
+    <div className="mt-0.5 flex divide-x">
+      <div className="flex space-x-1 pr-2">
+        {settingsManager?.opacity && (
+          <div className="flex items-start">
+            <Popover
+              onOpenChange={(open) => {
+                setPopoverOpen(open);
+              }}
             >
-              <div className="space-y-5">
-                <div className="text-xxs text-white">Opacity</div>
+              <Tooltip delayDuration={500}>
+                <PopoverTrigger asChild>
+                  <TooltipTrigger
+                    type="button"
+                    className={cn({
+                      'pointer-events-none': popoverOpen,
+                    })}
+                  >
+                    <LegendItemButton icon={OPACITY_SVG} selected={opacity !== 1} />
+                  </TooltipTrigger>
+                </PopoverTrigger>
 
-                <Slider
-                  className="w-full"
-                  defaultValue={[opacity]}
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  onValueChange={(value) => {
-                    if (onChangeOpacity) onChangeOpacity(value[0], settings);
-                  }}
-                />
-              </div>
-              <PopoverArrow className="fill-navy-500" width={11} height={5} />
-            </PopoverContent>
-          </Popover>
-        </div>
-      )}
+                <TooltipContent
+                  align="end"
+                  alignOffset={-10}
+                  className="rounded-none border-navy-500 bg-navy-500"
+                >
+                  <div className="text-xxs text-white">Opacity</div>
 
-      {settingsManager?.visibility && (
-        <div className="flex">
-          <button
-            type="button"
-            onClick={() => {
-              if (onChangeVisibility) onChangeVisibility(!visibility, settings);
-            }}
-          >
-            <Icon
-              className={cn({
-                'flex h-4 w-4 items-center justify-center text-navy-500': true,
-              })}
-              icon={visibility ? VISIBLE_SVG : HIDDEN_SVG}
-            />
-          </button>
-        </div>
-      )}
+                  <TooltipArrow className="fill-navy-500" width={10} height={5} />
+                </TooltipContent>
+              </Tooltip>
+
+              <PopoverContent
+                side="top"
+                align="end"
+                alignOffset={-10}
+                className="max-w-[122px] border-navy-500 bg-navy-500 px-2.5 pt-1 pb-2.5"
+              >
+                <div className="space-y-5">
+                  <div className="text-xxs text-white">Opacity</div>
+
+                  <Slider
+                    className="w-full"
+                    defaultValue={[opacity]}
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    onValueChange={(value) => {
+                      if (onChangeOpacity) onChangeOpacity(value[0], settings);
+                    }}
+                  />
+                </div>
+                <PopoverArrow className="block fill-navy-500" width={11} height={5} />
+              </PopoverContent>
+            </Popover>
+          </div>
+        )}
+
+        {settingsManager?.visibility && (
+          <div className="flex items-start">
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger
+                type="button"
+                className={cn({
+                  'pointer-events-none': popoverOpen,
+                })}
+                onClick={() => {
+                  if (onChangeVisibility) onChangeVisibility(!visibility, settings);
+                }}
+              >
+                <LegendItemButton icon={visibility ? VISIBLE_SVG : HIDDEN_SVG} />
+              </TooltipTrigger>
+
+              <TooltipContent
+                side="top"
+                align="end"
+                alignOffset={-10}
+                className="rounded-none border-navy-500 bg-navy-500"
+              >
+                <div className="text-xxs text-white">
+                  {visibility ? 'Hide layer' : 'Show layer'}
+                </div>
+
+                <TooltipArrow className="fill-navy-500" width={10} height={5} />
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
+
+        {settingsManager?.info && (
+          <div className="flex items-start">
+            <Dialog>
+              <Tooltip delayDuration={500}>
+                <DialogTrigger asChild>
+                  <TooltipTrigger
+                    type="button"
+                    className={cn({
+                      'pointer-events-none': popoverOpen,
+                    })}
+                  >
+                    <LegendItemButton icon={INFO_SVG} />
+                  </TooltipTrigger>
+                </DialogTrigger>
+
+                <TooltipContent
+                  side="top"
+                  align="end"
+                  alignOffset={-10}
+                  className="rounded-none border-navy-500 bg-navy-500"
+                >
+                  <div className="text-xxs text-white">Show info</div>
+
+                  <TooltipArrow className="fill-navy-500" width={10} height={5} />
+                </TooltipContent>
+
+                <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+                  <div>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem consequuntur
+                    voluptas saepe debitis quam dicta necessitatibus ipsam, eius odit. Mollitia
+                    cupiditate doloremque voluptatum commodi minus fugit, et dolor odit.
+                  </div>
+                </DialogContent>
+              </Tooltip>
+            </Dialog>
+          </div>
+        )}
+      </div>
+
+      <div className="pl-2">
+        {settingsManager?.expand && (
+          <div className="flex items-start">
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger
+                type="button"
+                className={cn({
+                  'pointer-events-none': popoverOpen,
+                })}
+                onClick={() => {
+                  if (onChangeExpand) onChangeExpand(!expand, settings);
+                }}
+              >
+                <LegendItemButton icon={expand ? EXPAND_SVG : EXPAND_SVG} />
+              </TooltipTrigger>
+
+              <TooltipContent
+                side="top"
+                align="end"
+                alignOffset={-10}
+                className="rounded-none border-navy-500 bg-navy-500"
+              >
+                <div className="text-xxs text-white">
+                  {expand ? 'Collapse layer' : 'Expand layer'}
+                </div>
+
+                <TooltipArrow className="fill-navy-500" width={10} height={5} />
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

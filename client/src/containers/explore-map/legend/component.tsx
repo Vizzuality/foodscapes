@@ -35,7 +35,12 @@ const LegendContainer = () => {
               onChangeVisibility={(visibility, settings) =>
                 setLayerSettings({ [layer.id]: { ...settings, visibility } })
               }
-            />
+              onChangeExpand={(expand, settings) =>
+                setLayerSettings({ [layer.id]: { ...settings, expand } })
+              }
+            >
+              <div>Testing expand</div>
+            </LegendItem>
           );
         })}
       </Legend>

@@ -22,10 +22,12 @@ export const LegendItem: React.FC<LegendItemProps> = ({
   settingsManager,
   settings,
   className,
-  theme = 'light',
   onChangeOpacity,
   onChangeVisibility,
+  onChangeExpand,
 }: LegendItemProps) => {
+  const { expand } = settings || {};
+
   const validChildren = useMemo(() => {
     const chldn = Children.map(children, (Child) => {
       return isValidElement(Child);
@@ -44,26 +46,24 @@ export const LegendItem: React.FC<LegendItemProps> = ({
         <header className="relative flex justify-between space-x-8">
           <div
             className={cx({
-              'relative flex space-x-2': true,
+              'relative flex space-x-0.5': true,
             })}
           >
             {sortable?.handle && (
               <button
                 aria-label="drag"
                 type="button"
-                className="cursor-pointer text-navy-400 hover:text-navy-500"
+                className="cursor-pointer text-navy-500 transition-colors hover:text-navy-400"
                 {...listeners}
                 {...attributes}
               >
-                <Icon className="h-4 w-4" icon={DRAG_SVG} />
+                <Icon className="h-5 w-5" icon={DRAG_SVG} />
               </button>
             )}
 
             <div
               className={cx({
-                'font-heading text-sm text-white': true,
-                'text-white': theme === 'dark',
-                'text-gray-700': theme === 'light',
+                'font-heading mt-px text-sm text-navy-500': true,
               })}
             >
               {name}
@@ -76,12 +76,13 @@ export const LegendItem: React.FC<LegendItemProps> = ({
             settingsManager={settingsManager}
             onChangeOpacity={onChangeOpacity}
             onChangeVisibility={onChangeVisibility}
+            onChangeExpand={onChangeExpand}
           />
         </header>
 
         {description && <div className="mt-1 text-sm text-gray-300">{description}</div>}
 
-        {validChildren && <div className="mt-2.5">{children}</div>}
+        {validChildren && expand && <div className="mt-2.5">{children}</div>}
       </div>
     </div>
   );

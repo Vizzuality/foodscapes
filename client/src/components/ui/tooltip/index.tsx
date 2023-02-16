@@ -16,12 +16,12 @@ const TooltipTrigger = TooltipPrimitive.Trigger;
 const TooltipContent = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+>(({ className, sideOffset = 0, ...props }, ref) => (
   <TooltipPrimitive.Content
     ref={ref}
     sideOffset={sideOffset}
     className={cn({
-      'data-[side=bottom]:slide-in-from-top-1 data-[side=top]:slide-in-from-bottom-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 dark:border-gray-800 dark:bg-gray-800 z-50 overflow-hidden rounded-md border border-gray-100 bg-white px-3 py-1.5 text-sm text-gray-700 shadow-md animate-in fade-in-50 dark:text-gray-400':
+      'data-[side=bottom]:slide-in-from-top-1 data-[side=top]:slide-in-from-bottom-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 dark:border-gray-800 dark:bg-gray-800 z-50 rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 shadow-md animate-in fade-in-50 dark:text-gray-400':
         true,
       [className]: !!className,
     })}

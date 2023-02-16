@@ -17,10 +17,13 @@ export function useLegend({ layers, settings = {} }: UseLegendProps) {
     settings: settings[layer.value] || {
       opacity: 1,
       visibility: true,
+      expand: true,
     },
     settingsManager: {
       opacity: true,
       visibility: true,
+      expand: true,
+      info: true,
     },
   }));
 }

@@ -10,7 +10,7 @@ const LayoutMap: React.FC<LayoutMapProps> = (props: LayoutMapProps) => {
   const { children } = props;
 
   return (
-    <main className="flex flex-col font-sans antialiased lg:min-h-screen">
+    <main className="flex h-screen flex-col overflow-hidden font-sans antialiased">
       <Header />
 
       <div className="relative grow">

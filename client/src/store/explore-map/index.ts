@@ -43,6 +43,7 @@ export const layersSettingsAtom = atom({
         object({
           opacity: number(),
           visibility: bool(),
+          expand: bool(),
         })
       ),
     }),
