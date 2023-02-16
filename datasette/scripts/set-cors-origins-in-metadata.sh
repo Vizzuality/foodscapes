@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Given a comma-separated list of origins from an environment variable,
 CORS_ORIGINS=`echo "$DATASETTE_CORS_ORIGINS" | \
