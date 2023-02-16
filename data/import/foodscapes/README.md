@@ -6,7 +6,10 @@ is the `sqlite3` binary.
 
 ```
 sudo apt install sqlite3 # or whatever appropriate to install sqlite3 on your OS
-cp /path/to/local/copy/of/foodscapes.csv ./source
+# copy source CSV where the ingestion script expects it - please note that
+# the expected filename is hardcoded, so do make sure it matches what is shown
+# in the example command below
+cp /path/to/local/copy/of/foodscapes.csv ./source/foodscapes-filter-table.csv
 sh foodscapes_csv-to-sqlite.sh
 ```
 
