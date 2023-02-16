@@ -12,7 +12,6 @@ on:
       - 'datasette/**'
       - 'tiler/**'
       - '.github/**'
-  pull_request:
   workflow_dispatch:
 
 env:
@@ -35,28 +34,31 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract branch ids
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Prepare ids
         shell: bash
         run: |
           echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
           echo "shortsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "registry_namespace=$(echo ${{ github.repository_owner }} | tr A-Z a-z)" >> $GITHUB_OUTPUT
         id: extract_branch
 
-      - name: Build container image
+      - name: Build and push
+        uses: docker/build-push-action@v4
         env:
           IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-        run: |
-          docker build \
-          --build-arg TILER_FOODSCAPES_COG_FILENAME=${{ env.TILER_FOODSCAPES_COG_FILENAME }} \
-          --build-arg DATA_CORE_COG_SOURCE_URL=${{ env.DATA_CORE_COG_SOURCE_URL }} \
-          --build-arg DATA_CORE_COG_CHECKSUM=${{ env.DATA_CORE_COG_CHECKSUM }} \
-          -t $REGISTRY/$REPOSITORY:$IMAGE_TAG $REPOSITORY
+          REGISTRY_NAMESPACE: ${{ steps.extract_branch.outputs.registry_namespace }}
 
-      - name: Push container image to registry
-        env:
-          IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-        run: |
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+        with:
+          context: ${{ env.REPOSITORY }}
+          push: true
+          build-args: |
+            TILER_FOODSCAPES_COG_FILENAME=${{ env.TILER_FOODSCAPES_COG_FILENAME }}
+            DATA_CORE_COG_SOURCE_URL=${{ env.DATA_CORE_COG_SOURCE_URL }}
+            DATA_CORE_COG_CHECKSUM=${{ env.DATA_CORE_COG_CHECKSUM }}
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_NAMESPACE }}/foodscapes_${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
 
   push_client_to_registry:
     name: Push client container image to registry
@@ -74,24 +76,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract branch ids
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Prepare ids
         shell: bash
         run: |
           echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
           echo "shortsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "registry_namespace=$(echo ${{ github.repository_owner }} | tr A-Z a-z)" >> $GITHUB_OUTPUT
         id: extract_branch
 
-      - name: Build container image
+      - name: Build and push
+        uses: docker/build-push-action@v4
         env:
           IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG $REPOSITORY
-
-      - name: Push container image to registry
-        env:
-          IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-        run: |
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          REGISTRY_NAMESPACE: ${{ steps.extract_branch.outputs.registry_namespace }}
+        with:
+          context: ${{ env.REPOSITORY }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_NAMESPACE }}/foodscapes_${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
 
   push_datasette_to_registry:
     name: Push datasette container image to registry
@@ -109,26 +113,28 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract branch ids
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Prepare ids
         shell: bash
         run: |
           echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
           echo "shortsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "registry_namespace=$(echo ${{ github.repository_owner }} | tr A-Z a-z)" >> $GITHUB_OUTPUT
         id: extract_branch
 
-      - name: Build container image
+      - name: Build and push
+        uses: docker/build-push-action@v4
         env:
           IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-        run: |
-          docker build \
-          --build-arg DATASETTE_SQLITE_DB_FILENAME=${{ env.DATASETTE_SQLITE_DB_FILENAME }} \
-          --build-arg DATA_CORE_SQLITE_DB_SOURCE_URL=${{ env.DATA_CORE_SQLITE_DB_SOURCE_URL }} \
-          --build-arg DATA_CORE_SQLITE_DB_CHECKSUM=${{ env.DATA_CORE_SQLITE_DB_CHECKSUM }} \
-          --build-arg DATASETTE_CORS_ORIGINS=${{ env.DATASETTE_CORS_ORIGINS }} \
-          -t $REGISTRY/$REPOSITORY:$IMAGE_TAG $REPOSITORY
-
-      - name: Push container image to registry
-        env:
-          IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-        run: |
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          REGISTRY_NAMESPACE: ${{ steps.extract_branch.outputs.registry_namespace }}
+        with:
+          context: ${{ env.REPOSITORY }}
+          push: true
+          build-args: |
+            DATASETTE_SQLITE_DB_FILENAME=${{ env.DATASETTE_SQLITE_DB_FILENAME }}
+            DATA_CORE_SQLITE_DB_SOURCE_URL=${{ env.DATA_CORE_SQLITE_DB_SOURCE_URL }}
+            DATA_CORE_SQLITE_DB_CHECKSUM=${{ env.DATA_CORE_SQLITE_DB_CHECKSUM }}
+            DATASETTE_CORS_ORIGINS=${{ env.DATASETTE_CORS_ORIGINS }}
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_NAMESPACE }}/foodscapes_${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
