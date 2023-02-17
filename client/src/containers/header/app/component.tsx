@@ -14,7 +14,7 @@ const THEMES = {
   'light-dark': 'light-dark',
 } as const;
 
-type Theme = typeof THEMES[keyof typeof THEMES];
+type Theme = (typeof THEMES)[keyof typeof THEMES];
 
 const Header = () => {
   const { pathname } = useRouter();

@@ -23,8 +23,8 @@ export const LegendItemButton = ({ icon, className, selected = false }: LegendIt
         className={cn({
           'absolute top-1/2 left-1/2 z-0 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 scale-0 rounded-full border border-transparent transition-all':
             true,
-          'group-active:scale-100 group-active:bg-navy-400': true,
-          'scale-100 border-navy-500 group-hover:border-navy-400': selected,
+          'group-active:scale-100 group-active:bg-navy-200': true,
+          'scale-100 border-navy-500 group-hover:border-navy-200': selected,
         })}
       />
     </div>

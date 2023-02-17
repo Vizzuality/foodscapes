@@ -47,6 +47,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
           <div
             className={cx({
               'relative flex space-x-0.5': true,
+              '-ml-1': sortable?.handle,
             })}
           >
             {sortable?.handle && (

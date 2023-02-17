@@ -36,6 +36,7 @@ const Slider = React.forwardRef<
             true,
         })}
       >
+        <span className="pointer-events-none absolute left-0 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white/80" />
         <SliderPrimitive.Range
           className={cn({
             'absolute h-full': true,
@@ -43,6 +44,7 @@ const Slider = React.forwardRef<
               true,
           })}
         />
+        <span className="pointer-events-none absolute right-0 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white/20" />
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb asChild>
         <span className="relative block h-2 w-2 rounded-full bg-white transition-colors focus:outline-none focus:ring-1 focus:ring-gray-400 disabled:pointer-events-none disabled:opacity-50">
