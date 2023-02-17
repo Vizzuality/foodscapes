@@ -9,6 +9,7 @@ import LegendItem from 'components/map/legend/item';
 
 const LegendContainer = () => {
   const layers = useRecoilValue(layersAtom);
+  const setLayers = useSetRecoilState(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
   const setLayerSettings = useSetRecoilState(layersSettingsAtom);
 
@@ -22,6 +23,13 @@ const LegendContainer = () => {
           enabled: true,
           handle: true,
           handleIcon: <div className="text-white">Drag</div>,
+        }}
+        onChangeOrder={(order) => {
+          const newLayers = order.map((id) => {
+            return layers.find((layer) => layer === id);
+          });
+
+          setLayers(newLayers);
         }}
       >
         {LEGEND_LAYERS.map((layer) => {
