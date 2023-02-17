@@ -80,7 +80,10 @@ const Layers = () => {
               Map layers
             </h2>
 
-            <button className="h-6 w-6 text-navy-500" onClick={handleClose}>
+            <button
+              className="flex h-6 w-6 items-center justify-center text-navy-500"
+              onClick={handleClose}
+            >
               <Icon icon={CLOSE_SVG} />
             </button>
           </div>
