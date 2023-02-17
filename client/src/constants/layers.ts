@@ -108,6 +108,8 @@ export const LAYERS = [
         BAND: 1,
         COLOR_RAMP: encodeURIComponent(JSON.stringify(settings.colormap)),
       },
+      opacity: settings.opacity,
+      visibility: settings.visibility,
     }),
   },
   {
@@ -218,6 +220,8 @@ export const LAYERS = [
         BAND: 3,
         COLOR_RAMP: encodeURIComponent(JSON.stringify(settings.colormap)),
       },
+      opacity: settings.opacity,
+      visibility: settings.visibility,
     }),
   },
   {

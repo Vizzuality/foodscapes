@@ -1,6 +1,6 @@
 import { useMap } from 'react-map-gl';
 
-import { layersAtom } from 'store/explore-map';
+import { layersAtom, layersSettingsAtom } from 'store/explore-map';
 
 import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import { Layer, LayerManager } from '@vizzuality/layer-manager-react';
@@ -11,8 +11,9 @@ import { useLayers } from 'hooks/explore-map';
 const LayerManagerContainer = () => {
   const { current: map } = useMap();
   const layers = useRecoilValue(layersAtom);
+  const layersSettings = useRecoilValue(layersSettingsAtom);
 
-  const LAYERS = useLayers({ layers });
+  const LAYERS = useLayers({ layers, settings: layersSettings });
 
   return (
     <LayerManager map={map.getMap()} plugin={PluginMapboxGl}>
