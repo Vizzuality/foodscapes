@@ -44,11 +44,11 @@ export const LegendItem: React.FC<LegendItemProps> = ({
         <AccordionItem value={id} asChild>
           <div
             className={cn({
-              'bg-white px-2.5 py-2.5': true,
+              'bg-white': true,
               [className]: !!className,
             })}
           >
-            <header className="relative flex justify-between space-x-8">
+            <header className="flex justify-between space-x-8 bg-white px-2.5 py-2.5">
               <div
                 className={cx({
                   'relative flex space-x-0.5': true,
@@ -87,8 +87,8 @@ export const LegendItem: React.FC<LegendItemProps> = ({
             </header>
 
             {validChildren && (
-              <AccordionContent className="overflow-hidden transition-all data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
-                <div className="mt-2.5">{children}</div>
+              <AccordionContent className="overflow-hidden px-2.5 pb-2.5 transition-all data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                {children}
               </AccordionContent>
             )}
           </div>

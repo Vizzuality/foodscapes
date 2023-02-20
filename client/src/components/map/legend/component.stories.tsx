@@ -32,7 +32,7 @@ const Template: Story<LegendProps> = (args) => {
   }, []);
 
   return (
-    <Legend {...args} sortable={sortable} maxHeight={300} onChangeOrder={onChangeOrder}>
+    <Legend {...args} sortable={sortable} onChangeOrder={onChangeOrder}>
       {sortedItems.map((i) => {
         const { type, items, intersections } = i;
 

@@ -8,7 +8,6 @@ import { LegendProps } from './types';
 export const Legend: React.FC<LegendProps> = ({
   children,
   className = '',
-  maxHeight,
   sortable,
   onChangeOrder,
 }: LegendProps) => {
@@ -19,18 +18,13 @@ export const Legend: React.FC<LegendProps> = ({
   return (
     <div
       className={cn({
-        'flex w-full flex-grow flex-col overflow-hidden': true,
+        'flex w-full grow flex-col overflow-hidden': true,
         hidden: !isChildren,
         [className]: !!className,
       })}
     >
       {isChildren && (
-        <div
-          className="relative flex flex-grow flex-col"
-          style={{
-            maxHeight,
-          }}
-        >
+        <div className="relative flex h-full grow flex-col overflow-hidden">
           {/* <div className="pointer-events-none absolute top-0 left-0 z-10 h-3 w-full bg-gradient-to-b from-black via-black" /> */}
           <div className="overflow-y-auto overflow-x-hidden">
             {!!sortable && (

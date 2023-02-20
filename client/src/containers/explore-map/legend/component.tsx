@@ -67,9 +67,9 @@ const LegendContainer = () => {
   );
 
   return (
-    <div className="absolute bottom-16 right-6 z-10">
+    <div className="absolute bottom-16 right-6 z-10 w-full max-w-xs">
       <Legend
-        maxHeight={'80vh'}
+        className={'max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48))]'}
         sortable={{
           enabled: true,
           handle: true,
@@ -92,7 +92,37 @@ const LegendContainer = () => {
                 onChangeExpand(layer, expand, settings);
               }}
             >
-              <div>Testing expand</div>
+              <div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rerum libero modi quo
+                quae maiores dolorum, reiciendis saepe corrupti maxime similique quos quidem
+                repellendus tempore aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Nam rerum libero modi quo quae maiores dolorum,
+                reiciendis saepe corrupti maxime similique quos quidem repellendus tempore aut quam
+                itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
+                rerum libero modi quo quae maiores dolorum, reiciendis saepe corrupti maxime
+                similique quos quidem repellendus tempore aut quam itaque amet laboriosam. Lorem
+                ipsum dolor sit amet consectetur adipisicing elit. Nam rerum libero modi quo quae
+                maiores dolorum, reiciendis saepe corrupti maxime similique quos quidem repellendus
+                tempore aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur
+                adipisicing elit. Nam rerum libero modi quo quae maiores dolorum, reiciendis saepe
+                corrupti maxime similique quos quidem repellendus tempore aut quam itaque amet
+                laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rerum
+                libero modi quo quae maiores dolorum, reiciendis saepe corrupti maxime similique
+                quos quidem repellendus tempore aut quam itaque amet laboriosam. Lorem ipsum dolor
+                sit amet consectetur adipisicing elit. Nam rerum libero modi quo quae maiores
+                dolorum, reiciendis saepe corrupti maxime similique quos quidem repellendus tempore
+                aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Nam rerum libero modi quo quae maiores dolorum, reiciendis saepe corrupti
+                maxime similique quos quidem repellendus tempore aut quam itaque amet laboriosam.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rerum libero modi quo
+                quae maiores dolorum, reiciendis saepe corrupti maxime similique quos quidem
+                repellendus tempore aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Nam rerum libero modi quo quae maiores dolorum,
+                reiciendis saepe corrupti maxime similique quos quidem repellendus tempore aut quam
+                itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
+                rerum libero modi quo quae maiores dolorum, reiciendis saepe corrupti maxime
+                similique quos quidem repellendus tempore aut quam itaque amet laboriosam.
+              </div>
             </LegendItem>
           );
         })}
