@@ -125,11 +125,13 @@ export const SortableList: React.FC<SortableListProps> = ({
       </SortableContext>
 
       <DragOverlay>
-        {isValidElement(ActiveItem)
-          ? cloneElement(ActiveItem as ReactElement, {
+        {isValidElement(ActiveItem) && (
+          <div className="flex max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48)_-_theme(space.40))] flex-col overflow-hidden">
+            {cloneElement(ActiveItem as ReactElement, {
               sortable,
-            })
-          : null}
+            })}
+          </div>
+        )}
       </DragOverlay>
     </DndContext>
   );
