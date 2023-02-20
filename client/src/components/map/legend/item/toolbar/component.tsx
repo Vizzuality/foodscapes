@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { AccordionTrigger } from '@radix-ui/react-accordion';
 import { PopoverArrow } from '@radix-ui/react-popover';
 
 import { LegendItemToolbarProps } from 'components/map/legend/types';
@@ -161,17 +162,24 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
         {settingsManager?.expand && (
           <div className="flex items-start">
             <Tooltip delayDuration={500}>
-              <TooltipTrigger
-                type="button"
-                className={cn({
-                  'pointer-events-none': popoverOpen,
-                })}
-                onClick={() => {
-                  if (onChangeExpand) onChangeExpand(!expand, settings);
-                }}
-              >
-                <LegendItemButton icon={expand ? EXPAND_SVG : EXPAND_SVG} />
-              </TooltipTrigger>
+              <AccordionTrigger asChild>
+                <TooltipTrigger
+                  type="button"
+                  className={cn({
+                    'pointer-events-none': popoverOpen,
+                  })}
+                  onClick={() => {
+                    if (onChangeExpand) onChangeExpand(!expand, settings);
+                  }}
+                >
+                  <LegendItemButton
+                    icon={EXPAND_SVG}
+                    className={cn({
+                      'rotate-180 transform transition-transform': expand,
+                    })}
+                  />
+                </TooltipTrigger>
+              </AccordionTrigger>
 
               <TooltipContent
                 side="top"

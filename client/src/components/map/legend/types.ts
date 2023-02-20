@@ -28,6 +28,12 @@ export type SettingsManager = {
   expand: boolean;
   info?: boolean;
 };
+
+export type LegendItemEvents = {
+  onChangeOpacity?: OnChangeOpacity;
+  onChangeVisibility?: OnChangeVisibility;
+  onChangeExpand?: OnChangeExpand;
+};
 /*
  * Legend
  */
@@ -38,10 +44,10 @@ export interface LegendProps extends PropsWithChildren {
   onChangeOrder?: OnChangeOrder;
 }
 
-export interface LegendItemProps extends PropsWithChildren {
+export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   id: string;
   name: string;
-  description?: string;
+  className?: string;
   // sortable
   sortable?: Sortable;
   listeners?: SyntheticListeners;
@@ -50,21 +56,13 @@ export interface LegendItemProps extends PropsWithChildren {
   // settings
   settings?: Settings;
   settingsManager?: SettingsManager;
-  className?: string;
-  onChangeOpacity?: OnChangeOpacity;
-  onChangeVisibility?: OnChangeVisibility;
-  onChangeExpand?: OnChangeExpand;
 }
 
-export interface LegendItemToolbarProps {
+export interface LegendItemToolbarProps extends LegendItemEvents {
+  className?: string;
   // settings
   settings?: Settings;
   settingsManager?: SettingsManager;
-
-  className?: string;
-  onChangeOpacity?: OnChangeOpacity;
-  onChangeVisibility?: OnChangeVisibility;
-  onChangeExpand?: OnChangeExpand;
 }
 
 export interface LegendItemButtonProps {

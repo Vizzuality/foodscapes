@@ -25,8 +25,18 @@ module.exports = {
         ping1: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
         ping2: 'ping 1.75s cubic-bezier(0, 0, 0.2, 1) infinite 0.25s',
         ping3: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite 0.5s',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       keyframes: {
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
         ping: {
           '75%, 100%': {
             transform: 'scaleY(1.75) scaleX(1.15)',

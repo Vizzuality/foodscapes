@@ -3135,6 +3135,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-accordion@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@radix-ui/react-accordion@npm:1.1.0"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-collapsible": 1.0.1
+    "@radix-ui/react-collection": 1.0.1
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-direction": 1.0.0
+    "@radix-ui/react-id": 1.0.0
+    "@radix-ui/react-primitive": 1.0.1
+    "@radix-ui/react-use-controllable-state": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: c35353c5870f3de2ab180de7df3d5d0886fa35b5b9b0f187820c487c3875a73d175715c36bc21c49ac5208516adf4dd1b050174ecd7005f5cb15a4fcef696311
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-arrow@npm:0.1.3":
   version: 0.1.3
   resolution: "@radix-ui/react-arrow@npm:0.1.3"
@@ -3157,6 +3178,26 @@ __metadata:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
   checksum: 808ad81fb7a10281b2c3e549f40259891aff84e93d448100ce466ccb46ac8d21e68e1e8d8e45000fcf72d1f21bcffce6d58c689936f01f10b623a7abea3e9a23
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-collapsible@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@radix-ui/react-collapsible@npm:1.0.1"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-id": 1.0.0
+    "@radix-ui/react-presence": 1.0.0
+    "@radix-ui/react-primitive": 1.0.1
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-layout-effect": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: 24c4611c06b258cf1710c9978a0ad529f25f074e7654dd6fdf615f1e43dc100bbc9f8b2acd7a318153f2e27f3c4670d209c12a336004ff43f73cd05278e9a754
   languageName: node
   linkType: hard
 
@@ -11233,6 +11274,7 @@ __metadata:
     "@headlessui/react": 1.7.4
     "@luma.gl/constants": 8.4.5
     "@next/font": 13.1.2
+    "@radix-ui/react-accordion": 1.1.0
     "@radix-ui/react-dialog": ^1.0.2
     "@radix-ui/react-popover": 1.0.3
     "@radix-ui/react-slider": 1.1.0
