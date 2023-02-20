@@ -39,11 +39,11 @@ export const LegendItem: React.FC<LegendItemProps> = ({
   const acordionState = expand ? id : null;
 
   return (
-    <Accordion type="single" value={acordionState}>
+    <Accordion type="single" value={acordionState} asChild>
       <AccordionItem value={id} asChild>
         <div
           className={cn({
-            'mb-1': true,
+            'mb-1 flex grow flex-col overflow-hidden': true,
             [className]: !!className,
           })}
         >
@@ -86,7 +86,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
           </header>
 
           {validChildren && (
-            <AccordionContent className="overflow-hidden bg-white px-2.5 pb-2.5 transition-all data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+            <AccordionContent className="grow overflow-y-auto overflow-x-hidden bg-white px-2.5 pb-2.5 transition-all">
               {children}
             </AccordionContent>
           )}
