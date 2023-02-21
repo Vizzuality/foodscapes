@@ -6,7 +6,7 @@ import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
 import { LayerManager } from '@vizzuality/layer-manager-react';
 import { useRecoilValue } from 'recoil';
 
-import LAYERS from 'containers/layers';
+import { LAYERS } from 'containers/layers';
 
 const LayerManagerContainer = () => {
   const { current: map } = useMap();

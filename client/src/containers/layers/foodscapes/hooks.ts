@@ -8,7 +8,11 @@ interface UseFoodscapesLayerProps {
   settings?: Partial<Settings>;
 }
 
-export function useFoodscapesLayer({ settings = {} }: UseFoodscapesLayerProps) {
+interface UseFoodscapesLegendProps {
+  settings?: Settings;
+}
+
+export function useLayer({ settings = {} }: UseFoodscapesLayerProps) {
   const { data: foodscapesData } = useFoodscapes();
 
   const colormap = useMemo(() => {
@@ -45,4 +49,45 @@ export function useFoodscapesLayer({ settings = {} }: UseFoodscapesLayerProps) {
   }, [foodscapesData, colormap, settings]);
 
   return layer;
+}
+
+export function useLegend({
+  settings = {
+    opacity: 1,
+    visibility: true,
+    expand: true,
+  },
+}: UseFoodscapesLegendProps) {
+  const { data: foodscapesData } = useFoodscapes();
+
+  const colormap = useMemo(() => {
+    const c = foodscapesData.reduce((acc, v) => {
+      return {
+        ...acc,
+        [v.value]: v.color,
+      };
+    }, {});
+    return encodeURIComponent(JSON.stringify(c));
+  }, [foodscapesData]);
+
+  const legend = useMemo(() => {
+    if (!foodscapesData || !foodscapesData.length) {
+      return null;
+    }
+
+    return {
+      id: 'foodscapes',
+      name: 'Foodscapes',
+      colormap,
+      settings: settings,
+      settingsManager: {
+        opacity: true,
+        visibility: true,
+        expand: true,
+        info: true,
+      },
+    };
+  }, [foodscapesData, colormap, settings]);
+
+  return legend;
 }

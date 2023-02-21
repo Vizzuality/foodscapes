@@ -4,10 +4,10 @@ import { LayerProps } from 'types/layers';
 
 import { Settings } from 'components/map/legend/types';
 
-import { useFoodscapesLayer } from './hooks';
+import { useLayer } from './hooks';
 
 const FoodscapesLayer = ({ settings, ...props }: LayerProps<Settings>) => {
-  const LAYER = useFoodscapesLayer({ settings });
+  const LAYER = useLayer({ settings });
 
   if (!LAYER) return null;
 

@@ -1,7 +1,10 @@
 import FoodscapesLayer from './foodscapes';
+import FoodscapesLegend from './foodscapes/legend';
 
-const LAYERS = {
+export const LAYERS = {
   foodscapes: FoodscapesLayer,
 };
 
-export default LAYERS;
+export const LEGENDS = {
+  foodscapes: FoodscapesLegend,
+};

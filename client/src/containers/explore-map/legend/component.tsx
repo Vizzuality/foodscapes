@@ -5,18 +5,15 @@ import { layersAtom, layersSettingsAtom } from 'store/explore-map';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { useLegend } from 'hooks/explore-map';
+import { LEGENDS } from 'containers/layers';
 
 import Legend from 'components/map/legend';
-import LegendItem from 'components/map/legend/item';
 
 const LegendContainer = () => {
   const layers = useRecoilValue(layersAtom);
   const setLayers = useSetRecoilState(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
   const setLayerSettings = useSetRecoilState(layersSettingsAtom);
-
-  const LEGEND_LAYERS = useLegend({ layers, settings: layersSettings });
 
   const onChangeOrder = useCallback(
     (order) => {
@@ -30,10 +27,10 @@ const LegendContainer = () => {
   );
 
   const onChangeOpacity = useDebouncedCallback(
-    (layer, opacity, settings) =>
+    (id, opacity, settings) =>
       setLayerSettings({
         ...layersSettings,
-        [layer.id]: {
+        [id]: {
           ...settings,
           opacity,
         },
@@ -43,10 +40,10 @@ const LegendContainer = () => {
   );
 
   const onChangeVisibility = useCallback(
-    (layer, visibility, settings) =>
+    (id, visibility, settings) =>
       setLayerSettings({
         ...layersSettings,
-        [layer.id]: {
+        [id]: {
           ...settings,
           visibility,
         },
@@ -55,10 +52,10 @@ const LegendContainer = () => {
   );
 
   const onChangeExpand = useCallback(
-    (layer, expand, settings) =>
+    (id, expand, settings) =>
       setLayerSettings({
         ...layersSettings,
-        [layer.id]: {
+        [id]: {
           ...settings,
           expand,
         },
@@ -77,55 +74,28 @@ const LegendContainer = () => {
         }}
         onChangeOrder={onChangeOrder}
       >
-        {LEGEND_LAYERS.map((layer) => {
-          return (
-            <LegendItem
-              key={layer.id}
-              {...layer}
-              onChangeOpacity={(opacity, settings) => {
-                onChangeOpacity(layer, opacity, settings);
-              }}
-              onChangeVisibility={(visibility, settings) => {
-                onChangeVisibility(layer, visibility, settings);
-              }}
-              onChangeExpand={(expand, settings) => {
-                onChangeExpand(layer, expand, settings);
-              }}
-            >
-              <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rerum libero modi quo
-                quae maiores dolorum, reiciendis saepe corrupti maxime similique quos quidem
-                repellendus tempore aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Nam rerum libero modi quo quae maiores dolorum,
-                reiciendis saepe corrupti maxime similique quos quidem repellendus tempore aut quam
-                itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-                rerum libero modi quo quae maiores dolorum, reiciendis saepe corrupti maxime
-                similique quos quidem repellendus tempore aut quam itaque amet laboriosam. Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Nam rerum libero modi quo quae
-                maiores dolorum, reiciendis saepe corrupti maxime similique quos quidem repellendus
-                tempore aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Nam rerum libero modi quo quae maiores dolorum, reiciendis saepe
-                corrupti maxime similique quos quidem repellendus tempore aut quam itaque amet
-                laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rerum
-                libero modi quo quae maiores dolorum, reiciendis saepe corrupti maxime similique
-                quos quidem repellendus tempore aut quam itaque amet laboriosam. Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Nam rerum libero modi quo quae maiores
-                dolorum, reiciendis saepe corrupti maxime similique quos quidem repellendus tempore
-                aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Nam rerum libero modi quo quae maiores dolorum, reiciendis saepe corrupti
-                maxime similique quos quidem repellendus tempore aut quam itaque amet laboriosam.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam rerum libero modi quo
-                quae maiores dolorum, reiciendis saepe corrupti maxime similique quos quidem
-                repellendus tempore aut quam itaque amet laboriosam. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Nam rerum libero modi quo quae maiores dolorum,
-                reiciendis saepe corrupti maxime similique quos quidem repellendus tempore aut quam
-                itaque amet laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam
-                rerum libero modi quo quae maiores dolorum, reiciendis saepe corrupti maxime
-                similique quos quidem repellendus tempore aut quam itaque amet laboriosam.
-              </div>
-            </LegendItem>
-          );
-        })}
+        {layers
+          .filter((layer) => !!LEGENDS[layer])
+          .map((layer) => {
+            const LegendComponent = LEGENDS[layer];
+
+            return (
+              <LegendComponent
+                key={layer}
+                id={layer}
+                settings={layersSettings[layer]}
+                onChangeOpacity={(opacity, settings) => {
+                  onChangeOpacity(layer, opacity, settings);
+                }}
+                onChangeVisibility={(visibility, settings) =>
+                  onChangeVisibility(layer, visibility, settings)
+                }
+                onChangeExpand={(expand, settings) => {
+                  onChangeExpand(layer, expand, settings);
+                }}
+              />
+            );
+          })}
       </Legend>
     </div>
   );
