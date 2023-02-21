@@ -54,6 +54,7 @@
     "@tailwindcss/line-clamp": "0.4.0",
     "@tanstack/react-query": "4.0.10",
     "@types/mapbox": "1.6.42",
+    "@vizzuality/layer-manager": "5.0.2",
     "@vizzuality/layer-manager-layers-deckgl": "2.0.2",
     "@vizzuality/layer-manager-plugin-mapboxgl": "2.0.2",
     "@vizzuality/layer-manager-provider-carto": "2.0.2",

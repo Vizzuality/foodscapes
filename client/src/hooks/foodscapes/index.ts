@@ -10,9 +10,14 @@ import DATA_JSON from './data.json';
 
 export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown> = {}) {
   const fetchFoodscapes = () =>
-    Promise.resolve({
-      data: DATA_JSON,
-    }).then((response) => response.data);
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: DATA_JSON,
+        });
+      }, 1000);
+    });
+
   // API.request({
   //   method: 'GET',
   //   url: '/foodscapes',

@@ -54,7 +54,22 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
 
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            keepPreviousData: true,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            structuralSharing: false,
+            select: (data: any) => {
+              return data.data;
+            },
+          },
+        },
+      })
+  );
 
   const handleRouteChangeCompleted = useCallback((url: string) => {
     GAPage(url);
