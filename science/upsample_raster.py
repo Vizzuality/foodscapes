@@ -1,3 +1,4 @@
+from functools import partial
 from pathlib import Path
 
 import click
@@ -6,7 +7,7 @@ import rasterio
 from rasterio import MemoryFile, shutil
 from rasterio.enums import Resampling
 from rasterio.vrt import WarpedVRT
-from tqdm import tqdm
+from tqdm.contrib.concurrent import process_map
 
 
 def disaggregate(file: Path, factor: int = 2) -> MemoryFile:
@@ -52,8 +53,23 @@ def check_sum(original: Path, resampled: Path) -> float:
         return round(100 * (orig_sum - res_sum) / orig_sum, 6)
 
 
+def resample(check, dst_profile, out_dir, suffix, vrt_options, file):
+    file = file
+    with disaggregate(file).open() as upscaled_raster:
+        with WarpedVRT(upscaled_raster, **vrt_options) as vrt:
+            outfile = out_dir / (file.stem + suffix + file.suffix)
+            dst_profile.update(
+                dtype=upscaled_raster.profile["dtype"],
+                nodata=upscaled_raster.profile["nodata"],
+                count=upscaled_raster.profile["count"],
+            )
+            rasterio.shutil.copy(vrt, outfile, **dst_profile)
+    if check:
+        print(f"Resampling error: {check_sum(file, outfile)} % ")
+
+
 @click.command(help="Upscale raster files according to a given reference file.")
-@click.argument("files", nargs=-1, type=click.Path(exists=True))
+@click.argument("files", nargs=-1, type=click.Path(exists=True, path_type=Path))
 @click.option(
     "--suffix",
     "-s",
@@ -75,7 +91,7 @@ def check_sum(original: Path, resampled: Path) -> float:
     "-r",
     "ref_file",
     required=True,
-    type=click.Path(exists=True),
+    type=click.Path(exists=True, path_type=Path),
     help="Reference file to align rasters with",
 )
 @click.option(
@@ -110,22 +126,8 @@ def main(files: list[Path], suffix: str, ref_file: Path, out_dir: Path, check: b
     }
 
     out_dir.mkdir(exist_ok=True)
-
-    pbar = tqdm(files)
-    for file in pbar:
-        file = Path(file)
-        pbar.set_description(file.name)
-        with disaggregate(file).open() as upscaled_raster:
-            with WarpedVRT(upscaled_raster, **vrt_options) as vrt:
-                outfile = out_dir / (file.stem + suffix + file.suffix)
-                dst_profile.update(
-                    dtype=upscaled_raster.profile["dtype"],
-                    nodata=upscaled_raster.profile["nodata"],
-                    count=upscaled_raster.profile["count"],
-                )
-                rasterio.shutil.copy(vrt, outfile, **dst_profile)
-        if check:
-            pbar.write(f"Resampling error: {check_sum(file, outfile)} % ")
+    res_multi = partial(resample, check, dst_profile, out_dir, suffix, vrt_options)
+    process_map(res_multi, files)
 
 
 if __name__ == "__main__":
