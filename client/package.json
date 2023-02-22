@@ -63,6 +63,7 @@
     "axios": "0.21.1",
     "classnames": "2.3.1",
     "cypress": "12.1.0",
+    "d3-array": "3.2.2",
     "d3-ease": "2.0.0",
     "final-form": "4.20.2",
     "framer-motion": "7.0.0",

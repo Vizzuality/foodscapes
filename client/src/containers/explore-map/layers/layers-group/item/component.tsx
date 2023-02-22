@@ -27,7 +27,7 @@ const LayeItem = ({ label, value, disabled }) => {
     // push or slice layer in lys array base on index
     const index = lys.findIndex((ly) => ly === value);
     if (index === -1) {
-      lys.push(value);
+      lys.unshift(value);
     } else {
       lys.splice(index, 1);
     }

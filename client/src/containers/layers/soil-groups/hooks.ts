@@ -13,23 +13,16 @@ interface UseFoodscapesLegendProps {
 }
 
 export function useLayer({ settings = {} }: UseFoodscapesLayerProps) {
-  const { data: foodscapesData } = useFoodscapes();
-
   const colormap = useMemo(() => {
-    const c = foodscapesData.reduce((acc, v) => {
-      return {
-        ...acc,
-        [v.value]: v.color,
-      };
-    }, {});
+    const c = {
+      '-1': '#000000',
+      '0': '#ffffff00',
+      '1': '#ff0000',
+    };
     return encodeURIComponent(JSON.stringify(c));
-  }, [foodscapesData]);
+  }, []);
 
   const layer = useMemo(() => {
-    if (!foodscapesData || !foodscapesData.length) {
-      return null;
-    }
-
     return {
       id: 'soil-groups',
       type: 'raster',
@@ -40,13 +33,13 @@ export function useLayer({ settings = {} }: UseFoodscapesLayerProps) {
         ],
       },
       params: {
-        BAND: 1,
+        BAND: 25,
         COLOR_RAMP: colormap,
       },
       opacity: settings.opacity,
       visibility: settings.visibility,
     };
-  }, [foodscapesData, colormap, settings]);
+  }, [colormap, settings]);
 
   return layer;
 }
