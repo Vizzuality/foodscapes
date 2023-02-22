@@ -43,7 +43,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
       <AccordionItem value={id} asChild>
         <div
           className={cn({
-            'mb-1 flex grow flex-col overflow-hidden': true,
+            'mb-1 w-full': true,
             [className]: !!className,
           })}
         >

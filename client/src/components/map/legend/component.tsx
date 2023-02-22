@@ -18,24 +18,22 @@ export const Legend: React.FC<LegendProps> = ({
   return (
     <div
       className={cn({
-        'flex w-full grow flex-col overflow-hidden': true,
+        'relative flex grow flex-col overflow-hidden': true,
         hidden: !isChildren,
         [className]: !!className,
       })}
     >
       {isChildren && (
-        <div className="relative flex h-full grow flex-col overflow-hidden">
-          {/* <div className="pointer-events-none absolute top-0 left-0 z-10 h-3 w-full bg-gradient-to-b from-black via-black" /> */}
-          {/* <div className="overflow-y-auto overflow-x-hidden"> */}
-          {!!sortable && (
-            <SortableList sortable={sortable} onChangeOrder={onChangeOrder}>
-              {children}
-            </SortableList>
-          )}
+        <div className="relative flex h-full flex-col overflow-hidden">
+          <div className="overflow-y-auto overflow-x-hidden">
+            {!!sortable && (
+              <SortableList sortable={sortable} onChangeOrder={onChangeOrder}>
+                {children}
+              </SortableList>
+            )}
 
-          {!sortable && children}
-          {/* </div> */}
-          {/* <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-3 w-full bg-gradient-to-t from-black via-black" /> */}
+            {!sortable && children}
+          </div>
         </div>
       )}
     </div>

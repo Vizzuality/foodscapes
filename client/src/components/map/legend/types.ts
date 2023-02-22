@@ -12,9 +12,9 @@ type Sortable = {
 };
 
 type OnChangeOrder = (id: string[]) => void;
-type OnChangeOpacity = (opacity: number, settings: Settings) => void;
-type OnChangeVisibility = (visibility: boolean, settings: Settings) => void;
-type OnChangeExpand = (expand: boolean, settings: Settings) => void;
+type OnChangeOpacity = (opacity: number) => void;
+type OnChangeVisibility = (visibility: boolean) => void;
+type OnChangeExpand = (expand: boolean) => void;
 
 export type Settings = {
   opacity: number;

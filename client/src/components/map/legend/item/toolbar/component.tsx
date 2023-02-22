@@ -78,7 +78,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                     max={1}
                     step={0.01}
                     onValueChange={(value) => {
-                      if (onChangeOpacity) onChangeOpacity(value[0], settings);
+                      if (onChangeOpacity) onChangeOpacity(value[0]);
                     }}
                   />
                 </div>
@@ -97,7 +97,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   'pointer-events-none': popoverOpen,
                 })}
                 onClick={() => {
-                  if (onChangeVisibility) onChangeVisibility(!visibility, settings);
+                  if (onChangeVisibility) onChangeVisibility(!visibility);
                 }}
               >
                 <LegendItemButton icon={visibility ? VISIBLE_SVG : HIDDEN_SVG} />
@@ -169,7 +169,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                     'pointer-events-none': popoverOpen,
                   })}
                   onClick={() => {
-                    if (onChangeExpand) onChangeExpand(!expand, settings);
+                    if (onChangeExpand) onChangeExpand(!expand);
                   }}
                 >
                   <LegendItemButton

@@ -32,8 +32,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({
     <div
       ref={setNodeRef}
       className={cx({
-        'flex h-full grow flex-col overflow-hidden': true,
-        'shrink-0': !CHILD.props?.settings?.expand,
+        'w-full': true,
         'opacity-0': isDragging,
       })}
       style={style}

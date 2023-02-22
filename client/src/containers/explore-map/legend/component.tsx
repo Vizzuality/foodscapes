@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { layersAtom, layersSettingsAtom } from 'store/explore-map';
 
@@ -27,11 +27,11 @@ const LegendContainer = () => {
   );
 
   const onChangeOpacity = useDebouncedCallback(
-    (id, opacity, settings) =>
+    (id, opacity) =>
       setLayerSettings({
         ...layersSettings,
         [id]: {
-          ...settings,
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: false }),
           opacity,
         },
       }),
@@ -40,11 +40,11 @@ const LegendContainer = () => {
   );
 
   const onChangeVisibility = useCallback(
-    (id, visibility, settings) =>
+    (id, visibility) =>
       setLayerSettings({
         ...layersSettings,
         [id]: {
-          ...settings,
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: false }),
           visibility,
         },
       }),
@@ -52,16 +52,41 @@ const LegendContainer = () => {
   );
 
   const onChangeExpand = useCallback(
-    (id, expand, settings) =>
+    (id, expand) =>
       setLayerSettings({
         ...layersSettings,
         [id]: {
-          ...settings,
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: false }),
           expand,
         },
       }),
     [layersSettings, setLayerSettings]
   );
+
+  const ITEMS = useMemo(() => {
+    return layers
+      .filter((layer) => !!LEGENDS[layer])
+      .map((layer) => {
+        const LegendComponent = LEGENDS[layer];
+
+        return (
+          <LegendComponent
+            key={layer}
+            id={layer}
+            settings={layersSettings[layer]}
+            onChangeOpacity={(opacity) => {
+              onChangeOpacity(layer, opacity);
+            }}
+            onChangeVisibility={(visibility) => {
+              onChangeVisibility(layer, visibility);
+            }}
+            onChangeExpand={(expand) => {
+              onChangeExpand(layer, expand);
+            }}
+          />
+        );
+      });
+  }, [layers, onChangeOpacity, onChangeVisibility, onChangeExpand, layersSettings]);
 
   return (
     <div className="absolute bottom-16 right-6 z-10 w-full max-w-xs">
@@ -74,28 +99,7 @@ const LegendContainer = () => {
         }}
         onChangeOrder={onChangeOrder}
       >
-        {layers
-          .filter((layer) => !!LEGENDS[layer])
-          .map((layer) => {
-            const LegendComponent = LEGENDS[layer];
-
-            return (
-              <LegendComponent
-                key={layer}
-                id={layer}
-                settings={layersSettings[layer]}
-                onChangeOpacity={(opacity, settings) => {
-                  onChangeOpacity(layer, opacity, settings);
-                }}
-                onChangeVisibility={(visibility, settings) =>
-                  onChangeVisibility(layer, visibility, settings)
-                }
-                onChangeExpand={(expand, settings) => {
-                  onChangeExpand(layer, expand, settings);
-                }}
-              />
-            );
-          })}
+        {ITEMS}
       </Legend>
     </div>
   );
