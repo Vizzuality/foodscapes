@@ -31,7 +31,7 @@ const LegendContainer = () => {
       setLayerSettings({
         ...layersSettings,
         [id]: {
-          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: false }),
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: true }),
           opacity,
         },
       }),
@@ -44,7 +44,7 @@ const LegendContainer = () => {
       setLayerSettings({
         ...layersSettings,
         [id]: {
-          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: false }),
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: true }),
           visibility,
         },
       }),
@@ -56,7 +56,7 @@ const LegendContainer = () => {
       setLayerSettings({
         ...layersSettings,
         [id]: {
-          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: false }),
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: true }),
           expand,
         },
       }),
@@ -73,7 +73,7 @@ const LegendContainer = () => {
           <LegendComponent
             key={layer}
             id={layer}
-            settings={layersSettings[layer]}
+            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: false }}
             onChangeOpacity={(opacity) => {
               onChangeOpacity(layer, opacity);
             }}
