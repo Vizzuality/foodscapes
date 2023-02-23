@@ -1,8 +1,9 @@
+import { Dataset } from 'types/datasets';
+
 export const DATASETS = [
-  // FOODSCAPES
   {
+    id: 'foodscapes',
     label: 'Foodscapes',
-    value: 'foodscapes',
     group: 'foodscapes',
     disabled: false,
     layer: {
@@ -10,11 +11,14 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      sql: `SELECT DISTINCT foodscapes, soil_groups, COUNT(pixel_count) AS pixel_count
+      FROM foodscapes
+      GROUP BY foodscapes, soil_groups`,
     },
   },
   {
+    id: 'soil-groups',
     label: 'Soil Groups',
-    value: 'soil-groups',
     group: 'foodscapes',
     layer: {
       enabled: true,
@@ -24,8 +28,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'foodscapes-intensity-groups',
     label: 'Foodscapes Intensity Groups',
-    value: 'foodscapes-intensity-groups',
     group: 'foodscapes',
     layer: {
       enabled: false,
@@ -35,8 +39,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'crops',
     label: 'Crops',
-    value: 'crops',
     group: 'foodscapes',
     layer: {
       enabled: false,
@@ -46,8 +50,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'crop-groups',
     label: 'Crop Groups',
-    value: 'crop-groups',
     group: 'foodscapes',
     layer: {
       enabled: false,
@@ -59,8 +63,8 @@ export const DATASETS = [
 
   // RISKS
   {
+    id: 'land-use-change',
     label: 'Land Use Change',
-    value: 'land-use-change',
     group: 'risks',
     layer: {
       enabled: false,
@@ -70,8 +74,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'climate-change-climate-risk',
     label: 'Climate change (climate risk)',
-    value: 'climate-change-climate-risk',
     group: 'risks',
     layer: {
       enabled: false,
@@ -81,8 +85,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'pollution-pesticide-risk',
     label: 'Pollution (pesticide risk)',
-    value: 'pollution-pesticide-risk',
     group: 'risks',
     layer: {
       enabled: false,
@@ -94,8 +98,8 @@ export const DATASETS = [
 
   // OPPORTUNITIES
   {
+    id: 'restoration',
     label: 'Restoration',
-    value: 'restoration',
     group: 'opportunities',
     layer: {
       enabled: false,
@@ -105,8 +109,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'agroforestry',
     label: 'Agroforestry',
-    value: 'agroforestry',
     group: 'opportunities',
     layer: {
       enabled: false,
@@ -116,8 +120,8 @@ export const DATASETS = [
     },
   },
   {
+    id: 'soil-health-management-cover-crops-area',
     label: 'Soil Health Management (cover crops area)',
-    value: 'soil-health-management-cover-crops-area',
     group: 'opportunities',
     layer: {
       enabled: false,
@@ -126,4 +130,4 @@ export const DATASETS = [
       enabled: false,
     },
   },
-];
+] as Dataset[];

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { LAYERS } from 'constants/layers';
+import { DATASETS } from 'constants/datasets';
 
 import LayerItem from './item';
 
@@ -10,8 +10,12 @@ export interface LayersProps {
 }
 
 const Layers = ({ name, group }) => {
-  const GROUP_LAYERS = useMemo(() => {
-    return LAYERS.filter((b) => b.group === group);
+  const FILTERED_DATASETS = useMemo(() => {
+    return (
+      DATASETS
+        //
+        .filter((d) => d.group === group)
+    );
   }, [group]);
 
   return (
@@ -19,8 +23,8 @@ const Layers = ({ name, group }) => {
       <h3 className="font-display text-lg">{name}</h3>
 
       <ul className="space-y-2">
-        {GROUP_LAYERS.map((l) => (
-          <li key={l.value}>
+        {FILTERED_DATASETS.map((l) => (
+          <li key={l.id}>
             <LayerItem {...l} />
           </li>
         ))}

@@ -6,18 +6,14 @@ import { layersAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { Dataset } from 'types/datasets';
+
 import Checkbox from 'components/forms/checkbox';
 import Icon from 'components/icon';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
-export interface LayeItemProps {
-  label: string;
-  value: string;
-  disabled?: boolean;
-}
-
-const LayeItem = ({ label, value, disabled }) => {
+const LayerItem = ({ label, id, layer }: Dataset) => {
   const layers = useRecoilValue(layersAtom);
   const setLayers = useSetRecoilState(layersAtom);
 
@@ -25,31 +21,31 @@ const LayeItem = ({ label, value, disabled }) => {
     const lys = [...layers];
 
     // push or slice layer in lys array base on index
-    const index = lys.findIndex((ly) => ly === value);
+    const index = lys.findIndex((ly) => ly === id);
     if (index === -1) {
-      lys.unshift(value);
+      lys.unshift(id);
     } else {
       lys.splice(index, 1);
     }
 
     setLayers(lys);
-  }, [value, layers, setLayers]);
+  }, [id, layers, setLayers]);
 
   return (
     <div
       className={cn({
         'group flex items-center justify-between space-x-8': true,
-        'pointer-events-none opacity-25': disabled,
+        'pointer-events-none opacity-25': !layer.enabled,
       })}
     >
       <button
         className="flex grow space-x-3"
         type="button"
-        disabled={disabled}
+        disabled={!layer.enabled}
         onClick={handleToggleLayer}
       >
         <Checkbox
-          checked={layers.includes(value)}
+          checked={layers.includes(id)}
           readOnly
           className="pointer-events-none mt-1 h-3 w-3 rounded-sm group-hover:border-navy-400 group-hover:bg-navy-400"
         />
@@ -64,7 +60,7 @@ const LayeItem = ({ label, value, disabled }) => {
         </span>
       </button>
 
-      <button type="button" className="h-4 w-4 shrink-0" disabled={disabled}>
+      <button type="button" className="h-4 w-4 shrink-0" disabled={!layer.enabled}>
         <Icon
           icon={INFO_SVG}
           className={cn({
@@ -78,4 +74,4 @@ const LayeItem = ({ label, value, disabled }) => {
   );
 };
 
-export default LayeItem;
+export default LayerItem;
