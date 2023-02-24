@@ -63,9 +63,6 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
             refetchOnMount: false,
             refetchOnWindowFocus: false,
             structuralSharing: false,
-            select: (data: any) => {
-              return data.data;
-            },
           },
         },
       })

@@ -5,13 +5,12 @@ export const DATASETS = [
     id: 'foodscapes',
     label: 'Foodscapes',
     group: 'foodscapes',
-    disabled: false,
     layer: {
       enabled: true,
     },
     widget: {
       enabled: false,
-      sql: `SELECT DISTINCT foodscapes, soil_groups, COUNT(pixel_count) AS pixel_count
+      sql: `SELECT DISTINCT foodscapes as id, soil_groups, COUNT(pixel_count) AS value
       FROM foodscapes
       GROUP BY foodscapes, soil_groups`,
     },

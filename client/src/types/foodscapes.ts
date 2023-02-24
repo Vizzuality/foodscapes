@@ -5,3 +5,9 @@ export interface Foodscape {
   color: string;
   parent: string;
 }
+
+export interface FoodscapeData {
+  id: number;
+  value: number;
+  soil_groups: number;
+}

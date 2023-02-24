@@ -12,9 +12,7 @@ export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown
   const fetchFoodscapes = () =>
     new Promise((resolve) => {
       setTimeout(() => {
-        resolve({
-          data: DATA_JSON,
-        });
+        resolve(DATA_JSON);
       }, 1000);
     });
 
@@ -24,9 +22,7 @@ export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown
   // }).then((response) => response.data);
 
   const query = useQuery(['foodscapes'], fetchFoodscapes, {
-    placeholderData: {
-      data: [],
-    },
+    placeholderData: [],
     ...queryOptions,
   });
 
@@ -37,9 +33,7 @@ export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown
       return [];
     }
 
-    return data.sort((a, b) => {
-      return a.label > b.label ? 1 : -1;
-    });
+    return data;
   }, [data]);
 
   return useMemo(() => {

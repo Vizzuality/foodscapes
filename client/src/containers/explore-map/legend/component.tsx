@@ -5,6 +5,8 @@ import { layersAtom, layersSettingsAtom } from 'store/explore-map';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
+import { DATASETS } from 'constants/datasets';
+
 import { LEGENDS } from 'containers/layers';
 
 import Legend from 'components/map/legend';
@@ -68,12 +70,14 @@ const LegendContainer = () => {
       .filter((layer) => !!LEGENDS[layer])
       .map((layer) => {
         const LegendComponent = LEGENDS[layer];
+        const DATASET = DATASETS.find((d) => d.id === layer);
 
         return (
           <LegendComponent
-            key={layer}
             id={layer}
-            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: false }}
+            key={layer}
+            dataset={DATASET}
+            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             onChangeOpacity={(opacity) => {
               onChangeOpacity(layer, opacity);
             }}

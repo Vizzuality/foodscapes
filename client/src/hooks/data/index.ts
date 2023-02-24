@@ -3,7 +3,7 @@ import { ParamsProps } from 'lib/adapters/types';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { Foodscape } from 'types/foodscapes';
+import { FoodscapeData } from 'types/foodscapes';
 
 import API from 'services/api';
 
@@ -17,14 +17,12 @@ export const fetchData = (params: ParamsProps) => {
 
 export function useData(
   params: ParamsProps = {},
-  queryOptions: UseQueryOptions<Foodscape[], unknown> = {}
+  queryOptions: UseQueryOptions<FoodscapeData[], unknown> = {}
 ) {
   const fetch = () => fetchData(params);
 
-  const query = useQuery(['data'], fetch, {
-    placeholderData: {
-      data: [],
-    },
+  const query = useQuery(['data', JSON.stringify(params)], fetch, {
+    placeholderData: [],
     ...queryOptions,
   });
 

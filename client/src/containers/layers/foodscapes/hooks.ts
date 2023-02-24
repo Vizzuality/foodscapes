@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { Dataset } from 'types/datasets';
+
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
@@ -9,6 +11,7 @@ interface UseFoodscapesLayerProps {
 }
 
 interface UseFoodscapesLegendProps {
+  dataset: Dataset;
   settings?: Settings;
 }
 
@@ -52,6 +55,7 @@ export function useLayer({ settings = {} }: UseFoodscapesLayerProps) {
 }
 
 export function useLegend({
+  dataset,
   settings = {
     opacity: 1,
     visibility: true,
@@ -76,8 +80,8 @@ export function useLegend({
     }
 
     return {
-      id: 'foodscapes',
-      name: 'Foodscapes',
+      id: dataset.id,
+      name: dataset.label,
       colormap,
       settings: settings,
       settingsManager: {
@@ -87,7 +91,7 @@ export function useLegend({
         info: true,
       },
     };
-  }, [foodscapesData, colormap, settings]);
+  }, [dataset, colormap, settings, foodscapesData]);
 
   return legend;
 }
