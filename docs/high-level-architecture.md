@@ -152,6 +152,13 @@ following CI/CD steps are run in sequence:
 - a GitHub action tags and publishes the freshly built OCI container images to
   the AWS Elastic Container Registry managed through the _Infrastructure setup_
   component described in the previous section
+
+In early phases of development, until the Terraform setup for infrastructure
+setup on AWS (see previous section) is completed, images are pushed to GitHub
+Container Registry instead, as a way to validate the image build and push step,
+as well as to make images available for deployment on local development
+environments.
+
 - a GitHub action deploys the new container images to AWS Fargate
 
 Once the last step successfully completes, users will see the latest release of
