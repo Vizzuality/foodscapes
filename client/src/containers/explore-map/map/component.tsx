@@ -2,9 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { ViewState } from 'react-map-gl';
 
-import { basemapAtom } from 'store/explore-map';
+import { basemapAtom, layersAtom, popupAtom } from 'store/explore-map';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { BASEMAPS } from 'constants/basemaps';
 
@@ -13,6 +13,7 @@ import { CustomMapProps } from 'components/map/types';
 
 import Controls from './controls';
 import LayerManager from './layer-manager';
+import Popup from './popup';
 
 const DEFAULT_PROPS: CustomMapProps = {
   id: 'default',
@@ -55,6 +56,8 @@ const MapContainer = () => {
   const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
   const basemap = useRecoilValue(basemapAtom);
+  const layers = useRecoilValue(layersAtom);
+  const setPopup = useSetRecoilState(popupAtom);
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
@@ -63,6 +66,16 @@ const MapContainer = () => {
   const handleViewState = useCallback((vw: ViewState) => {
     setViewState(vw);
   }, []);
+
+  const handleClick = useCallback(
+    (e) => {
+      const { lngLat } = e;
+      if (layers.length) {
+        setPopup(lngLat);
+      }
+    },
+    [layers, setPopup]
+  );
 
   return (
     <div className="relative h-screen w-full">
@@ -77,12 +90,15 @@ const MapContainer = () => {
         viewState={viewState}
         mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
         onMapViewStateChange={handleViewState}
+        onClick={handleClick}
       >
         {() => (
           <>
             <LayerManager />
 
             <Controls />
+
+            <Popup />
           </>
         )}
       </Map>

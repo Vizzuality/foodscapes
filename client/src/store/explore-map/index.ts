@@ -52,6 +52,11 @@ export const layersSettingsAtom = atom({
   ],
 });
 
+export const popupAtom = atom({
+  key: 'point',
+  default: null,
+});
+
 export function useSyncExploreMap() {
   const layers = useRecoilValue(layersAtom);
 
@@ -73,6 +78,7 @@ export function useSyncExploreMap() {
 
         if (lys.length === 0) {
           reset(layersSettingsAtom);
+          reset(popupAtom);
         }
       },
     []
