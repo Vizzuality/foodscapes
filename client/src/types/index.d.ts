@@ -5,5 +5,8 @@ declare global {
   }
 }
 
-// ? If your module exports nothing, you will need this line. Otherwise, delete it */
-export {};
+export type PointQuery = {
+  band_names: string[];
+  coordinates: [number, number];
+  values: number[];
+};

@@ -1,6 +1,6 @@
 import { Children, FC, PropsWithChildren } from 'react';
 
-import cx from 'classnames';
+import cn from 'lib/classnames';
 
 import type { ControlsProps } from './types';
 
@@ -11,7 +11,7 @@ export const Controls: FC<ControlsPropsWithChildren> = ({
   children,
 }: ControlsPropsWithChildren) => (
   <div
-    className={cx({
+    className={cn({
       'flex flex-col space-y-2': true,
       [className]: !!className,
     })}

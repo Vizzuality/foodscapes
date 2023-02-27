@@ -1,5 +1,6 @@
 const forms = require('@tailwindcss/forms');
 const lineClamp = require('@tailwindcss/line-clamp');
+const animate = require('tailwindcss-animate');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 
 /**
@@ -12,7 +13,7 @@ module.exports = {
     './src/containers/**/*.@(tsx|ts)',
     './src/pages/**/*.tsx',
   ],
-  plugins: [forms, lineClamp],
+  plugins: [forms, lineClamp, animate],
   theme: {
     extend: {
       height: {
@@ -24,8 +25,18 @@ module.exports = {
         ping1: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
         ping2: 'ping 1.75s cubic-bezier(0, 0, 0.2, 1) infinite 0.25s',
         ping3: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite 0.5s',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       keyframes: {
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
         ping: {
           '75%, 100%': {
             transform: 'scaleY(1.75) scaleX(1.15)',
@@ -62,6 +73,7 @@ module.exports = {
       navy: {
         500: '#1C274A',
         400: '#8D92A4',
+        200: '#D2D4DB',
       },
       yellow: {
         100: '#FCF8E8',

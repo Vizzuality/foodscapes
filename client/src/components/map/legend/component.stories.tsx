@@ -9,21 +9,21 @@ import { LegendProps } from './types';
 import LegendTypeBasic from './types/basic';
 import LegendTypeChoropleth from './types/choropleth';
 import LegendTypeGradient from './types/gradient';
+import LegendTypeMatrix from './types/matrix';
 
-const StoryLegend = {
+const DefaultStory = {
   title: 'Components/Map/Legend',
   component: Legend,
 };
 
-export default StoryLegend;
-
 const Template: Story<LegendProps> = (args) => {
+  const { sortable } = args;
   const [sortArray, setSortArray] = useState([]);
-
   // Sorted
   const sortedItems = useMemo(() => {
-    const itms = ITEMS.sort((a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id));
-    return itms;
+    return ITEMS.sort((a, b) => {
+      return sortArray.indexOf(a.id) - sortArray.indexOf(b.id);
+    });
   }, [sortArray]);
 
   // Callbacks
@@ -32,11 +32,19 @@ const Template: Story<LegendProps> = (args) => {
   }, []);
 
   return (
-    <Legend {...args} onChangeOrder={onChangeOrder}>
+    <Legend {...args} sortable={sortable} onChangeOrder={onChangeOrder}>
       {sortedItems.map((i) => {
-        const { type, items } = i;
+        const { type, items, intersections } = i;
+
         return (
           <LegendItem key={i.id} {...i}>
+            {type === 'matrix' && (
+              <LegendTypeMatrix
+                className="text-sm text-white"
+                intersections={intersections}
+                items={items}
+              />
+            )}
             {type === 'basic' && (
               <LegendTypeBasic className="text-sm text-gray-300" items={items} />
             )}
@@ -44,7 +52,7 @@ const Template: Story<LegendProps> = (args) => {
               <LegendTypeChoropleth className="text-sm text-gray-300" items={items} />
             )}
             {type === 'gradient' && (
-              <LegendTypeGradient className="text-sm text-gray-300" items={items} />
+              <LegendTypeGradient className={{ box: 'text-sm text-gray-300' }} items={items} />
             )}
           </LegendItem>
         );
@@ -58,8 +66,21 @@ Default.args = {
   className: '',
 };
 
-export const MaxHeight = Template.bind({});
-MaxHeight.args = {
+export const Sortable = Template.bind({});
+Sortable.args = {
   className: '',
-  maxHeight: 300,
+  sortable: {
+    enabled: true,
+  },
 };
+
+export const SortableHandle = Template.bind({});
+SortableHandle.args = {
+  className: '',
+  sortable: {
+    enabled: true,
+    handle: true,
+  },
+};
+
+export default DefaultStory;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
 
@@ -7,23 +7,66 @@ import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
 
+import { Domine, Public_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { NextPage } from 'next';
 import { RecoilRoot } from 'recoil';
 
-import Layout from 'layouts';
+import Layout from 'layouts/app';
 
 import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
+import { TooltipProvider } from 'components/ui/tooltip';
+
+const publicSans = Public_Sans({
+  weight: ['300', '400', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--font-public-sans',
+  display: 'block',
+});
+
+const domine = Domine({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--font-domine',
+  display: 'block',
+});
 
 import 'styles/globals.css';
+import 'styles/mapbox.css';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout) => {
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+
   const router = useRouter();
 
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            keepPreviousData: true,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            structuralSharing: false,
+          },
+        },
+      })
+  );
 
   const handleRouteChangeCompleted = useCallback((url: string) => {
     GAPage(url);
@@ -38,22 +81,30 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   }, [router.events, handleRouteChangeCompleted]);
 
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
-          <MediaContextProvider>
-            <MapProvider>
-              {/* Layout */}
-              <Layout>
-                <Component {...pageProps} />
-                <ThirdParty />
-              </Layout>
-            </MapProvider>
-          </MediaContextProvider>
-        </Hydrate>
-      </QueryClientProvider>
-    </RecoilRoot>
+    <>
+      <style jsx global>{`
+        :root {
+          --font-public-sans: ${publicSans.style.fontFamily};
+          --font-domine: ${domine.style.fontFamily};
+        }
+      `}</style>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
+            <MediaContextProvider>
+              <MapProvider>
+                <TooltipProvider delayDuration={750}>
+                  {/* Layout */}
+                  {getLayout(<Component {...pageProps} />)}
+                  <ThirdParty />
+                </TooltipProvider>
+              </MapProvider>
+            </MediaContextProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </RecoilRoot>
+    </>
   );
 };
 
