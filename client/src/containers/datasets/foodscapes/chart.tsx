@@ -4,17 +4,20 @@ import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { BarStackHorizontal } from '@visx/shape';
 
+import { Dataset } from 'types/datasets';
+
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 
-import { FoodscapesLegendProps } from './legend';
-
-interface FoodscapesLegendWidgetProps extends FoodscapesLegendProps {
+interface FoodscapesChartParentProps {
+  dataset: Dataset;
+}
+interface FoodscapesChartProps extends FoodscapesChartParentProps {
   width: number;
   height: number;
 }
 
-const FoodscapesLegendWidget = ({ width, height, dataset }: FoodscapesLegendWidgetProps) => {
+const FoodscapesChart = ({ width, height, dataset }: FoodscapesChartProps) => {
   const { data: foodscapesData } = useFoodscapes();
 
   const { data } = useData({
@@ -91,12 +94,12 @@ const FoodscapesLegendWidget = ({ width, height, dataset }: FoodscapesLegendWidg
   );
 };
 
-const FoodscapesLegendWidgetParent = (props: FoodscapesLegendProps) => {
+const FoodscapesChartParent = (props: FoodscapesChartParentProps) => {
   return (
     <ParentSize>
-      {({ width, height }) => <FoodscapesLegendWidget {...props} width={width} height={height} />}
+      {({ width, height }) => <FoodscapesChart {...props} width={width} height={height} />}
     </ParentSize>
   );
 };
 
-export default FoodscapesLegendWidgetParent;
+export default FoodscapesChartParent;

@@ -16,7 +16,7 @@ import LegendTypeBasic from 'components/map/legend/types/basic/component';
 
 import { useLegend } from './hooks';
 
-const Widget = dynamic(() => import('./chart'), { ssr: false });
+const Chart = dynamic(() => import('./chart'), { ssr: false });
 
 export interface FoodscapesLegendProps extends LegendItemProps {
   dataset: Dataset;
@@ -47,7 +47,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
       <div className="divide-y divide-navy-500/20">
         <div className="ml-0.5 px-4 pt-3 pb-5">
           <div className="h-3.5 border border-navy-500">
-            <Widget {...legend} {...props} />
+            <Chart dataset={dataset} />
           </div>
         </div>
 
