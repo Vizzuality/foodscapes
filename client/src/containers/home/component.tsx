@@ -85,7 +85,7 @@ const Home = () => {
                 </FadeY>
               )}
 
-              {step === 10 && (
+              {step === 7 && (
                 <FadeY key="globe-chart" className="z-20">
                   <GlobeChart />
                 </FadeY>

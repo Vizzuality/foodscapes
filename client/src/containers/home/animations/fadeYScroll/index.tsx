@@ -8,12 +8,12 @@ const clamp = (v) => {
     const p = (threshold - v) * (1 / threshold);
 
     // clamp value between 0 and 1
-    return 1 - Math.min(Math.max(p, 0), 1);
+    return 1 - Math.min(Math.max(p, 0), 1) * 1.25;
   }
 
   if (v > 1 - threshold) {
     const p = (threshold - (1 - v)) * (1 / threshold);
-    return 1 - Math.min(Math.max(p, 0), 1);
+    return 1 - Math.min(Math.max(p, 0), 1) * 1.25;
   }
 
   return 1;
