@@ -19,14 +19,19 @@ const PopupContainer = () => {
       latitude={popup.lat}
       longitude={popup.lng}
       closeOnClick={false}
+      style={{
+        padding: 0,
+      }}
       onClose={() => setPopup(null)}
     >
-      {layers
-        .filter((layer) => !!POPUPS[layer])
-        .map((layer) => {
-          const PopupComponent = POPUPS[layer];
-          return <PopupComponent key={layer} latLng={popup} />;
-        })}
+      <div className="space-y-2.5 p-2.5">
+        {layers
+          .filter((layer) => !!POPUPS[layer])
+          .map((layer) => {
+            const PopupComponent = POPUPS[layer];
+            return <PopupComponent key={layer} latLng={popup} />;
+          })}
+      </div>
     </Popup>
   );
 };

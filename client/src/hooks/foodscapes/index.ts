@@ -40,6 +40,6 @@ export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown
     return {
       ...query,
       data: DATA,
-    };
+    } as typeof query;
   }, [query, DATA]);
 }

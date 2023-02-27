@@ -68,6 +68,6 @@ export function usePointData(
     return {
       ...query,
       data: DATA,
-    };
+    } as typeof query;
   }, [query, DATA]);
 }
