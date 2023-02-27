@@ -14,9 +14,9 @@ import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
 import LegendTypeBasic from 'components/map/legend/types/basic/component';
 
-import { useLegend } from '../hooks';
+import { useLegend } from './hooks';
 
-const Widget = dynamic(() => import('./widget'), { ssr: false });
+const Widget = dynamic(() => import('./chart'), { ssr: false });
 
 export interface FoodscapesLegendProps extends LegendItemProps {
   dataset: Dataset;

@@ -7,7 +7,7 @@ import { BarStackHorizontal } from '@visx/shape';
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 
-import { FoodscapesLegendProps } from '.';
+import { FoodscapesLegendProps } from './legend';
 
 interface FoodscapesLegendWidgetProps extends FoodscapesLegendProps {
   width: number;

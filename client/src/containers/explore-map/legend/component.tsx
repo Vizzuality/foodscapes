@@ -7,7 +7,7 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import { DATASETS } from 'constants/datasets';
 
-import { LEGENDS } from 'containers/layers';
+import { LEGENDS } from 'containers/datasets';
 
 import Legend from 'components/map/legend';
 

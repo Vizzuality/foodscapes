@@ -4,7 +4,7 @@ import { layersAtom, popupAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { POPUPS } from 'containers/layers';
+import { POPUPS } from 'containers/datasets';
 
 const PopupContainer = () => {
   const layers = useRecoilValue(layersAtom);
