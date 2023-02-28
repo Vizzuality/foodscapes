@@ -40,7 +40,7 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
         <>
           <header className="flex items-center space-x-2">
             {!!DATA && <div className="h-4 w-4" style={{ background: DATA.color }} />}
-            <h2 className="mt-0.5 text-base font-semibold">Foodscape</h2>
+            <h2 className="text-base font-semibold">Foodscape</h2>
           </header>
 
           <div className={cn({ 'mt-2 pl-6': true, 'pl-0': !DATA })}>
