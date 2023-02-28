@@ -5,6 +5,7 @@ import { layersAtom, popupAtom } from 'store/explore-map';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { POPUPS } from 'containers/datasets';
+import ProvincesPopup from 'containers/datasets/provinces/popup';
 
 const PopupContainer = () => {
   const layers = useRecoilValue(layersAtom);
@@ -31,6 +32,8 @@ const PopupContainer = () => {
             const PopupComponent = POPUPS[layer];
             return <PopupComponent key={layer} latLng={popup} />;
           })}
+
+        <ProvincesPopup key="provinces-popup" latLng={popup} />
       </div>
     </Popup>
   );

@@ -126,7 +126,7 @@ const Menu = () => {
 
             <footer className="space-y-10 p-6 text-sm font-light text-navy-500">
               <div className="space-y-2">
-                <p>If you would like to provide feedback please contact us at xxxxx@xxxxxxxx.</p>
+                {/* <p>If you would like to provide feedback please contact us at xxxxx@xxxxxxxx.</p> */}
                 <p>© {new Date().getFullYear()} Foodscapes by The Nature Conservancy</p>
               </div>
 
