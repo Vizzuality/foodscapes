@@ -18,6 +18,13 @@
     -webkit-appearance: none;
   }
 
+  body {
+    @apply font-sans;
+    @apply text-navy-500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   svg {
     display: block;
   }
