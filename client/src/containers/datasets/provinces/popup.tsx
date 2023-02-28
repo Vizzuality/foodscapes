@@ -45,7 +45,7 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
         <>
           <header className="flex items-center space-x-2">
             {!!DATA && <Icon icon={PIN_SVG} className="h-4 w-4 text-navy-500" />}
-            <h2 className="text-base font-light">Location</h2>
+            <h2 className="mt-0.5 text-base font-semibold">Location</h2>
           </header>
 
           <div className={cn({ 'mt-2 pl-6': true, 'pl-0': !DATA })}>

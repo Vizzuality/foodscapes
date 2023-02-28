@@ -25,7 +25,7 @@ const PopupContainer = () => {
       }}
       onClose={() => setPopup(null)}
     >
-      <div className="space-y-2.5 p-2.5 pr-6 text-navy-500">
+      <div className="space-y-2.5 p-2.5 pr-6 text-navy-500 shadow-[0_20px_15px_rgba(0,0,0,0.1)]">
         {layers
           .filter((layer) => !!POPUPS[layer])
           .map((layer) => {

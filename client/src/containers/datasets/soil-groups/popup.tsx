@@ -37,8 +37,8 @@ const SoilGroupsPopup = ({ latLng }: SoilGroupsPopupProps) => {
       {isFetched && (
         <>
           <header className="flex items-center space-x-2">
-            <div className="h-4 w-4" style={{ background: DATA?.color }} />
-            <h2 className="text-base font-light">Soil Group</h2>
+            {!!DATA && <div className="h-4 w-4" style={{ background: DATA.color }} />}
+            <h2 className="mt-0.5 text-base font-semibold">Soil Group</h2>
           </header>
 
           <div className="mt-2 pl-6">
