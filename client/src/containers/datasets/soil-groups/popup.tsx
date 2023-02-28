@@ -23,6 +23,8 @@ const SoilGroupsPopup = ({ latLng }: SoilGroupsPopupProps) => {
 
   // const DATA = useMemo(() => {
   //   if (!soilgroupsData || !pointData) return null;
+  // if (noPointData(pointData)) return null;
+
   //   const band = 'b1';
   //   const value = pointData[band];
 

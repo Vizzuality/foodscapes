@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { LngLat } from 'types/map';
 
-import { usePointData } from 'hooks/data';
+import { noPointData, usePointData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 import { useIsLoading } from 'hooks/utils';
 
@@ -25,6 +25,8 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
 
   const DATA = useMemo(() => {
     if (!foodscapesData || !pointData) return null;
+    if (noPointData(pointData)) return null;
+
     const band = 'b1';
     const value = pointData[band];
 

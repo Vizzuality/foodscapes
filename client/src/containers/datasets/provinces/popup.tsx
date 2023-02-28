@@ -2,10 +2,9 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { PointData } from 'types/data';
 import { LngLat } from 'types/map';
 
-import { usePointData } from 'hooks/data';
+import { noPointData, usePointData } from 'hooks/data';
 import { useProvinces } from 'hooks/provinces';
 import { useIsLoading } from 'hooks/utils';
 
@@ -16,12 +15,6 @@ import PIN_SVG from 'svgs/map/pin.svg?sprite';
 interface ProvincesPopupProps {
   latLng: LngLat;
 }
-
-const noData = (pointData: PointData) => {
-  return Object.keys(pointData).every((p) => {
-    return pointData[p] === 0;
-  });
-};
 
 const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
   const f = useProvinces();
@@ -37,7 +30,7 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
   const DATA = useMemo(() => {
     if (!provincesData || !pointData) return null;
 
-    if (noData(pointData)) return null;
+    if (noPointData(pointData)) return null;
 
     const band = 'b4';
     const value = pointData[band];
