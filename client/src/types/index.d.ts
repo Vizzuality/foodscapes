@@ -5,8 +5,4 @@ declare global {
   }
 }
 
-export type PointQuery = {
-  band_names: string[];
-  coordinates: [number, number];
-  values: number[];
-};
+export {};

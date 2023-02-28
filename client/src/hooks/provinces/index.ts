@@ -2,24 +2,24 @@ import { useMemo } from 'react';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { Foodscape } from 'types/foodscapes';
+import { Province } from 'types/provinces';
 
 import DATA_JSON from './data.json';
 
 // import API from 'services/api';
 
-export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown> = {}) {
-  const fetchFoodscapes = () =>
+export function useProvinces(queryOptions: UseQueryOptions<Province[], unknown> = {}) {
+  const fetchProvinces = () =>
     new Promise((resolve) => {
       resolve(DATA_JSON);
     });
 
   // API.request({
   //   method: 'GET',
-  //   url: '/foodscapes',
+  //   url: '/provinces',
   // }).then((response) => response.data);
 
-  const query = useQuery(['foodscapes'], fetchFoodscapes, {
+  const query = useQuery(['provinces'], fetchProvinces, {
     placeholderData: [],
     ...queryOptions,
   });

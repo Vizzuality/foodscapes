@@ -5,10 +5,8 @@ import { ParamsProps } from 'lib/adapters/types';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { FoodscapeData } from 'types/foodscapes';
+import { PointData } from 'types/data';
 import { LngLat } from 'types/map';
-
-import { PointQuery } from 'types';
 
 import API from 'services/api';
 import TITILER_API from 'services/titiler';
@@ -28,9 +26,9 @@ export const fetchPointData = ({ lng, lat }: LngLat) => {
   }).then((response) => response.data);
 };
 
-export function useData(
+export function useData<T extends {}>(
   params: ParamsProps = {},
-  queryOptions: UseQueryOptions<FoodscapeData[], unknown> = {}
+  queryOptions: UseQueryOptions<T[], unknown> = {}
 ) {
   const fetch = () => fetchData(params);
 
@@ -44,7 +42,7 @@ export function useData(
 
 export function usePointData(
   params: LngLat,
-  queryOptions: UseQueryOptions<PointQuery, unknown> = {}
+  queryOptions: UseQueryOptions<PointData, unknown> = {}
 ) {
   const fetch = () => fetchPointData(params);
 
@@ -71,3 +69,9 @@ export function usePointData(
     } as typeof query;
   }, [query, DATA]);
 }
+
+export const noPointData = (pointData: PointData) => {
+  return Object.keys(pointData).every((p) => {
+    return pointData[p] === 0;
+  });
+};
