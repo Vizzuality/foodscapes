@@ -4,6 +4,7 @@ import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { BarStackHorizontal } from '@visx/shape';
 
+import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
@@ -20,7 +21,7 @@ interface FoodscapesChartProps extends FoodscapesChartParentProps {
 const FoodscapesChart = ({ width, height, dataset }: FoodscapesChartProps) => {
   const { data: foodscapesData } = useFoodscapes();
 
-  const { data } = useData({
+  const { data } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
     shape: 'array',
   });

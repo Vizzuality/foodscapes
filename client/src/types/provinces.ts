@@ -1,7 +1,6 @@
-export interface Foodscape {
+export interface Province {
   id: number;
   value: number;
   label: string;
-  color: string;
   parent: string;
 }
