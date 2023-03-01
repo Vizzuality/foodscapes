@@ -44,11 +44,11 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
       {isFetched && (
         <>
           <header className="flex items-center space-x-2">
-            {!!DATA && <Icon icon={PIN_SVG} className="h-4 w-4 text-navy-500" />}
+            <Icon icon={PIN_SVG} className="h-4 w-4 text-navy-500" />
             <h2 className="text-base font-semibold">Location</h2>
           </header>
 
-          <div className={cn({ 'mt-2 pl-6': true, 'pl-0': !DATA })}>
+          <div className={cn({ 'mt-2 pl-6': true })}>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
               <h3 className="text-sm font-light">

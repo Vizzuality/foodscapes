@@ -61,7 +61,7 @@ const Menu = () => {
           animate="animate"
           exit="exit"
           variants={overlayVariants}
-          className="absolute top-0 left-0 z-10 h-full w-full"
+          className="absolute top-0 left-0 z-10 h-full w-full bg-black/25"
           onClick={handleClose}
         />
       )}

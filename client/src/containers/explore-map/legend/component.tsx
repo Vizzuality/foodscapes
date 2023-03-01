@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react';
 
-import { layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { layersAtom, layersSettingsAtom, menuOpenAtom } from 'store/explore-map';
 
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -12,6 +13,7 @@ import { LEGENDS } from 'containers/datasets';
 import Legend from 'components/map/legend';
 
 const LegendContainer = () => {
+  const menuOpen = useRecoilValue(menuOpenAtom);
   const layers = useRecoilValue(layersAtom);
   const setLayers = useSetRecoilState(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
@@ -93,19 +95,29 @@ const LegendContainer = () => {
   }, [layers, onChangeOpacity, onChangeVisibility, onChangeExpand, layersSettings]);
 
   return (
-    <div className="absolute bottom-16 right-6 z-10 w-full max-w-xs">
-      <Legend
-        className={'max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48))]'}
-        sortable={{
-          enabled: true,
-          handle: true,
-          handleIcon: <div className="text-white">Drag</div>,
-        }}
-        onChangeOrder={onChangeOrder}
-      >
-        {ITEMS}
-      </Legend>
-    </div>
+    <AnimatePresence>
+      {!menuOpen && (
+        <motion.div
+          key="legend"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute bottom-16 right-6 z-10 w-full max-w-xs"
+        >
+          <Legend
+            className={'max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48))]'}
+            sortable={{
+              enabled: false,
+              handle: false,
+              handleIcon: <div className="text-white">Drag</div>,
+            }}
+            onChangeOrder={onChangeOrder}
+          >
+            {ITEMS}
+          </Legend>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

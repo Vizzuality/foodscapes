@@ -39,7 +39,7 @@ export type LegendItemEvents = {
  */
 export interface LegendProps extends PropsWithChildren {
   className?: string;
-  sortable?: Sortable;
+  sortable: Sortable;
   onChangeOrder?: OnChangeOrder;
 }
 
@@ -48,7 +48,7 @@ export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   name: string;
   className?: string;
   // sortable
-  sortable?: Sortable;
+  sortable: Sortable;
   listeners?: SyntheticListeners;
   attributes?: DraggableAttributes;
 
