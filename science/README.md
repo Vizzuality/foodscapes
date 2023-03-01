@@ -69,3 +69,11 @@ python stack_raster.py --cog --nodata 0 \
   data/foodscapes_cog_<YYYYMMDD>_<XX>.tif
 ```
 In `stack_raster.py` the last argument is the output COG name, but check the `--help` for more.
+
+Fourth! Convert everything into a single `DataFrame` with 30ish columns like so:
+```shell
+python widget_table.py \
+data/foodscapes/*.tif data/crop/*.tif data/risks/*.tif data/interventions/res/*.tif data/country/*.tif \
+data/layers_<YYYYMMDD>_<XX>.csv \
+--output_path data/
+```
