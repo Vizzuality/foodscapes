@@ -1,4 +1,5 @@
 import FoodscapesLayer from './foodscapes';
+import FoodscapesInfo from './foodscapes/info';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
 import SoilGroupsLayer from './soil-groups';
@@ -18,4 +19,8 @@ export const LEGENDS = {
 export const POPUPS = {
   foodscapes: FoodscapesPopup,
   'soil-groups': SoilGroupsPopup,
+};
+
+export const INFO = {
+  foodscapes: FoodscapesInfo,
 };

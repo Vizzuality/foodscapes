@@ -37,7 +37,14 @@ const Template: Story<LegendProps> = (args) => {
         const { type, items, intersections } = i;
 
         return (
-          <LegendItem key={i.id} {...i}>
+          <LegendItem
+            {...i}
+            key={i.id}
+            sortable={sortable}
+            Components={{
+              Info: <div>Info</div>,
+            }}
+          >
             {type === 'matrix' && (
               <LegendTypeMatrix
                 className="text-sm text-white"

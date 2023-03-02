@@ -8,10 +8,6 @@ import { basemapAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import Icon from 'components/icon';
-
-import INFO_SVG from 'svgs/ui/info.svg?sprite';
-
 export interface BasemapItemProps {
   label: string;
   value: string;
@@ -53,17 +49,6 @@ const BasemapItem = ({ label, value, preview }) => {
             {label}
           </span>
         </div>
-      </button>
-
-      <button type="button" className="h-4 w-4 shrink-0">
-        <Icon
-          icon={INFO_SVG}
-          className={cn({
-            'h-full w-full text-navy-500 ': true,
-            'rounded-full hover:text-navy-400 active:text-navy-500 active:outline active:outline-1 active:outline-navy-400':
-              true,
-          })}
-        />
       </button>
     </div>
   );

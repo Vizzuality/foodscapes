@@ -9,6 +9,8 @@ import LayoutMap from 'layouts/map';
 
 import ExploreMap from 'containers/explore-map';
 
+import { Media } from 'components/media-query';
+
 export async function getServerSideProps() {
   return {
     props: {},
@@ -34,7 +36,9 @@ const ExploreMapPage = () => {
       >
         <RecoilDevTools />
 
-        <ExploreMap />
+        <Media greaterThanOrEqual="lg">
+          <ExploreMap />
+        </Media>
       </RecoilURLSyncNext>
     </RecoilRoot>
   );

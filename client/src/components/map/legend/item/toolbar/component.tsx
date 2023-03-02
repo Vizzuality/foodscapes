@@ -20,8 +20,9 @@ import INFO_SVG from 'svgs/ui/info.svg?sprite';
 import LegendItemButton from './button';
 
 export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
-  settingsManager,
+  Components,
   settings,
+  settingsManager,
   onChangeOpacity,
   onChangeVisibility,
   onChangeExpand,
@@ -146,11 +147,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                 </TooltipContent>
 
                 <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
-                  <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem consequuntur
-                    voluptas saepe debitis quam dicta necessitatibus ipsam, eius odit. Mollitia
-                    cupiditate doloremque voluptatum commodi minus fugit, et dolor odit.
-                  </div>
+                  {Components.Info}
                 </DialogContent>
               </Tooltip>
             </Dialog>

@@ -31,7 +31,7 @@ export function useFoodscapes(queryOptions: UseQueryOptions<Foodscape[], unknown
       return [];
     }
 
-    return data;
+    return data.filter((d) => ![1, 2, 3].includes(d.value));
   }, [data]);
 
   return useMemo(() => {
