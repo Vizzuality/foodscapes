@@ -5,6 +5,10 @@ import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
 import { IconProps } from 'components/icon/types';
 
+type Components = {
+  Info: React.ReactNode;
+};
+
 type Sortable = {
   enabled: boolean;
   handle?: boolean;
@@ -47,6 +51,9 @@ export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   id: string;
   name: string;
   className?: string;
+  // components
+  Components: Components;
+
   // sortable
   sortable: Sortable;
   listeners?: SyntheticListeners;
@@ -59,6 +66,8 @@ export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
 
 export interface LegendItemToolbarProps extends LegendItemEvents {
   className?: string;
+  // components
+  Components?: Components;
   // settings
   settings?: Settings;
   settingsManager?: SettingsManager;

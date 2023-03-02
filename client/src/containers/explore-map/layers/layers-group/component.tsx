@@ -19,7 +19,7 @@ const Layers = ({ name, group }) => {
   }, [group]);
 
   return (
-    <div className="space-y-3 px-6">
+    <div className="space-y-3 pl-6 pr-7">
       <h3 className="font-display text-lg">{name}</h3>
 
       <ul className="space-y-2">

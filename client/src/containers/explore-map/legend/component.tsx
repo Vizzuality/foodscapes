@@ -8,7 +8,7 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import { DATASETS } from 'constants/datasets';
 
-import { LEGENDS } from 'containers/datasets';
+import { INFO, LEGENDS } from 'containers/datasets';
 
 import Legend from 'components/map/legend';
 
@@ -72,6 +72,7 @@ const LegendContainer = () => {
       .filter((layer) => !!LEGENDS[layer])
       .map((layer) => {
         const LegendComponent = LEGENDS[layer];
+        const InfoComponent = INFO[layer];
         const DATASET = DATASETS.find((d) => d.id === layer);
 
         return (
@@ -79,6 +80,9 @@ const LegendContainer = () => {
             id={layer}
             key={layer}
             dataset={DATASET}
+            Components={{
+              Info: <InfoComponent {...DATASET} />,
+            }}
             settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             onChangeOpacity={(opacity) => {
               onChangeOpacity(layer, opacity);
