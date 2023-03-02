@@ -6,6 +6,7 @@ import { BarStackHorizontal } from '@visx/shape';
 
 import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { FoodscapeChartData } from 'types/foodscapes';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -31,12 +32,12 @@ const FoodscapesChart = ({ width, height, dataset }: FoodscapesChartProps) => {
   }, [data]);
   const TOTAL = data.reduce((acc, curr) => acc + curr.value, 0);
 
-  const DATA = useMemo<Record<keyof typeof KEYS, number>[]>(() => {
+  const DATA = useMemo<FoodscapeChartData[]>(() => {
     return [
       data.reduce((acc, curr) => {
         acc[curr.id] = curr.value;
         return acc;
-      }, {} as Record<keyof typeof KEYS, number>),
+      }, {} as FoodscapeChartData),
     ];
   }, [data]);
 
@@ -66,7 +67,7 @@ const FoodscapesChart = ({ width, height, dataset }: FoodscapesChartProps) => {
 
   return (
     <svg width={width} height={height}>
-      <BarStackHorizontal<Record<keyof typeof KEYS, number>, number>
+      <BarStackHorizontal<FoodscapeChartData>
         data={DATA}
         keys={KEYS}
         width={width}
@@ -74,7 +75,7 @@ const FoodscapesChart = ({ width, height, dataset }: FoodscapesChartProps) => {
         y={() => height}
         xScale={xScale}
         yScale={yScale}
-        color={colorScale}
+        color={(d) => colorScale(+d)}
       >
         {(barStacks) =>
           barStacks.map((barStack) =>
