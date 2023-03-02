@@ -15,12 +15,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@artsy/fresnel@npm:3.5.0":
-  version: 3.5.0
-  resolution: "@artsy/fresnel@npm:3.5.0"
+"@artsy/fresnel@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@artsy/fresnel@npm:6.1.0"
   peerDependencies:
-    react: ">=16.3.0 <18.0.0"
-  checksum: 31d70914669928e36c62729a43241aa366fd1f1bb599bda3816769760ef4dfc8274d0d0db72c8369d449c7031845964c60e791bcecabea6c52a666dfba87297a
+    react: ">=16.3.0"
+  checksum: cee67e5de178e84d68fa4c551b6425978836ee52c5d359bfd3402a4cda406026f6fbb2e5d072a6e5349f3d302ba2b4e0ba57edc55f309f496594741b89ac739b
   languageName: node
   linkType: hard
 
@@ -11489,7 +11489,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "foodscapes@workspace:."
   dependencies:
-    "@artsy/fresnel": 3.5.0
+    "@artsy/fresnel": 6.1.0
     "@deck.gl/core": 8.7.8
     "@deck.gl/extensions": 8.7.8
     "@deck.gl/geo-layers": 8.7.8

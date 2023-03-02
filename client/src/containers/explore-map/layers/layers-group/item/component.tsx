@@ -4,18 +4,25 @@ import cn from 'lib/classnames';
 
 import { layersAtom } from 'store/explore-map';
 
+import { Dialog } from '@radix-ui/react-dialog';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { Dataset } from 'types/datasets';
 
+import { INFO } from 'containers/datasets';
+
 import Checkbox from 'components/forms/checkbox';
 import Icon from 'components/icon';
+import { DialogContent, DialogTrigger } from 'components/ui/dialog';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
-const LayerItem = ({ label, id, layer }: Dataset) => {
+const LayerItem = (props: Dataset) => {
+  const { label, id, layer } = props;
   const layers = useRecoilValue(layersAtom);
   const setLayers = useSetRecoilState(layersAtom);
+
+  const Info = INFO[id];
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -60,16 +67,22 @@ const LayerItem = ({ label, id, layer }: Dataset) => {
         </span>
       </button>
 
-      <button type="button" className="h-4 w-4 shrink-0" disabled={!layer.enabled}>
-        <Icon
-          icon={INFO_SVG}
-          className={cn({
-            'h-full w-full text-navy-500 ': true,
-            'rounded-full hover:text-navy-400 active:text-navy-500 active:outline active:outline-1 active:outline-navy-400':
-              true,
-          })}
-        />
-      </button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <button type="button" className="h-4 w-4 shrink-0" disabled={!layer.enabled}>
+            <Icon
+              icon={INFO_SVG}
+              className={cn({
+                'h-full w-full text-navy-500 ': true,
+                'rounded-full hover:text-navy-400 active:text-navy-500 active:outline active:outline-1 active:outline-navy-400':
+                  true,
+              })}
+            />
+          </button>
+        </DialogTrigger>
+
+        <DialogContent>{!!Info && <Info {...props} />}</DialogContent>
+      </Dialog>
     </div>
   );
 };

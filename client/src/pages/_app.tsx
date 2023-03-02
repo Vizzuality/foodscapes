@@ -91,8 +91,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
       <RecoilRoot>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            {/* @ts-ignore: https://github.com/artsy/fresnel/issues/281 */}
-            <MediaContextProvider>
+            <MediaContextProvider disableDynamicMediaQueries>
               <MapProvider>
                 <TooltipProvider delayDuration={750}>
                   {/* Layout */}

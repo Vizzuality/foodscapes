@@ -12,6 +12,7 @@ export const DATASETS = [
       enabled: false,
       sql: `SELECT DISTINCT foodscapes as id, soil_groups, COUNT(pixel_count) AS value
       FROM foodscapes
+      WHERE foodscapes NOT IN (1,2,3)
       GROUP BY foodscapes, soil_groups`,
     },
   },
