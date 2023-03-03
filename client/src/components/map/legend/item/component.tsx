@@ -17,12 +17,17 @@ export const LegendItem: React.FC<LegendItemProps> = ({
   id,
   name,
   children,
+  className,
+  // sortable
   sortable,
-  listeners,
   attributes,
+  listeners,
+  // settings
   settingsManager,
   settings,
-  className,
+  // components
+  Components,
+  // events
   onChangeOpacity,
   onChangeVisibility,
   onChangeExpand,
@@ -79,6 +84,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
             <LegendItemToolbar
               settings={settings}
               settingsManager={settingsManager}
+              Components={Components}
               onChangeOpacity={onChangeOpacity}
               onChangeVisibility={onChangeVisibility}
               onChangeExpand={onChangeExpand}

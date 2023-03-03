@@ -23,6 +23,8 @@ const SoilGroupsPopup = ({ latLng }: SoilGroupsPopupProps) => {
 
   // const DATA = useMemo(() => {
   //   if (!soilgroupsData || !pointData) return null;
+  // if (noPointData(pointData)) return null;
+
   //   const band = 'b1';
   //   const value = pointData[band];
 
@@ -35,8 +37,15 @@ const SoilGroupsPopup = ({ latLng }: SoilGroupsPopupProps) => {
       {isFetched && (
         <>
           <header className="flex items-center space-x-2">
-            <div className="h-4 w-4" style={{ background: DATA?.color }} />
-            <h2 className="text-base font-light">Soil Group</h2>
+            <div
+              className="h-4 w-4 border"
+              style={{
+                background: DATA?.color,
+                borderColor: DATA?.color ?? 'var(--color-navy-500)',
+              }}
+            />
+
+            <h2 className="text-base font-semibold">Soil Group</h2>
           </header>
 
           <div className="mt-2 pl-6">

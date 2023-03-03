@@ -26,7 +26,7 @@ export const fetchPointData = ({ lng, lat }: LngLat) => {
   }).then((response) => response.data);
 };
 
-export function useData<T extends {}>(
+export function useData<T = unknown>(
   params: ParamsProps = {},
   queryOptions: UseQueryOptions<T[], unknown> = {}
 ) {

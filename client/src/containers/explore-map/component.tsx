@@ -7,6 +7,7 @@ import Menu from './menu';
 
 const ExploreMap = () => {
   useSyncExploreMap();
+
   return (
     <div className="relative h-screen w-full">
       <Map />

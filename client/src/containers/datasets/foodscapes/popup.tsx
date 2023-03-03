@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { LngLat } from 'types/map';
 
-import { usePointData } from 'hooks/data';
+import { noPointData, usePointData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 import { useIsLoading } from 'hooks/utils';
 
@@ -25,6 +25,8 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
 
   const DATA = useMemo(() => {
     if (!foodscapesData || !pointData) return null;
+    if (noPointData(pointData)) return null;
+
     const band = 'b1';
     const value = pointData[band];
 
@@ -37,11 +39,17 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
       {isFetched && (
         <>
           <header className="flex items-center space-x-2">
-            {!!DATA && <div className="h-4 w-4" style={{ background: DATA?.color }} />}
-            <h2 className="text-base font-light">Foodscape</h2>
+            <div
+              className="h-4 w-4 border"
+              style={{
+                background: DATA?.color,
+                borderColor: DATA?.color ?? 'var(--color-navy-500)',
+              }}
+            />
+            <h2 className="text-base font-semibold">Foodscape</h2>
           </header>
 
-          <div className={cn({ 'mt-2 pl-6': true, 'pl-0': !DATA })}>
+          <div className={cn({ 'mt-2 pl-6': true })}>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && <h3 className="text-sm font-light">{DATA.label}</h3>}
           </div>

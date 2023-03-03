@@ -2,10 +2,9 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { PointData } from 'types/data';
 import { LngLat } from 'types/map';
 
-import { usePointData } from 'hooks/data';
+import { noPointData, usePointData } from 'hooks/data';
 import { useProvinces } from 'hooks/provinces';
 import { useIsLoading } from 'hooks/utils';
 
@@ -16,12 +15,6 @@ import PIN_SVG from 'svgs/map/pin.svg?sprite';
 interface ProvincesPopupProps {
   latLng: LngLat;
 }
-
-const noData = (pointData: PointData) => {
-  return Object.keys(pointData).every((p) => {
-    return pointData[p] === 0;
-  });
-};
 
 const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
   const f = useProvinces();
@@ -37,7 +30,7 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
   const DATA = useMemo(() => {
     if (!provincesData || !pointData) return null;
 
-    if (noData(pointData)) return null;
+    if (noPointData(pointData)) return null;
 
     const band = 'b4';
     const value = pointData[band];
@@ -51,11 +44,11 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
       {isFetched && (
         <>
           <header className="flex items-center space-x-2">
-            {!!DATA && <Icon icon={PIN_SVG} className="h-4 w-4 text-navy-500" />}
-            <h2 className="text-base font-light">Location</h2>
+            <Icon icon={PIN_SVG} className="h-4 w-4 text-navy-500" />
+            <h2 className="text-base font-semibold">Location</h2>
           </header>
 
-          <div className={cn({ 'mt-2 pl-6': true, 'pl-0': !DATA })}>
+          <div className={cn({ 'mt-2 pl-6': true })}>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
               <h3 className="text-sm font-light">

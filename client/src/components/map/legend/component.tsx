@@ -26,13 +26,13 @@ export const Legend: React.FC<LegendProps> = ({
       {isChildren && (
         <div className="relative flex h-full flex-col overflow-hidden">
           <div className="overflow-y-auto overflow-x-hidden">
-            {!!sortable && (
+            {!!sortable.enabled && (
               <SortableList sortable={sortable} onChangeOrder={onChangeOrder}>
                 {children}
               </SortableList>
             )}
 
-            {!sortable && children}
+            {!sortable.enabled && children}
           </div>
         </div>
       )}
