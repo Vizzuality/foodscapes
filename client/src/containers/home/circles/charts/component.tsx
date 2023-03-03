@@ -10,14 +10,17 @@ import { useScrollDirection } from 'hooks/home';
 import { STEP_DURATION } from 'containers/home/animations/constants';
 import { useSoyCounter, useSoyFavoredCounter } from 'containers/home/animations/hooks';
 
-const Charts = () => {
-  const { direction } = useScrollDirection();
-  const stepStart = 3;
-  const step = useRecoilValue(stepAtom);
-  const substep = Math.min(Math.max(step - stepStart, 0), 3);
+export interface ChartsProps {
+  initialStep: number;
+}
 
-  const soyCounter = useSoyCounter(step - stepStart);
-  const soyFavoredCounter = useSoyFavoredCounter(step - stepStart);
+const Charts = ({ initialStep }) => {
+  const { direction } = useScrollDirection();
+  const step = useRecoilValue(stepAtom);
+  const substep = Math.min(Math.max(step - initialStep, 0), 3);
+
+  const soyCounter = useSoyCounter(step - initialStep);
+  const soyFavoredCounter = useSoyFavoredCounter(step - initialStep);
 
   const variants = {
     initial: (d) => ({

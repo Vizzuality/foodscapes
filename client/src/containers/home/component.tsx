@@ -1,5 +1,3 @@
-// import dynamic from 'next/dynamic';
-
 import { lastStepAtom, stepAtom } from 'store/home';
 
 import { AnimatePresence } from 'framer-motion';
@@ -21,12 +19,13 @@ import GlobeText from './globe/text';
 import Hero from './hero';
 import How from './how';
 import LayersChart from './layers/chart';
-import { Text1 as LayersText1 } from './layers/texts';
+import {
+  Text1 as LayersText1,
+  Text2 as LayersText2,
+  Text3 as LayersText3,
+  Text4 as LayersText4,
+} from './layers/texts';
 import ScrollItem from './scroll';
-
-// const LayersChart = dynamic(() => import('./layers/charts'), {
-//   ssr: false,
-// });
 
 const Home = () => {
   const step = useRecoilValue(stepAtom);
@@ -40,52 +39,61 @@ const Home = () => {
 
   return (
     <>
-      <ScrollItem key={`scroll-0`} step={0} onChange={onChange}>
-        <Hero key="hero" />
+      <ScrollItem step={0} onChange={onChange}>
+        <Hero />
       </ScrollItem>
 
-      <ScrollItem key={`scroll-1`} step={1} onChange={onChange}>
+      <ScrollItem step={1} onChange={onChange}>
         <How />
       </ScrollItem>
 
       <Wrapper>
         <div className="grid grid-cols-12 gap-6">
           <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
-            <ScrollItem key={`scroll-2`} step={2} onChange={onChange}>
-              <LayersText1 key="text-layers-1" />
+            <ScrollItem step={2} onChange={onChange}>
+              <LayersText1 />
             </ScrollItem>
-            <ScrollItem key={`scroll-3`} step={3} onChange={onChange}>
-              <CirclesText1 key="text-circles-1" />
+            <ScrollItem step={3} onChange={onChange}>
+              <LayersText2 />
             </ScrollItem>
-            <ScrollItem key={`scroll-4`} step={4} onChange={onChange}>
-              <CirclesText2 key="text-circles-2" />
+            <ScrollItem step={4} onChange={onChange}>
+              <LayersText3 />
             </ScrollItem>
-            <ScrollItem key={`scroll-5`} step={5} onChange={onChange}>
-              <CirclesText3 key="text-circles-3" />
+            <ScrollItem step={5} onChange={onChange}>
+              <LayersText4 />
             </ScrollItem>
-            <ScrollItem key={`scroll-6`} step={6} onChange={onChange}>
-              <CirclesText4 key="text-circles-4" />
+            <ScrollItem step={6} onChange={onChange}>
+              <CirclesText1 />
             </ScrollItem>
-            <ScrollItem key={`scroll-7`} step={7} onChange={onChange}>
-              <GlobeText key="text-globe-1" />
+            <ScrollItem step={7} onChange={onChange}>
+              <CirclesText2 />
+            </ScrollItem>
+            <ScrollItem step={8} onChange={onChange}>
+              <CirclesText3 />
+            </ScrollItem>
+            <ScrollItem step={9} onChange={onChange}>
+              <CirclesText4 />
+            </ScrollItem>
+            <ScrollItem step={10} onChange={onChange}>
+              <GlobeText />
             </ScrollItem>
           </div>
 
           <div className="sticky top-0 z-0 col-span-5 col-start-7 h-small-screen">
             <AnimatePresence>
-              {step === 2 && (
+              {[2, 3, 4, 5].includes(step) && (
                 <FadeY key="layers-chart">
-                  <LayersChart />
+                  <LayersChart initialStep={2} />
                 </FadeY>
               )}
 
-              {(step === 3 || step === 4 || step === 5 || step === 6) && (
+              {[6, 7, 8, 9].includes(step) && (
                 <FadeY key="circles-chart">
-                  <CirclesChart />
+                  <CirclesChart initialStep={6} />
                 </FadeY>
               )}
 
-              {step === 7 && (
+              {step === 10 && (
                 <FadeY key="globe-chart" className="z-20">
                   <GlobeChart />
                 </FadeY>
