@@ -59,7 +59,7 @@ const LayersChart = ({ initialStep }: LayersChartProps) => {
 
   return (
     <motion.div
-      className="absolute z-10 flex h-full w-full flex-col items-center justify-center"
+      className="absolute z-10 flex h-full w-full scale-125 flex-col items-center justify-center"
       initial={{ opacity: 0 }}
       animate={ANIMATE}
     >

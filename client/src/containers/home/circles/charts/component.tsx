@@ -38,15 +38,13 @@ const Charts = ({ initialStep }) => {
     initial: (d) => ({
       x: d === 1 ? 0 : `${(0.5 - 0.19 / 2) * 100}%`,
       y: d === 1 ? 0 : `${(-0.5 + 0.19 / 2) * 100}%`,
-      scale: 1,
     }),
-    step0: { x: 0, y: 0, scale: 1 },
-    step1: { x: 0, y: 0, scale: 1 },
-    step2: { x: 0, y: 0, scale: 1 },
+    step0: { x: 0, y: 0 },
+    step1: { x: 0, y: 0 },
+    step2: { x: 0, y: 0 },
     step3: {
       x: `${(0.5 - 0.19 / 2) * 100}%`,
       y: `${(-0.5 + 0.19 / 2) * 100}%`,
-      scale: 1,
     },
   };
 
@@ -88,7 +86,7 @@ const Charts = ({ initialStep }) => {
     },
   };
 
-  const borderVariants = {
+  const border1Variants = {
     initial: (d) => ({
       scale: d === 1 ? 1 : 0.19,
       borderColor: d === 1 ? '#1C274A' : '#F0A38B',
@@ -106,6 +104,33 @@ const Charts = ({ initialStep }) => {
     step2: {
       opacity: 1,
       borderColor: '#1C274A',
+      scale: 1,
+    },
+    step3: {
+      opacity: 0,
+      borderColor: '#F0A38B',
+      scale: 0.19,
+    },
+  };
+
+  const border2Variants = {
+    initial: (d) => ({
+      scale: d === 1 ? 1 : 0.19,
+      borderColor: d === 1 ? '#1C274A' : '#F0A38B',
+    }),
+    step0: {
+      opacity: 1,
+      borderColor: '#1C274A',
+      scale: 1,
+    },
+    step1: {
+      opacity: 1,
+      borderColor: '#1C274A',
+      scale: 0.68,
+    },
+    step2: {
+      opacity: 1,
+      borderColor: '#1C274A',
       scale: 0.68,
     },
     step3: {
@@ -113,6 +138,14 @@ const Charts = ({ initialStep }) => {
       borderColor: '#F0A38B',
       scale: 0.19,
     },
+  };
+
+  const labelVariants = {
+    initial: { opacity: 0 },
+    step0: { opacity: 0 },
+    step1: { opacity: 0 },
+    step2: { opacity: 0 },
+    step3: { opacity: 1 },
   };
 
   const numberVariants = {
@@ -158,12 +191,22 @@ const Charts = ({ initialStep }) => {
         >
           <motion.div
             className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy-500"
-            variants={borderVariants}
+            variants={border1Variants}
             initial="initial"
             animate={`step${substep}`}
             transition={{ duration: STEP_DURATION }}
             custom={direction}
           />
+
+          <motion.div
+            className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2 border-navy-500"
+            variants={border2Variants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION }}
+            custom={direction}
+          />
+
           <motion.div
             className="absolute top-0 left-0 z-0 h-full w-full rounded-full border-2"
             variants={bgVariants}
@@ -172,6 +215,7 @@ const Charts = ({ initialStep }) => {
             transition={{ duration: STEP_DURATION }}
             custom={direction}
           />
+
           <motion.div
             className="relative z-10 font-display text-4xl"
             variants={numberVariants}
@@ -180,6 +224,16 @@ const Charts = ({ initialStep }) => {
             transition={{ duration: STEP_DURATION }}
           >
             {`${soyCounter}%`}
+          </motion.div>
+
+          <motion.div
+            variants={labelVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION * 0.5 }}
+            className="absolute z-10 flex h-full w-full -translate-y-[9.5%] items-center justify-center text-red-500"
+          >
+            <div className="-mt-10 font-semibold">Soy production</div>
           </motion.div>
         </motion.div>
 
@@ -205,6 +259,16 @@ const Charts = ({ initialStep }) => {
             transition={{ duration: STEP_DURATION }}
           >
             {`${soyFavoredCounter}%`}
+          </motion.div>
+
+          <motion.div
+            variants={labelVariants}
+            initial="initial"
+            animate={`step${substep}`}
+            transition={{ duration: STEP_DURATION * 0.5 }}
+            className="absolute z-10 flex h-full w-full translate-y-[34%] items-center justify-center text-yellow-500"
+          >
+            <div className="mt-10 font-semibold">Soy distribution</div>
           </motion.div>
         </div>
       </div>
