@@ -3,6 +3,8 @@ import { useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
+import { useFoodscapes } from 'hooks/foodscapes';
+
 import Icon from 'components/icon';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
@@ -21,6 +23,8 @@ const BACKGROUNDS = [
 ];
 
 const Hero = () => {
+  const { data: foodscapesData } = useFoodscapes();
+
   const backgroundsRef = useRef<string[]>([]);
   const DURATION = 3;
   const TOTAL_DURATION = 12;
@@ -56,16 +60,15 @@ const Hero = () => {
     const ITEMS_PER_ROW = Math.floor((w * 1.5) / SIZE);
     const COUNT = ITEMS_PER_ROW * ROW_COUNT;
 
+    const COLORS = foodscapesData.map((f) => f.color);
+
     backgroundsRef.current = [];
 
     return [...Array(COUNT)].map((_, i) => {
       const random = Math.random();
 
-      // Generate a random color for the background but keep it light
-      const backgroundColor = `hsl(${Math.floor(random * 360)}, 100%, ${
-        Math.floor(random * 50) + 50
-      }%)`;
-
+      // Generate a random color for the background with the foodScapes colors
+      const backgroundColor = COLORS[Math.floor(Math.random() * COLORS.length)];
       const backgroundImage = randomImage();
 
       return (
@@ -99,7 +102,7 @@ const Hero = () => {
         </div>
       );
     });
-  }, [width, height, count]);
+  }, [width, height, count, foodscapesData]);
 
   return (
     <section
