@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { useMemo } from 'react';
 
 import { stepAtom } from 'store/home';
 
@@ -17,16 +17,28 @@ export interface ChartsProps {
 const Charts = ({ initialStep }) => {
   const { direction } = useScrollDirection();
   const step = useRecoilValue(stepAtom);
-  const substep = Math.min(Math.max(step - initialStep, 0), 3);
+  const substep = step - initialStep;
 
   const soyCounter = useSoyCounter(step - initialStep);
   const soyFavoredCounter = useSoyFavoredCounter(step - initialStep);
+
+  const ANIMATE = useMemo(() => {
+    if (step - initialStep < 0)
+      return {
+        scale: 0,
+        opacity: 0,
+      };
+    return {
+      scale: 1,
+      opacity: 1,
+    };
+  }, [initialStep, step]);
 
   const variants = {
     initial: (d) => ({
       x: d === 1 ? 0 : `${(0.5 - 0.19 / 2) * 100}%`,
       y: d === 1 ? 0 : `${(-0.5 + 0.19 / 2) * 100}%`,
-      scale: 0,
+      scale: 1,
     }),
     step0: { x: 0, y: 0, scale: 1 },
     step1: { x: 0, y: 0, scale: 1 },
@@ -36,14 +48,6 @@ const Charts = ({ initialStep }) => {
       y: `${(-0.5 + 0.19 / 2) * 100}%`,
       scale: 1,
     },
-  };
-
-  const imgVariants = {
-    initial: { opacity: 0, scale: 0.75 },
-    step0: { opacity: 1, scale: 1 },
-    step1: { opacity: 0, scale: 0.75 },
-    step2: { opacity: 0, scale: 0.75 },
-    step3: { opacity: 0, scale: 0.75 },
   };
 
   const bgVariants = {
@@ -136,23 +140,16 @@ const Charts = ({ initialStep }) => {
   };
 
   return (
-    <div className="flex h-full items-center">
+    <motion.div
+      className="absoulte z-0 flex h-full w-full items-center"
+      initial={{ opacity: 0 }}
+      animate={ANIMATE}
+      transition={{ duration: STEP_DURATION }}
+    >
       <div className="relative aspect-square w-full rounded-full">
-        {/* IMAGE */}
-        <motion.div
-          className="absolute top-0 left-0 z-10 h-full w-full"
-          variants={imgVariants}
-          initial="initial"
-          animate={`step${substep}`}
-          transition={{ duration: STEP_DURATION }}
-          custom={direction}
-        >
-          <Image src="/images/layers/all.png" alt="All layers" fill />
-        </motion.div>
-
         {/* CIRCLE and NUMBER */}
         <motion.div
-          className="absolute top-0 left-0 z-0 flex h-full w-full items-center justify-center rounded-full"
+          className="absolute top-0 left-0 z-10 flex h-full w-full items-center justify-center rounded-full"
           variants={variants}
           initial="initial"
           animate={`step${substep}`}
@@ -211,7 +208,7 @@ const Charts = ({ initialStep }) => {
           </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

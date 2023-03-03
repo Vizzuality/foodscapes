@@ -24,6 +24,10 @@ const LAYERS = [
     step: 3,
     imageUrl: '/images/layers/socio.png',
   },
+  {
+    step: 4,
+    imageUrl: '/images/layers/all.png',
+  },
 ];
 
 export interface LayersChartProps {
@@ -41,10 +45,24 @@ const LayersChart = ({ initialStep }: LayersChartProps) => {
     return LAYERS.map((l) => l.imageUrl);
   }, []);
 
+  const ANIMATE = useMemo(() => {
+    if (step - initialStep < 0 || step - initialStep > LAYERS.length - 1)
+      return {
+        opacity: 0,
+      };
+    return {
+      opacity: 1,
+    };
+  }, [initialStep, step]);
+
   useImagesPreloader(PRELOADED_IMAGES);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center">
+    <motion.div
+      className="absolute z-10 flex h-full w-full flex-col items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={ANIMATE}
+    >
       <div className="relative aspect-square w-full">
         <AnimatePresence>
           <motion.div
@@ -84,7 +102,7 @@ const LayersChart = ({ initialStep }: LayersChartProps) => {
           })}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

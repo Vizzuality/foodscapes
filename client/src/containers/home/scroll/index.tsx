@@ -23,7 +23,7 @@ const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
   }, [s, step, inView, onChange]);
 
   return (
-    <section ref={ref} className="h-small-screen">
+    <section ref={ref} className="min-h-[125vh]">
       {children}
     </section>
   );

@@ -81,15 +81,12 @@ const Home = () => {
 
           <div className="sticky top-0 z-0 col-span-5 col-start-7 h-small-screen">
             <AnimatePresence>
-              {[2, 3, 4, 5].includes(step) && (
+              {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
                 <FadeY key="layers-chart">
-                  <LayersChart initialStep={2} />
-                </FadeY>
-              )}
-
-              {[6, 7, 8, 9].includes(step) && (
-                <FadeY key="circles-chart">
-                  <CirclesChart initialStep={6} />
+                  <div className="flex h-full flex-col items-center justify-center">
+                    <LayersChart initialStep={2} />
+                    <CirclesChart initialStep={6} />
+                  </div>
                 </FadeY>
               )}
 
