@@ -14,7 +14,7 @@ import {
   Text3 as CirclesText3,
   Text4 as CirclesText4,
 } from './circles/texts';
-import GlobeChart from './globe/chart';
+import GlobeMap from './globe/map';
 import GlobeText from './globe/text';
 import Hero from './hero';
 import How from './how';
@@ -90,11 +90,7 @@ const Home = () => {
                 </FadeY>
               )}
 
-              {step === 10 && (
-                <FadeY key="globe-chart" className="z-20">
-                  <GlobeChart />
-                </FadeY>
-              )}
+              <GlobeMap />
             </AnimatePresence>
           </div>
         </div>

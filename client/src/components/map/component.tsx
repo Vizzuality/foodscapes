@@ -22,7 +22,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   mapboxAccessToken,
   children,
   className,
-  viewState = {},
+  viewState,
   initialViewState,
   bounds,
   onMapViewStateChange,
