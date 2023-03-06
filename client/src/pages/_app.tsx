@@ -14,7 +14,7 @@ import { RecoilRoot } from 'recoil';
 
 import Layout from 'layouts/app';
 
-import ThirdParty from 'containers/third-party';
+// import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
 import { TooltipProvider } from 'components/ui/tooltip';
@@ -96,7 +96,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
                 <TooltipProvider delayDuration={750}>
                   {/* Layout */}
                   {getLayout(<Component {...pageProps} />)}
-                  <ThirdParty />
+                  {/* <ThirdParty /> */}
                 </TooltipProvider>
               </MapProvider>
             </MediaContextProvider>
