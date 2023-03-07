@@ -1,18 +1,21 @@
 import { useMemo } from 'react';
 
+import { AnyLayer, AnySourceData } from 'mapbox-gl';
+
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
 
-interface UseFoodscapesLayerProps {
+interface UseSoilGroupsLayerProps {
   settings?: Partial<Settings>;
 }
 
-interface UseFoodscapesLegendProps {
+interface UseSoilGroupsLegendProps {
   settings?: Settings;
 }
 
-export function useLayer({ settings = {} }: UseFoodscapesLayerProps) {
+export function useSource(): AnySourceData {
+  const band = 25;
   const colormap = useMemo(() => {
     const c = {
       '-1': '#000000',
@@ -22,24 +25,30 @@ export function useLayer({ settings = {} }: UseFoodscapesLayerProps) {
     return encodeURIComponent(JSON.stringify(c));
   }, []);
 
-  const layer = useMemo(() => {
+  return {
+    id: 'soil-groups-source',
+    type: 'raster',
+    tiles: [
+      // `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap={{COLOR_RAMP}}&bidx={{BAND}}`,
+      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap=${colormap}&bidx=${band}`,
+    ],
+  };
+}
+
+export function useLayer({ settings = {} }: UseSoilGroupsLayerProps): AnyLayer {
+  const visibility = settings.visibility ?? true;
+  const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'soil-groups',
+      id: 'soil-groups-layer',
       type: 'raster',
-      source: {
-        type: 'raster',
-        tiles: [
-          `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap={{COLOR_RAMP}}&bidx={{BAND}}`,
-        ],
+      paint: {
+        'raster-opacity': settings.opacity ?? 1,
       },
-      params: {
-        BAND: 25,
-        COLOR_RAMP: colormap,
+      layout: {
+        visibility: visibility ? 'visible' : 'none',
       },
-      opacity: settings.opacity,
-      visibility: settings.visibility,
     };
-  }, [colormap, settings]);
+  }, [settings, visibility]);
 
   return layer;
 }
@@ -50,7 +59,7 @@ export function useLegend({
     visibility: true,
     expand: true,
   },
-}: UseFoodscapesLegendProps) {
+}: UseSoilGroupsLegendProps) {
   const { data: foodscapesData } = useFoodscapes();
 
   const colormap = useMemo(() => {

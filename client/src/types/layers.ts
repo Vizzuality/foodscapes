@@ -1,6 +1,6 @@
-import LayerManager, { LayerSpec } from '@vizzuality/layer-manager';
+import { LayerSpec } from '@vizzuality/layer-manager';
 
 export type LayerProps<T> = Partial<LayerSpec> & {
-  layerManager?: LayerManager;
+  beforeId?: string;
   settings?: Partial<T>;
 };

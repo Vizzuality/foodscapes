@@ -1,8 +1,10 @@
-import FoodscapesLayer from './foodscapes';
+// Foodscapes
 import FoodscapesInfo from './foodscapes/info';
+import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
-import SoilGroupsLayer from './soil-groups';
+// Soils
+import SoilGroupsLayer from './soil-groups/layer';
 import SoilGroupsLegend from './soil-groups/legend';
 import SoilGroupsPopup from './soil-groups/popup';
 

@@ -21,7 +21,7 @@ export const DATASETS = [
     label: 'Soil Groups',
     group: 'foodscapes',
     layer: {
-      enabled: false,
+      enabled: true,
     },
     widget: {
       enabled: false,
