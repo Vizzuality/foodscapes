@@ -32,7 +32,7 @@ export const DATASETS = [
     label: 'Foodscapes Intensity Groups',
     group: 'foodscapes',
     layer: {
-      enabled: false,
+      enabled: true,
     },
     widget: {
       enabled: false,
@@ -43,7 +43,7 @@ export const DATASETS = [
     label: 'Crops',
     group: 'foodscapes',
     layer: {
-      enabled: false,
+      enabled: true,
     },
     widget: {
       enabled: false,
