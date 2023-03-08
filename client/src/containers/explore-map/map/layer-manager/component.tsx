@@ -18,7 +18,20 @@ const LayerManagerContainer = () => {
         // We want to put it before the custom-layers transparent backgrond
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-layer`;
 
-        return <LayerComponent key={layer} settings={layersSettings[layer]} beforeId={beforeId} />;
+        return (
+          <LayerComponent
+            key={layer}
+            settings={
+              layersSettings[layer] ?? {
+                opacity: 1,
+                visibility: true,
+                expand: false,
+              }
+            }
+            beforeId={beforeId}
+            zIndex={1000 - i}
+          />
+        );
       })}
     </>
   );

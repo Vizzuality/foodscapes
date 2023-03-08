@@ -8,7 +8,7 @@ import { Settings } from 'components/map/legend/types';
 
 import { useDeckLayer, useLayer } from './hooks';
 
-const CropGroupsLayer = ({ settings, beforeId, zIndex }: LayerProps<Settings>) => {
+const LandUseChangeLayer = ({ settings, zIndex, beforeId }: LayerProps<Settings>) => {
   const { current: map } = useMap();
   const LAYER = useLayer();
   const DECK_LAYER = useDeckLayer({ settings, zIndex });
@@ -36,12 +36,9 @@ const CropGroupsLayer = ({ settings, beforeId, zIndex }: LayerProps<Settings>) =
     };
   }, [map, DECK_LAYER, beforeId]);
 
-  // Remove layer on unmount
-  useEffect(() => {}, [DECK_LAYER, map]);
-
   if (!LAYER) return null;
 
   return <Layer {...LAYER} beforeId={beforeId} />;
 };
 
-export default CropGroupsLayer;
+export default LandUseChangeLayer;

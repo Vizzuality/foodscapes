@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { H3HexagonLayer } from '@deck.gl/geo-layers';
+import { LineLayer } from '@deck.gl/layers';
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { AnyLayer } from 'mapbox-gl';
 
@@ -10,12 +10,12 @@ import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
 
-interface UseCropGroupsLayerProps {
+interface UseLandUseChangeLayerProps {
   settings?: Partial<Settings>;
   zIndex?: number;
 }
 
-interface UseCropGroupsLegendProps {
+interface UseLandUseChangeLegendProps {
   settings?: Settings;
 }
 
@@ -26,10 +26,10 @@ type LayerDeckProps = AnyLayer & {
 export function useLayer(): AnyLayer {
   const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'crop-groups-layer',
+      id: 'land-use-change-layer',
       type: 'background',
       paint: {
-        'background-color': '#FFCC11',
+        'background-color': '#77CCFF',
         'background-opacity': 0,
       },
     };
@@ -41,7 +41,7 @@ export function useLayer(): AnyLayer {
 export function useDeckLayer({
   settings = {},
   zIndex,
-}: UseCropGroupsLayerProps): typeof MapboxLayer {
+}: UseLandUseChangeLayerProps): typeof MapboxLayer {
   const { current: map } = useMap();
   const layerRef = useRef<typeof MapboxLayer>(null);
   const visibility = settings.visibility ?? true;
@@ -52,16 +52,33 @@ export function useDeckLayer({
     }
 
     layerRef.current = new MapboxLayer({
-      id: 'crop-groups-layer-deck',
-      type: H3HexagonLayer,
-      data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf.h3cells.json',
-      extruded: false,
-      filled: true,
+      id: 'land-use-change-layer-deck',
+      type: LineLayer,
+      data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart-segments.json',
+
+      /* props from LineLayer class */
+
+      getColor: (d) => [Math.sqrt(d.inbound + d.outbound), 140, 0],
+      getSourcePosition: (d) => d.from.coordinates,
+      getTargetPosition: (d) => d.to.coordinates,
+      getWidth: 12,
+      // widthMaxPixels: Number.MAX_SAFE_INTEGER,
+      // widthMinPixels: 0,
+      // widthScale: 1,
+      // widthUnits: 'pixels',
+
+      /* props inherited from Layer class */
+
+      // autoHighlight: false,
+      // coordinateOrigin: [0, 0, 0],
+      // coordinateSystem: COORDINATE_SYSTEM.LNGLAT,
+      // highlightColor: [0, 0, 128, 128],
+      // modelMatrix: null,
+      // opacity: 1,
       pickable: true,
-      getElevation: (d) => d.count,
-      getFillColor: (d) => [255, (1 - d.count / 500) * 255, 0],
-      getHexagon: (d) => d.hex,
       getPolygonOffset: () => [0, zIndex * 1000],
+      // visible: true,
+      // wrapLongitude: false,
       visible: visibility,
       opacity: settings.opacity ?? 1,
     });
@@ -70,16 +87,16 @@ export function useDeckLayer({
   }, [settings, visibility, zIndex]);
 
   useEffect(() => {
-    const l = map.getLayer('crop-groups-layer-deck') as LayerDeckProps;
+    const l = map.getLayer('land-use-change-layer-deck') as LayerDeckProps;
 
     if (l) {
       l.implementation.setProps({
-        visible: settings.visibility,
-        opacity: settings.opacity,
+        visible: visibility,
+        opacity: settings.opacity ?? 1,
         getPolygonOffset: () => [0, zIndex * 1000],
       });
     }
-  }, [map, settings, zIndex]);
+  }, [map, visibility, settings, zIndex]);
 
   return layer;
 }
@@ -90,7 +107,7 @@ export function useLegend({
     visibility: true,
     expand: true,
   },
-}: UseCropGroupsLegendProps) {
+}: UseLandUseChangeLegendProps) {
   const { data: foodscapesData } = useFoodscapes();
 
   const colormap = useMemo(() => {
@@ -109,8 +126,8 @@ export function useLegend({
     }
 
     return {
-      id: 'crop-groups',
-      name: 'Crop Groups',
+      id: 'land-use-change',
+      name: 'Land Use Change',
       colormap,
       settings: settings,
       settingsManager: {

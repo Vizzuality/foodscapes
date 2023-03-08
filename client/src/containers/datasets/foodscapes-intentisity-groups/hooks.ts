@@ -12,6 +12,7 @@ import { Settings } from 'components/map/legend/types';
 
 interface UseFoodscapesIntensityGroupsLayerProps {
   settings?: Partial<Settings>;
+  zIndex?: number;
 }
 
 interface UseFoodscapesIntensityGroupsLegendProps {
@@ -39,6 +40,7 @@ export function useLayer(): AnyLayer {
 
 export function useDeckLayer({
   settings = {},
+  zIndex,
 }: UseFoodscapesIntensityGroupsLayerProps): typeof MapboxLayer {
   const { current: map } = useMap();
   const layerRef = useRef<typeof MapboxLayer>(null);
@@ -58,12 +60,13 @@ export function useDeckLayer({
       getPosition: (d) => d.coordinates,
       getFillColor: [255, 255, 0],
       getRadius: () => 500,
+      getPolygonOffset: () => [0, zIndex * 1000],
       visible: visibility,
       opacity: settings.opacity ?? 1,
     });
 
     return layerRef.current;
-  }, [settings, visibility]);
+  }, [settings, visibility, zIndex]);
 
   useEffect(() => {
     const l = map.getLayer('foodscapes-intensity-groups-layer-deck') as LayerDeckProps;
@@ -73,9 +76,10 @@ export function useDeckLayer({
         getFillColor: [Math.random() * 255, 255, 0],
         visible: settings.visibility,
         opacity: settings.opacity,
+        getPolygonOffset: () => [0, zIndex * 1000],
       });
     }
-  }, [map, settings]);
+  }, [map, settings, zIndex]);
 
   return layer;
 }
