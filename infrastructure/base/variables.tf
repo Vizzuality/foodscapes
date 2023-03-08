@@ -1,12 +1,12 @@
 variable "project_name" {
   default     = "foodscapes"
   type        = string
-  description = "A project namespace for the infrastructure."
+  description = "A project namespace for the infrastructure"
 }
 
 variable "environment" {
   type        = string
-  description = "An environment namespace for the infrastructure."
+  description = "An environment namespace for the infrastructure"
 }
 
 variable "domain" {
@@ -17,7 +17,13 @@ variable "domain" {
 variable "aws_region" {
   default     = "eu-west-3"
   type        = string
-  description = "A valid AWS region to configure the underlying AWS SDK."
+  description = "A valid AWS region to configure the underlying AWS SDK"
+}
+
+variable "dynamo_db_lock_table_name" {
+  default     = "aws-locks"
+  type        = string
+  description = "Name of the lock table in Dynamo DB"
 }
 
 variable "tf_state_bucket" {
