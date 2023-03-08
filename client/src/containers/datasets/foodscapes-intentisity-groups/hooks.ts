@@ -22,7 +22,22 @@ type LayerDeckProps = AnyLayer & {
   implementation: any;
 };
 
-export function useLayer({
+export function useLayer(): AnyLayer {
+  const layer = useMemo<AnyLayer>(() => {
+    return {
+      id: 'foodscapes-intensity-groups-layer',
+      type: 'background',
+      paint: {
+        'background-color': '#77CCFF',
+        'background-opacity': 0,
+      },
+    };
+  }, []);
+
+  return layer;
+}
+
+export function useDeckLayer({
   settings = {},
 }: UseFoodscapesIntensityGroupsLayerProps): typeof MapboxLayer {
   const { current: map } = useMap();
@@ -35,7 +50,7 @@ export function useLayer({
     }
 
     layerRef.current = new MapboxLayer({
-      id: 'foodscapes-intensity-groups-layer',
+      id: 'foodscapes-intensity-groups-layer-deck',
       type: ScatterplotLayer,
       data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/airports.json',
       radiusScale: 20,
@@ -45,14 +60,13 @@ export function useLayer({
       getRadius: () => 500,
       visible: visibility,
       opacity: settings.opacity ?? 1,
-      // getPolygonOffset: () => [0, zIndex * 1000],
     });
 
     return layerRef.current;
   }, [settings, visibility]);
 
   useEffect(() => {
-    const l = map.getLayer('foodscapes-intensity-groups-layer') as LayerDeckProps;
+    const l = map.getLayer('foodscapes-intensity-groups-layer-deck') as LayerDeckProps;
 
     if (l) {
       l.implementation.setProps({
@@ -91,8 +105,8 @@ export function useLegend({
     }
 
     return {
-      id: 'deck-test',
-      name: 'Deck test',
+      id: 'intensity-groups',
+      name: 'Intensity Groups',
       colormap,
       settings: settings,
       settingsManager: {
