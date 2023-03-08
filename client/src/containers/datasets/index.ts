@@ -1,4 +1,7 @@
 // Foodscapes intensity groups
+import CropGroupsLayer from 'containers/datasets/crops-groups/layer';
+import CropGroupsLegend from 'containers/datasets/crops-groups/legend';
+import CropGroupsPopup from 'containers/datasets/crops-groups/popup';
 import CropsLayer from 'containers/datasets/crops/layer';
 import CropsLegend from 'containers/datasets/crops/legend';
 import CropsPopup from 'containers/datasets/crops/popup';
@@ -21,6 +24,7 @@ export const LAYERS = {
   'soil-groups': SoilGroupsLayer,
   'foodscapes-intensity-groups': FoodscapesIntensityGroupsLayer,
   crops: CropsLayer,
+  'crop-groups': CropGroupsLayer,
 };
 
 export const LEGENDS = {
@@ -28,6 +32,7 @@ export const LEGENDS = {
   'soil-groups': SoilGroupsLegend,
   'foodscapes-intensity-groups': FoodscapesIntensityGroupsLegend,
   crops: CropsLegend,
+  'crop-groups': CropGroupsLegend,
 };
 
 export const POPUPS = {
@@ -35,6 +40,7 @@ export const POPUPS = {
   'soil-groups': SoilGroupsPopup,
   'foodscapes-intensity-groups': FoodscapesIntensityGroupsPopup,
   crops: CropsPopup,
+  'crop-groups': CropGroupsPopup,
 };
 
 export const INFO = {
