@@ -29,3 +29,9 @@ variable "allowed_account_id" {
   type        = string
   description = "Allowed AWS Account ID"
 }
+
+variable "aws_cli_profile" {
+  default     = "default"
+  type        = string
+  description = "Named profile to use when interfacing with the AWS API"
+}
