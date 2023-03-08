@@ -73,7 +73,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
 
               <div
                 className={cx({
-                  'mt-px text-sm font-semibold text-navy-500': true,
+                  'mt-px text-base font-semibold text-navy-500': true,
                 })}
               >
                 {name}

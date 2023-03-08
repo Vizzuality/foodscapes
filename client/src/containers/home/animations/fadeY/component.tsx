@@ -9,21 +9,20 @@ import { useScrollDirection } from 'hooks/home';
 import { STEP_DURATION } from 'containers/home/animations/constants';
 
 interface FadeYProps extends PropsWithChildren {
+  animate?: 'initial' | 'animate' | 'exit';
   className?: string;
 }
 
-const FadeY = ({ className, children }: FadeYProps) => {
+const FadeY = ({ className, children, animate = 'animate' }: FadeYProps) => {
   const { direction } = useScrollDirection();
 
   const variants = {
-    initial: (d: number) => ({
+    initial: {
       opacity: 0,
-      y: d * 100,
       scale: 0.9,
-    }),
+    },
     animate: {
       opacity: 1,
-      y: 0,
       scale: 1,
       transition: {
         duration: STEP_DURATION,
@@ -34,9 +33,9 @@ const FadeY = ({ className, children }: FadeYProps) => {
         },
       },
     },
-    exit: (d: number) => ({
+    exit: {
       opacity: 0,
-      y: -d * 100,
+      // y: d * 100,
       scale: 0.9,
       transition: {
         duration: STEP_DURATION,
@@ -46,14 +45,14 @@ const FadeY = ({ className, children }: FadeYProps) => {
           ease: 'linear',
         },
       },
-    }),
+    },
   };
 
   return (
     <motion.div
       variants={variants}
       initial="initial"
-      animate="animate"
+      animate={animate}
       exit="exit"
       custom={direction}
       className={cn({
