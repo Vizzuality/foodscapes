@@ -231,7 +231,7 @@ const Charts = ({ initialStep }) => {
             initial="initial"
             animate={`step${substep}`}
             transition={{ duration: STEP_DURATION * 0.5 }}
-            className="absolute z-10 flex h-full w-full -translate-y-[9.5%] items-center justify-center text-red-500"
+            className="absolute z-10 flex h-full w-full -translate-y-[9.5%] items-center justify-center text-navy-500"
           >
             <div className="-mt-10 font-semibold">Soy production</div>
           </motion.div>
@@ -266,7 +266,7 @@ const Charts = ({ initialStep }) => {
             initial="initial"
             animate={`step${substep}`}
             transition={{ duration: STEP_DURATION * 0.5 }}
-            className="absolute z-10 flex h-full w-full translate-y-[34%] items-center justify-center text-yellow-500"
+            className="absolute z-10 flex h-full w-full translate-y-[34%] items-center justify-center text-navy-500"
           >
             <div className="mt-10 font-semibold">Soy distribution</div>
           </motion.div>
