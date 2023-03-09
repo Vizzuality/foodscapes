@@ -1,6 +1,9 @@
 import { useMemo, useRef, useState } from 'react';
 
+import { stepAtom } from 'store/home';
+
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -25,6 +28,7 @@ const BACKGROUNDS = [
 const Hero = () => {
   const { data: foodscapesData } = useFoodscapes();
 
+  const step = useRecoilValue(stepAtom);
   const backgroundsRef = useRef<string[]>([]);
   const DURATION = 3;
   const TOTAL_DURATION = 12;
@@ -125,10 +129,10 @@ const Hero = () => {
 
       <button
         className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
-        // onClick={() => {
-        //   const el = document.querySelector(`#scroll-${step + 1}`);
-        //   el?.scrollIntoView({ behavior: 'smooth' });
-        // }}
+        onClick={() => {
+          const el = document.querySelector(`#scroll-${step + 1}`);
+          el?.scrollIntoView({ behavior: 'smooth' });
+        }}
       >
         <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
 
