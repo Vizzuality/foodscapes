@@ -1,6 +1,9 @@
 import { useMemo, useRef, useState } from 'react';
 
+import { stepAtom } from 'store/home';
+
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -8,8 +11,6 @@ import { useFoodscapes } from 'hooks/foodscapes';
 import Icon from 'components/icon';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
-import { useRecoilValue } from 'recoil';
-import { stepAtom } from 'store/home';
 
 const BACKGROUNDS = [
   'url(/images/hero/home1.jpg)',
