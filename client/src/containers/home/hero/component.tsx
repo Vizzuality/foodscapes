@@ -8,6 +8,8 @@ import { useFoodscapes } from 'hooks/foodscapes';
 import Icon from 'components/icon';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+import { useRecoilValue } from 'recoil';
+import { stepAtom } from 'store/home';
 
 const BACKGROUNDS = [
   'url(/images/hero/home1.jpg)',
@@ -25,6 +27,7 @@ const BACKGROUNDS = [
 const Hero = () => {
   const { data: foodscapesData } = useFoodscapes();
 
+  const step = useRecoilValue(stepAtom);
   const backgroundsRef = useRef<string[]>([]);
   const DURATION = 3;
   const TOTAL_DURATION = 12;
@@ -125,10 +128,10 @@ const Hero = () => {
 
       <button
         className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
-        // onClick={() => {
-        //   const el = document.querySelector(`#scroll-${step + 1}`);
-        //   el?.scrollIntoView({ behavior: 'smooth' });
-        // }}
+        onClick={() => {
+          const el = document.querySelector(`#scroll-${step + 1}`);
+          el?.scrollIntoView({ behavior: 'smooth' });
+        }}
       >
         <Icon icon={ARROW_DOWN_SVG} className="h-4 w-4 animate-bounce" />
 

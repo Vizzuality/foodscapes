@@ -6,11 +6,12 @@ import { useInView } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 interface ScrollItemProps extends PropsWithChildren {
+  id: string;
   step: number;
   onChange: (step: number) => void;
 }
 
-const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
+const ScrollItem = ({ children, id, step, onChange }: ScrollItemProps) => {
   const s = useRecoilValue(stepAtom);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +24,7 @@ const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
   }, [s, step, inView, onChange]);
 
   return (
-    <section ref={ref} className="min-h-[100vh]">
+    <section ref={ref} id={id} className="min-h-[100vh]">
       {children}
     </section>
   );
