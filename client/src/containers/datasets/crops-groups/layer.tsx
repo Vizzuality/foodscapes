@@ -1,47 +1,18 @@
-import { useEffect } from 'react';
-
-import { Layer, useMap } from 'react-map-gl';
+import { H3HexagonLayerProps } from '@deck.gl/geo-layers/typed';
 
 import { LayerProps } from 'types/layers';
 
+import DeckLayer from 'components/map/layers/deck-layer';
 import { Settings } from 'components/map/legend/types';
 
-import { useDeckLayer, useLayer } from './hooks';
+import { useLayer } from './hooks';
 
-const CropGroupsLayer = ({ settings, beforeId, zIndex }: LayerProps<Settings>) => {
-  const { current: map } = useMap();
-  const LAYER = useLayer();
-  const DECK_LAYER = useDeckLayer({ settings, zIndex });
-
-  // Add layer on mount
-  // Move layer on beforeId change
-  useEffect(() => {
-    const m = map.getMap();
-    const l = map.getLayer(DECK_LAYER.id);
-
-    if (!l) {
-      m.addLayer(DECK_LAYER, beforeId);
-    }
-
-    if (l) {
-      m.moveLayer(DECK_LAYER.id, beforeId);
-    }
-
-    return () => {
-      const l1 = m.getLayer(DECK_LAYER.id);
-
-      if (l1) {
-        m.removeLayer(DECK_LAYER.id);
-      }
-    };
-  }, [map, DECK_LAYER, beforeId]);
-
-  // Remove layer on unmount
-  useEffect(() => {}, [DECK_LAYER, map]);
+const CropGroupsLayer = ({ id, settings, beforeId, zIndex }: LayerProps<Settings>) => {
+  const LAYER = useLayer({ id, settings });
 
   if (!LAYER) return null;
 
-  return <Layer {...LAYER} beforeId={beforeId} />;
+  return <DeckLayer<H3HexagonLayerProps> {...LAYER} id={id} beforeId={beforeId} zIndex={zIndex} />;
 };
 
 export default CropGroupsLayer;

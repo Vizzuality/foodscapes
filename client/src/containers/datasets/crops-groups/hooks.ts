@@ -1,85 +1,39 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
-import { useMap } from 'react-map-gl';
-
-import { H3HexagonLayer } from '@deck.gl/geo-layers';
-import { MapboxLayer } from '@deck.gl/mapbox';
-import { AnyLayer } from 'mapbox-gl';
+import { H3HexagonLayer, H3HexagonLayerProps } from '@deck.gl/geo-layers/typed';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
 
 interface UseCropGroupsLayerProps {
-  settings?: Partial<Settings>;
-  zIndex?: number;
+  id: string;
+  settings: Partial<Settings>;
 }
 
 interface UseCropGroupsLegendProps {
   settings?: Settings;
 }
 
-type LayerDeckProps = AnyLayer & {
-  implementation: any;
-};
-
-export function useLayer(): AnyLayer {
-  const layer = useMemo<AnyLayer>(() => {
-    return {
-      id: 'crop-groups-layer',
-      type: 'background',
-      paint: {
-        'background-color': '#FFCC11',
-        'background-opacity': 0,
-      },
-    };
-  }, []);
-
-  return layer;
-}
-
-export function useDeckLayer({
-  settings = {},
-  zIndex,
-}: UseCropGroupsLayerProps): typeof MapboxLayer {
-  const { current: map } = useMap();
-  const layerRef = useRef<typeof MapboxLayer>(null);
+export function useLayer({ id, settings = {} }: UseCropGroupsLayerProps): H3HexagonLayerProps {
   const visibility = settings.visibility ?? true;
 
-  const layer = useMemo<typeof MapboxLayer>(() => {
-    if (layerRef.current) {
-      return layerRef.current;
-    }
-
-    layerRef.current = new MapboxLayer({
-      id: 'crop-groups-layer-deck',
+  const layer = useMemo(() => {
+    return {
+      //
+      id: `${id}-deck`,
       type: H3HexagonLayer,
       data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf.h3cells.json',
       extruded: false,
       filled: true,
       pickable: true,
       getElevation: (d) => d.count,
-      getFillColor: (d) => [255, (1 - d.count / 500) * 255, 0],
+      getFillColor: (d) => [255, (1 - d.count / 500) * 255, 0] as [number, number, number],
       getHexagon: (d) => d.hex,
-      getPolygonOffset: () => [0, zIndex * 1000],
       visible: visibility,
       opacity: settings.opacity ?? 1,
-    });
-
-    return layerRef.current;
-  }, [settings, visibility, zIndex]);
-
-  useEffect(() => {
-    const l = map.getLayer('crop-groups-layer-deck') as LayerDeckProps;
-
-    if (l) {
-      l.implementation.setProps({
-        visible: settings.visibility,
-        opacity: settings.opacity,
-        getPolygonOffset: () => [0, zIndex * 1000],
-      });
-    }
-  }, [map, settings, zIndex]);
+    };
+  }, [id, settings, visibility]);
 
   return layer;
 }

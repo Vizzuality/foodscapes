@@ -1,7 +1,8 @@
-import { LayerSpec } from '@vizzuality/layer-manager';
-
-export type LayerProps<T> = Partial<LayerSpec> & {
+export type LayerProps<S> = {
+  id?: string;
   beforeId?: string;
   zIndex?: number;
-  settings?: Partial<T>;
+  settings?: Partial<S>;
 };
+
+export type DeckLayerProps<T, S> = LayerProps<S> & T;

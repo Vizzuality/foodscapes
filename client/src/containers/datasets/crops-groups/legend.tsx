@@ -12,51 +12,7 @@ const CropGroupsLegend = (props: CropGroupsLegendProps) => {
 
   return (
     <LegendItem {...legend} {...props}>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, unde, reiciendis impedit
-        soluta aliquid perspiciatis molestias consequatur aliquam commodi molestiae a! Modi ab
-        officiis delectus vero obcaecati omnis praesentium consectetur. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis
-        molestias consequatur aliquam commodi molestiae a! Modi ab officiis delectus vero obcaecati
-        omnis praesentium consectetur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis molestias consequatur aliquam
-        commodi molestiae a! Modi ab officiis delectus vero obcaecati omnis praesentium consectetur.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, unde, reiciendis impedit
-        soluta aliquid perspiciatis molestias consequatur aliquam commodi molestiae a! Modi ab
-        officiis delectus vero obcaecati omnis praesentium consectetur. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis
-        molestias consequatur aliquam commodi molestiae a! Modi ab officiis delectus vero obcaecati
-        omnis praesentium consectetur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis molestias consequatur aliquam
-        commodi molestiae a! Modi ab officiis delectus vero obcaecati omnis praesentium consectetur.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, unde, reiciendis impedit
-        soluta aliquid perspiciatis molestias consequatur aliquam commodi molestiae a! Modi ab
-        officiis delectus vero obcaecati omnis praesentium consectetur. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis
-        molestias consequatur aliquam commodi molestiae a! Modi ab officiis delectus vero obcaecati
-        omnis praesentium consectetur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis molestias consequatur aliquam
-        commodi molestiae a! Modi ab officiis delectus vero obcaecati omnis praesentium consectetur.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, unde, reiciendis impedit
-        soluta aliquid perspiciatis molestias consequatur aliquam commodi molestiae a! Modi ab
-        officiis delectus vero obcaecati omnis praesentium consectetur. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis
-        molestias consequatur aliquam commodi molestiae a! Modi ab officiis delectus vero obcaecati
-        omnis praesentium consectetur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis molestias consequatur aliquam
-        commodi molestiae a! Modi ab officiis delectus vero obcaecati omnis praesentium consectetur.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, unde, reiciendis impedit
-        soluta aliquid perspiciatis molestias consequatur aliquam commodi molestiae a! Modi ab
-        officiis delectus vero obcaecati omnis praesentium consectetur. Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis
-        molestias consequatur aliquam commodi molestiae a! Modi ab officiis delectus vero obcaecati
-        omnis praesentium consectetur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Mollitia, unde, reiciendis impedit soluta aliquid perspiciatis molestias consequatur aliquam
-        commodi molestiae a! Modi ab officiis delectus vero obcaecati omnis praesentium consectetur.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, unde, reiciendis impedit
-        soluta aliquid perspiciatis molestias consequatur aliquam commodi molestiae a! Modi ab
-        officiis delectus vero obcaecati omnis praesentium consectetur.
-      </div>
+      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
     </LegendItem>
   );
 };

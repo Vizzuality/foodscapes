@@ -1,16 +1,14 @@
-import { useEffect, useMemo, useRef } from 'react';
-
-import { useMap } from 'react-map-gl';
+import { useMemo } from 'react';
 
 import { ScatterplotLayer } from '@deck.gl/layers';
-import { MapboxLayer } from '@deck.gl/mapbox';
-import { AnyLayer } from 'mapbox-gl';
+import { ScatterplotLayerProps } from '@deck.gl/layers/typed';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
 
 interface UseFoodscapesIntensityGroupsLayerProps {
+  id: string;
   settings?: Partial<Settings>;
   zIndex?: number;
 }
@@ -19,67 +17,32 @@ interface UseFoodscapesIntensityGroupsLegendProps {
   settings?: Settings;
 }
 
-type LayerDeckProps = AnyLayer & {
-  implementation: any;
-};
-
-export function useLayer(): AnyLayer {
-  const layer = useMemo<AnyLayer>(() => {
-    return {
-      id: 'foodscapes-intensity-groups-layer',
-      type: 'background',
-      paint: {
-        'background-color': '#77CCFF',
-        'background-opacity': 0,
-      },
-    };
-  }, []);
-
-  return layer;
-}
-
-export function useDeckLayer({
+export function useLayer({
+  id,
   settings = {},
-  zIndex,
-}: UseFoodscapesIntensityGroupsLayerProps): typeof MapboxLayer {
-  const { current: map } = useMap();
-  const layerRef = useRef<typeof MapboxLayer>(null);
+}: UseFoodscapesIntensityGroupsLayerProps): ScatterplotLayerProps {
   const visibility = settings.visibility ?? true;
 
-  const layer = useMemo<typeof MapboxLayer>(() => {
-    if (layerRef.current) {
-      return layerRef.current;
-    }
-
-    layerRef.current = new MapboxLayer({
-      id: 'foodscapes-intensity-groups-layer-deck',
+  const layer = useMemo<ScatterplotLayerProps>(() => {
+    return {
+      id: `${id}-deck`,
       type: ScatterplotLayer,
       data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/airports.json',
+
+      /* props from LineLayer class */
       radiusScale: 20,
       radiusMinPixels: 0.5,
       getPosition: (d) => d.coordinates,
-      getFillColor: [255, 255, 0],
+      getFillColor: [255 * settings.opacity, 255, 255 * (1 - settings.opacity)] as [
+        number,
+        number,
+        number
+      ],
       getRadius: () => 500,
-      getPolygonOffset: () => [0, zIndex * 1000],
       visible: visibility,
       opacity: settings.opacity ?? 1,
-    });
-
-    return layerRef.current;
-  }, [settings, visibility, zIndex]);
-
-  useEffect(() => {
-    const l = map.getLayer('foodscapes-intensity-groups-layer-deck') as LayerDeckProps;
-
-    if (l) {
-      l.implementation.setProps({
-        getFillColor: [Math.random() * 255, 255, 0],
-        visible: settings.visibility,
-        opacity: settings.opacity,
-        getPolygonOffset: () => [0, zIndex * 1000],
-      });
-    }
-  }, [map, settings, zIndex]);
+    };
+  }, [id, settings, visibility]);
 
   return layer;
 }

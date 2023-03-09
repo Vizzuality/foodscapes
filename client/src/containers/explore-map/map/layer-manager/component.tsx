@@ -21,6 +21,7 @@ const LayerManagerContainer = () => {
         return (
           <LayerComponent
             key={layer}
+            id={`${layer}-layer`}
             settings={
               layersSettings[layer] ?? {
                 opacity: 1,
