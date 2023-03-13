@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { H3HexagonLayer, H3HexagonLayerProps } from '@deck.gl/geo-layers/typed';
 
+import { MapboxLayerProps } from 'types/layers';
+
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
@@ -15,13 +17,17 @@ interface UseCropGroupsLegendProps {
   settings?: Settings;
 }
 
-export function useLayer({ id, settings = {} }: UseCropGroupsLayerProps): H3HexagonLayerProps {
+interface CropGroupsData {
+  hex: string;
+  count: number;
+}
+
+export function useLayer({ settings = {} }: UseCropGroupsLayerProps) {
   const visibility = settings.visibility ?? true;
 
   const layer = useMemo(() => {
     return {
       //
-      id: `${id}-deck`,
       type: H3HexagonLayer,
       data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf.h3cells.json',
       extruded: false,
@@ -32,8 +38,8 @@ export function useLayer({ id, settings = {} }: UseCropGroupsLayerProps): H3Hexa
       getHexagon: (d) => d.hex,
       visible: visibility,
       opacity: settings.opacity ?? 1,
-    };
-  }, [id, settings, visibility]);
+    } satisfies MapboxLayerProps<H3HexagonLayerProps<CropGroupsData>>;
+  }, [settings, visibility]);
 
   return layer;
 }

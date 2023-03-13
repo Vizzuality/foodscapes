@@ -1,7 +1,10 @@
 import { useMemo } from 'react';
 
+import { Position } from '@deck.gl/core/typed';
 import { ScatterplotLayer } from '@deck.gl/layers';
 import { ScatterplotLayerProps } from '@deck.gl/layers/typed';
+
+import { MapboxLayerProps } from 'types/layers';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
@@ -17,15 +20,20 @@ interface UseFoodscapesIntensityGroupsLegendProps {
   settings?: Settings;
 }
 
-export function useLayer({
-  id,
-  settings = {},
-}: UseFoodscapesIntensityGroupsLayerProps): ScatterplotLayerProps {
+interface FoodscapesIntensityGroupsData {
+  type: Type;
+  name: string;
+  abbrev: string;
+  coordinates: Position;
+}
+
+type Type = 'mid' | 'major' | 'military mid';
+
+export function useLayer({ settings = {} }: UseFoodscapesIntensityGroupsLayerProps) {
   const visibility = settings.visibility ?? true;
 
-  const layer = useMemo<ScatterplotLayerProps>(() => {
+  const layer = useMemo(() => {
     return {
-      id: `${id}-deck`,
       type: ScatterplotLayer,
       data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/line/airports.json',
 
@@ -41,8 +49,8 @@ export function useLayer({
       getRadius: () => 500,
       visible: visibility,
       opacity: settings.opacity ?? 1,
-    };
-  }, [id, settings, visibility]);
+    } satisfies MapboxLayerProps<ScatterplotLayerProps<FoodscapesIntensityGroupsData>>;
+  }, [settings, visibility]);
 
   return layer;
 }

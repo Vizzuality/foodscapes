@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
 
+import { Position } from '@deck.gl/core/typed';
 import { LineLayer, LineLayerProps } from '@deck.gl/layers/typed';
+
+import { MapboxLayerProps } from 'types/layers';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
@@ -16,17 +19,27 @@ interface UseLandUseChangeLegendProps {
   settings?: Settings;
 }
 
-export function useLayer({ id, settings = {} }: UseLandUseChangeLayerProps): LineLayerProps {
+interface LandUseChangeData {
+  inbound: number;
+  outbound: number;
+  from: Location;
+  to: Location;
+}
+
+interface Location {
+  name: string;
+  coordinates: Position;
+}
+
+export function useLayer({ settings = {} }: UseLandUseChangeLayerProps) {
   const visibility = settings.visibility ?? true;
 
-  const layer = useMemo<LineLayerProps>(() => {
+  const layer = useMemo(() => {
     return {
-      id: `${id}-deck`,
       type: LineLayer,
       data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart-segments.json',
 
       /* props from LineLayer class */
-
       getColor: (d) => [Math.sqrt(d.inbound + d.outbound) * settings.opacity, 140, 0],
       getSourcePosition: (d) => d.from.coordinates,
       getTargetPosition: (d) => d.to.coordinates,
@@ -49,8 +62,8 @@ export function useLayer({ id, settings = {} }: UseLandUseChangeLayerProps): Lin
       // wrapLongitude: false,
       visible: visibility,
       opacity: settings.opacity ?? 1,
-    };
-  }, [id, settings, visibility]);
+    } satisfies MapboxLayerProps<LineLayerProps<LandUseChangeData>>;
+  }, [settings, visibility]);
 
   return layer;
 }
