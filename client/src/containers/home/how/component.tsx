@@ -3,7 +3,7 @@ import Wrapper from 'containers/wrapper';
 import HowChart from './chart';
 import HowText from './text';
 
-const Home = () => {
+const How = () => {
   return (
     <div className="relative z-20 bg-white">
       <Wrapper>
@@ -20,4 +20,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default How;
