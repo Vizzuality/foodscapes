@@ -81,7 +81,7 @@ const LegendContainer = () => {
             key={layer}
             dataset={DATASET}
             Components={{
-              Info: <InfoComponent {...DATASET} />,
+              Info: InfoComponent ? <InfoComponent {...DATASET} /> : null,
             }}
             settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             onChangeOpacity={(opacity) => {
@@ -111,8 +111,8 @@ const LegendContainer = () => {
           <Legend
             className={'max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48))]'}
             sortable={{
-              enabled: false,
-              handle: false,
+              enabled: true,
+              handle: true,
               handleIcon: <div className="text-white">Drag</div>,
             }}
             onChangeOrder={onChangeOrder}

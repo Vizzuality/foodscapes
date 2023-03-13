@@ -6,51 +6,55 @@ import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
 
-interface UseSoilGroupsLayerProps {
+interface UseCropsLayerProps {
   settings?: Partial<Settings>;
 }
 
-interface UseSoilGroupsLegendProps {
+interface UseCropsLegendProps {
   settings?: Settings;
 }
 
 export function useSource(): AnySourceData {
-  const band = 25;
-  const colormap = useMemo(() => {
-    const c = {
-      '-1': '#000000',
-      '0': '#ffffff00',
-      '1': '#ff0000',
-    };
-    return encodeURIComponent(JSON.stringify(c));
-  }, []);
-
   return {
-    id: 'soil-groups-source',
-    type: 'raster',
-    tiles: [
-      // `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap={{COLOR_RAMP}}&bidx={{BAND}}`,
-      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap=${colormap}&bidx=${band}`,
-    ],
+    id: 'crops-source',
+    type: 'vector',
+    url: 'mapbox://afilatore90.azhsjfex',
   };
 }
 
-export function useLayer({ settings = {} }: UseSoilGroupsLayerProps): AnyLayer {
+export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer[] {
   const visibility = settings.visibility ?? true;
-  const layer = useMemo<AnyLayer>(() => {
-    return {
-      id: 'soil-groups-layer',
-      type: 'raster',
-      paint: {
-        'raster-opacity': settings.opacity ?? 1,
+  const layers = useMemo(() => {
+    return [
+      {
+        id: 'crops-layer',
+        type: 'fill',
+        'source-layer': 'everest_rivers_v2-8my8fi',
+        paint: {
+          'fill-color': '#77CCFF',
+          'fill-opacity': 0.5 * (settings.opacity ?? 1),
+        },
+        layout: {
+          visibility: visibility ? 'visible' : 'none',
+        },
       },
-      layout: {
-        visibility: visibility ? 'visible' : 'none',
+      {
+        id: 'crops-layer-line',
+        type: 'line',
+        'source-layer': 'everest_rivers_v2-8my8fi',
+        paint: {
+          'line-color': '#0044FF',
+          'line-width': 1,
+          'line-opacity': settings.opacity ?? 1,
+        },
+        layout: {
+          visibility: visibility ? 'visible' : 'none',
+        },
       },
-    };
+    ] as AnyLayer[];
   }, [settings, visibility]);
 
-  return layer;
+  return layers;
 }
 
 export function useLegend({
@@ -59,7 +63,7 @@ export function useLegend({
     visibility: true,
     expand: true,
   },
-}: UseSoilGroupsLegendProps) {
+}: UseCropsLegendProps) {
   const { data: foodscapesData } = useFoodscapes();
 
   const colormap = useMemo(() => {
@@ -78,8 +82,8 @@ export function useLegend({
     }
 
     return {
-      id: 'soil-groups',
-      name: 'Soil Groups',
+      id: 'crops',
+      name: 'Crops',
       colormap,
       settings: settings,
       settingsManager: {

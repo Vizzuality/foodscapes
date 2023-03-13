@@ -23,7 +23,7 @@ const DEFAULT_PROPS: CustomMapProps = {
     zoom: 2,
   },
   minZoom: 2,
-  maxZoom: 5,
+  maxZoom: 20,
   mapStyle: 'mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6',
   // mapStyle: 'mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz',
   // mapStyle: {

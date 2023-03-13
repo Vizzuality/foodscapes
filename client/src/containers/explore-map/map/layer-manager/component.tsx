@@ -1,27 +1,40 @@
-import { useMap } from 'react-map-gl';
-
 import { layersAtom, layersSettingsAtom } from 'store/explore-map';
 
-import PluginMapboxGl from '@vizzuality/layer-manager-plugin-mapboxgl';
-import { LayerManager } from '@vizzuality/layer-manager-react';
 import { useRecoilValue } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
 
 const LayerManagerContainer = () => {
-  const { current: map } = useMap();
   const layers = useRecoilValue(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
 
+  const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
+
   return (
-    <LayerManager map={map.getMap()} plugin={PluginMapboxGl}>
-      {layers
-        .filter((layer) => !!LAYERS[layer])
-        .map((layer) => {
-          const LayerComponent = LAYERS[layer];
-          return <LayerComponent key={layer} settings={layersSettings[layer]} />;
-        })}
-    </LayerManager>
+    <>
+      {LAYERS_FILTERED.map((layer, i) => {
+        const LayerComponent = LAYERS[layer];
+        // We need to define where do we want to put the layer
+        // We want to put it before the custom-layers transparent backgrond
+        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-layer`;
+
+        return (
+          <LayerComponent
+            key={layer}
+            id={`${layer}-layer`}
+            settings={
+              layersSettings[layer] ?? {
+                opacity: 1,
+                visibility: true,
+                expand: false,
+              }
+            }
+            beforeId={beforeId}
+            zIndex={1000 - i}
+          />
+        );
+      })}
+    </>
   );
 };
 

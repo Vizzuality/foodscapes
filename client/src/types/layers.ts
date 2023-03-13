@@ -1,6 +1,14 @@
-import LayerManager, { LayerSpec } from '@vizzuality/layer-manager';
+import { Layer } from '@deck.gl/core/typed';
 
-export type LayerProps<T> = Partial<LayerSpec> & {
-  layerManager?: LayerManager;
-  settings?: Partial<T>;
+export type LayerProps<S> = {
+  id?: string;
+  beforeId?: string;
+  zIndex?: number;
+  settings?: Partial<S>;
 };
+
+export type MapboxLayerProps<T> = Partial<Omit<T, 'id'>> & {
+  type: typeof Layer;
+};
+
+export type DeckLayerProps<T, S> = LayerProps<S> & T;

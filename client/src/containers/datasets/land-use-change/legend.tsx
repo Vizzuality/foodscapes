@@ -3,18 +3,18 @@ import { LegendItemProps } from 'components/map/legend/types';
 
 import { useLegend } from './hooks';
 
-interface SoilGroupsLegendProps extends LegendItemProps {}
+interface LandUseChangeLegendProps extends LegendItemProps {}
 
-const SoilGroupsLegend = (props: SoilGroupsLegendProps) => {
+const LandUseChangeLegend = (props: LandUseChangeLegendProps) => {
   const { settings } = props;
 
   const legend = useLegend({ settings });
 
   return (
     <LegendItem {...legend} {...props}>
-      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit</div>
+      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
     </LegendItem>
   );
 };
 
-export default SoilGroupsLegend;
+export default LandUseChangeLegend;
