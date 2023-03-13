@@ -21,7 +21,7 @@ export const DATASETS = [
     label: 'Soil Groups',
     group: 'foodscapes',
     layer: {
-      enabled: true,
+      enabled: false,
     },
     widget: {
       enabled: false,
@@ -32,7 +32,7 @@ export const DATASETS = [
     label: 'Foodscapes Intensity Groups',
     group: 'foodscapes',
     layer: {
-      enabled: true,
+      enabled: false,
     },
     widget: {
       enabled: false,
@@ -43,7 +43,7 @@ export const DATASETS = [
     label: 'Crops',
     group: 'foodscapes',
     layer: {
-      enabled: true,
+      enabled: false,
     },
     widget: {
       enabled: false,
@@ -54,7 +54,7 @@ export const DATASETS = [
     label: 'Crop Groups',
     group: 'foodscapes',
     layer: {
-      enabled: true,
+      enabled: false,
     },
     widget: {
       enabled: false,
@@ -67,7 +67,7 @@ export const DATASETS = [
     label: 'Land Use Change',
     group: 'risks',
     layer: {
-      enabled: true,
+      enabled: false,
     },
     widget: {
       enabled: false,
