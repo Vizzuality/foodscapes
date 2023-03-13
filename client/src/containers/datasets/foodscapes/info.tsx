@@ -2,12 +2,18 @@ import { Dataset } from 'types/datasets';
 
 const FoodscapesInfo = ({ label }: Dataset) => {
   return (
-    <div className="">
-      <h3 className="text-lg font-semibold text-navy-500">{label}</h3>
-      <p className="mt-2 text-sm text-navy-500">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat praesentium, quam quo nisi
-        vel impedit! Molestias obcaecati voluptatibus placeat dolores dolorum molestiae. A
-        consequuntur nisi qui quasi odio ut. Sapiente!
+    <div className="prose-sm">
+      <h3>{label}</h3>
+      <p>
+        A foodscape is a terrestrial or aquatic food production area defined by a series of distinct
+        biophysical attributes and management patterns, which can be mapped. They cover all parts of
+        the globe where food is produced.
+      </p>
+      <p>
+        <em>
+          Copyright © 2021 The Nature Conservancy; International Institute for Applied Systems
+          Analysis; SYSTEMIQ
+        </em>
       </p>
     </div>
   );

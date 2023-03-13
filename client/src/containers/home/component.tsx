@@ -25,6 +25,7 @@ import {
   Text3 as LayersText3,
   Text4 as LayersText4,
 } from './layers/texts';
+import Outro from './outro';
 import ScrollItem from './scroll';
 
 const Home = () => {
@@ -95,6 +96,10 @@ const Home = () => {
           </div>
         </div>
       </Wrapper>
+
+      <ScrollItem step={11} onChange={onChange}>
+        <Outro />
+      </ScrollItem>
 
       {/* <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
 

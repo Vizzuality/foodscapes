@@ -1,4 +1,4 @@
-// import Footer from 'containers/footer';
+import Footer from 'containers/footer';
 import Header from 'containers/header/app';
 
 type LayoutProps = {
@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         {children}
       </div>
 
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 };
