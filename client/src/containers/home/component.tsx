@@ -40,42 +40,42 @@ const Home = () => {
 
   return (
     <>
-      <ScrollItem id={`scroll-0`} step={0} onChange={onChange}>
+      <ScrollItem step={0} onChange={onChange}>
         <Hero />
       </ScrollItem>
 
-      <ScrollItem id={`scroll-1`} step={1} onChange={onChange}>
+      <ScrollItem step={1} onChange={onChange}>
         <How />
       </ScrollItem>
 
       <Wrapper>
         <div className="grid grid-cols-12 gap-6">
           <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
-            <ScrollItem id={`scroll-2`} step={2} onChange={onChange}>
+            <ScrollItem step={2} onChange={onChange}>
               <LayersText1 />
             </ScrollItem>
-            <ScrollItem id={`scroll-3`} step={3} onChange={onChange}>
+            <ScrollItem step={3} onChange={onChange}>
               <LayersText2 />
             </ScrollItem>
-            <ScrollItem id={`scroll-4`} step={4} onChange={onChange}>
+            <ScrollItem step={4} onChange={onChange}>
               <LayersText3 />
             </ScrollItem>
-            <ScrollItem id={`scroll-5`} step={5} onChange={onChange}>
+            <ScrollItem step={5} onChange={onChange}>
               <LayersText4 />
             </ScrollItem>
-            <ScrollItem id={`scroll-6`} step={6} onChange={onChange}>
+            <ScrollItem step={6} onChange={onChange}>
               <CirclesText1 />
             </ScrollItem>
-            <ScrollItem id={`scroll-7`} step={7} onChange={onChange}>
+            <ScrollItem step={7} onChange={onChange}>
               <CirclesText2 />
             </ScrollItem>
-            <ScrollItem id={`scroll-8`} step={8} onChange={onChange}>
+            <ScrollItem step={8} onChange={onChange}>
               <CirclesText3 />
             </ScrollItem>
-            <ScrollItem id={`scroll-9`} step={9} onChange={onChange}>
+            <ScrollItem step={9} onChange={onChange}>
               <CirclesText4 />
             </ScrollItem>
-            <ScrollItem id={`scroll-10`} step={10} onChange={onChange}>
+            <ScrollItem step={10} onChange={onChange}>
               <GlobeText />
             </ScrollItem>
           </div>
@@ -97,7 +97,7 @@ const Home = () => {
         </div>
       </Wrapper>
 
-      <ScrollItem id={`scroll-11`} step={11} onChange={onChange}>
+      <ScrollItem step={11} onChange={onChange}>
         <Outro />
       </ScrollItem>
 

@@ -86,7 +86,7 @@ const MapContainer = () => {
               viewState={initialViewState}
               projection="globe"
               mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
-              axis="y"
+              constrainedAxis="y"
               dragPan={true}
               dragRotate={false}
               scrollZoom={false}

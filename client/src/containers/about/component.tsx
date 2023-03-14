@@ -11,7 +11,7 @@ const About = () => {
     <>
       <Wrapper>
         <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-5 xl:col-span-4 xl:col-start-2">
+          <div className="col-span-6 xl:col-span-5 xl:col-start-2">
             <div className="flex h-small-screen flex-col justify-center space-y-10 ">
               <h2 className="font-display text-5xl">About Foodscapes.</h2>
 
@@ -26,7 +26,7 @@ const About = () => {
                   The project involves collaboration with the following partners:
                 </p>
 
-                <div className="flex justify-between">
+                <div className="flex space-x-6">
                   <Icon icon={TNC_SVG} className="h-10 w-36" />
                   <Icon icon={TNC_SVG} className="h-10 w-36" />
                 </div>
@@ -37,22 +37,19 @@ const About = () => {
             </div>
           </div>
 
-          <div className="col-span-5 col-start-7 h-small-screen">
-            <div className="flex h-full flex-col items-center justify-center">
+          <div className="col-span-5 col-start-8 h-small-screen">
+            <div className="flex h-full flex-col items-end justify-center">
               <Image
                 width={456}
                 height={280}
                 src="/images/about/about.jpg"
                 alt="About field image"
+                className="pt-36"
               />
             </div>
           </div>
         </div>
       </Wrapper>
-
-      {/* <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
-
-      </div> */}
     </>
   );
 };

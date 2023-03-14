@@ -12,7 +12,7 @@ export interface CustomMapProps extends MapProps {
   viewState?: Partial<ViewState>;
 
   /** An string that defines the rotation axis */
-  axis?: string;
+  constrainedAxis?: 'x' | 'y';
 
   /** An object that defines the bounds */
   bounds?: {
