@@ -12,7 +12,10 @@ const Outro = () => {
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-4 flex flex-col xl:col-start-2">
             <div className="flex h-full grow flex-col">
-              <Link href="/case-studies/grand-chaco" className="relative flex h-full grow flex-col">
+              <Link
+                href="/stories/argentina-gran-chaco"
+                className="relative flex h-full grow flex-col"
+              >
                 <div className="relative z-10 flex h-full grow flex-col justify-between space-y-8">
                   <header className="space-y-8">
                     <h2 className="font-display text-4xl">Continue learning.</h2>

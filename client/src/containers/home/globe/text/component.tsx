@@ -1,4 +1,4 @@
-import FadeYScroll from 'containers/home/animations/fadeYScroll';
+import FadeYScroll from 'containers/animations/fadeYScroll';
 
 const GlobeText = () => {
   return (

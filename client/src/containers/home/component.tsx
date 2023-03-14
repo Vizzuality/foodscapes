@@ -4,9 +4,9 @@ import { AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
+import FadeY from 'containers/animations/fadeY';
 import Wrapper from 'containers/wrapper';
 
-import FadeY from './animations/fadeY';
 import CirclesChart from './circles/charts';
 import {
   Text1 as CirclesText1,
