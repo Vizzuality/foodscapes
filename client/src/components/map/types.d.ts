@@ -11,6 +11,9 @@ export interface CustomMapProps extends MapProps {
    */
   viewState?: Partial<ViewState>;
 
+  /** An string that defines the rotation axis */
+  axis?: string;
+
   /** An object that defines the bounds */
   bounds?: {
     bbox: [number, number, number, number];

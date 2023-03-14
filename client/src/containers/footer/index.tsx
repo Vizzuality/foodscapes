@@ -12,7 +12,7 @@ const Footer = () => {
       })}
     >
       <Wrapper>
-        <div className="flex items-center justify-between py-10">
+        <div className="flex items-center justify-between py-6">
           {/* CREDITS */}
           <p className="text-sm font-light">
             © {new Date().getFullYear()} Foodscapes by The Nature Conservancy

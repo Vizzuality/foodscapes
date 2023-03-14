@@ -627,3 +627,8 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
     display: none;
   }
 }
+
+
+#home-globe .mapboxgl-ctrl-logo {
+  display: none;
+}
