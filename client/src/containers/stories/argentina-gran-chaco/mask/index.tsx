@@ -1,10 +1,18 @@
 import { useRef } from 'react';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { stepAtom } from 'store/stories/gran-chaco';
+
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
+
+import Mask1 from 'containers/stories/argentina-gran-chaco/mask/mask-1';
+import Mask2 from 'containers/stories/argentina-gran-chaco/mask/mask-2';
 
 const Mask = () => {
   const document = typeof window !== 'undefined' ? window.document : null;
   const ref = useRef(document?.getElementById('scroll-0'));
+
+  const step = useRecoilValue(stepAtom);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -21,6 +29,12 @@ const Mask = () => {
     >
       <div className="absolute top-0 left-0 h-[calc(88px_-_theme(space.4))] w-full bg-white" />
       <div className="absolute top-0 right-0 h-full w-1/2 bg-white" />
+
+      <AnimatePresence>
+        {step === 1 && <Mask1 key="mask-1" />}
+
+        {step === 2 && <Mask2 key="mask-2" />}
+      </AnimatePresence>
     </motion.div>
   );
 };
