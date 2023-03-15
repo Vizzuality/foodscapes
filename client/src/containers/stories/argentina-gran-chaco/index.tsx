@@ -1,13 +1,15 @@
 import { lastStepAtom, stepAtom } from 'store/stories/gran-chaco';
 
+import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
-import Background from './background';
-import Hero from './hero';
-import How from './how';
-import Mask from './mask';
-import Risk from './risk';
+import IntroBackground from './intro/background';
+import IntroHero from './intro/hero';
+import IntroHow from './intro/how';
+import IntroMask from './intro/mask';
+import IntroRisk from './intro/risk';
+import NatureBasedHero from './nature-based-solutions/hero';
 import ScrollItem from './scroll';
 
 const GranChaco = () => {
@@ -22,20 +24,26 @@ const GranChaco = () => {
 
   return (
     <>
-      <Background />
+      <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
+        <IntroBackground />
 
-      <Mask />
+        <IntroMask />
+      </motion.div>
 
       <ScrollItem step={0} onChange={onChange}>
-        <Hero />
+        <IntroHero />
       </ScrollItem>
 
       <ScrollItem step={1} onChange={onChange}>
-        <How />
+        <IntroHow />
       </ScrollItem>
 
       <ScrollItem step={2} onChange={onChange}>
-        <Risk />
+        <IntroRisk />
+      </ScrollItem>
+
+      <ScrollItem step={3} onChange={onChange}>
+        <NatureBasedHero />
       </ScrollItem>
     </>
   );

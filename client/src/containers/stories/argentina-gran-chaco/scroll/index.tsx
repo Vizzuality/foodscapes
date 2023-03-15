@@ -17,7 +17,10 @@ const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) =>
   const s = useRecoilValue(stepAtom);
 
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.5 });
+  const inView = useInView(ref, {
+    amount: 0.25,
+    margin: '-50% 0% 0% 0%',
+  });
 
   useEffect(() => {
     if (inView && s !== step) {

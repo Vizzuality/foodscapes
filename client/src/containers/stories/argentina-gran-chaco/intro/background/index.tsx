@@ -2,10 +2,9 @@ import { useRef } from 'react';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const Background = () => {
+const IntroBackground = () => {
   const document = typeof window !== 'undefined' ? window.document : null;
   const ref = useRef(document?.getElementById('scroll-0'));
-
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['0 0', '0.5 0'],
@@ -26,4 +25,4 @@ const Background = () => {
   );
 };
 
-export default Background;
+export default IntroBackground;

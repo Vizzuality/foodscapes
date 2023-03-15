@@ -5,8 +5,8 @@ import { stepAtom } from 'store/stories/gran-chaco';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
-import Mask1 from 'containers/stories/argentina-gran-chaco/mask/mask-1';
-import Mask2 from 'containers/stories/argentina-gran-chaco/mask/mask-2';
+import Mask1 from 'containers/stories/argentina-gran-chaco/intro/mask/mask-1';
+import Mask2 from 'containers/stories/argentina-gran-chaco/intro/mask/mask-2';
 
 const Mask = () => {
   const document = typeof window !== 'undefined' ? window.document : null;
