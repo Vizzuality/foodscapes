@@ -23,6 +23,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   children,
   className,
   viewState,
+  constrainedAxis,
   initialViewState,
   bounds,
   onMapViewStateChange,
@@ -74,10 +75,15 @@ export const CustomMap: FC<CustomMapProps> = ({
 
   const handleMapMove = useCallback(
     ({ viewState: _viewState }: ViewStateChangeEvent) => {
-      setLocalViewState(_viewState);
-      debouncedViewStateChange(_viewState);
+      const newViewState = {
+        ..._viewState,
+        latitude: constrainedAxis === 'y' ? localViewState.latitude : _viewState.latitude,
+        longitude: constrainedAxis === 'x' ? localViewState.longitude : _viewState.longitude,
+      };
+      setLocalViewState(newViewState);
+      debouncedViewStateChange(newViewState);
     },
-    [debouncedViewStateChange]
+    [constrainedAxis, localViewState.latitude, localViewState.longitude, debouncedViewStateChange]
   );
 
   const handleMapLoad = useCallback(

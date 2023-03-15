@@ -5,6 +5,10 @@ import cn from 'lib/classnames';
 
 import Wrapper from 'containers/wrapper';
 
+import Icon from 'components/icon';
+
+import ARROW_RIGHT_SVG from 'svgs/ui/arrow-right.svg?sprite';
+
 const Outro = () => {
   return (
     <div className="relative z-20 flex min-h-screen flex-col justify-center bg-white">
@@ -16,23 +20,37 @@ const Outro = () => {
                 href="/stories/argentina-gran-chaco"
                 className="relative flex h-full grow flex-col"
               >
-                <div className="relative z-10 flex h-full grow flex-col justify-between space-y-8">
-                  <header className="space-y-8">
-                    <h2 className="font-display text-4xl">Continue learning.</h2>
-                    <p>
-                      See soy production in action and how its foodscapes interact within the
-                      specific boundary of Argentina Gran Chaco. Discover the risks that apply to a
-                      real area and how nature-based solutions can help to ensure the integrity of
-                      the ecosystem.
-                    </p>
-                  </header>
+                <div
+                  className={cn({
+                    'group relative flex h-full grow flex-col justify-between space-y-8': true,
+                    'z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-yellow-700 after:opacity-0 after:transition-opacity hover:after:opacity-100':
+                      true,
+                  })}
+                >
+                  <div className="relative z-10 flex h-full grow flex-col justify-between space-y-8">
+                    <header className="space-y-8">
+                      <h2 className="font-display text-4xl">Continue learning.</h2>
+                      <p>
+                        See soy production in action and how its foodscapes interact within the
+                        specific boundary of Argentina Gran Chaco. Discover the risks that apply to
+                        a real area and how nature-based solutions can help to ensure the integrity
+                        of the ecosystem.
+                      </p>
+                    </header>
 
-                  <Image
-                    width={81}
-                    height={131}
-                    src="/images/outro/plant.png"
-                    alt="Grand chaco plant"
-                  />
+                    <div className="flex items-end justify-between">
+                      <Image
+                        width={81}
+                        height={131}
+                        src="/images/outro/plant.png"
+                        alt="Grand chaco plant"
+                      />
+                      <Icon
+                        icon={ARROW_RIGHT_SVG}
+                        className="h-4 w-4 -translate-x-5 transition-transform group-hover:translate-x-0"
+                      />
+                    </div>
+                  </div>
                 </div>
               </Link>
             </div>
@@ -42,7 +60,7 @@ const Outro = () => {
               <Link href="/explore-map" className="relative flex h-full grow flex-col">
                 <div
                   className={cn({
-                    'relative flex h-full grow flex-col bg-navy-500': true,
+                    'group relative flex h-full grow flex-col bg-navy-500': true,
                     'z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-navy-500':
                       true,
                   })}
@@ -57,12 +75,18 @@ const Outro = () => {
                       </p>
                     </header>
 
-                    <Image
-                      width={194}
-                      height={99}
-                      src="/images/outro/map.svg"
-                      alt="Explore map image"
-                    />
+                    <div className="flex items-end justify-between">
+                      <Image
+                        width={194}
+                        height={99}
+                        src="/images/outro/map.svg"
+                        alt="Explore map image"
+                      />
+                      <Icon
+                        icon={ARROW_RIGHT_SVG}
+                        className="h-4 w-4 -translate-x-5 text-white transition-transform group-hover:translate-x-0"
+                      />
+                    </div>
                   </div>
                 </div>
               </Link>
