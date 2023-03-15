@@ -17,18 +17,19 @@ const IntroBackground = () => {
   return (
     <motion.div
       key="background"
-      className="fixed z-0 h-full w-full overflow-hidden object-cover"
+      className="fixed z-0 h-full w-full overflow-hidden"
       style={{
         x,
       }}
     >
-      <div className="absolute top-0 left-0 h-full w-full bg-black/20" />
       <Image
         src="/images/stories/argentina-gran-chaco/granchaco-1.jpg"
         alt="Gran Chaco"
         width={2000}
         height={1100}
+        className="h-full w-full object-cover"
       />
+      <div className="absolute top-0 left-0 h-full w-full bg-black/20" />
     </motion.div>
   );
 };

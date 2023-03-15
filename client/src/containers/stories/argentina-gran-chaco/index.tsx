@@ -12,6 +12,7 @@ import IntroRisk from './intro/risk';
 import NatureBasedBackground from './nature-based-solutions/background';
 import NatureBasedChart1 from './nature-based-solutions/chart-1';
 import NatureBasedChart2 from './nature-based-solutions/chart-2';
+import NatureBasedChart3 from './nature-based-solutions/chart-3';
 import NatureBasedHero from './nature-based-solutions/hero';
 import ScrollItem from './scroll';
 
@@ -60,6 +61,10 @@ const GranChaco = () => {
 
       <ScrollItem step={5} onChange={onChange}>
         <NatureBasedChart2 />
+      </ScrollItem>
+
+      <ScrollItem step={6} onChange={onChange}>
+        <NatureBasedChart3 />
       </ScrollItem>
     </>
   );

@@ -8,6 +8,7 @@ const IntroBackground = () => {
   const document = typeof window !== 'undefined' ? window.document : null;
   const ref3 = useRef(document?.getElementById('scroll-3'));
   const ref4 = useRef(document?.getElementById('scroll-4'));
+  const ref6 = useRef(document?.getElementById('scroll-6'));
 
   const { scrollYProgress: scrollYProgress3 } = useScroll({
     target: ref3,
@@ -19,26 +20,71 @@ const IntroBackground = () => {
     offset: ['0 1', '1 0'],
   });
 
-  const x = useTransform(scrollYProgress3, (v) => `${(1 - v) * 100}%`);
-  const y = useTransform(scrollYProgress4, (v) => `${v * -20}%`);
+  const { scrollYProgress: scrollYProgress6 } = useScroll({
+    target: ref6,
+    offset: ['0 1', '1 1'],
+  });
+
+  // Bg-2 variables
+  const y2 = useTransform(scrollYProgress6, (v) => `${v * -50}%`);
+  const imgX2 = useTransform(scrollYProgress3, (v) => `${(1 - v) * 100}%`);
+  const imgY2 = useTransform(scrollYProgress4, (v) => `${v * -20}%`);
+
+  // Bg-3 variables
+  const y3 = useTransform(scrollYProgress6, (v) => `${(1 - v) * 100}%`);
 
   return (
-    <motion.div
-      key="background"
-      className="fixed z-0 h-[140%] w-full overflow-hidden object-cover"
-      style={{
-        x,
-        y,
-      }}
-    >
-      <div className="absolute top-0 left-0 h-full w-full bg-black/25" />
-      <Image
-        src="/images/stories/argentina-gran-chaco/granchaco-2.jpg"
-        alt="Gran Chaco - cow"
-        width={2400}
-        height={1600}
-      />
-    </motion.div>
+    <>
+      {/* Bg-2 */}
+      <motion.div
+        key="nature-based-background-2"
+        className="fixed z-0 h-[140%] w-full"
+        style={{
+          y: y2,
+        }}
+      >
+        <motion.div
+          key="nature-based-background-img-2"
+          className="absolute z-0 h-full w-full overflow-hidden"
+          style={{
+            x: imgX2,
+            y: imgY2,
+          }}
+        >
+          <div className="absolute top-0 left-0 h-full w-full bg-black/25" />
+          <Image
+            src="/images/stories/argentina-gran-chaco/granchaco-2.jpg"
+            alt="Gran Chaco - cow"
+            width={2400}
+            height={1600}
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Bg-3 */}
+      <motion.div
+        key="nature-based-background-3"
+        className="fixed z-0 h-full w-full"
+        style={{
+          y: y3,
+        }}
+      >
+        <motion.div
+          key="nature-based-background-img-1"
+          className="absolute z-0 h-full w-full overflow-hidden"
+        >
+          <div className="absolute top-0 left-0 h-full w-full bg-black/25" />
+          <Image
+            src="/images/stories/argentina-gran-chaco/granchaco-3.jpg"
+            alt="Gran Chaco - corn"
+            width={2400}
+            height={1600}
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
+      </motion.div>
+    </>
   );
 };
 

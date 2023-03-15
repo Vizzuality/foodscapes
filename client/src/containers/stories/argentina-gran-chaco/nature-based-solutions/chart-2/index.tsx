@@ -7,7 +7,7 @@ const Chart2 = () => {
       <Wrapper>
         <div className="grid grid-cols-12 items-end gap-6 pb-10">
           <div className="col-span-4 col-start-2">
-            <div className="space-y-5 text-right text-white">
+            <div className="space-y-5 text-white">
               <FadeYScroll>
                 <h3 className="font-semibold uppercase">NATURE-BASED SOLUTIONS</h3>
               </FadeYScroll>
@@ -24,7 +24,7 @@ const Chart2 = () => {
             </div>
           </div>
 
-          <div className="col-span-4 col-start-7">
+          <div className="col-span-4 col-start-8">
             <div className="aspect-square w-full border border-dashed border-white" />
           </div>
         </div>

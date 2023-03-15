@@ -1,7 +1,7 @@
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
-const Chart1 = () => {
+const Chart3 = () => {
   return (
     <section className="relative top-0 left-0 z-10 flex min-h-screen w-full items-center">
       <Wrapper>
@@ -12,14 +12,22 @@ const Chart1 = () => {
                 <h3 className="font-semibold uppercase">NATURE-BASED SOLUTIONS</h3>
               </FadeYScroll>
               <FadeYScroll>
-                <h1 className="font-display text-4xl">Make socioeconomic sense.</h1>
+                <h1 className="font-display text-4xl">Are locally viable.</h1>
               </FadeYScroll>
               <FadeYScroll>
                 <p className="font-semibold">
-                  Incorporating nature-based solutions improves productivity, diversifies and
-                  increases yearly profits, and prevents land degradation. For grazing systems this
-                  would come from introducing silvopasture. For mixed livestock-cropping systems
-                  these opportunities come from adding forest buffers, silvopasture and cover crops.
+                  Nature-based solutions could positively impact one tenth of the Argentinian Gran
+                  Chaco, as 1.4M Ha of land is suitable for agrosilvopastoral techniques. Of that
+                  area, the majority of opportunity is in the foodscape that produces the majority
+                  of soy.
+                </p>
+              </FadeYScroll>
+              <FadeYScroll>
+                <p>
+                  Not only would it bring financial prosperity to these farms, these techniques help
+                  make the agricultural area more resilient to climate change impacts while
+                  contributing positively to wider environmental issues, such as reducing carbon
+                  emissions and biodiversity loss.
                 </p>
               </FadeYScroll>
             </div>
@@ -34,4 +42,4 @@ const Chart1 = () => {
   );
 };
 
-export default Chart1;
+export default Chart3;
