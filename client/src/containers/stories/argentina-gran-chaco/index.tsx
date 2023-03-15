@@ -10,6 +10,7 @@ import IntroHow from './intro/how';
 import IntroMask from './intro/mask';
 import IntroRisk from './intro/risk';
 import NatureBasedBackground from './nature-based-solutions/background';
+import NatureBasedChart1 from './nature-based-solutions/chart-1';
 import NatureBasedHero from './nature-based-solutions/hero';
 import ScrollItem from './scroll';
 
@@ -50,6 +51,10 @@ const GranChaco = () => {
 
       <ScrollItem step={3} onChange={onChange}>
         <NatureBasedHero />
+      </ScrollItem>
+
+      <ScrollItem step={4} onChange={onChange}>
+        <NatureBasedChart1 />
       </ScrollItem>
     </>
   );
