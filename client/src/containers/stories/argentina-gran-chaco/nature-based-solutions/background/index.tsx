@@ -1,14 +1,13 @@
-import { useRef } from 'react';
-
 import Image from 'next/image';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+import { useElementById } from 'hooks/utils';
+
 const IntroBackground = () => {
-  const document = typeof window !== 'undefined' ? window.document : null;
-  const ref3 = useRef(document?.getElementById('scroll-3'));
-  const ref4 = useRef(document?.getElementById('scroll-4'));
-  const ref6 = useRef(document?.getElementById('scroll-6'));
+  const ref3 = useElementById('scroll-3');
+  const ref4 = useElementById('scroll-4');
+  const ref6 = useElementById('scroll-6');
 
   const { scrollYProgress: scrollYProgress3 } = useScroll({
     target: ref3,
@@ -74,7 +73,7 @@ const IntroBackground = () => {
           key="nature-based-background-img-1"
           className="absolute z-0 h-full w-full overflow-hidden"
         >
-          <div className="absolute top-0 left-0 h-full w-full bg-black/25" />
+          <div className="absolute top-0 left-0 h-full w-full bg-black/50" />
           <Image
             src="/images/stories/argentina-gran-chaco/granchaco-3.jpg"
             alt="Gran Chaco - corn"

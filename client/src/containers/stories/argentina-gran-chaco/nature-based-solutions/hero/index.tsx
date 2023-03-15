@@ -1,13 +1,12 @@
-import { useRef } from 'react';
-
 import { motion, useScroll, useTransform } from 'framer-motion';
+
+import { useElementById } from 'hooks/utils';
 
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
 const NatureBasedHero = () => {
-  const document = typeof window !== 'undefined' ? window.document : null;
-  const ref = useRef(document?.getElementById('scroll-3'));
+  const ref = useElementById('scroll-3');
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['0 0', '0.5 0.5'],

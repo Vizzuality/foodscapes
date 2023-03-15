@@ -1,11 +1,11 @@
-import { useRef } from 'react';
-
 import Image from 'next/image';
 
 import { stepAtom } from 'store/stories/gran-chaco';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
+
+import { useElementById } from 'hooks/utils';
 
 import Wrapper from 'containers/wrapper';
 
@@ -14,8 +14,7 @@ import Icon from 'components/icon';
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 
 const Hero = () => {
-  const document = typeof window !== 'undefined' ? window.document : null;
-  const ref = useRef(document?.getElementById('scroll-0'));
+  const ref = useElementById('scroll-0');
 
   const { scrollYProgress } = useScroll({
     target: ref,

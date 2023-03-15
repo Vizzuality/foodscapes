@@ -1,12 +1,12 @@
-import { useRef } from 'react';
-
 import Image from 'next/image';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+import { useElementById } from 'hooks/utils';
+
 const IntroBackground = () => {
-  const document = typeof window !== 'undefined' ? window.document : null;
-  const ref = useRef(document?.getElementById('scroll-0'));
+  const ref = useElementById('scroll-0');
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['0 0', '0.5 0'],
