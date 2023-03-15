@@ -22,7 +22,7 @@ const IntroBackground = () => {
         x,
       }}
     >
-      <div className="absolute top-0 left-0 h-full w-full bg-black/25" />
+      <div className="absolute top-0 left-0 h-full w-full bg-black/20" />
       <Image
         src="/images/stories/argentina-gran-chaco/granchaco-1.jpg"
         alt="Gran Chaco"

@@ -1,7 +1,7 @@
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
-const Chart1 = () => {
+const Chart2 = () => {
   return (
     <section className="relative top-0 left-0 z-10 flex min-h-screen w-full items-center">
       <Wrapper>
@@ -16,10 +16,9 @@ const Chart1 = () => {
               </FadeYScroll>
               <FadeYScroll>
                 <p className="font-semibold">
-                  Incorporating nature-based solutions improves productivity, diversifies and
-                  increases yearly profits, and prevents land degradation. For grazing systems this
-                  would come from introducing silvopasture. For mixed livestock-cropping systems
-                  these opportunities come from adding forest buffers, silvopasture and cover crops.
+                  Across the Argentina Gran Chaco foodscape, mixed land use practices could nearly
+                  double farm income. However, the transition costs would be more than the current
+                  farm profit. Farms will require new sources of capital to support this transition.
                 </p>
               </FadeYScroll>
             </div>
@@ -34,4 +33,4 @@ const Chart1 = () => {
   );
 };
 
-export default Chart1;
+export default Chart2;
