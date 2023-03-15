@@ -6,13 +6,13 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const IntroBackground = () => {
   const document = typeof window !== 'undefined' ? window.document : null;
-  const ref = useRef(document?.getElementById('scroll-0'));
+  const ref = useRef(document?.getElementById('scroll-3'));
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['0 0', '0.5 0'],
   });
 
-  const x = useTransform(scrollYProgress, (v) => `${v * -25}%`);
+  const x = useTransform(scrollYProgress, (v) => `${(1 - v) * 100}%`);
 
   return (
     <motion.div
@@ -23,10 +23,10 @@ const IntroBackground = () => {
       }}
     >
       <Image
-        src="/images/stories/argentina-gran-chaco/granchaco-1.jpg"
-        alt="Gran Chaco"
-        width={2000}
-        height={1100}
+        src="/images/stories/argentina-gran-chaco/granchaco-2.jpg"
+        alt="Gran Chaco - cow"
+        width={2400}
+        height={1600}
       />
     </motion.div>
   );

@@ -9,6 +9,7 @@ import IntroHero from './intro/hero';
 import IntroHow from './intro/how';
 import IntroMask from './intro/mask';
 import IntroRisk from './intro/risk';
+import NatureBasedBackground from './nature-based-solutions/background';
 import NatureBasedHero from './nature-based-solutions/hero';
 import ScrollItem from './scroll';
 
@@ -24,10 +25,15 @@ const GranChaco = () => {
 
   return (
     <>
+      {/* Backgrounds and masks */}
       <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
         <IntroBackground />
 
         <IntroMask />
+      </motion.div>
+
+      <motion.div>
+        <NatureBasedBackground />
       </motion.div>
 
       <ScrollItem step={0} onChange={onChange}>

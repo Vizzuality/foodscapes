@@ -1,7 +1,7 @@
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
-const Hero = () => {
+const NatureBasedHero = () => {
   return (
     <section className="relative z-20 h-[200vh]">
       <div className="sticky top-0 left-0 z-10 flex h-screen w-full items-center">
@@ -34,4 +34,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default NatureBasedHero;
