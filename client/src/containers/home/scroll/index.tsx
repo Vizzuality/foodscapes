@@ -23,7 +23,7 @@ const ScrollItem = ({ children, step, onChange }: ScrollItemProps) => {
   }, [s, step, inView, onChange]);
 
   return (
-    <section ref={ref} className="min-h-[100vh]">
+    <section ref={ref} id={`scroll-${step}`} className="min-h-[100vh]">
       {children}
     </section>
   );
