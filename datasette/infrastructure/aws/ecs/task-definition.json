@@ -1,0 +1,16 @@
+{
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "family": "datasette",
+    "containerDefinitions": [
+        {
+            "name": "datasette",
+            "image": "ghcr.io/vizzuality/foodscapes_datasette:latest",
+            "essential": true
+        }
+    ],
+    "networkMode": "awsvpc",
+    "memory": "2 GB",
+    "cpu": "1 vCPU"
+}
