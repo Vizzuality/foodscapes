@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.5-labs
-FROM datasetteproject/datasette:0.64.1
+FROM datasetteproject/datasette:0.64.2
 LABEL maintainer="hello@vizzuality.com"
 
 ENV NAME foodscapes-datasette
