@@ -1,19 +1,15 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useScrollItem } from 'lib/scroll';
 
-import { useElementById } from 'hooks/utils';
+import { motion, useTransform } from 'framer-motion';
 
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
 const NatureBasedHero = () => {
-  const ref = useElementById('scroll-3');
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['0 0', '0.5 0.5'],
-  });
+  const { scrollYProgress: scrollYProgress3 } = useScrollItem('scroll-3');
 
-  const color = useTransform(scrollYProgress, [0, 1], ['#1A1A1A', '#FFFFFF']);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const color = useTransform(scrollYProgress3, [0, 0.25], ['#1A1A1A', '#FFFFFF']);
+  const opacity = useTransform(scrollYProgress3, [0, 0.25], [0, 1]);
 
   return (
     <section className="relative z-20 h-[200vh]">

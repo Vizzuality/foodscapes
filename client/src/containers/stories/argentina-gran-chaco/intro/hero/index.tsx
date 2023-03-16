@@ -1,11 +1,11 @@
 import Image from 'next/image';
 
+import { clamp, useScrollItem } from 'lib/scroll';
+
 import { stepAtom } from 'store/stories/gran-chaco';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useTransform } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
-
-import { useElementById } from 'hooks/utils';
 
 import Wrapper from 'containers/wrapper';
 
@@ -14,14 +14,9 @@ import Icon from 'components/icon';
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 
 const Hero = () => {
-  const ref = useElementById('scroll-0');
+  const { scrollYProgress } = useScrollItem('scroll-0');
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['0 0', '0.5 0'],
-  });
-
-  const opacity = useTransform(scrollYProgress, (v) => 1 - v);
+  const opacity = useTransform(scrollYProgress, (v) => 1 - clamp(v * 2));
 
   const step = useRecoilValue(stepAtom);
 

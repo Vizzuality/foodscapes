@@ -1,3 +1,5 @@
+import { ScrollProvider } from 'lib/scroll';
+
 import { lastStepAtom, stepAtom } from 'store/stories/gran-chaco';
 
 import { motion } from 'framer-motion';
@@ -27,18 +29,7 @@ const GranChaco = () => {
   }, 100);
 
   return (
-    <>
-      {/* Backgrounds and masks */}
-      <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
-        <IntroBackground />
-
-        <IntroMask />
-      </motion.div>
-
-      <motion.div>
-        <NatureBasedBackground />
-      </motion.div>
-
+    <ScrollProvider>
       <ScrollItem step={0} onChange={onChange}>
         <IntroHero />
       </ScrollItem>
@@ -66,7 +57,20 @@ const GranChaco = () => {
       <ScrollItem step={6} onChange={onChange}>
         <NatureBasedChart3 />
       </ScrollItem>
-    </>
+
+      <div className="pt-40"></div>
+
+      {/* Backgrounds and masks */}
+      <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
+        <IntroBackground />
+
+        <IntroMask />
+      </motion.div>
+
+      <motion.div initial={false} animate={{ opacity: [3, 4, 5, 6].includes(step) ? 1 : 0 }}>
+        <NatureBasedBackground />
+      </motion.div>
+    </ScrollProvider>
   );
 };
 

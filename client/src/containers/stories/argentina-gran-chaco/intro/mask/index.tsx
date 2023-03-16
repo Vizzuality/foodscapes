@@ -1,24 +1,19 @@
+import { clamp, useScrollItem } from 'lib/scroll';
+
 import { stepAtom } from 'store/stories/gran-chaco';
 
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useTransform } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
-
-import { useElementById } from 'hooks/utils';
 
 import Mask1 from 'containers/stories/argentina-gran-chaco/intro/mask/mask-1';
 import Mask2 from 'containers/stories/argentina-gran-chaco/intro/mask/mask-2';
 
 const Mask = () => {
-  const ref = useElementById('scroll-0');
   const step = useRecoilValue(stepAtom);
+  const { scrollYProgress } = useScrollItem('scroll-0');
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['0 0', '0.5 0'],
-  });
-
-  const width = useTransform(scrollYProgress, (v) => `${v * 100}%`);
-  const x = useTransform(scrollYProgress, (v) => `${(1 - v) * 16 * 2}px`);
+  const width = useTransform(scrollYProgress, (v) => `${clamp(v * 2) * 100}%`);
+  const x = useTransform(scrollYProgress, (v) => `${(1 - clamp(v * 2)) * 16 * 2}px`);
 
   return (
     <motion.div

@@ -1,18 +1,13 @@
 import Image from 'next/image';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { clamp, useScrollItem } from 'lib/scroll';
 
-import { useElementById } from 'hooks/utils';
+import { motion, useTransform } from 'framer-motion';
 
 const IntroBackground = () => {
-  const ref = useElementById('scroll-0');
+  const { scrollYProgress } = useScrollItem('scroll-0');
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['0 0', '0.5 0'],
-  });
-
-  const x = useTransform(scrollYProgress, (v) => `${v * -25}%`);
+  const x = useTransform(scrollYProgress, (v) => `${clamp(v * 2) * -25}%`);
 
   return (
     <motion.div

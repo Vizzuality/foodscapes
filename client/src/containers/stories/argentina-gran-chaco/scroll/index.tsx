@@ -1,10 +1,11 @@
 import { PropsWithChildren, useEffect, useRef } from 'react';
 
 import cn from 'lib/classnames';
+import { useAddScrollItem } from 'lib/scroll';
 
 import { stepAtom } from 'store/home';
 
-import { useInView } from 'framer-motion';
+import { useInView, useScroll } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 interface ScrollItemProps extends PropsWithChildren {
@@ -22,6 +23,16 @@ const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) =>
     margin: '-50% 0% 0% 0%',
   });
 
+  const scrollMotionValue = useScroll({
+    target: ref,
+    offset: ['0 0', '1 0'],
+  });
+
+  useAddScrollItem({
+    key: `scroll-${step}`,
+    ...scrollMotionValue,
+  });
+
   useEffect(() => {
     if (inView && s !== step) {
       onChange(step);
@@ -31,6 +42,7 @@ const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) =>
   return (
     <section
       id={`scroll-${step}`}
+      key={`scroll-${step}`}
       ref={ref}
       className={cn({
         'relative min-h-[100vh]': true,
