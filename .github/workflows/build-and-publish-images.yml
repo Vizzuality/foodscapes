@@ -1,4 +1,4 @@
-name: Build and publish container images to GitHub Container Registry
+name: Build and publish container images to AWS ECR and deploy on ECS
 
 on:
   push:
@@ -12,129 +12,102 @@ on:
       - 'datasette/**'
       - 'tiler/**'
       - '.github/**'
+  pull_request:
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
+  AWS_ECS_CLUSTER: ${{ secrets.AWS_ECS_CLUSTER }}
+  AWS_ECS_SERVICE: ${{ secrets.AWS_ECS_CLUSTER }}
 
 jobs:
-  push_tiler_to_registry:
-    name: Push tiler container image to registry
+  build_and_deploy:
+    name: Build image, push to ECR and deploy on ECS
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        service-name:
+          - client
+          - datasette
+          - tiler
     env:
-      REPOSITORY: tiler
+      REPOSITORY: ${{ matrix.service-name }}
     steps:
-      - name: Check out the repo
+      - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Login to container registry
-        uses: docker/login-action@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Prepare ids
-        shell: bash
+      - name: Prepare task definition template
+        env:
+          AWS_ECS_EXECUTION_ROLE_ARN: ${{ secrets.AWS_ECS_EXECUTION_ROLE_ARN }}
         run: |
-          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-          echo "shortsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          echo "registry_namespace=$(echo ${{ github.repository_owner }} | tr A-Z a-z)" >> $GITHUB_OUTPUT
-        id: extract_branch
+          envsubst < ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json.tpl > ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
+          cat ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
 
-      - name: Build and push
+      - name: Configure Docker metadata for image tags
+        id: meta
+        uses: docker/metadata-action@v4
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ${{env.ECR_REGISTRY}}/${{env.REPOSITORY}}
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha
+            edge
+            latest
+
+      - name: Build and push image to ECR
+        id: build-image-with-buildx
         uses: docker/build-push-action@v4
         env:
-          IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-          REGISTRY_NAMESPACE: ${{ steps.extract_branch.outputs.registry_namespace }}
-
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           context: ${{ env.REPOSITORY }}
           push: true
+          # @todo: define build-args depending on matrix element
           build-args: |
-            TILER_FOODSCAPES_COG_FILENAME=${{ env.TILER_FOODSCAPES_COG_FILENAME }}
-            DATA_CORE_COG_SOURCE_URL=${{ env.DATA_CORE_COG_SOURCE_URL }}
-            DATA_CORE_COG_CHECKSUM=${{ env.DATA_CORE_COG_CHECKSUM }}
-          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_NAMESPACE }}/foodscapes_${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+            DATASETTE_SQLITE_DB_FILENAME=foodscapes.db
+            DATA_CORE_SQLITE_DB_SOURCE_URL=${{ secrets.DATA_CORE_SQLITE_DB_SOURCE_URL }}
+            DATA_CORE_SQLITE_DB_CHECKSUM=${{ secrets.DATA_CORE_SQLITE_DB_CHECKSUM }}
+            DATA_CORE_COG_SOURCE_URL=${{ secrets.DATA_CORE_COG_SOURCE_URL }}
+            DATA_CORE_COG_CHECKSUM=${{ secrets.DATA_CORE_COG_CHECKSUM }}
+            DATASETTE_CORS_ORIGINS=${{ secrets.DATASETTE_CORS_ORIGINS }}
+            TILER_FOODSCAPES_COG_FILENAME=foodscapes_stack_cog_lzw.tif
+            TILER_ROOT_PATH=''
+            TILER_CORS_ORIGINS_REGEX=${{ secrets.TILER_CORS_ORIGINS_REGEX }}
+          tags: ${{ steps.meta.outputs.tags }}
 
-  push_client_to_registry:
-    name: Push client container image to registry
-    runs-on: ubuntu-22.04
-    env:
-      REPOSITORY: client
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Login to container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Prepare ids
-        shell: bash
-        run: |
-          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-          echo "shortsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          echo "registry_namespace=$(echo ${{ github.repository_owner }} | tr A-Z a-z)" >> $GITHUB_OUTPUT
-        id: extract_branch
-
-      - name: Build and push
-        uses: docker/build-push-action@v4
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
         env:
-          IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-          REGISTRY_NAMESPACE: ${{ steps.extract_branch.outputs.registry_namespace }}
+          CONTAINER_NAME: ${{ env.REPOSITORY }}
         with:
-          context: ${{ env.REPOSITORY }}
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_NAMESPACE }}/foodscapes_${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+          task-definition: ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.REPOSITORY }}:edge
 
-  push_datasette_to_registry:
-    name: Push datasette container image to registry
-    runs-on: ubuntu-22.04
-    env:
-      REPOSITORY: datasette
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Login to container registry
-        uses: docker/login-action@v2
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Prepare ids
-        shell: bash
-        run: |
-          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-          echo "shortsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          echo "registry_namespace=$(echo ${{ github.repository_owner }} | tr A-Z a-z)" >> $GITHUB_OUTPUT
-        id: extract_branch
-
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        env:
-          IMAGE_TAG: ${{ steps.extract_branch.outputs.shortsha }}
-          REGISTRY_NAMESPACE: ${{ steps.extract_branch.outputs.registry_namespace }}
-        with:
-          context: ${{ env.REPOSITORY }}
-          push: true
-          build-args: |
-            DATASETTE_SQLITE_DB_FILENAME=${{ env.DATASETTE_SQLITE_DB_FILENAME }}
-            DATA_CORE_SQLITE_DB_SOURCE_URL=${{ env.DATA_CORE_SQLITE_DB_SOURCE_URL }}
-            DATA_CORE_SQLITE_DB_CHECKSUM=${{ env.DATA_CORE_SQLITE_DB_CHECKSUM }}
-            DATASETTE_CORS_ORIGINS=${{ env.DATASETTE_CORS_ORIGINS }}
-          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_NAMESPACE }}/foodscapes_${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.AWS_ECS_SERVICE }}
+          cluster: ${{ env.AWS_ECS_CLUSTER }}
+          wait-for-service-stability: true
