@@ -9,17 +9,18 @@ const Mask1 = () => {
       exit="exit"
       className="absolute top-0 left-0 h-full w-1/2"
       variants={{
-        initial: { opacity: 0 },
+        initial: { opacity: 1 },
         animate: { opacity: 1 },
-        exit: { opacity: 0 },
+        exit: { opacity: 1 },
       }}
+      transition={{ duration: 0 }}
     >
       <motion.div
         className="absolute h-0 w-4 bg-white"
         variants={{
           initial: { height: 0, right: '33.33%', top: 0 },
           animate: { height: '100%', right: '33.33%', top: 0 },
-          exit: { height: '100%', right: '33.33%', top: 0 },
+          exit: { height: 0, right: '33.33%', top: 0 },
         }}
         transition={{ duration: 1 }}
       />
@@ -29,7 +30,7 @@ const Mask1 = () => {
         variants={{
           initial: { width: 0, top: '66.66%', right: 0 },
           animate: { width: '33.33%', top: '66.66%', right: 0 },
-          exit: { width: '33.33%', top: '66.66%', right: 0 },
+          exit: { width: 0, top: '66.66%', right: 0 },
         }}
         transition={{ duration: 1 }}
       />
@@ -39,7 +40,7 @@ const Mask1 = () => {
         variants={{
           initial: { height: 0, bottom: 0, right: `${(1 / (3 * 3)) * 100}%` },
           animate: { height: '33.33%', bottom: 0, right: `${(1 / (3 * 3)) * 100}%` },
-          exit: { height: '33.33%', bottom: 0, right: `${(1 / (3 * 3)) * 100}%` },
+          exit: { height: 0, bottom: 0, right: `${(1 / (3 * 3)) * 100}%` },
         }}
         transition={{ duration: 1 }}
       />
@@ -54,7 +55,7 @@ const Mask1 = () => {
             right: 0,
           },
           exit: {
-            width: `${(1 / (3 * 3)) * 100}%`,
+            width: 0,
             bottom: `${(1 / (3 * 2)) * 100}%`,
             right: 0,
           },
@@ -72,7 +73,7 @@ const Mask1 = () => {
             right: 0,
           },
           exit: {
-            width: `${(1 / (3 * 3)) * 100}%`,
+            width: 0,
             bottom: `${(1 / (3 * 6)) * 100}%`,
             right: 0,
           },
@@ -90,7 +91,7 @@ const Mask1 = () => {
             right: `${(1 / (3 * 7.5)) * 100}%`,
           },
           exit: {
-            height: `${(1 / (3 * 6)) * 100}%`,
+            height: 0,
             bottom: 0,
             right: `${(1 / (3 * 7.5)) * 100}%`,
           },

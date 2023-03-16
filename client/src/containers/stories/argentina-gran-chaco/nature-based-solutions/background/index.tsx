@@ -6,11 +6,18 @@ import { motion, useTransform } from 'framer-motion';
 
 const NatureBasedBackground = () => {
   const { scrollYProgress: scrollYProgress3 } = useScrollItem('scroll-3');
+  const { scrollYProgress: scrollYProgress4 } = useScrollItem('scroll-4');
   const { scrollYProgress: scrollYProgress5 } = useScrollItem('scroll-5');
 
   // Bg-2 variables
   const imgX2 = useTransform(scrollYProgress3, (v) => `${(1 - clamp(v * 2)) * 100}%`);
-  const imgY2 = useTransform(scrollYProgress3, (v) => `${clamp(v, 0.5, 1) * -10}%`);
+  const imgY2 = useTransform(
+    [scrollYProgress3, scrollYProgress4, scrollYProgress5],
+    (values: number[]) => {
+      const v = values.reduce((a, b) => a + b, 0) / values.length;
+      return `${clamp(v, 0, 1) * -20}%`;
+    }
+  );
 
   // Bg-3 variables
   const y3 = useTransform(scrollYProgress5, (v) => `${(1 - v) * 100}%`);
