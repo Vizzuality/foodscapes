@@ -17,7 +17,7 @@ const IntroBackground = () => {
   return (
     <motion.div
       key="background"
-      className="fixed z-0 h-full w-full overflow-hidden"
+      className="fixed top-0 left-0 z-0 h-full w-full overflow-hidden"
       style={{
         x,
       }}

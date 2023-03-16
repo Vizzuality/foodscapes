@@ -33,7 +33,7 @@ const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) =>
       id={`scroll-${step}`}
       ref={ref}
       className={cn({
-        'min-h-[100vh]': true,
+        'relative min-h-[100vh]': true,
         [className]: !!className,
       })}
     >

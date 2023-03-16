@@ -37,7 +37,7 @@ const IntroBackground = () => {
       {/* Bg-2 */}
       <motion.div
         key="nature-based-background-2"
-        className="fixed z-0 h-[140%] w-full"
+        className="fixed top-0 left-0 z-0 h-[140%] w-full"
         style={{
           y: y2,
         }}
@@ -64,7 +64,7 @@ const IntroBackground = () => {
       {/* Bg-3 */}
       <motion.div
         key="nature-based-background-3"
-        className="fixed z-0 h-full w-full"
+        className="fixed top-0 left-0 z-0 h-full w-full translate-y-full"
         style={{
           y: y3,
         }}
