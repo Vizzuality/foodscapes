@@ -1,12 +1,14 @@
 version: '3.8'
 
 services:
+
   app:
     build:
       context: ./client
     ports:
       - "${APP_SERVICE_PORT}:3000"
     restart: unless-stopped
+
   tiler:
     container_name: tiler
     build:
@@ -21,6 +23,7 @@ services:
     volumes:
       - ./tiler/data:/opt/foodscapes-tiler/data/local-dev
     restart: unless-stopped
+
   datasette:
     container_name: datasette
     build:
