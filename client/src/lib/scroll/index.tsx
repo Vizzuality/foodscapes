@@ -3,11 +3,13 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react';
 
-import { MotionValue } from 'framer-motion';
+import { motionValue, MotionValue } from 'framer-motion';
 
 type ScrollItem = {
   key: string;
@@ -27,8 +29,15 @@ const Context = createContext<ScrollContext>({
   addScrollItem: () => {},
 });
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
+    ? useLayoutEffect
+    : useEffect;
+
 export const ScrollProvider = ({ children }: PropsWithChildren) => {
-  const [scrollItems, setScrollItems] = useState([]);
+  const [scrollItems, setScrollItems] = useState<ScrollItem[]>([]);
 
   const addScrollItem = useCallback<ScrollContext['addScrollItem']>(
     (data) => {
@@ -46,7 +55,11 @@ export const ScrollProvider = ({ children }: PropsWithChildren) => {
     [scrollItems, addScrollItem]
   );
 
-  return <Context.Provider value={context}>{children}</Context.Provider>;
+  return (
+    <Context.Provider key="scroll-provider" value={context}>
+      {children}
+    </Context.Provider>
+  );
 };
 
 export function useScrollItems() {
@@ -63,20 +76,24 @@ export function useScrollItem(key: string) {
   if (!scrollItem) {
     return {
       key,
-      scrollX: new MotionValue(),
-      scrollY: new MotionValue(),
-      scrollXProgress: new MotionValue(),
-      scrollYProgress: new MotionValue(),
-    };
+      scrollX: motionValue<number>(0),
+      scrollY: motionValue<number>(0),
+      scrollXProgress: motionValue<number>(0),
+      scrollYProgress: motionValue<number>(0),
+    } satisfies ScrollItem;
   }
 
-  return scrollItem ?? {};
+  return scrollItem;
 }
 
 export function useAddScrollItem(data: ScrollItem) {
   const { addScrollItem } = useContext(Context);
 
-  return addScrollItem(data);
+  useIsomorphicLayoutEffect(() => {
+    addScrollItem(data);
+  }, [addScrollItem, data]);
+
+  return null;
 }
 
 export function clamp(v: number, min: number = 0, max: number = 1) {
