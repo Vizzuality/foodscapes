@@ -8,11 +8,11 @@ import Wrapper from 'containers/wrapper';
 const NatureBasedHero = () => {
   const { scrollYProgress: scrollYProgress3 } = useScrollItem('scroll-3');
 
-  const color = useTransform(scrollYProgress3, [0, 0.25], ['#1A1A1A', '#FFFFFF']);
-  const opacity = useTransform(scrollYProgress3, [0, 0.25], [0, 1]);
+  const color = useTransform(scrollYProgress3, [0.25, 0.4], ['#1A1A1A', '#FFFFFF']);
+  const opacity = useTransform(scrollYProgress3, [0.25, 0.4], [0, 1]);
 
   return (
-    <section className="relative z-20 h-[200vh]">
+    <section className="relative z-20 h-[250vh]">
       <div className="sticky top-0 left-0 z-10 flex h-screen w-full items-center">
         <Wrapper>
           <div className="grid grid-cols-12 items-end gap-6 pb-10">

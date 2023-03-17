@@ -10,8 +10,8 @@ const NatureBasedBackground = () => {
   const { scrollYProgress: scrollYProgress5 } = useScrollItem('scroll-5');
 
   // Bg-2 variables
-  const imgX2 = useTransform(scrollYProgress3, (v) => `${clamp(v * 2) * 100}%`);
-  const imgY2 = useTransform(
+  const imgW = useTransform(scrollYProgress3, (v) => `${clamp(v * 2) * 100}%`);
+  const imgY = useTransform(
     [scrollYProgress3, scrollYProgress4, scrollYProgress5],
     (values: number[]) => {
       const v = values.reduce((a, b) => a + b, 0) / values.length;
@@ -31,10 +31,10 @@ const NatureBasedBackground = () => {
       >
         <motion.div
           key="nature-based-background-img-2"
-          className="absolute top-0 right-0 z-0 h-full w-full overflow-hidden"
+          className="absolute top-0 left-0 z-0 h-full w-full overflow-hidden"
           style={{
-            width: imgX2,
-            y: imgY2,
+            width: imgW,
+            y: imgY,
           }}
         >
           <div className="absolute top-0 left-0 z-10 h-full w-full bg-black/25" />
