@@ -10,12 +10,12 @@ const NatureBasedBackground = () => {
   const { scrollYProgress: scrollYProgress5 } = useScrollItem('scroll-5');
 
   // Bg-2 variables
-  const imgX2 = useTransform(scrollYProgress3, (v) => `${(1 - clamp(v * 2)) * 100}%`);
+  const imgX2 = useTransform(scrollYProgress3, (v) => `${clamp(v * 2) * 100}%`);
   const imgY2 = useTransform(
     [scrollYProgress3, scrollYProgress4, scrollYProgress5],
     (values: number[]) => {
       const v = values.reduce((a, b) => a + b, 0) / values.length;
-      return `${clamp(v, 0, 1) * -20}%`;
+      return `${clamp(v, 0.166666, 1) * -20}%`;
     }
   );
 
@@ -31,20 +31,27 @@ const NatureBasedBackground = () => {
       >
         <motion.div
           key="nature-based-background-img-2"
-          className="absolute z-0 h-full w-full overflow-hidden"
+          className="absolute top-0 right-0 z-0 h-full w-full overflow-hidden"
           style={{
-            x: imgX2,
+            width: imgX2,
             y: imgY2,
           }}
         >
-          <div className="absolute top-0 left-0 h-full w-full bg-black/25" />
-          <Image
+          <div className="absolute top-0 left-0 z-10 h-full w-full bg-black/25" />
+
+          <motion.div
+            className="absolute top-0 right-0 h-full w-full bg-cover bg-fixed bg-center"
+            style={{
+              backgroundImage: 'url(/images/stories/argentina-gran-chaco/granchaco-2.jpg)',
+            }}
+          />
+          {/* <Image
             src="/images/stories/argentina-gran-chaco/granchaco-2.jpg"
             alt="Gran Chaco - cow"
             width={2400}
             height={1600}
             className="h-full w-full object-cover"
-          />
+          /> */}
         </motion.div>
       </motion.div>
 
