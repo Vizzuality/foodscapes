@@ -25,8 +25,3 @@ module "vpc" {
   project = var.project_name
   tags    = local.tags
 }
-
-module "foodscapes_container_registry" {
-  source = "./modules/container_registry"
-  name   = "foodscapes"
-}
