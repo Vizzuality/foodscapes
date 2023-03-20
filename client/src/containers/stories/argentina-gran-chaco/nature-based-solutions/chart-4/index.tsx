@@ -1,14 +1,42 @@
+import { useScrollItem } from 'lib/scroll';
+
+import { motion, useTransform } from 'framer-motion';
+
+import { useScrollCounter } from 'hooks/animations';
+
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
-const Chart3 = () => {
+const Chart4 = () => {
+  const { scrollYProgress: scrollYProgress7 } = useScrollItem('scroll-7');
+  const min = 0.25;
+  const max = 1;
+  const counter = useScrollCounter(0, 8.2, [min, max], scrollYProgress7);
+
+  const opacity = useTransform(scrollYProgress7, (v) => {
+    if (v < min) {
+      return 0;
+    }
+    if (v > max * 0.5) {
+      return 1;
+    }
+
+    return (v - min) / (max * 0.5 - min);
+  });
+
   return (
     <section className="relative z-20 h-[300vh]">
       <div className="sticky top-0 left-0 z-10 flex min-h-screen w-full items-center">
         <Wrapper>
-          <div className="grid grid-cols-12 items-end gap-6 pb-10">
+          <div className="grid grid-cols-12 items-center gap-6 pb-10">
             <div className="col-span-4 col-start-2">
-              <div className="aspect-square w-full border border-dashed border-white" />
+              <motion.div
+                style={{
+                  opacity,
+                }}
+              >
+                <h2 className="font-display text-6xl">{`${counter.toFixed(1)} M Ha`}</h2>
+              </motion.div>
             </div>
 
             <div className="col-span-4 col-start-8">
@@ -35,4 +63,4 @@ const Chart3 = () => {
   );
 };
 
-export default Chart3;
+export default Chart4;
