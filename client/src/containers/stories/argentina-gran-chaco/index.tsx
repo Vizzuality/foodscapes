@@ -11,7 +11,8 @@ import IntroHero from './intro/hero';
 import IntroHow from './intro/how';
 import IntroMask from './intro/mask';
 import IntroRisk from './intro/risk';
-import NatureBasedBackground from './nature-based-solutions/background';
+import NatureBasedBackground1 from './nature-based-solutions/background-1';
+import NatureBasedBackground2 from './nature-based-solutions/background-2';
 import NatureBasedChart1 from './nature-based-solutions/chart-1';
 import NatureBasedChart2 from './nature-based-solutions/chart-2';
 import NatureBasedChart3 from './nature-based-solutions/chart-3';
@@ -58,8 +59,6 @@ const GranChaco = () => {
         <NatureBasedChart3 />
       </ScrollItem>
 
-      <div className="pt-40"></div>
-
       {/* Backgrounds and masks */}
       <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
         <IntroBackground />
@@ -68,7 +67,8 @@ const GranChaco = () => {
       </motion.div>
 
       <motion.div initial={false} animate={{ opacity: [3, 4, 5, 6].includes(step) ? 1 : 0 }}>
-        <NatureBasedBackground />
+        <NatureBasedBackground1 />
+        <NatureBasedBackground2 />
       </motion.div>
     </ScrollProvider>
   );
