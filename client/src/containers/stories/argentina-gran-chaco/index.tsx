@@ -13,9 +13,11 @@ import IntroMask from './intro/mask';
 import IntroRisk from './intro/risk';
 import NatureBasedBackground1 from './nature-based-solutions/background-1';
 import NatureBasedBackground2 from './nature-based-solutions/background-2';
+import NatureBasedBackground3 from './nature-based-solutions/background-3';
 import NatureBasedChart1 from './nature-based-solutions/chart-1';
 import NatureBasedChart2 from './nature-based-solutions/chart-2';
 import NatureBasedChart3 from './nature-based-solutions/chart-3';
+import NatureBasedChart4 from './nature-based-solutions/chart-4';
 import NatureBasedHero from './nature-based-solutions/hero';
 import NatureBasedMask from './nature-based-solutions/mask';
 import ScrollItem from './scroll';
@@ -60,6 +62,10 @@ const GranChaco = () => {
         <NatureBasedChart3 />
       </ScrollItem>
 
+      <ScrollItem step={7} onChange={onChange}>
+        <NatureBasedChart4 />
+      </ScrollItem>
+
       {/* Backgrounds and masks */}
       <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
         <IntroBackground />
@@ -67,9 +73,10 @@ const GranChaco = () => {
         <IntroMask />
       </motion.div>
 
-      <motion.div initial={false} animate={{ opacity: [3, 4, 5, 6].includes(step) ? 1 : 0 }}>
+      <motion.div initial={false} animate={{ opacity: [3, 4, 5, 6, 7].includes(step) ? 1 : 0 }}>
         <NatureBasedBackground1 />
         <NatureBasedBackground2 />
+        <NatureBasedBackground3 />
 
         <NatureBasedMask />
       </motion.div>

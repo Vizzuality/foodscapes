@@ -45,14 +45,14 @@ export const SCROLL_ITEMS_METADATA = [
     id: 6,
     inViewProps: {
       amount: 0.25 * 0.3333,
-      margin: `-${50 * 0.3333}% 0% 0% 0%`,
+      margin: `-${50 + 50 * 0.3333}% 0% 0% 0%`,
     },
   },
   {
     id: 7,
     inViewProps: {
-      amount: 0.25,
-      margin: '-50% 0% 0% 0%',
+      amount: 0.25 * 0.3333,
+      margin: `-${50 + 50 * 0.3333}% 0% 0% 0%`,
     },
   },
   {
