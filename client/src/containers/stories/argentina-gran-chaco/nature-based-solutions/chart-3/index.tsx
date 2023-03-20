@@ -3,7 +3,7 @@ import Wrapper from 'containers/wrapper';
 
 const Chart3 = () => {
   return (
-    <section className="relative z-20 h-[200vh]">
+    <section className="relative z-20 h-[300vh]">
       <div className="sticky top-0 left-0 z-10 flex min-h-screen w-full items-center">
         <Wrapper>
           <div className="grid grid-cols-12 items-end gap-6 pb-10">

@@ -4,11 +4,11 @@ import { clamp, useScrollItem } from 'lib/scroll';
 
 import { motion, useTransform } from 'framer-motion';
 
-const NatureBasedBackground2 = () => {
+const NatureBasedBackground3 = () => {
   const { scrollYProgress: scrollYProgress5 } = useScrollItem('scroll-5');
   const { scrollYProgress: scrollYProgress6 } = useScrollItem('scroll-6');
 
-  const x = useTransform(scrollYProgress6, (v) => `${clamp(v * 4) * -50}%`);
+  const x = useTransform(scrollYProgress6, (v) => `${clamp(v * 2) * -50}%`);
 
   const y = useTransform(scrollYProgress5, (v) => `${(1 - v) * 100}%`);
 
@@ -27,7 +27,7 @@ const NatureBasedBackground2 = () => {
       >
         <div className="absolute top-0 left-0 h-full w-full bg-black/50" />
         <Image
-          src="/images/stories/argentina-gran-chaco/granchaco-3.jpg"
+          src="/images/stories/argentina-gran-chaco/granchaco-4.jpg"
           alt="Gran Chaco - corn"
           width={2400}
           height={1600}
@@ -38,4 +38,4 @@ const NatureBasedBackground2 = () => {
   );
 };
 
-export default NatureBasedBackground2;
+export default NatureBasedBackground3;

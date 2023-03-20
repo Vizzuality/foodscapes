@@ -8,6 +8,8 @@ import { stepAtom } from 'store/home';
 import { useInView, useScroll } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
+import { SCROLL_ITEMS_METADATA } from './constants';
+
 interface ScrollItemProps extends PropsWithChildren {
   className?: string;
   step: number;
@@ -16,12 +18,10 @@ interface ScrollItemProps extends PropsWithChildren {
 
 const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) => {
   const s = useRecoilValue(stepAtom);
+  const { inViewProps } = SCROLL_ITEMS_METADATA[step];
 
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, {
-    amount: 0.25,
-    margin: '-50% 0% 0% 0%',
-  });
+  const inView = useInView(ref, inViewProps);
 
   const scrollMotionValue = useScroll({
     target: ref,
