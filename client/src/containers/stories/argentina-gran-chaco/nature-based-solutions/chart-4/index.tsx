@@ -1,27 +1,27 @@
+import { useState } from 'react';
+
 import { useScrollItem } from 'lib/scroll';
 
-import { motion, useTransform } from 'framer-motion';
+import { motion, useMotionValueEvent } from 'framer-motion';
 
-import { useScrollCounter } from 'hooks/animations';
+import { useAnimatedCounter } from 'hooks/animations';
 
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
 
 const Chart4 = () => {
+  const [enabled, setEnabled] = useState(false);
   const { scrollYProgress: scrollYProgress7 } = useScrollItem('scroll-7');
-  const min = 0.25;
-  const max = 1;
-  const counter = useScrollCounter(0, 8.2, [min, max], scrollYProgress7);
+  const threshold = 0.25;
 
-  const opacity = useTransform(scrollYProgress7, (v) => {
-    if (v < min) {
-      return 0;
-    }
-    if (v > max * 0.5) {
-      return 1;
+  const counter = useAnimatedCounter(0, 8.2, 1, (v) => `${v.toFixed(1)} M Ha`, enabled);
+
+  useMotionValueEvent(scrollYProgress7, 'change', (v) => {
+    if (v > threshold) {
+      return setEnabled(true);
     }
 
-    return (v - min) / (max * 0.5 - min);
+    return setEnabled(false);
   });
 
   return (
@@ -32,11 +32,20 @@ const Chart4 = () => {
             <div className="col-span-4 col-start-2">
               <FadeYScroll>
                 <motion.div
-                  style={{
-                    opacity,
+                  initial="hidden"
+                  animate={enabled ? 'visible' : 'hidden'}
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: { opacity: 1 },
                   }}
+                  className="flex flex-col items-center"
                 >
-                  <h2 className="font-display text-6xl">{`${counter.toFixed(1)} M Ha`}</h2>
+                  <div>
+                    <h2 className="font-display text-6xl">{counter}</h2>
+                    <h3 className="max-w-[200px] text-xxs font-bold uppercase">
+                      deforested land by soy globally
+                    </h3>
+                  </div>
                 </motion.div>
               </FadeYScroll>
             </div>

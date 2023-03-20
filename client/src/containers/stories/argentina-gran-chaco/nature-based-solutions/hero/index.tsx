@@ -26,7 +26,7 @@ const NatureBasedHero = () => {
                 <FadeYScroll>
                   <motion.p className="font-semibold text-white" style={{ opacity }}>
                     We look to nature-based solutions to ensure the integrity of foodscapes and the
-                    broader ecosystem that they interact with. For example, introducing
+                    broader ecosystem that they interact with. For example, introducing{' '}
                     <strong className="font-bold">
                       agrosilvopastoral techniques to farming – the combination of growing trees,
                       crop production, and grazing cattle –
