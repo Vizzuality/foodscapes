@@ -18,14 +18,14 @@ interface ScrollItemProps extends PropsWithChildren {
 
 const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) => {
   const s = useRecoilValue(stepAtom);
-  const { inViewProps } = SCROLL_ITEMS_METADATA[step];
+  const { inViewProps, useScrollProps } = SCROLL_ITEMS_METADATA[step];
 
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, inViewProps);
 
   const scrollMotionValue = useScroll({
     target: ref,
-    offset: ['0 0', '1 0'],
+    ...useScrollProps,
   });
 
   useAddScrollItem({

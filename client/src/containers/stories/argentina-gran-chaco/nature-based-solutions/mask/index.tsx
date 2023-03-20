@@ -6,15 +6,20 @@ const NatureBasedMask = () => {
   const { scrollYProgress: scrollYProgress5 } = useScrollItem('scroll-5');
   const { scrollYProgress: scrollYProgress6 } = useScrollItem('scroll-6');
   const { scrollYProgress: scrollYProgress7 } = useScrollItem('scroll-7');
+  const { scrollYProgress: scrollYProgress8 } = useScrollItem('scroll-8');
 
-  const x = useTransform([scrollYProgress6, scrollYProgress7], (values: number[]) => {
-    const [v1, v2] = values;
+  const x = useTransform(
+    [scrollYProgress6, scrollYProgress7, scrollYProgress8],
+    (values: number[]) => {
+      const [v1, v2, v3] = values;
 
-    const p1 = clamp(v1 * 4) * -100;
-    const p2 = clamp(v2 * 4) * -100;
+      const p1 = clamp(v1 * 4) * -100;
+      const p2 = clamp(v2 * 4) * -100;
+      const p3 = clamp(v3 * 4) * -100;
 
-    return `${p1 + p2}%`;
-  });
+      return `${p1 + p2 + p3}%`;
+    }
+  );
 
   const y = useTransform(scrollYProgress5, (v) => `${(1 - v) * 100}%`);
 
