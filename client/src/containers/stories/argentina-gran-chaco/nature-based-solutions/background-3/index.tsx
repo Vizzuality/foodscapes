@@ -33,6 +33,7 @@ const NatureBasedBackground3 = () => {
           width={2400}
           height={1600}
           className="h-full w-full object-cover"
+          priority
         />
       </motion.div>
     </motion.div>

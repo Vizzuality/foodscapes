@@ -23,6 +23,7 @@ const IntroBackground = () => {
         width={2000}
         height={1100}
         className="h-full w-full object-cover"
+        priority
       />
       <div className="absolute top-0 left-0 h-full w-full bg-black/20" />
     </motion.div>

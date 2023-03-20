@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { clamp, useScrollItem } from 'lib/scroll';
 
 import { motion, useTransform } from 'framer-motion';
@@ -29,19 +31,14 @@ const NatureBasedBackground1 = () => {
       >
         <div className="absolute top-0 left-0 z-10 h-full w-full bg-black/25" />
 
-        <motion.div
-          className="absolute top-0 right-0 h-full w-full bg-cover bg-fixed bg-center"
-          style={{
-            backgroundImage: 'url(/images/stories/argentina-gran-chaco/granchaco-2.jpg)',
-          }}
+        <Image
+          src="/images/stories/argentina-gran-chaco/granchaco-2.jpg"
+          alt="Gran Chaco - cow"
+          width={2400}
+          height={1600}
+          className="h-full w-full object-cover"
+          priority
         />
-        {/* <Image
-            src="/images/stories/argentina-gran-chaco/granchaco-2.jpg"
-            alt="Gran Chaco - cow"
-            width={2400}
-            height={1600}
-            className="h-full w-full object-cover"
-          /> */}
       </motion.div>
     </motion.div>
   );
