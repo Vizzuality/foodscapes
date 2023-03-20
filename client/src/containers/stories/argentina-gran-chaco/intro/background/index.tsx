@@ -13,9 +13,12 @@ const IntroBackground = () => {
     <motion.div
       key="background"
       className="fixed top-0 left-0 z-0 h-full w-full overflow-hidden"
+      initial={{ y: 88 }}
+      animate={{ y: 0 }}
       style={{
         x,
       }}
+      transition={{ delay: 0.5, duration: 0.75 }}
     >
       <Image
         src="/images/stories/argentina-gran-chaco/granchaco-1.jpg"

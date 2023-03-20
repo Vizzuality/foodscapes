@@ -25,24 +25,35 @@ const Hero = () => {
       <div className="fixed top-0 left-0 z-10 flex h-full w-full items-end">
         <Wrapper>
           <motion.div className="grid grid-cols-12 items-end gap-6 pb-10" style={{ opacity }}>
-            <div className="col-span-5 col-start-2">
+            <motion.div
+              className="col-span-5 col-start-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.75 }}
+            >
               <Image
                 src="/images/stories/argentina-gran-chaco/argentina-map-state-2.svg"
                 alt="Argentina map - Gran chaco"
-                width={400}
-                height={400}
+                width={308}
+                height={448}
                 priority
               />
-            </div>
+            </motion.div>
+
             <div className="col-span-5 col-start-7">
-              <div className="space-y-5 text-right text-white">
+              <div className="flex flex-col items-end space-y-5 text-right text-white">
                 <h1 className="font-display text-5xl">Foodscapes in action.</h1>
-                <p className="font-semibold">
+                <motion.p
+                  className="overflow-hidden font-semibold"
+                  initial={{ opacity: 0, y: 100, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  transition={{ delay: 0.5, duration: 0.75 }}
+                >
                   The Gran Chaco is a large region across South America, known for its high endemic
                   biodiversity. The region has long accommodated a diversity of uses, such as
                   hunting, grazing, and crop production. The Gran Chaco region of Argentina
                   allocates 58% of its croplands to produce soy.
-                </p>
+                </motion.p>
 
                 <button
                   onClick={() => {
