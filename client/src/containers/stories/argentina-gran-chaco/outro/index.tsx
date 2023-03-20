@@ -6,7 +6,7 @@ const Outro = () => {
   return (
     <section className="relative z-20">
       <Wrapper>
-        <motion.div className="grid min-h-screen grid-cols-12 items-center gap-6 pb-10">
+        <motion.div className="grid min-h-screen grid-cols-12 items-center gap-6 pt-24">
           <div className="col-span-6 col-start-4">
             <div className="space-y-5 text-center text-white">
               <p className="font-semibold">

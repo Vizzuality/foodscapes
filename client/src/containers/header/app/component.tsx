@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <header
       className={cn({
-        'fixed top-0 z-30 w-full py-6': true,
+        'fixed top-0 z-30 w-full bg-white py-6': true,
         'bg-white/10 backdrop-blur-sm':
           THEME === 'light' || THEME === 'dark-light' || THEME === 'light-dark',
       })}

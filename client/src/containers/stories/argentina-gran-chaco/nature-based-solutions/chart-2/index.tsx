@@ -5,7 +5,7 @@ const Chart2 = () => {
   return (
     <section className="relative top-0 left-0 z-10 flex min-h-screen w-full items-center">
       <Wrapper>
-        <div className="grid grid-cols-12 items-end gap-6 pb-10">
+        <div className="grid grid-cols-12 items-end gap-6">
           <div className="col-span-4 col-start-2">
             <div className="space-y-5 text-white">
               <FadeYScroll>

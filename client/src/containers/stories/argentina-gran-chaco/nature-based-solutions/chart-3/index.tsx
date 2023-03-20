@@ -28,7 +28,7 @@ const Chart3 = () => {
     <section className="relative z-20 h-[300vh]">
       <div className="sticky top-0 left-0 z-10 flex min-h-screen w-full items-center">
         <Wrapper>
-          <div className="grid grid-cols-12 items-center gap-6 pb-10">
+          <div className="grid grid-cols-12 items-center gap-6 pt-24">
             <div className="col-span-4 col-start-2">
               <div className="space-y-5 text-white">
                 <FadeYScroll>
@@ -57,13 +57,15 @@ const Chart3 = () => {
             </div>
 
             <div className="col-span-4 col-start-8 flex justify-center">
-              <motion.div
-                style={{
-                  opacity,
-                }}
-              >
-                <h2 className="font-display text-6xl">{`${counter.toFixed(1)} M Ha`}</h2>
-              </motion.div>
+              <FadeYScroll>
+                <motion.div
+                  style={{
+                    opacity,
+                  }}
+                >
+                  <h2 className="font-display text-6xl">{`${counter.toFixed(1)} M Ha`}</h2>
+                </motion.div>
+              </FadeYScroll>
             </div>
           </div>
         </Wrapper>
