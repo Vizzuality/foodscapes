@@ -3,18 +3,11 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
+import { Theme } from 'types/header';
+
 import { NAV } from 'constants/nav';
 
 import Wrapper from 'containers/wrapper';
-
-const THEMES = {
-  dark: 'dark',
-  light: 'light',
-  'dark-light': 'dark-light',
-  'light-dark': 'light-dark',
-} as const;
-
-type Theme = (typeof THEMES)[keyof typeof THEMES];
 
 const Header = () => {
   const { pathname } = useRouter();
@@ -25,8 +18,7 @@ const Header = () => {
     <header
       className={cn({
         'fixed top-0 z-30 w-full py-6': true,
-        'bg-white/10 backdrop-blur-sm':
-          THEME === 'light' || THEME === 'dark-light' || THEME === 'light-dark',
+        'bg-white': pathname === '/stories/argentina-gran-chaco' && THEME === 'dark',
       })}
     >
       <Wrapper>

@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer
       className={cn({
-        'border-t border-navy-400': true,
+        'relative z-10 border-t border-navy-400 bg-white': true,
       })}
     >
       <Wrapper>

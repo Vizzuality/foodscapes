@@ -16,7 +16,10 @@ const Outro = () => {
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-4 flex flex-col xl:col-start-2">
             <div className="flex h-full grow flex-col">
-              <Link href="/case-studies/grand-chaco" className="relative flex h-full grow flex-col">
+              <Link
+                href="/stories/argentina-gran-chaco"
+                className="relative flex h-full grow flex-col"
+              >
                 <div
                   className={cn({
                     'group relative flex h-full grow flex-col justify-between space-y-8': true,

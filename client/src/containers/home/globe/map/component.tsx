@@ -4,7 +4,7 @@ import { stepAtom } from 'store/home';
 
 import { useRecoilValue } from 'recoil';
 
-import FadeY from 'containers/home/animations/fadeY';
+import FadeY from 'containers/animations/fadeY';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';

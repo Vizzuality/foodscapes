@@ -10,7 +10,7 @@ const About = () => {
   return (
     <>
       <Wrapper>
-        <div className="space-y-10 py-24">
+        <div className="space-y-10 py-24 lg:py-48">
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-6 xl:col-span-5 xl:col-start-2">
               <h2 className="font-display text-5xl">About Foodscapes.</h2>
