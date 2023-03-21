@@ -33,3 +33,8 @@ output "nat_gateway_ips" {
   description = "Public IP addresses of the VPC NAT gateways."
 }
 
+# @todo remove once enabling LB
+output "ecs_tasks_security_group_id" {
+  value       = aws_security_group.ecs_tasks.id
+  description = "Security group for apps on ECS."
+}
