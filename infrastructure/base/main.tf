@@ -1,15 +1,15 @@
 # @debt DRY this via Terragrunt: see remote_state in the root terragrunt.hcl
 # configuration.
 
-terraform {
-  backend "s3" {
-    region         = "eu-west-3"
-    key            = "core.tfstate"
-    dynamodb_table = "aws-locks"
-    encrypt        = true
-    profile        = "default"
-  }
-}
+# terraform {
+#   backend "s3" {
+#     region         = "eu-west-3"
+#     key            = "core.tfstate"
+#     dynamodb_table = "aws-locks"
+#     encrypt        = true
+#     profile        = "default"
+#   }
+# }
 
 module "bootstrap" {
   source               = "./modules/bootstrap"
