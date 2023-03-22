@@ -7,6 +7,10 @@ export const NAV = [
     label: 'About Us',
     href: '/about',
   },
+  {
+    label: 'Charts',
+    href: '/charts',
+  },
   // {
   //   label: 'Get involved',
   //   href: '/get-involved',

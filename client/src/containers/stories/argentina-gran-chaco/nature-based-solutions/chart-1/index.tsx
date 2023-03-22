@@ -26,7 +26,7 @@ const Chart1 = () => {
           </div>
 
           <div className="col-span-4 col-start-7">
-            <div className="aspect-square w-full border border-dashed border-white" />
+            <div className="aspect-square w-full border border-dashed border-white"></div>
           </div>
         </div>
       </Wrapper>
