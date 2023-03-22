@@ -7,12 +7,12 @@ const BarStack = dynamic(() => import('components/charts/bar-stack'), { ssr: fal
 
 const data = [
   {
-    label: 'Sad',
-    value: 2000,
+    label: 'Grazing systems',
+    value: 5,
   },
   {
-    label: 'Anxious',
-    value: 7000,
+    label: 'Mixed livestock cropping systems',
+    value: 140,
   },
 ];
 
@@ -33,10 +33,10 @@ const ChartPage: React.FC = () => {
     <Wrapper>
       <div className="flex h-small-screen items-center bg-navy-500">
         <BarChart
-          width={300}
+          width={600}
           height={300}
           data={data}
-          margin={{ top: 20, left: 20, bottom: 20, right: 20 }}
+          margin={{ top: 20, left: 20, bottom: 25, right: 20 }}
         />
         <BarStack
           width={300}

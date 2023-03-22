@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
-import { AxisBottom, TickLabelProps } from '@visx/axis';
+import { Annotation, HtmlLabel } from '@visx/annotation';
+import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { motion } from 'framer-motion';
@@ -27,7 +28,7 @@ export const BarChart = ({
         range: [0, xMax],
         round: true,
         domain: data.map(x),
-        padding: 0.4,
+        padding: 0.7,
       }),
     [data, xMax]
   );
@@ -41,60 +42,78 @@ export const BarChart = ({
     [dataMax, yMax]
   );
 
-  const tickLabelProps: TickLabelProps<string> = () => {
-    return {
-      fill: '#fff',
-      fontSize: 16,
-      fontWeight: 600,
-      textAnchor: 'middle',
-    };
-  };
-
   return (
     <svg width={width} height={height}>
       <Group top={0} left={margin.left}>
         {data.map((d, i) => {
           const label = x(d);
-          const barWidth = xScale.bandwidth();
-          const barHeight = yMax - yScale(y(d));
+          const w = xScale.bandwidth();
+          const h = yMax - yScale(y(d));
           const barX = xScale(label);
-          const barY = yMax - barHeight;
+          const barY = yMax - h;
+
+          const polygonX = {
+            x1: barX + w * 0.5,
+            x2: barX + w,
+            x3: barX,
+          };
+
+          const polygonY = {
+            initialY1: barY,
+            y1: barY - w * 0.4,
+            y2: barY,
+            y3: barY,
+          };
 
           return (
             <Group key={i}>
               <motion.rect
                 key={`bar-${label}`}
                 x={barX}
-                width={barWidth}
+                width={w}
                 initial={{
                   height: 0,
                   y: yMax,
                 }}
                 animate={{
-                  height: barHeight,
+                  height: h,
                   y: barY,
                 }}
                 transition={{
+                  duration: 0.5,
                   ease: 'linear',
                 }}
                 fill="rgba(255,255,255)"
               />
-              <motion.polygon
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                  transition: {
-                    delay: 0.25,
-                  },
-                }}
-                points={`
-                  ${barX + barWidth * 0.5},${barY - barWidth * 0.5}
-                  ${barX + barWidth}, ${barY}
-                  ${barX},${barY}`}
+              {/* Triangle */}
+              <path
+                d={`
+                  M
+                  ${polygonX.x1},${polygonY.initialY1}
+                  ${polygonX.x2},${polygonY.y2}
+                  ${polygonX.x3},${polygonY.y3}
+                  z
+                `}
                 fill="rgba(255,255,255)"
-              />
+              >
+                <animate
+                  attributeName="d"
+                  attributeType="XML"
+                  to={`M${polygonX.x1},${polygonY.y1} ${polygonX.x2},${polygonY.y2} ${polygonX.x3},${polygonY.y3}z`}
+                  begin="0.51s"
+                  dur="0.125s"
+                  fill="freeze"
+                />
+              </path>
+
+              <Annotation x={barX + w} y={barY} dx={0} dy={0}>
+                <HtmlLabel horizontalAnchor="start" verticalAnchor="end" showAnchorLine={false}>
+                  <div className="whitespace-nowrap text-sm font-bold text-white">
+                    <span className="text-lg">+ {d.value.toLocaleString()} $</span>
+                    <span className="text-sm">/Ha</span>
+                  </div>
+                </HtmlLabel>
+              </Annotation>
             </Group>
           );
         })}
@@ -104,7 +123,20 @@ export const BarChart = ({
           top={yMax}
           hideAxisLine
           hideTicks
-          tickLabelProps={tickLabelProps}
+          tickComponent={(tickProps) => {
+            return (
+              <foreignObject
+                width={xScale.bandwidth() * 2.5}
+                height={50}
+                x={tickProps.x - xScale.bandwidth() * 2.5 * 0.5}
+                y={5}
+              >
+                <div className="px-1 text-center text-sm font-bold text-white">
+                  {tickProps.formattedValue}
+                </div>
+              </foreignObject>
+            );
+          }}
         />
       </Group>
     </svg>

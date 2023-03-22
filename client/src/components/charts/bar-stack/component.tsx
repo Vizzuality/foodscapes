@@ -9,7 +9,7 @@ import { group } from 'd3-array';
 import type { BarStackChartProps, GroupBarStackChartData } from './types';
 
 // data
-const barName = (d: GroupBarStackChartData) => d.key;
+const xAccessor = (d: GroupBarStackChartData) => d.key;
 
 export const BarStackChart: FC<BarStackChartProps> = ({
   data,
@@ -40,15 +40,16 @@ export const BarStackChart: FC<BarStackChartProps> = ({
   }, [data]);
 
   const keys = groups.map((g) => g.key);
+  const stackedKeys = useMemo(() => ['t1', 't2', 't3'], []);
 
   const xScale = useMemo(
     () =>
       scaleBand<string>({
         range: [0, xMax],
-        domain: groups.map(barName),
+        domain: keys,
         padding: 0.5,
       }),
-    [groups, xMax]
+    [keys, xMax]
   );
 
   const yScale = useMemo(
@@ -65,10 +66,10 @@ export const BarStackChart: FC<BarStackChartProps> = ({
   const colorScale = useMemo(
     () =>
       scaleOrdinal({
-        domain: ['t1', 't2', 't3'],
+        domain: stackedKeys,
         range: ['#4F76A3', '#F0867D', '#65A6F0'],
       }),
-    []
+    [stackedKeys]
   );
 
   const tickLabelProps: TickLabelProps<string> = () => {
@@ -80,15 +81,13 @@ export const BarStackChart: FC<BarStackChartProps> = ({
     };
   };
 
-  console.log({ colorScale });
-
   return (
     <svg width={width} height={height}>
       <Group top={margin.top}>
         <BarStack
           data={groups}
-          keys={keys}
-          x={barName}
+          keys={stackedKeys}
+          x={xAccessor}
           xScale={xScale}
           yScale={yScale}
           color={colorScale}
