@@ -51,6 +51,7 @@ jobs:
       - name: Prepare task definition template
         env:
           AWS_ECS_EXECUTION_ROLE_ARN: ${{ secrets.AWS_ECS_EXECUTION_ROLE_ARN }}
+          AWS_REGION: ${{ env.AWS_REGION }}
         run: |
           envsubst < ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json.tpl > ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
 
