@@ -131,12 +131,20 @@ const Menu = () => {
               </div>
 
               <div className="flex divide-x">
-                <Link href="/terms-of-use" className="pr-2">
-                  Terms of Use
-                </Link>
-                <Link href="/privacy-policy" className="pl-2">
-                  Privacy policy
-                </Link>
+                <a
+                  href="https://www.nature.org/en-us/about-us/who-we-are/accountability/terms-of-use/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p className="pl-2">Terms of Use</p>
+                </a>
+                <a
+                  href="https://www.nature.org/en-us/about-us/who-we-are/accountability/privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p className="pl-2">Privacy policy</p>
+                </a>
               </div>
             </footer>
           </div>

@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import cn from 'lib/classnames';
 
 import Wrapper from 'containers/wrapper';
@@ -22,10 +20,22 @@ const Footer = () => {
           <nav className="flex items-center justify-between">
             <ul className="flex items-center justify-between space-x-2.5 divide-x text-sm font-light">
               <li>
-                <Link href="/terms-of-use">Terms of use</Link>
+                <a
+                  href="https://www.nature.org/en-us/about-us/who-we-are/accountability/terms-of-use/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p className="pl-2">Terms of Use</p>
+                </a>
               </li>
               <li className="pl-2.5">
-                <Link href="/privacy-policy">Privacy policy</Link>
+                <a
+                  href="https://www.nature.org/en-us/about-us/who-we-are/accountability/privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p className="pl-2">Privacy policy</p>
+                </a>
               </li>
             </ul>
           </nav>
