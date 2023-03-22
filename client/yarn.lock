@@ -6846,6 +6846,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@visx/annotation@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@visx/annotation@npm:3.0.1"
+  dependencies:
+    "@types/react": "*"
+    "@visx/drag": 3.0.1
+    "@visx/group": 3.0.0
+    "@visx/text": 3.0.0
+    classnames: ^2.3.1
+    prop-types: ^15.5.10
+    react-use-measure: ^2.0.4
+  peerDependencies:
+    react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: e1a3016b8b00c843b56a41c0b07c5509ea195948408c856f09fd2db3268fbc4641f1e6adf0022e60a042cd25d7f0334e7ac6128a367c92a27e42770573eef5f6
+  languageName: node
+  linkType: hard
+
 "@visx/axis@npm:3.1.0":
   version: 3.1.0
   resolution: "@visx/axis@npm:3.1.0"
@@ -6871,6 +6888,30 @@ __metadata:
     "@types/d3-shape": ^1.3.1
     d3-shape: ^1.0.6
   checksum: 1707b2b0e002d35e77cec3c5fbf8a05e70f10881ffb123edf7e04e9ccfb05262e1cbbc0dfd45067e1c3ae5bc653325ef728fe880fecc7be9620ae267631f4149
+  languageName: node
+  linkType: hard
+
+"@visx/drag@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@visx/drag@npm:3.0.1"
+  dependencies:
+    "@types/react": "*"
+    "@visx/event": 3.0.1
+    "@visx/point": 3.0.1
+    prop-types: ^15.5.10
+  peerDependencies:
+    react: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 256e4a7b649e29b2112f77a57a657cd3aedb76b605ebc8b49e6c3d4b152fea5d81de7820060dc569dda0c81a0e7b6668ce9fe071536198b26cf2ebd655a6e6a9
+  languageName: node
+  linkType: hard
+
+"@visx/event@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@visx/event@npm:3.0.1"
+  dependencies:
+    "@types/react": "*"
+    "@visx/point": 3.0.1
+  checksum: 0cb4dd578bbe54bd428a0cfae9e64db141b039c2c6c1412d1cd1d04e1613d193212b031124948ca3b7eed877cdea87d161cc3a008b973c6f217e21a8a2dd27b0
   languageName: node
   linkType: hard
 
@@ -11396,6 +11437,7 @@ __metadata:
     "@types/react-dom": 18.0.6
     "@typescript-eslint/eslint-plugin": 5.48.2
     "@typescript-eslint/parser": 5.48.2
+    "@visx/annotation": 3.0.1
     "@visx/axis": 3.1.0
     "@visx/group": 3.0.0
     "@visx/responsive": 3.0.0
@@ -17142,7 +17184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-use-measure@npm:^2.1.1":
+"react-use-measure@npm:^2.0.4, react-use-measure@npm:^2.1.1":
   version: 2.1.1
   resolution: "react-use-measure@npm:2.1.1"
   dependencies:
