@@ -10,6 +10,7 @@ export type BarStackChartData = {
   key: string;
   type: string;
   value: number;
+  name: string;
 };
 
 export interface BarStackChartProps {

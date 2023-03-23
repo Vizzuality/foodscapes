@@ -1,10 +1,12 @@
 import { FC, useMemo } from 'react';
 
-import { AxisBottom, TickLabelProps } from '@visx/axis';
+import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
+import { PatternLines } from '@visx/pattern';
 import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarStack } from '@visx/shape';
 import { group } from 'd3-array';
+import { motion } from 'framer-motion';
 
 import type { BarStackChartProps, GroupBarStackChartData } from './types';
 
@@ -22,7 +24,7 @@ export const BarStackChart: FC<BarStackChartProps> = ({
 
   const groups = useMemo(() => {
     return Array.from(
-      group(data, (d) => d.key),
+      group(data, (d) => d.name),
       ([key, value]) => ({
         key,
         ...value.reduce(
@@ -47,7 +49,7 @@ export const BarStackChart: FC<BarStackChartProps> = ({
       scaleBand<string>({
         range: [0, xMax],
         domain: keys,
-        padding: 0.5,
+        padding: 0.7,
       }),
     [keys, xMax]
   );
@@ -67,23 +69,22 @@ export const BarStackChart: FC<BarStackChartProps> = ({
     () =>
       scaleOrdinal({
         domain: stackedKeys,
-        range: ['#4F76A3', '#F0867D', '#65A6F0'],
+        range: ['#FFF', '#FFF', '#FFF'],
       }),
     [stackedKeys]
   );
 
-  const tickLabelProps: TickLabelProps<string> = () => {
-    return {
-      fill: '#fff',
-      fontSize: 16,
-      fontWeight: 600,
-      textAnchor: 'middle',
-    };
-  };
-
   return (
     <svg width={width} height={height}>
-      <Group top={margin.top}>
+      <PatternLines
+        id="lines"
+        height={5}
+        width={5}
+        stroke={'white'}
+        strokeWidth={1}
+        orientation={['diagonal']}
+      />
+      <Group top={margin.top} left={margin.left}>
         <BarStack
           data={groups}
           keys={stackedKeys}
@@ -91,13 +92,54 @@ export const BarStackChart: FC<BarStackChartProps> = ({
           xScale={xScale}
           yScale={yScale}
           color={colorScale}
-        />
+        >
+          {(barStacks) =>
+            barStacks.map((barStack) =>
+              barStack.bars.map((bar) => (
+                <motion.rect
+                  key={`bar-stack-${barStack.index}-${bar.index}`}
+                  initial={{
+                    height: 0,
+                    y: yMax,
+                  }}
+                  animate={{
+                    height: bar.height - 4 > 0 ? bar.height - 4 : bar.height,
+                    y: bar.y,
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    ease: 'linear',
+                  }}
+                  x={bar.x}
+                  width={bar.width}
+                  {...(bar.key === 't1' && { fill: 'url(#lines)' })}
+                  {...(bar.key !== 't1' && { fill: bar.color })}
+                />
+              ))
+            )
+          }
+        </BarStack>
+
         <AxisBottom
           scale={xScale}
           top={yMax}
           hideAxisLine
           hideTicks
-          tickLabelProps={tickLabelProps}
+          tickFormat={(value) => value}
+          tickComponent={(tickProps) => {
+            return (
+              <foreignObject
+                width={xScale.bandwidth() * 2.5}
+                height={50}
+                x={tickProps.x - xScale.bandwidth() * 2.5 * 0.5}
+                y={5}
+              >
+                <div className="px-1 text-center text-sm font-bold text-white">
+                  {tickProps.formattedValue}
+                </div>
+              </foreignObject>
+            );
+          }}
         />
       </Group>
     </svg>

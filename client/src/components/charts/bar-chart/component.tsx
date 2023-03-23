@@ -44,7 +44,7 @@ export const BarChart = ({
 
   return (
     <svg width={width} height={height}>
-      <Group top={0} left={margin.left}>
+      <Group top={margin.top} left={margin.left}>
         {data.map((d, i) => {
           const label = x(d);
           const w = xScale.bandwidth();
