@@ -81,6 +81,7 @@ export const BarChart = ({
                 }}
                 transition={{
                   duration: 0.5,
+                  delay: 0.5,
                   ease: 'linear',
                 }}
                 fill="rgba(255,255,255)"
@@ -100,7 +101,7 @@ export const BarChart = ({
                   attributeName="d"
                   attributeType="XML"
                   to={`M${polygonX.x1},${polygonY.y1} ${polygonX.x2},${polygonY.y2} ${polygonX.x3},${polygonY.y3}z`}
-                  begin="0.51s"
+                  begin="1.01s"
                   dur="0.125s"
                   fill="freeze"
                 />

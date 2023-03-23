@@ -1,5 +1,6 @@
 import { FC, useMemo } from 'react';
 
+import { Annotation, HtmlLabel } from '@visx/annotation';
 import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
 import { PatternLines } from '@visx/pattern';
@@ -93,31 +94,137 @@ export const BarStackChart: FC<BarStackChartProps> = ({
           yScale={yScale}
           color={colorScale}
         >
-          {(barStacks) =>
-            barStacks.map((barStack) =>
-              barStack.bars.map((bar) => (
+          {(barStacks) => {
+            const highlight = barStacks
+              //
+              .filter((barStack) => barStack.key === 't2' || barStack.key === 't3')
+              .map((barStack) => barStack.bars.filter((bar) => bar.index === groups.length - 1))
+              .flat()
+              .reduce(
+                (acc, bar) => {
+                  return {
+                    x: bar.x,
+                    y: bar.y,
+                    width: bar.width,
+                    height: bar.height + acc.height,
+                  };
+                },
+                { x: 0, y: 0, width: 0, height: 0 }
+              );
+
+            return (
+              <>
+                {/* highlight */}
                 <motion.rect
-                  key={`bar-stack-${barStack.index}-${bar.index}`}
                   initial={{
                     height: 0,
                     y: yMax,
+                    opacity: 0,
                   }}
                   animate={{
-                    height: bar.height - 4 > 0 ? bar.height - 4 : bar.height,
-                    y: bar.y,
+                    height: highlight.height + 4,
+                    y: highlight.y - 4,
+                    opacity: [0, 1, 0],
                   }}
                   transition={{
                     duration: 0.5,
                     ease: 'linear',
+                    delay: 0.5,
+                    opacity: {
+                      repeat: Infinity,
+                      repeatType: 'loop',
+                      duration: 2,
+                    },
                   }}
-                  x={bar.x}
-                  width={bar.width}
-                  {...(bar.key === 't1' && { fill: 'url(#lines)' })}
-                  {...(bar.key !== 't1' && { fill: bar.color })}
+                  x={highlight.x - 4}
+                  width={highlight.width + 8}
+                  fillOpacity={0}
+                  stroke="white"
+                  strokeWidth={2}
+                  strokeDasharray="4"
                 />
-              ))
-            )
-          }
+
+                {barStacks.map((barStack) =>
+                  barStack.bars.map((bar) => (
+                    <>
+                      <motion.rect
+                        key={`bar-stack-${barStack.index}-${bar.index}`}
+                        initial={{
+                          height: 0,
+                          y: yMax,
+                        }}
+                        animate={{
+                          height: bar.height - 4 > 0 ? bar.height - 4 : bar.height,
+                          y: bar.y,
+                        }}
+                        transition={{
+                          duration: 0.5,
+                          ease: 'linear',
+                          delay: 0.5,
+                        }}
+                        x={bar.x}
+                        width={bar.width}
+                        {...(bar.key === 't1' && { fill: 'url(#lines)' })}
+                        {...(bar.key !== 't1' && { fill: bar.color })}
+                      />
+
+                      {/* Annotations */}
+                      {bar.key === 't2' && bar.index === groups.length - 1 && (
+                        <Annotation x={bar.x} y={bar.y + bar.height * 0.5} dx={-20} dy={-5}>
+                          <HtmlLabel
+                            horizontalAnchor="end"
+                            verticalAnchor="middle"
+                            showAnchorLine={false}
+                          >
+                            <div className="font-semibold text-white">
+                              <span className="block text-sm leading-tight">
+                                Private <br /> benefits
+                              </span>
+                            </div>
+                          </HtmlLabel>
+                        </Annotation>
+                      )}
+
+                      {bar.key === 't3' && bar.index === groups.length - 1 && (
+                        <Annotation x={bar.x} y={bar.y + bar.height * 0.5} dx={-20} dy={-5}>
+                          <HtmlLabel
+                            horizontalAnchor="end"
+                            verticalAnchor="middle"
+                            showAnchorLine={false}
+                          >
+                            <div className="font-semibold text-white">
+                              <span className="block text-sm leading-tight">
+                                Public <br /> benefits
+                              </span>
+                            </div>
+                          </HtmlLabel>
+                        </Annotation>
+                      )}
+
+                      {bar.key === 't3' && bar.index === groups.length - 1 && (
+                        <Annotation
+                          x={bar.x + bar.width}
+                          y={bar.y + bar.height * 0.5}
+                          dx={15}
+                          dy={-2}
+                        >
+                          <HtmlLabel
+                            horizontalAnchor="start"
+                            verticalAnchor="middle"
+                            showAnchorLine={false}
+                          >
+                            <div className="whitespace-nowrap text-sm font-bold text-white">
+                              <span className="text-lg">+ 90 %</span>
+                            </div>
+                          </HtmlLabel>
+                        </Annotation>
+                      )}
+                    </>
+                  ))
+                )}
+              </>
+            );
+          }}
         </BarStack>
 
         <AxisBottom
