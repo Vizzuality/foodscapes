@@ -15,7 +15,7 @@ const About = () => {
 
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-6 xl:col-span-5 xl:col-start-2">
-              <div className="flex flex-col justify-center space-y-5">
+              <div className="flex flex-col justify-center space-y-6">
                 <p className="font-light">
                   The Nature Conservancy is a global environmental nonprofit working to create a
                   world where people and nature can thrive. Founded in the U.S. through grassroots
@@ -86,14 +86,9 @@ const About = () => {
 
             <div className="col-span-5 col-start-8">
               <div className="flex flex-col items-end">
-                <Image
-                  width={456}
-                  height={280}
-                  src="/images/about/about.jpg"
-                  alt="About field image"
-                />
+                <video src="/videos/about.mp4" autoPlay loop muted className="aspect-{1920/822}" />
               </div>
-              <p className="pl-2 pt-2 text-xxs font-light">
+              <p className="pt-2 text-xxs font-light">
                 © {new Date().getFullYear()} The Nature Conservancy
               </p>
             </div>

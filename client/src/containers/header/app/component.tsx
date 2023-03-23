@@ -61,7 +61,7 @@ const Header = () => {
                           pathname === href && (THEME === 'dark' || THEME === 'light-dark'),
 
                         // Filled: dark
-                        'bg-navy-500 text-white hover:bg-navy-400 hover:text-white active:bg-navy-500 active:text-white':
+                        'bg-navy-500 text-white hover:bg-navy-500/90 hover:text-white active:bg-navy-500 active:text-white':
                           filled && (THEME === 'dark' || THEME === 'light-dark'),
                         // Filled: light
                         'bg-white text-navy-500 hover:bg-navy-400 hover:text-navy-500 active:bg-white active:text-navy-500':
