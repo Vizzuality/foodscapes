@@ -17,15 +17,12 @@ const data = [
 ];
 
 const stackData = [
-  { key: 'A', type: 't1', value: 20 },
-  { key: 'A', type: 't2', value: 12 },
-  { key: 'A', type: 't3', value: 5 },
-  { key: 'B', type: 't1', value: 5 },
-  { key: 'B', type: 't2', value: 22 },
-  { key: 'B', type: 't3', value: 14 },
-  { key: 'C', type: 't1', value: 18 },
-  { key: 'C', type: 't2', value: 21 },
-  { key: 'C', type: 't3', value: 9 },
+  { key: 'A', name: 'Current Farm Benefits', type: 't1', value: 20 },
+  { key: 'A', name: 'Current Farm Benefits', type: 't2', value: 0 },
+  { key: 'A', name: 'Current Farm Benefits', type: 't3', value: 0 },
+  { key: 'B', name: 'Benefits after interventions', type: 't1', value: 20 },
+  { key: 'B', name: 'Benefits after interventions', type: 't2', value: 10 },
+  { key: 'B', name: 'Benefits after interventions', type: 't3', value: 6 },
 ];
 
 const ChartPage: React.FC = () => {
@@ -36,13 +33,14 @@ const ChartPage: React.FC = () => {
           width={600}
           height={300}
           data={data}
-          margin={{ top: 20, left: 20, bottom: 25, right: 20 }}
+          margin={{ top: 20, left: 20, bottom: 50, right: 20 }}
         />
+
         <BarStack
-          width={300}
-          height={400}
+          width={600}
+          height={300}
           data={stackData}
-          margin={{ top: 8, left: 32, bottom: 32, right: 8 }}
+          margin={{ top: 20, left: 20, bottom: 50, right: 20 }}
         />
       </div>
     </Wrapper>
