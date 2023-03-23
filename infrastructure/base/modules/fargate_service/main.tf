@@ -22,14 +22,11 @@ resource "aws_ecs_service" "service" {
   name            = var.name
   cluster         = var.fargate_cluster_id
   desired_count   = 2
+  launch_type     = "FARGATE"
 
   network_configuration {
     security_groups  = [var.ecs_tasks_security_group_id]
     subnets          = setunion(var.private_subnet_ids)
-  }
-  ordered_placement_strategy {
-    type  = "binpack"
-    field = "cpu"
   }
 
   task_definition = aws_ecs_task_definition.task.arn
