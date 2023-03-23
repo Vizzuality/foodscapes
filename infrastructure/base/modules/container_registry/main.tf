@@ -7,8 +7,6 @@ resource "aws_ecr_repository" "container_registry" {
   }
 }
 
-// TEMPORARILY COMMENTED OUT TO AVOID MULTIPLE DOCKER TAGS GETTING DELETED FROM ECR
-
 resource "aws_ecr_lifecycle_policy" "container_registry_policy_keep_edge_and_up_to_n" {
  repository = aws_ecr_repository.container_registry.name
 
