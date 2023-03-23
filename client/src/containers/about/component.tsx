@@ -86,7 +86,7 @@ const About = () => {
 
             <div className="col-span-5 col-start-8">
               <div className="flex flex-col items-end">
-                <video src="/videos/about.mp4" autoPlay loop muted className="aspect-{1920/822}" />
+                <video src="/videos/about.mp4" autoPlay loop muted className="aspect-{1200/800}" />
               </div>
               <p className="pt-2 text-xxs font-light">
                 © {new Date().getFullYear()} The Nature Conservancy
