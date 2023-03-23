@@ -109,10 +109,17 @@ export const BarChart = ({
 
               <Annotation x={barX + w} y={barY} dx={0} dy={0}>
                 <HtmlLabel horizontalAnchor="start" verticalAnchor="end" showAnchorLine={false}>
-                  <div className="whitespace-nowrap text-sm font-bold text-white">
+                  <motion.div
+                    className="whitespace-nowrap font-semibold text-white"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      delay: 1,
+                    }}
+                  >
                     <span className="text-lg">+ {d.value.toLocaleString()} $</span>
                     <span className="text-sm">/Ha</span>
-                  </div>
+                  </motion.div>
                 </HtmlLabel>
               </Annotation>
             </Group>

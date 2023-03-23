@@ -176,11 +176,18 @@ export const BarStackChart: FC<BarStackChartProps> = ({
                             verticalAnchor="middle"
                             showAnchorLine={false}
                           >
-                            <div className="font-semibold text-white">
+                            <motion.div
+                              className="font-semibold text-white"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{
+                                delay: 1,
+                              }}
+                            >
                               <span className="block text-sm leading-tight">
                                 Private <br /> benefits
                               </span>
-                            </div>
+                            </motion.div>
                           </HtmlLabel>
                         </Annotation>
                       )}
@@ -192,11 +199,18 @@ export const BarStackChart: FC<BarStackChartProps> = ({
                             verticalAnchor="middle"
                             showAnchorLine={false}
                           >
-                            <div className="font-semibold text-white">
+                            <motion.div
+                              className="font-semibold text-white"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{
+                                delay: 1,
+                              }}
+                            >
                               <span className="block text-sm leading-tight">
                                 Public <br /> benefits
                               </span>
-                            </div>
+                            </motion.div>
                           </HtmlLabel>
                         </Annotation>
                       )}
@@ -213,9 +227,16 @@ export const BarStackChart: FC<BarStackChartProps> = ({
                             verticalAnchor="middle"
                             showAnchorLine={false}
                           >
-                            <div className="whitespace-nowrap text-sm font-bold text-white">
+                            <motion.div
+                              className="whitespace-nowrap font-semibold text-white"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{
+                                delay: 1,
+                              }}
+                            >
                               <span className="text-lg">+ 90 %</span>
-                            </div>
+                            </motion.div>
                           </HtmlLabel>
                         </Annotation>
                       )}
