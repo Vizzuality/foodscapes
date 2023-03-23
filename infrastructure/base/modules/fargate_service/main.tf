@@ -36,9 +36,4 @@ resource "aws_ecs_service" "service" {
   #   container_name   = var.name
   #   container_port   = 3000
   # }
-
-  # placement_constraints {
-  #   type       = "memberOf"
-  #   expression = "attribute:ecs.availability-zone in [us-west-2a, us-west-2b]"
-  # }
 }
