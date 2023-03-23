@@ -2,10 +2,6 @@ import Image from 'next/image';
 
 import Wrapper from 'containers/wrapper';
 
-import Icon from 'components/icon';
-
-import TNC_SVG from 'svgs/about/TNC_logo.svg?sprite';
-
 const About = () => {
   return (
     <>
@@ -19,29 +15,77 @@ const About = () => {
 
           <div className="grid grid-cols-12 gap-6">
             <div className="col-span-6 xl:col-span-5 xl:col-start-2">
-              <div className="flex flex-col justify-center space-y-4">
+              <div className="flex flex-col justify-center space-y-5">
                 <p className="font-light">
-                  [Placeholder text] Foodscapes is a Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                  aliquip ex ea commodo consequat.
+                  The Nature Conservancy is a global environmental nonprofit working to create a
+                  world where people and nature can thrive. Founded in the U.S. through grassroots
+                  action in 1951, The Nature Conservancy (TNC) has grown to become one of the most
+                  effective and wide-reaching environmental organizations in the world. Thanks to
+                  more than a million members and the dedicated efforts of our diverse staff and
+                  over 400 scientists, we impact conservation in 76 countries and territories: 37 by
+                  direct conservation impact and 39 through partners.
                 </p>
                 <p className="font-light">
-                  The project involves collaboration with the following partners:
+                  The work featured here comes from our report,{' '}
+                  <u>
+                    <a
+                      href="https://www.nature.org/content/dam/tnc/nature/en/documents/TNC_FoodscapesReport.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Foodscapes: Toward Food System Transition{' '}
+                    </a>
+                  </u>
+                  — a collaboration among TNC, the International Institute for Applied Systems
+                  Analysis (IIASA), and SYSTEMIQ.
                 </p>
 
                 <div className="flex space-x-6">
-                  <Icon icon={TNC_SVG} className="h-10 w-36" />
-                  <Icon icon={TNC_SVG} className="h-10 w-36" />
+                  <div>
+                    <Image
+                      width={139}
+                      height={57}
+                      src="/images/about/TNC_logo.svg"
+                      alt="TNC logo"
+                      className="h-auto"
+                    />
+                  </div>
+                  <div>
+                    <Image
+                      width={139}
+                      height={63}
+                      src="/images/about/iiasa.svg"
+                      alt="IIASA logo"
+                      className="h-auto"
+                    />
+                  </div>
+                  <div>
+                    <Image
+                      width={139}
+                      height={40}
+                      src="/images/about/SYSTEMIQ_Logo.png"
+                      alt="Systemiq logo"
+                      className="h-auto"
+                    />
+                  </div>
                 </div>
 
-                <p className="font-light">Designed and developed by:</p>
-                <Icon icon={TNC_SVG} className="h-10 w-36" />
+                <div className="flex flex-col space-y-6 pt-4">
+                  <p className="text-sm font-light">Designed and developed by:</p>
+                  <a href="https://www.vizzuality.com/" target="_blank" rel="noopener noreferrer">
+                    <Image
+                      width={80}
+                      height={25}
+                      src="/images/about/vizz_logo.svg"
+                      alt="Vizzuality logo"
+                    />
+                  </a>
+                </div>
               </div>
             </div>
 
             <div className="col-span-5 col-start-8">
-              <div className="flex h-full flex-col items-end justify-center">
+              <div className="flex flex-col items-end">
                 <Image
                   width={456}
                   height={280}
@@ -49,6 +93,9 @@ const About = () => {
                   alt="About field image"
                 />
               </div>
+              <p className="pl-2 pt-2 text-xxs font-light">
+                © {new Date().getFullYear()} The Nature Conservancy
+              </p>
             </div>
           </div>
         </div>
