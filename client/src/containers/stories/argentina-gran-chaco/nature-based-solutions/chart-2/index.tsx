@@ -1,5 +1,23 @@
+import dynamic from 'next/dynamic';
+
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
+
+const BarStackChart = dynamic(
+  () => import('containers/stories/argentina-gran-chaco/charts/bar-stack'),
+  {
+    ssr: false,
+  }
+);
+
+const data = [
+  { key: 'A', name: 'Current Farm Benefits', type: 't1', value: 20 },
+  { key: 'A', name: 'Current Farm Benefits', type: 't2', value: 0 },
+  { key: 'A', name: 'Current Farm Benefits', type: 't3', value: 0 },
+  { key: 'B', name: 'Benefits after interventions', type: 't1', value: 20 },
+  { key: 'B', name: 'Benefits after interventions', type: 't2', value: 10 },
+  { key: 'B', name: 'Benefits after interventions', type: 't3', value: 6 },
+];
 
 const Chart2 = () => {
   return (
@@ -25,7 +43,12 @@ const Chart2 = () => {
           </div>
 
           <div className="col-span-4 col-start-8">
-            <div className="aspect-square w-full border border-dashed border-white" />
+            <BarStackChart
+              width={600}
+              height={300}
+              data={data}
+              margin={{ top: 20, left: 20, bottom: 50, right: 20 }}
+            />
           </div>
         </div>
       </Wrapper>

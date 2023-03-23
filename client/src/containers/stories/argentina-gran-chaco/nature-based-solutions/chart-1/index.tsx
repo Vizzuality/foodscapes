@@ -1,5 +1,21 @@
+import dynamic from 'next/dynamic';
+
 import FadeYScroll from 'containers/animations/fadeYScroll';
 import Wrapper from 'containers/wrapper';
+
+const BarChart = dynamic(() => import('containers/stories/argentina-gran-chaco/charts/bar-chart'), {
+  ssr: false,
+});
+const data = [
+  {
+    label: 'Grazing systems',
+    value: 5,
+  },
+  {
+    label: 'Mixed livestock cropping systems',
+    value: 140,
+  },
+];
 
 const Chart1 = () => {
   return (
@@ -26,7 +42,12 @@ const Chart1 = () => {
           </div>
 
           <div className="col-span-4 col-start-8">
-            <div className="aspect-square w-full border border-dashed border-white" />
+            <BarChart
+              width={600}
+              height={600}
+              data={data}
+              margin={{ top: 20, left: 20, bottom: 50, right: 20 }}
+            />
           </div>
         </div>
       </Wrapper>
