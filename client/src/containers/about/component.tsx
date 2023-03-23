@@ -40,7 +40,7 @@ const About = () => {
                   Analysis (IIASA), and SYSTEMIQ.
                 </p>
 
-                <div className="flex space-x-6">
+                <div className="flex justify-between">
                   <div>
                     <Image
                       width={139}
