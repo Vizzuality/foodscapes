@@ -11,9 +11,10 @@ const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
-    './src/components/**/*.@(tsx|ts)',
-    './src/containers/**/*.@(tsx|ts)',
-    './src/pages/**/*.tsx',
+    './src/components/**/*.@(tsx|mdx|ts)',
+    './src/containers/**/*.@(tsx|mdx|ts)',
+    './src/layouts/**/*.@(tsx|mdx|ts)',
+    './src/pages/**/*.@(tsx|mdx)',
   ],
   plugins: [forms, lineClamp, animate, typography],
   theme: {
