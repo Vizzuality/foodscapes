@@ -47,7 +47,7 @@ const Outro = () => {
                       />
                       <Icon
                         icon={ARROW_RIGHT_SVG}
-                        className="h-4 w-4 hover:animate-bounce-horizontal"
+                        className="h-4 w-4 group-hover:animate-bounce-horizontal"
                       />
                     </div>
                   </div>
@@ -84,7 +84,7 @@ const Outro = () => {
                       />
                       <Icon
                         icon={ARROW_RIGHT_SVG}
-                        className="h-4 w-4 text-white hover:animate-bounce-horizontal"
+                        className="h-4 w-4 text-white group-hover:animate-bounce-horizontal"
                       />
                     </div>
                   </div>
