@@ -172,7 +172,8 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   <LegendItemButton
                     icon={EXPAND_SVG}
                     className={cn({
-                      'rotate-180 transform transition-transform': expand,
+                      'rotate-180': !expand,
+                      'rotate-0 transform transition-transform': expand,
                     })}
                   />
                 </TooltipTrigger>
