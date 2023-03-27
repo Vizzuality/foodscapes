@@ -1,9 +1,10 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { ViewState } from 'react-map-gl';
+import { useMap, ViewState } from 'react-map-gl';
 
-import { basemapAtom, layersAtom, popupAtom } from 'store/explore-map';
+import { basemapAtom, layersAtom, popupAtom, sidebarOpenAtom } from 'store/explore-map';
 
+import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { BASEMAPS } from 'constants/basemaps';
@@ -55,13 +56,31 @@ const MapContainer = () => {
   const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
   const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
+  const { [id]: map } = useMap();
+
+  const mapResizerIntervalRef = useRef<number>();
+
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
+  const sidebarOpen = useRecoilValue(sidebarOpenAtom);
+
   const setPopup = useSetRecoilState(popupAtom);
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   }, [basemap, mapStyle]);
+
+  const handleResize = useCallback(() => {
+    // Prevent map flickering by ruunning the resize after aa timeout of 0
+    // This will queue the resize after in the JS thread
+    setTimeout(() => {
+      map.resize();
+    }, 0);
+
+    mapResizerIntervalRef.current = requestAnimationFrame(() => {
+      handleResize();
+    });
+  }, [map]);
 
   const handleViewState = useCallback((vw: ViewState) => {
     setViewState(vw);
@@ -78,7 +97,38 @@ const MapContainer = () => {
   );
 
   return (
-    <div className="relative h-screen w-full">
+    <motion.div
+      className="absolute right-0 h-screen w-full"
+      initial={false}
+      animate={sidebarOpen ? 'animate' : 'exit'}
+      variants={{
+        animate: {
+          width: 'calc(100% - 576px)',
+          // x: 576,
+          transition: {
+            ease: 'linear',
+            delay: 0.25,
+            duration: 0.25,
+          },
+        },
+        exit: {
+          width: '100%',
+          // x: 0,
+          transition: {
+            ease: 'linear',
+            duration: 0.25,
+          },
+        },
+      }}
+      onAnimationStart={() => {
+        handleResize();
+      }}
+      onAnimationComplete={() => {
+        if (mapResizerIntervalRef.current) {
+          cancelAnimationFrame(mapResizerIntervalRef.current);
+        }
+      }}
+    >
       <Map
         id={id}
         // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
@@ -102,7 +152,7 @@ const MapContainer = () => {
           </>
         )}
       </Map>
-    </div>
+    </motion.div>
   );
 };
 
