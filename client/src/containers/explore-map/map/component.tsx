@@ -4,7 +4,6 @@ import { useMap, ViewState } from 'react-map-gl';
 
 import { basemapAtom, layersAtom, popupAtom, sidebarOpenAtom } from 'store/explore-map';
 
-import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { BASEMAPS } from 'constants/basemaps';
@@ -96,39 +95,20 @@ const MapContainer = () => {
     [layers, setPopup]
   );
 
+  useMemo(() => {
+    map?.easeTo({
+      padding: {
+        left: sidebarOpen ? 576 : 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
+      duration: 500,
+    });
+  }, [map, sidebarOpen]);
+
   return (
-    <motion.div
-      className="absolute right-0 h-screen w-full"
-      initial={false}
-      animate={sidebarOpen ? 'animate' : 'exit'}
-      variants={{
-        animate: {
-          width: 'calc(100% - 576px)',
-          // x: 576,
-          transition: {
-            ease: 'linear',
-            delay: 0.25,
-            duration: 0.25,
-          },
-        },
-        exit: {
-          width: '100%',
-          // x: 0,
-          transition: {
-            ease: 'linear',
-            duration: 0.25,
-          },
-        },
-      }}
-      onAnimationStart={() => {
-        handleResize();
-      }}
-      onAnimationComplete={() => {
-        if (mapResizerIntervalRef.current) {
-          cancelAnimationFrame(mapResizerIntervalRef.current);
-        }
-      }}
-    >
+    <div className="absolute right-0 h-screen w-full">
       <Map
         id={id}
         // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
@@ -152,7 +132,7 @@ const MapContainer = () => {
           </>
         )}
       </Map>
-    </motion.div>
+    </div>
   );
 };
 

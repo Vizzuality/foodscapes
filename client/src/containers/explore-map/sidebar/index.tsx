@@ -36,18 +36,12 @@ const Sidebar = ({ children }: PropsWithChildren) => {
               initial: { x: '0%' },
               animate: {
                 x: '0%',
-                transition: {
-                  duration: 0.25,
-                },
               },
               exit: {
                 x: '-100%',
-                transition: {
-                  delay: 0.25,
-                  duration: 0.25,
-                },
               },
             }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
             className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-xl bg-white"
           >
             {children}
