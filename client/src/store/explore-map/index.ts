@@ -62,6 +62,16 @@ export const popupAtom = atom({
   default: null,
 });
 
+export const tabAtom = atom({
+  key: 'tab',
+  default: 'foodscapes',
+  effects: [
+    urlSyncEffect({
+      refine: string(),
+    }),
+  ],
+});
+
 export function useSyncExploreMap() {
   const layers = useRecoilValue(layersAtom);
 
