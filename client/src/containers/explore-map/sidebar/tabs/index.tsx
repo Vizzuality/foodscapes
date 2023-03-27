@@ -76,11 +76,20 @@ const TabsTrigger = React.forwardRef<
       {...props}
       ref={ref}
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-full transition-colors group-data-[state=active]:bg-navy-500">
+      <div className="relative z-0 flex h-10 w-10 items-center justify-center">
+        <div
+          className={cn({
+            'absolute top-0 left-0 z-0 flex h-full w-full rounded-full transition-all': true,
+            'bg-navy-500/0 animate-out zoom-out': true,
+            'group-data-[state=active]:bg-navy-500 group-data-[state=active]:animate-in group-data-[state=active]:zoom-in':
+              true,
+          })}
+        />
+
         <Icon
           icon={TAB?.icon}
           className={cn({
-            'h-6 w-6 text-navy-500': true,
+            'relative z-10 h-6 w-6 text-navy-500 transition-colors duration-300': true,
             [TAB?.active]: true,
           })}
         />
