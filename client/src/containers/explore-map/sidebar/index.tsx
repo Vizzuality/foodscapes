@@ -62,7 +62,7 @@ const Sidebar = () => {
                   <TabsTrigger value="case-studies" />
                 </TabsList>
 
-                <div className="relative z-0">
+                <div className="relative z-0 flex grow flex-col overflow-hidden">
                   <TabsContent value="foodscapes">
                     <FoodscapesSidebar />
                   </TabsContent>

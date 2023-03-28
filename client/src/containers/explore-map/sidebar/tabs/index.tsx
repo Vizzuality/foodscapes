@@ -81,6 +81,7 @@ const TabsTrigger = React.forwardRef<
           className={cn({
             'absolute top-0 left-0 z-0 flex h-full w-full rounded-full transition-all': true,
             'bg-navy-500/0 animate-out zoom-out': true,
+            'group-hover:bg-navy-500/5 group-hover:animate-in group-hover:zoom-in': true,
             'group-data-[state=active]:bg-navy-500 group-data-[state=active]:animate-in group-data-[state=active]:zoom-in':
               true,
           })}
@@ -103,17 +104,29 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    className={cn({
-      'pt-20 transition-all animate-in duration-500 data-[state=active]:fade-in data-[state=active]:slide-in-from-bottom-2':
-        true,
-      [className]: !!className,
-    })}
-    {...props}
-    ref={ref}
-  />
-));
+>(({ className, ...props }, ref) => {
+  return (
+    <TabsPrimitive.Content
+      className={cn({
+        'group relative': true,
+        'data-[state=active]:flex data-[state=active]:grow data-[state=active]:flex-col data-[state=active]:overflow-hidden':
+          true,
+        [className]: !!className,
+      })}
+      {...props}
+      ref={ref}
+    >
+      <div
+        className={cn({
+          'relative z-10 grow overflow-y-auto overflow-x-hidden transition-all animate-in duration-300 group-data-[state=active]:zoom-in-105':
+            true,
+        })}
+      >
+        {props.children}
+      </div>
+    </TabsPrimitive.Content>
+  );
+});
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
