@@ -110,8 +110,8 @@ const Hero = () => {
       className="relative z-20 flex h-small-screen w-full items-center justify-center overflow-hidden bg-white"
     >
       <div className="relative z-10 space-y-2 text-center">
-        <h1 className="font-display text-9xl">Foodscapes</h1>
-        <h2 className="text-xl font-bold uppercase tracking-widest">
+        <h1 className="font-display text-5xl lg:text-9xl">Foodscapes</h1>
+        <h2 className="text-base font-bold uppercase tracking-widest lg:text-xl">
           Accelerating a global food system transfomation
         </h2>
       </div>
@@ -124,7 +124,7 @@ const Hero = () => {
       </div>
 
       <button
-        className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-4 rounded-full"
+        className="absolute bottom-0 mx-auto mb-5 flex flex-col items-center space-y-1 rounded-full lg:space-y-4"
         onClick={() => {
           const el = document.querySelector(`#scroll-${step + 1}`);
           el?.scrollIntoView({ behavior: 'smooth' });

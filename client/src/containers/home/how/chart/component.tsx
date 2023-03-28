@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
+import { Media } from 'components/media-query';
+
 const HowChart = () => {
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,17 +32,26 @@ const HowChart = () => {
   }, [inView]);
 
   return (
-    <motion.div
-      ref={ref}
-      className="relative flex h-full items-center overflow-hidden"
-      style={{
-        x,
-        scale,
-      }}
-    >
-      <video ref={videoRef} src="/videos/how.mp4" muted loop className="lg:h-5/6" />
-      {/* <RiveComponent /> */}
-    </motion.div>
+    <>
+      <Media lessThan="sm" className="flex h-full justify-center overflow-hidden">
+        <div ref={ref}>
+          <video ref={videoRef} src="/videos/how.mp4" muted loop className="h-80 lg:h-5/6" />
+        </div>
+      </Media>
+      <Media greaterThanOrEqual="sm">
+        <motion.div
+          ref={ref}
+          className="relative flex h-full items-center overflow-hidden"
+          style={{
+            x,
+            scale,
+          }}
+        >
+          <video ref={videoRef} src="/videos/how.mp4" muted loop className="h-80 lg:h-5/6" />
+          {/* <RiveComponent /> */}
+        </motion.div>
+      </Media>
+    </>
   );
 };
 

@@ -2,9 +2,9 @@ import FadeYScroll from 'containers/animations/fadeYScroll';
 
 const Text1 = () => {
   return (
-    <div className="flex h-small-screen flex-col justify-center space-y-10 ">
+    <div className="flex flex-col justify-center space-y-5 lg:h-small-screen lg:space-y-10 ">
       <FadeYScroll>
-        <h2 className="font-display text-5xl">Think of it in layers.</h2>
+        <h2 className="font-display text-4xl lg:text-5xl">Think of it in layers.</h2>
       </FadeYScroll>
 
       <div className="space-y-4">

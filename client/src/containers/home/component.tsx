@@ -49,8 +49,8 @@ const Home = () => {
       </ScrollItem>
 
       <Wrapper>
-        <div className="grid grid-cols-12 gap-6">
-          <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-6">
+          <div className="relative z-10 pt-20 lg:col-span-5 lg:pt-0 xl:col-span-4 xl:col-start-2">
             <ScrollItem step={2} onChange={onChange}>
               <LayersText1 />
             </ScrollItem>
@@ -80,7 +80,7 @@ const Home = () => {
             </ScrollItem>
           </div>
 
-          <div className="sticky top-0 z-0 col-span-5 col-start-7 h-small-screen">
+          <div className="sticky top-0 z-0 h-auto lg:col-span-5 lg:col-start-7 lg:h-small-screen">
             <AnimatePresence>
               {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
                 <FadeY key="layers-chart">
