@@ -47,7 +47,7 @@ const Outro = () => {
                       />
                       <Icon
                         icon={ARROW_RIGHT_SVG}
-                        className="h-4 w-4 -translate-x-5 transition-transform group-hover:translate-x-0"
+                        className="h-4 w-4 group-hover:animate-bounce-horizontal"
                       />
                     </div>
                   </div>
@@ -60,8 +60,8 @@ const Outro = () => {
               <Link href="/explore-map" className="relative flex h-full grow flex-col">
                 <div
                   className={cn({
-                    'group relative flex h-full grow flex-col bg-navy-500': true,
-                    'z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-navy-500':
+                    'group relative flex h-full grow flex-col': true,
+                    'z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-navy-500 hover:after:bg-navy-500/90':
                       true,
                   })}
                 >
@@ -84,7 +84,7 @@ const Outro = () => {
                       />
                       <Icon
                         icon={ARROW_RIGHT_SVG}
-                        className="h-4 w-4 -translate-x-5 text-white transition-transform group-hover:translate-x-0"
+                        className="h-4 w-4 text-white group-hover:animate-bounce-horizontal"
                       />
                     </div>
                   </div>

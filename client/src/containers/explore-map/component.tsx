@@ -1,5 +1,7 @@
 import { useSyncExploreMap } from 'store/explore-map';
 
+import Sidebar from 'containers/explore-map/sidebar';
+
 import Layers from './layers';
 import Legend from './legend';
 import Map from './map';
@@ -14,6 +16,7 @@ const ExploreMap = () => {
       <Legend />
       <Menu />
       <Layers />
+      <Sidebar />
     </div>
   );
 };

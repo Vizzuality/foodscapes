@@ -6,9 +6,9 @@ import { AccordionTrigger } from '@radix-ui/react-accordion';
 import { PopoverArrow } from '@radix-ui/react-popover';
 
 import { LegendItemToolbarProps } from 'components/map/legend/types';
-import Slider from 'components/slider';
 import { Dialog, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Slider from 'components/ui/slider';
 import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
 import EXPAND_SVG from 'svgs/legend/expand.svg?sprite';
@@ -172,7 +172,8 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   <LegendItemButton
                     icon={EXPAND_SVG}
                     className={cn({
-                      'rotate-180 transform transition-transform': expand,
+                      'rotate-180': !expand,
+                      'rotate-0 transform transition-transform': expand,
                     })}
                   />
                 </TooltipTrigger>

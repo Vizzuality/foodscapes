@@ -5,6 +5,11 @@ import { atom, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 // Menus
+export const sidebarOpenAtom = atom({
+  key: 'sidebar-open',
+  default: true,
+});
+
 export const menuOpenAtom = atom({
   key: 'menu-open',
   default: false,
@@ -57,6 +62,16 @@ export const popupAtom = atom({
   default: null,
 });
 
+export const tabAtom = atom({
+  key: 'tab',
+  default: 'foodscapes',
+  effects: [
+    urlSyncEffect({
+      refine: string(),
+    }),
+  ],
+});
+
 export function useSyncExploreMap() {
   const layers = useRecoilValue(layersAtom);
 
@@ -88,5 +103,6 @@ export function useSyncExploreMap() {
   useEffect(() => {
     syncAtoms();
   }, [layers]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return null;
 }

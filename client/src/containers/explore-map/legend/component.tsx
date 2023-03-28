@@ -80,10 +80,10 @@ const LegendContainer = () => {
             id={layer}
             key={layer}
             dataset={DATASET}
+            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             Components={{
               Info: InfoComponent ? <InfoComponent {...DATASET} /> : null,
             }}
-            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             onChangeOpacity={(opacity) => {
               onChangeOpacity(layer, opacity);
             }}

@@ -11,7 +11,7 @@ import FoodscapesIntensityGroupsLayer from './foodscapes-intentisity-groups/laye
 import FoodscapesIntensityGroupsLegend from './foodscapes-intentisity-groups/legend';
 import FoodscapesIntensityGroupsPopup from './foodscapes-intentisity-groups/popup';
 // Foodscapes
-import FoodscapesInfo from './foodscapes/info';
+import FoodscapesInfo from './foodscapes/info.mdx';
 import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';

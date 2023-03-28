@@ -6,8 +6,6 @@ import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 import { useWindowSize, useInterval } from 'usehooks-ts';
 
-import { useFoodscapes } from 'hooks/foodscapes';
-
 import Icon from 'components/icon';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
@@ -25,9 +23,9 @@ const BACKGROUNDS = [
   'url(/images/hero/home10.jpg)',
 ];
 
-const Hero = () => {
-  const { data: foodscapesData } = useFoodscapes();
+const COLORS = ['#F0DC8B', '#F0A38B', '#B7F08B', '#8BE4F0', '#E2C4ED'];
 
+const Hero = () => {
   const step = useRecoilValue(stepAtom);
   const backgroundsRef = useRef<string[]>([]);
   const DURATION = 3;
@@ -63,8 +61,6 @@ const Hero = () => {
     const SIZE = h / ROW_COUNT;
     const ITEMS_PER_ROW = Math.floor((w * 1.5) / SIZE);
     const COUNT = ITEMS_PER_ROW * ROW_COUNT;
-
-    const COLORS = foodscapesData.map((f) => f.color);
 
     backgroundsRef.current = [];
 
@@ -106,7 +102,7 @@ const Hero = () => {
         </div>
       );
     });
-  }, [width, height, count, foodscapesData]);
+  }, [width, height, count]);
 
   return (
     <section

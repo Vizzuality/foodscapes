@@ -130,13 +130,21 @@ const Menu = () => {
                 <p>© {new Date().getFullYear()} Foodscapes by The Nature Conservancy</p>
               </div>
 
-              <div className="flex divide-x">
-                <Link href="/terms-of-use" className="pr-2">
-                  Terms of Use
-                </Link>
-                <Link href="/privacy-policy" className="pl-2">
-                  Privacy policy
-                </Link>
+              <div className="flex space-x-2.5 divide-x">
+                <a
+                  href="https://www.nature.org/en-us/about-us/who-we-are/accountability/terms-of-use/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p>Terms of Use</p>
+                </a>
+                <a
+                  href="https://www.nature.org/en-us/about-us/who-we-are/accountability/privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p className="pl-2">Privacy policy</p>
+                </a>
               </div>
             </footer>
           </div>

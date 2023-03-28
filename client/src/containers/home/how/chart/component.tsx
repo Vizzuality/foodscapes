@@ -38,7 +38,7 @@ const HowChart = () => {
         scale,
       }}
     >
-      <video ref={videoRef} src="/videos/how.mp4" muted loop className="lg:h-5/6" />
+      <video ref={videoRef} src="/videos/how.mp4" muted loop />
       {/* <RiveComponent /> */}
     </motion.div>
   );

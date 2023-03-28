@@ -16,6 +16,14 @@ output "private_subnet_ids" {
   value = module.vpc.private_subnet_ids
 }
 
-output "foodscapes_container_registry_url" {
-  value = module.foodscapes_container_registry.container_registry_url
+output "client_container_registry_url" {
+  value = module.client_container_registry.container_registry_url
+}
+
+output "datasette_container_registry_url" {
+  value = module.datasette_container_registry.container_registry_url
+}
+
+output "tiler_container_registry_url" {
+  value = module.tiler_container_registry.container_registry_url
 }
