@@ -1,20 +1,32 @@
+import { useEffect } from 'react';
+
 import { Layer } from 'react-map-gl';
 
 import { DeckLayerProps } from 'types/layers';
 
-import { Settings } from 'components/map/legend/types';
+import { useMapboxOverlayContext } from 'containers/explore-map/map/layer-manager/provider';
 
-import { useLayer } from './hooks';
+import { Settings } from 'components/map/legend/types';
 
 const DeckLayer = <T extends unknown>({
   id,
   settings,
-  zIndex,
   beforeId,
   ...props
 }: DeckLayerProps<T, Settings>) => {
   // Render deck layer
-  useLayer({ id, beforeId, settings, zIndex, ...props });
+  const i = `${id}-deck`;
+  const { addLayer, removeLayer } = useMapboxOverlayContext();
+
+  useEffect(() => {
+    addLayer({ ...props, id: i, beforeId });
+  }, [i, beforeId, props, addLayer]);
+
+  useEffect(() => {
+    return () => {
+      removeLayer(i);
+    };
+  }, [i, removeLayer]);
 
   return (
     <Layer

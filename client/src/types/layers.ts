@@ -11,4 +11,7 @@ export type MapboxLayerProps<T> = Partial<Omit<T, 'id'>> & {
   type: typeof Layer;
 };
 
-export type DeckLayerProps<T, S> = LayerProps<S> & T;
+export type DeckLayerProps<T, S> = LayerProps<S> &
+  T & {
+    type: typeof Layer;
+  };
