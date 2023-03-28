@@ -2,7 +2,7 @@ import FadeYScroll from 'containers/animations/fadeYScroll';
 
 const Text2 = () => {
   return (
-    <div className="flex h-small-screen flex-col justify-center space-y-10 ">
+    <div className="flex h-small-screen flex-col justify-center space-y-10">
       <FadeYScroll>
         <h2 className="font-display text-4xl">Physical geography</h2>
       </FadeYScroll>

@@ -107,7 +107,7 @@ const Hero = () => {
   return (
     <section
       key="hero"
-      className="relative z-20 flex h-small-screen w-full items-center justify-center overflow-hidden bg-white"
+      className="relative z-20 flex h-small-screen w-full items-center justify-center overflow-hidden bg-white px-12 lg:px-0"
     >
       <div className="relative z-10 space-y-2 text-center">
         <h1 className="font-display text-5xl lg:text-9xl">Foodscapes</h1>

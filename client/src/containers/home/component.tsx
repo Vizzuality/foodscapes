@@ -1,3 +1,5 @@
+import cn from 'lib/classnames';
+
 import { lastStepAtom, stepAtom } from 'store/home';
 
 import { AnimatePresence } from 'framer-motion';
@@ -39,7 +41,14 @@ const Home = () => {
   }, 100);
 
   return (
-    <>
+    <div
+      className={cn({
+        'bg-white': true,
+        'bg-green-500 lg:bg-white': step === 3,
+        'bg-red-500 lg:bg-white': step === 4,
+        'bg-yellow-500 lg:bg-white': step === 5,
+      })}
+    >
       <ScrollItem step={0} onChange={onChange}>
         <Hero />
       </ScrollItem>
@@ -104,7 +113,7 @@ const Home = () => {
       {/* <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
 
       </div> */}
-    </>
+    </div>
   );
 };
 

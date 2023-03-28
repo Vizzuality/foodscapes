@@ -4,7 +4,7 @@ const GlobeText = () => {
   return (
     <div className="flex h-small-screen flex-col justify-center space-y-10 ">
       <FadeYScroll>
-        <h2 className="font-display text-5xl">Why think of soy in foodscapes?</h2>
+        <h2 className="font-display text-4xl lg:text-5xl">Why think of soy in foodscapes?</h2>
       </FadeYScroll>
       <div className="space-y-4">
         <FadeYScroll>

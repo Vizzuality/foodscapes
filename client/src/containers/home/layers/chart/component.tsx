@@ -46,7 +46,6 @@ const LayersChart = ({ initialStep }: LayersChartProps) => {
   }, []);
 
   const ANIMATE = useMemo(() => {
-    console.log({ step });
     if (step - initialStep < 0 || step - initialStep > LAYERS.length - 1)
       return {
         opacity: 0,

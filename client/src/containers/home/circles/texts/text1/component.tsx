@@ -4,7 +4,9 @@ const Text1 = () => {
   return (
     <div className="flex h-small-screen flex-col justify-center space-y-10 ">
       <FadeYScroll>
-        <h2 className="font-display text-5xl">These layers overlap to create a foodscape.</h2>
+        <h2 className="font-display text-4xl lg:text-5xl">
+          These layers overlap to create a foodscape.
+        </h2>
       </FadeYScroll>
 
       <div className="space-y-4">

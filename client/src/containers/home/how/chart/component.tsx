@@ -35,7 +35,7 @@ const HowChart = () => {
     <>
       <Media lessThan="sm" className="flex h-full justify-center overflow-hidden">
         <div ref={ref}>
-          <video ref={videoRef} src="/videos/how.mp4" muted loop className="h-80 lg:h-5/6" />
+          <video ref={videoRef} src="/videos/how.mp4" muted loop className="h-72 lg:h-5/6" />
         </div>
       </Media>
       <Media greaterThanOrEqual="sm">

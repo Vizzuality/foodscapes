@@ -4,7 +4,7 @@ const Text2 = () => {
   return (
     <div className="flex h-small-screen flex-col justify-center space-y-10 ">
       <FadeYScroll>
-        <h2 className="font-display text-4xl">A Globally Distributed Foodscape</h2>
+        <h2 className="font-display text-2xl lg:text-4xl">A Globally Distributed Foodscape</h2>
       </FadeYScroll>
       <div className="space-y-4">
         <FadeYScroll>
