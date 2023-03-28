@@ -58,6 +58,7 @@ export function useLayer({ settings = {} }: UseLandUseChangeLayerProps) {
       // modelMatrix: null,
       // opacity: 1,
       pickable: true,
+      onHover: (info) => console.info(info),
       // visible: true,
       // wrapLongitude: false,
       visible: visibility,

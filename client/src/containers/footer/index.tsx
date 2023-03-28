@@ -25,7 +25,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <p className="pl-2">Terms of Use</p>
+                  <p>Terms of Use</p>
                 </a>
               </li>
               <li className="pl-2.5">
@@ -34,7 +34,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <p className="pl-2">Privacy policy</p>
+                  <p>Privacy policy</p>
                 </a>
               </li>
             </ul>

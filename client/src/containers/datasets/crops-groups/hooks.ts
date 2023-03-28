@@ -33,6 +33,7 @@ export function useLayer({ settings = {} }: UseCropGroupsLayerProps) {
       extruded: false,
       filled: true,
       pickable: true,
+      onHover: (info) => console.info(info),
       getElevation: (d) => d.count,
       getFillColor: (d) => [255, (1 - d.count / 500) * 255, 0] as [number, number, number],
       getHexagon: (d) => d.hex,

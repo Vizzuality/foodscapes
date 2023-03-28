@@ -1,8 +1,8 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { ViewState } from 'react-map-gl';
+import { useMap, ViewState } from 'react-map-gl';
 
-import { basemapAtom, layersAtom, popupAtom } from 'store/explore-map';
+import { basemapAtom, layersAtom, popupAtom, sidebarOpenAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -18,9 +18,11 @@ import Popup from './popup';
 const DEFAULT_PROPS: CustomMapProps = {
   id: 'default',
   initialViewState: {
-    latitude: 20,
-    longitude: 0,
-    zoom: 2,
+    longitude: -122.4,
+    latitude: 37.74,
+    zoom: 11,
+    pitch: 30,
+    bearing: 0,
   },
   minZoom: 2,
   maxZoom: 20,
@@ -55,13 +57,31 @@ const MapContainer = () => {
   const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
   const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
+  const { [id]: map } = useMap();
+
+  const mapResizerIntervalRef = useRef<number>();
+
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
+  const sidebarOpen = useRecoilValue(sidebarOpenAtom);
+
   const setPopup = useSetRecoilState(popupAtom);
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   }, [basemap, mapStyle]);
+
+  const handleResize = useCallback(() => {
+    // Prevent map flickering by ruunning the resize after aa timeout of 0
+    // This will queue the resize after in the JS thread
+    setTimeout(() => {
+      map.resize();
+    }, 0);
+
+    mapResizerIntervalRef.current = requestAnimationFrame(() => {
+      handleResize();
+    });
+  }, [map]);
 
   const handleViewState = useCallback((vw: ViewState) => {
     setViewState(vw);
@@ -77,8 +97,20 @@ const MapContainer = () => {
     [layers, setPopup]
   );
 
+  useMemo(() => {
+    map?.easeTo({
+      padding: {
+        left: sidebarOpen ? 576 : 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      },
+      duration: 500,
+    });
+  }, [map, sidebarOpen]);
+
   return (
-    <div className="relative h-screen w-full">
+    <div className="absolute right-0 h-screen w-full">
       <Map
         id={id}
         // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
