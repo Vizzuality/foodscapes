@@ -8,38 +8,42 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 
 import Icon from 'components/icon';
 
-import TEST_SVG from 'svgs/ui/close.svg?sprite';
+import CASE_STUDIES_SVG from 'svgs/tabs/tab-casestudies.svg?sprite';
+import FOODSCAPES_SVG from 'svgs/tabs/tab-foodscapes.svg?sprite';
+import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
+import OPPORTUNITIES_SVG from 'svgs/tabs/tab-opportunities.svg?sprite';
+import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
 
 const TABS = [
   {
     id: 'foodscapes',
     label: 'Foodscapes',
     active: 'group-data-[state=active]:text-yellow-500',
-    icon: TEST_SVG,
+    icon: FOODSCAPES_SVG,
   },
   {
     id: 'risks',
     label: 'Risks',
     active: 'group-data-[state=active]:text-red-500',
-    icon: TEST_SVG,
+    icon: RISKS_SVG,
   },
   {
     id: 'opportunities',
     label: 'Opportunities',
     active: 'group-data-[state=active]:text-green-500',
-    icon: TEST_SVG,
+    icon: OPPORTUNITIES_SVG,
   },
   {
     id: 'locations',
     label: 'Locations',
     active: 'group-data-[state=active]:text-blue-500',
-    icon: TEST_SVG,
+    icon: LOCATIONS_SVG,
   },
   {
     id: 'case-studies',
     label: 'Case Studies',
     active: 'group-data-[state=active]:text-violet-500',
-    icon: TEST_SVG,
+    icon: CASE_STUDIES_SVG,
   },
 ];
 
