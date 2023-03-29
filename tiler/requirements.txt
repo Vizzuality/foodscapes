@@ -1,2 +1,2 @@
-titiler.application==0.10.2
+titiler.application==0.11.5
 uvicorn
