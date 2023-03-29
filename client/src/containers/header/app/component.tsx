@@ -68,7 +68,6 @@ const Header = () => {
             >
               <Icon icon={MENU_SVG} className="h-full w-full" />
             </button>
-            <Menu />
           </Media>
 
           <Media greaterThanOrEqual="sm">
@@ -115,6 +114,9 @@ const Header = () => {
           </Media>
         </div>
       </Wrapper>
+      <div className="h-small-screen w-full">
+        <Menu />
+      </div>
     </header>
   );
 };

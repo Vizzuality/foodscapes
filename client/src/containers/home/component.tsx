@@ -89,7 +89,7 @@ const Home = () => {
             </ScrollItem>
           </div>
 
-          <div className="sticky top-0 z-0 h-auto lg:col-span-5 lg:col-start-7 lg:h-small-screen">
+          <div className="sticky top-0 z-0 h-96 lg:col-span-5 lg:col-start-7 lg:h-small-screen">
             <AnimatePresence>
               {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
                 <FadeY key="layers-chart">
