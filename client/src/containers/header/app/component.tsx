@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { menuOpenAtom } from 'store/explore-map';
+import { menuOpenAtom } from 'store/menu';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -13,11 +13,11 @@ import { Theme } from 'types/header';
 
 import { NAV } from 'constants/nav';
 
-import Menu from 'containers/explore-map/menu';
+import Menu from 'containers/header/menu';
+import { HEADER_BUTTON_STYLES } from 'containers/header/menu/constants';
 import Wrapper from 'containers/wrapper';
 
 import Icon from 'components/icon';
-import { CONTROL_BUTTON_STYLES } from 'components/map/controls/constants';
 import { Media } from 'components/media-query';
 
 import MENU_SVG from 'svgs/map/menu.svg?sprite';
@@ -56,10 +56,10 @@ const Header = () => {
           <Media lessThan="sm">
             <button
               className={cn({
-                [CONTROL_BUTTON_STYLES.default]: true,
-                [CONTROL_BUTTON_STYLES.hover]: true,
-                [CONTROL_BUTTON_STYLES.active]: true,
-                [CONTROL_BUTTON_STYLES.disabled]: false,
+                [HEADER_BUTTON_STYLES.default]: true,
+                [HEADER_BUTTON_STYLES.hover]: true,
+                [HEADER_BUTTON_STYLES.active]: true,
+                [HEADER_BUTTON_STYLES.disabled]: false,
               })}
               aria-label="Toogle menu"
               type="button"
@@ -114,9 +114,8 @@ const Header = () => {
           </Media>
         </div>
       </Wrapper>
-      <div className="h-small-screen w-full">
-        <Menu />
-      </div>
+
+      <Menu />
     </header>
   );
 };
