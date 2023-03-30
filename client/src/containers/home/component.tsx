@@ -9,6 +9,8 @@ import { useDebouncedCallback } from 'use-debounce';
 import FadeY from 'containers/animations/fadeY';
 import Wrapper from 'containers/wrapper';
 
+import { Media } from 'components/media-query';
+
 import CirclesChart from './circles/charts';
 import {
   Text1 as CirclesText1,
@@ -43,10 +45,10 @@ const Home = () => {
   return (
     <div
       className={cn({
-        'bg-white': true,
-        'bg-green-500 lg:bg-white': step === 3,
-        'bg-red-500 lg:bg-white': step === 4,
-        'bg-yellow-500 lg:bg-white': step === 5,
+        'bg-white transition-colors lg:bg-white': true,
+        'bg-green-500': step === 3,
+        'bg-red-500': step === 4,
+        'bg-yellow-500': step === 5,
       })}
     >
       <ScrollItem step={0} onChange={onChange}>
@@ -57,54 +59,90 @@ const Home = () => {
         <How />
       </ScrollItem>
 
-      <Wrapper>
-        <div className="lg:grid lg:grid-cols-12 lg:gap-6">
-          <div className="relative z-10 pt-20 lg:col-span-5 lg:pt-0 xl:col-span-4 xl:col-start-2">
-            <ScrollItem step={2} onChange={onChange}>
-              <LayersText1 />
-            </ScrollItem>
-            <ScrollItem step={3} onChange={onChange}>
-              <LayersText2 />
-            </ScrollItem>
-            <ScrollItem step={4} onChange={onChange}>
-              <LayersText3 />
-            </ScrollItem>
-            <ScrollItem step={5} onChange={onChange}>
-              <LayersText4 />
-            </ScrollItem>
-            <ScrollItem step={6} onChange={onChange}>
-              <CirclesText1 />
-            </ScrollItem>
-            <ScrollItem step={7} onChange={onChange}>
-              <CirclesText2 />
-            </ScrollItem>
-            <ScrollItem step={8} onChange={onChange}>
-              <CirclesText3 />
-            </ScrollItem>
-            <ScrollItem step={9} onChange={onChange}>
-              <CirclesText4 />
-            </ScrollItem>
-            <ScrollItem step={10} onChange={onChange}>
-              <GlobeText />
-            </ScrollItem>
-          </div>
+      <Media lessThan="sm" className="px-10">
+        <ScrollItem step={2} onChange={onChange}>
+          <LayersText1 />
+          <LayersChart initialStep={2} currentStep={2} />
+        </ScrollItem>
+        <ScrollItem step={3} onChange={onChange}>
+          <LayersText2 />
+          <LayersChart initialStep={2} currentStep={3} />
+        </ScrollItem>
+        <ScrollItem step={4} onChange={onChange}>
+          <LayersText3 />
+          <LayersChart initialStep={2} currentStep={4} />
+        </ScrollItem>
+        <ScrollItem step={5} onChange={onChange}>
+          <LayersText4 />
+          <LayersChart initialStep={2} currentStep={5} />
+        </ScrollItem>
+        <ScrollItem step={6} onChange={onChange}>
+          <CirclesText1 />
+        </ScrollItem>
+        <ScrollItem step={7} onChange={onChange}>
+          <CirclesText2 />
+        </ScrollItem>
+        <ScrollItem step={8} onChange={onChange}>
+          <CirclesText3 />
+        </ScrollItem>
+        <ScrollItem step={9} onChange={onChange}>
+          <CirclesText4 />
+        </ScrollItem>
+        <ScrollItem step={10} onChange={onChange}>
+          <GlobeText />
+        </ScrollItem>
+      </Media>
 
-          <div className="sticky top-0 z-0 h-96 lg:col-span-5 lg:col-start-7 lg:h-small-screen">
-            <AnimatePresence>
-              {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
-                <FadeY key="layers-chart">
-                  <div className="flex h-full flex-col items-center justify-center">
-                    <LayersChart initialStep={2} />
-                    <CirclesChart initialStep={6} />
-                  </div>
-                </FadeY>
-              )}
+      <Media greaterThanOrEqual="sm">
+        <Wrapper>
+          <div className="grid grid-cols-12 gap-6">
+            <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
+              <ScrollItem step={2} onChange={onChange}>
+                <LayersText1 />
+              </ScrollItem>
+              <ScrollItem step={3} onChange={onChange}>
+                <LayersText2 />
+              </ScrollItem>
+              <ScrollItem step={4} onChange={onChange}>
+                <LayersText3 />
+              </ScrollItem>
+              <ScrollItem step={5} onChange={onChange}>
+                <LayersText4 />
+              </ScrollItem>
+              <ScrollItem step={6} onChange={onChange}>
+                <CirclesText1 />
+              </ScrollItem>
+              <ScrollItem step={7} onChange={onChange}>
+                <CirclesText2 />
+              </ScrollItem>
+              <ScrollItem step={8} onChange={onChange}>
+                <CirclesText3 />
+              </ScrollItem>
+              <ScrollItem step={9} onChange={onChange}>
+                <CirclesText4 />
+              </ScrollItem>
+              <ScrollItem step={10} onChange={onChange}>
+                <GlobeText />
+              </ScrollItem>
+            </div>
 
-              <GlobeMap />
-            </AnimatePresence>
+            <div className="sticky top-0 z-0 h-96 lg:col-span-5 lg:col-start-7 lg:h-small-screen">
+              <AnimatePresence>
+                {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
+                  <FadeY key="layers-chart">
+                    <div className="flex h-full flex-col items-center justify-center">
+                      <LayersChart initialStep={2} />
+                      <CirclesChart initialStep={6} />
+                    </div>
+                  </FadeY>
+                )}
+
+                <GlobeMap />
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
-      </Wrapper>
+        </Wrapper>
+      </Media>
 
       <ScrollItem step={11} onChange={onChange}>
         <Outro />
