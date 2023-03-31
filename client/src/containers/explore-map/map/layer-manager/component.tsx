@@ -1,4 +1,4 @@
-import { layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { foodscapesAtom, layersAtom, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue } from 'recoil';
 
@@ -8,6 +8,8 @@ import { MapboxOverlayProvider } from 'containers/explore-map/map/layer-manager/
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
+
+  const foodscapes = useRecoilValue(foodscapesAtom);
 
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
 
@@ -23,6 +25,9 @@ const LayerManagerContainer = () => {
           <LayerComponent
             key={layer}
             id={`${layer}-layer`}
+            filters={{
+              foodscapes,
+            }}
             settings={
               layersSettings[layer] ?? {
                 opacity: 1,

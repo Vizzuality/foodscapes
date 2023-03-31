@@ -3695,6 +3695,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-switch@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@radix-ui/react-switch@npm:1.0.2"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-primitive": 1.0.2
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-previous": 1.0.0
+    "@radix-ui/react-use-size": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: 51dda47620938504e540383435a1b8f038fa8ce1e0179a0ce32be500fa39e7a40ac518d9a2f223f7cac4d5fac1c1b8a1a8c5f75104c54bea1431dfdfa76cb1e5
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-tabs@npm:1.0.3":
   version: 1.0.3
   resolution: "@radix-ui/react-tabs@npm:1.0.3"
@@ -11753,6 +11772,7 @@ __metadata:
     "@radix-ui/react-dialog": ^1.0.2
     "@radix-ui/react-popover": 1.0.3
     "@radix-ui/react-slider": 1.1.0
+    "@radix-ui/react-switch": 1.0.2
     "@radix-ui/react-tabs": 1.0.3
     "@radix-ui/react-tooltip": 1.0.3
     "@react-aria/button": 3.6.0

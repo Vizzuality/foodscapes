@@ -6,8 +6,8 @@ import { Settings } from 'components/map/legend/types';
 
 import { useLayer, useSource } from './hooks';
 
-const FoodscapesLayer = ({ settings, beforeId }: LayerProps<Settings>) => {
-  const SOURCE = useSource();
+const FoodscapesLayer = ({ settings, filters, beforeId }: LayerProps<Settings>) => {
+  const SOURCE = useSource({ filters });
   const LAYER = useLayer({ settings });
 
   if (!SOURCE || !LAYER) return null;

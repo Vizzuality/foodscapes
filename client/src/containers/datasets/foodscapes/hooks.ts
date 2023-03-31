@@ -8,6 +8,12 @@ import { useFoodscapes } from 'hooks/foodscapes';
 
 import { Settings } from 'components/map/legend/types';
 
+interface UseFoodscapesSourceProps {
+  filters: {
+    foodscapes: number[];
+  };
+}
+
 interface UseFoodscapesLayerProps {
   settings?: Partial<Settings>;
 }
@@ -17,8 +23,9 @@ interface UseFoodscapesLegendProps {
   settings?: Settings;
 }
 
-export function useSource(): AnySourceData {
+export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
+  const { foodscapes } = filters;
 
   const band = 1;
   const colormap = useMemo(() => {
@@ -28,15 +35,37 @@ export function useSource(): AnySourceData {
         [v.value]: v.color,
       };
     }, {});
-    return encodeURIComponent(JSON.stringify(c));
+    return JSON.stringify(c);
   }, [foodscapesData]);
+
+  const expression = useMemo(() => {
+    if (!foodscapes.length) return null;
+    // loop through the foodscapes and create a where expression
+    const where = foodscapes
+      .map((v) => {
+        return `(b1==${v})`;
+      })
+      .join('|');
+
+    return `where(${where},b1,-1)`;
+  }, [foodscapes]);
+
+  const searchParams = useMemo(() => {
+    const params = new URLSearchParams();
+
+    if (colormap) params.set('colormap', colormap);
+    if (band) params.set('bidx', band.toString());
+    if (expression) params.set('expression', expression);
+
+    return params.toString();
+  }, [band, colormap, expression]);
 
   return {
     id: 'foodscapes-source',
+    key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
-      // `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap={{COLOR_RAMP}}&bidx={{BAND}}`,
-      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap=${colormap}&bidx=${band}`,
+      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
     ],
   };
 }

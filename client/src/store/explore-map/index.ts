@@ -72,22 +72,13 @@ export const tabAtom = atom({
   ],
 });
 
-export const filtersAtom = atom({
-  key: 'filters',
-  default: {
-    foodscapes: [],
-    intensity: [],
-    crops: [],
-    location: null,
-  },
+// Filters
+export const foodscapesAtom = atom({
+  key: 'foodscapes',
+  default: [],
   effects: [
     urlSyncEffect({
-      refine: object({
-        foodscapes: array(number()),
-        crops: array(number()),
-        intensity: array(number()),
-        location: number(),
-      }),
+      refine: array(number()),
     }),
   ],
 });

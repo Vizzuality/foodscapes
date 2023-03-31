@@ -53,8 +53,8 @@ const Sidebar = () => {
             className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-xl bg-white"
           >
             <Tabs value={tab} onValueChange={setTab} asChild>
-              <div className="flex h-full flex-col overflow-hidden">
-                <TabsList className="absolute top-0 left-0 z-10 w-full">
+              <div className="flex h-full flex-col overflow-auto">
+                <TabsList className="relative z-10 w-full">
                   <TabsTrigger value="foodscapes" />
                   <TabsTrigger value="risks" />
                   <TabsTrigger value="opportunities" />
@@ -62,7 +62,7 @@ const Sidebar = () => {
                   <TabsTrigger value="case-studies" />
                 </TabsList>
 
-                <div className="relative z-0 flex grow flex-col overflow-hidden">
+                <div className="relative z-0 -mt-20">
                   <TabsContent value="foodscapes">
                     <FoodscapesSidebar />
                   </TabsContent>
