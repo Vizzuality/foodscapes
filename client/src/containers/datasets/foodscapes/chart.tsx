@@ -5,10 +5,12 @@ import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
+import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
-import { FoodscapeChartData } from 'types/foodscapes';
+import { Foodscape, FoodscapeChartData } from 'types/foodscapes';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -34,6 +36,25 @@ const FoodscapesChart = ({
 }: FoodscapesChartProps) => {
   const [hover, setHover] = useState<number | null>(null);
 
+  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
+  const { tooltipData, tooltipLeft, tooltipTop, tooltipOpen, showTooltip, hideTooltip } =
+    useTooltip<
+      Omit<BarGroupBar<number>, 'value' | 'key'> & {
+        bar: SeriesPoint<FoodscapeChartData>;
+        key: number;
+      }
+    >();
+  const { containerRef, TooltipInPortal } = useTooltipInPortal({
+    detectBounds: true,
+    scroll: true,
+  });
+
+  // DATA
   const { data: foodscapesData } = useFoodscapes();
 
   const { data } = useData<FoodscapeData>({
@@ -41,6 +62,7 @@ const FoodscapesChart = ({
     shape: 'array',
   });
 
+  // CONFIG
   const KEYS = useMemo(() => {
     return data.sort((a, b) => a.soil_groups - b.soil_groups).map((d) => d.id);
   }, [data]);
@@ -55,10 +77,25 @@ const FoodscapesChart = ({
     ];
   }, [data]);
 
+  const TOOLTIP = useMemo<(Foodscape & { percentage: string }) | null>(() => {
+    if (!tooltipData) return null;
+
+    const f = foodscapesData.find((d) => d.value === tooltipData.key);
+    if (!f) return null;
+
+    const percentage = formatPercentage(tooltipData.bar.data[tooltipData.key] / TOTAL);
+
+    return {
+      ...f,
+      percentage,
+    };
+  }, [TOTAL, tooltipData, foodscapesData, formatPercentage]);
+
+  // SCALES
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, TOTAL],
-      range: [0, width],
+      range: [0, width - 1],
     });
   }, [width, TOTAL]);
 
@@ -93,89 +130,126 @@ const FoodscapesChart = ({
   );
 
   return (
-    <svg width={width} height={height}>
-      <Group top={1}>
-        <BarStackHorizontal<FoodscapeChartData, number>
-          data={DATA}
-          keys={KEYS}
-          width={width - 2}
-          height={height - 2}
-          y={() => height}
-          xScale={xScale}
-          yScale={yScale}
-          color={(d) => colorScale(+d)}
-        >
-          {(barStacks) =>
-            barStacks.map((barStack) =>
-              barStack.bars.map((bar) => {
-                const opacity = selected?.includes(bar.key) ? 1 : 0.5;
+    <div className="relative" ref={containerRef}>
+      <svg width={width} height={height}>
+        <Group top={1}>
+          <BarStackHorizontal<FoodscapeChartData, number>
+            data={DATA}
+            keys={KEYS}
+            width={Math.max(width - 2, 0)}
+            height={Math.max(height - 2, 0)}
+            y={() => height}
+            xScale={xScale}
+            yScale={yScale}
+            color={(d) => colorScale(+d)}
+          >
+            {(barStacks) =>
+              barStacks.map((barStack) =>
+                barStack.bars.map((bar) => {
+                  const opacity = selected?.includes(bar.key) ? 1 : 0.5;
 
-                return (
-                  <g key={`bar-stack-${barStack.index}-${bar.index}`}>
-                    <rect
-                      x={bar.x}
-                      y={bar.y}
-                      width={bar.width}
-                      height={bar.height}
-                      fill={bar.color}
-                      fillOpacity={selected?.length ? opacity : 1}
-                      {...(interactive && {
-                        onClick: () => handleBarClick(bar),
-                        onMouseEnter: () => setHover(bar.key),
-                        onMouseLeave: () => setHover(null),
-                      })}
-                      cursor={interactive ? 'pointer' : 'default'}
-                    />
-
-                    {hover === bar.key && (
-                      <rect
-                        x={bar.x}
-                        y={bar.y + 1}
-                        width={bar.width}
-                        height={bar.height - 1}
-                        fill="transparent"
-                        stroke="#1C274A"
-                        strokeWidth={1}
-                        pointerEvents="none"
-                        shapeRendering="crispEdges"
-                      />
-                    )}
-
-                    {selected?.includes(bar.key) && (
-                      <rect
+                  return (
+                    <g key={`bar-stack-${barStack.index}-${bar.index}`}>
+                      <motion.rect
                         x={bar.x}
                         y={bar.y}
                         width={bar.width}
                         height={bar.height}
-                        fill="transparent"
-                        stroke="#1C274A"
-                        strokeWidth={2}
-                        pointerEvents="none"
-                        shapeRendering="crispEdges"
+                        fill={bar.color}
+                        {...(interactive && {
+                          onClick: () => handleBarClick(bar),
+                          onMouseEnter: () => {
+                            setHover(bar.key);
+                            showTooltip({
+                              tooltipData: bar,
+                              tooltipLeft: bar.x + bar.width / 2,
+                              tooltipTop: 0,
+                            });
+                          },
+                          onMouseLeave: () => {
+                            setHover(null);
+                            hideTooltip();
+                          },
+                        })}
+                        cursor={interactive ? 'pointer' : 'default'}
+                        animate={{
+                          fillOpacity: selected?.length ? opacity : 1,
+                        }}
                       />
-                    )}
-                  </g>
-                );
-              })
-            )
-          }
-        </BarStackHorizontal>
 
-        {!selected?.length && !hover && (
-          <rect
-            x={1}
-            y={1}
-            width={width}
-            height={height - 3}
-            fill="transparent"
-            stroke="#1C274A"
-            strokeWidth={1}
-            pointerEvents="none"
-            shapeRendering="crispEdges"
-          />
-        )}
-      </Group>
-    </svg>
+                      {hover === bar.key && (
+                        <rect
+                          x={bar.x}
+                          y={bar.y + 1}
+                          width={bar.width}
+                          height={Math.max(bar.height - 1, 0)}
+                          fill="transparent"
+                          stroke="#1C274A"
+                          strokeWidth={1}
+                          pointerEvents="none"
+                          shapeRendering="crispEdges"
+                        />
+                      )}
+
+                      <AnimatePresence>
+                        {selected?.includes(bar.key) && (
+                          <motion.rect
+                            key={`bar-stack-${barStack.index}-${bar.index}-selected`}
+                            x={bar.x}
+                            y={bar.y}
+                            width={bar.width}
+                            height={bar.height}
+                            fill="transparent"
+                            stroke="#1C274A"
+                            strokeWidth={2}
+                            pointerEvents="none"
+                            shapeRendering="crispEdges"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          />
+                        )}
+                      </AnimatePresence>
+                    </g>
+                  );
+                })
+              )
+            }
+          </BarStackHorizontal>
+
+          {!selected?.length && !hover && (
+            <rect
+              x={1}
+              y={1}
+              width={Math.max(width - 1, 0)}
+              height={Math.max(height - 3, 0)}
+              fill="transparent"
+              stroke="#1C274A"
+              strokeWidth={1}
+              pointerEvents="none"
+              shapeRendering="crispEdges"
+            />
+          )}
+        </Group>
+      </svg>
+
+      {tooltipOpen && TOOLTIP && (
+        <TooltipInPortal
+          unstyled
+          top={tooltipTop - 10 - height * 0.05}
+          left={tooltipLeft}
+          className="pointer-events-none absolute"
+        >
+          <div
+            key={Math.random()}
+            className="relative max-w-[180px] -translate-x-1/2 -translate-y-full space-y-1 border border-navy-500/25 bg-white p-1 text-navy-500 shadow-md"
+          >
+            <h3 className="text-[8px] font-bold uppercase">{TOOLTIP.label}</h3>
+            <span>{TOOLTIP.percentage}</span>
+          </div>
+        </TooltipInPortal>
+      )}
+    </div>
   );
 };
 
