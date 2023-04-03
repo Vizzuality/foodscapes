@@ -18,8 +18,8 @@ export interface ChartsProps {
 const Charts = ({ initialStep, currentStep }: ChartsProps) => {
   const { direction } = useScrollDirection();
   const step = useRecoilValue(stepAtom);
-  const substep = step - initialStep;
   const s = currentStep ?? step;
+  const substep = s - initialStep;
 
   const soyCounter = useSoyCounter(s - initialStep);
   const soyFavoredCounter = useSoyFavoredCounter(s - initialStep);
@@ -176,7 +176,7 @@ const Charts = ({ initialStep, currentStep }: ChartsProps) => {
 
   return (
     <motion.div
-      className="absoulte z-0 flex h-[300px] w-[300px] items-center pt-20 lg:h-full lg:w-full lg:pt-0"
+      className="relative z-0 flex w-full items-center justify-center pt-20 lg:h-full lg:pt-0"
       initial={{ opacity: 0 }}
       animate={ANIMATE}
       transition={{ duration: STEP_DURATION }}

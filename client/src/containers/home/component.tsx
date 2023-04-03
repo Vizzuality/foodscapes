@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import cn from 'lib/classnames';
 
 import { lastStepAtom, stepAtom } from 'store/home';
@@ -37,6 +39,14 @@ const Home = () => {
   const setStep = useSetRecoilState(stepAtom);
   const setLastStep = useSetRecoilState(lastStepAtom);
 
+  const ANIMATE_GLOBE = useMemo(() => {
+    if (step >= 10) {
+      return 'animate';
+    }
+
+    return 'exit';
+  }, [step]);
+
   const onChange = useDebouncedCallback((id: number) => {
     setLastStep(step);
     setStep(id);
@@ -45,6 +55,7 @@ const Home = () => {
   return (
     <div
       className={cn({
+        'w-full overflow-hidden lg:overflow-visible': true,
         'bg-white transition-colors lg:bg-white': true,
         'bg-green-500': step === 3,
         'bg-red-500': step === 4,
@@ -79,23 +90,24 @@ const Home = () => {
         <ScrollItem step={6} onChange={onChange}>
           <CirclesText1 />
           <LayersChart initialStep={2} currentStep={6} />
-          {/* <CirclesChart initialStep={6} currentStep={6} /> */}
         </ScrollItem>
         <ScrollItem step={7} onChange={onChange}>
           <CirclesText2 />
-          <CirclesChart initialStep={6} currentStep={6} />
+          <CirclesChart initialStep={6} currentStep={7} />
         </ScrollItem>
         <ScrollItem step={8} onChange={onChange}>
           <CirclesText3 />
-          <CirclesChart initialStep={6} currentStep={6} />
+          <CirclesChart initialStep={6} currentStep={8} />
         </ScrollItem>
         <ScrollItem step={9} onChange={onChange}>
           <CirclesText4 />
-          <CirclesChart initialStep={6} currentStep={6} />
+          <CirclesChart initialStep={6} currentStep={9} />
         </ScrollItem>
         <ScrollItem step={10} onChange={onChange}>
-          <GlobeText />
-          {/* <GlobeMap /> */}
+          <div className="flex flex-col space-y-20">
+            <GlobeText />
+            <GlobeMap currentId="mobile-globe" />
+          </div>
         </ScrollItem>
       </Media>
 
@@ -143,7 +155,9 @@ const Home = () => {
                   </FadeY>
                 )}
 
-                <GlobeMap />
+                <FadeY animate={ANIMATE_GLOBE}>
+                  <GlobeMap currentId="desktop-globe" />
+                </FadeY>
               </AnimatePresence>
             </div>
           </div>

@@ -39,12 +39,14 @@ const Outro = () => {
                     </header>
 
                     <div className="flex items-end justify-between">
-                      <Image
-                        width={81}
-                        height={131}
-                        src="/images/outro/plant.png"
-                        alt="Grand chaco plant"
-                      />
+                      <div className="max-w-[49px] lg:max-w-none">
+                        <Image
+                          width={81}
+                          height={131}
+                          src="/images/outro/plant.png"
+                          alt="Grand chaco plant"
+                        />
+                      </div>
                       <Icon
                         icon={ARROW_RIGHT_SVG}
                         className="h-4 w-4 group-hover:animate-bounce-horizontal"
@@ -76,12 +78,14 @@ const Outro = () => {
                     </header>
 
                     <div className="flex items-end justify-between">
-                      <Image
-                        width={194}
-                        height={99}
-                        src="/images/outro/map.svg"
-                        alt="Explore map image"
-                      />
+                      <div className="max-w-[137px] lg:max-w-none">
+                        <Image
+                          width={194}
+                          height={99}
+                          src="/images/outro/map.svg"
+                          alt="Explore map image"
+                        />
+                      </div>
                       <Icon
                         icon={ARROW_RIGHT_SVG}
                         className="h-4 w-4 text-white group-hover:animate-bounce-horizontal"
