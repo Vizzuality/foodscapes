@@ -9,7 +9,7 @@ const Text1 = () => {
         </h2>
       </FadeYScroll>
 
-      <div className="space-y-4">
+      <div className="space-y-2 lg:space-y-4">
         <FadeYScroll>
           <p className="text-sm font-light lg:text-base">
             A foodscape is a specific area of food production, defined by the{' '}

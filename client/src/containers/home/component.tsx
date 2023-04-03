@@ -78,18 +78,24 @@ const Home = () => {
         </ScrollItem>
         <ScrollItem step={6} onChange={onChange}>
           <CirclesText1 />
+          <LayersChart initialStep={2} currentStep={6} />
+          {/* <CirclesChart initialStep={6} currentStep={6} /> */}
         </ScrollItem>
         <ScrollItem step={7} onChange={onChange}>
           <CirclesText2 />
+          <CirclesChart initialStep={6} currentStep={6} />
         </ScrollItem>
         <ScrollItem step={8} onChange={onChange}>
           <CirclesText3 />
+          <CirclesChart initialStep={6} currentStep={6} />
         </ScrollItem>
         <ScrollItem step={9} onChange={onChange}>
           <CirclesText4 />
+          <CirclesChart initialStep={6} currentStep={6} />
         </ScrollItem>
         <ScrollItem step={10} onChange={onChange}>
           <GlobeText />
+          {/* <GlobeMap /> */}
         </ScrollItem>
       </Media>
 

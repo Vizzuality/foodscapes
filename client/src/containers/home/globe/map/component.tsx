@@ -75,11 +75,14 @@ const MapContainer = () => {
 
   return (
     <FadeY animate={ANIMATE}>
-      <div id="home-globe" className="relative flex h-full w-full items-center justify-center">
+      <div
+        id="home-globe"
+        className="relative flex h-96 w-full items-center justify-center lg:h-full"
+      >
         <div className="aspect-square w-full">
           <div className="relative flex h-full w-full items-center justify-center">
             <Map
-              id={id}
+              id={`${id}-${step}`}
               mapStyle={mapStyle}
               minZoom={minZoom}
               maxZoom={maxZoom}
