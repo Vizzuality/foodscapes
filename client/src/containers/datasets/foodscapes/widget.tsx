@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -6,13 +6,17 @@ import { foodscapesAtom, layersAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { useFoodscapes } from 'hooks/foodscapes';
+
 import { DATASETS } from 'constants/datasets';
 
 import Switch from 'components/ui/switch';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
+const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
 
 const FoodscapesWidget = () => {
+  const [view, setView] = useState<'single' | 'group'>('single');
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
   const { id } = DATASET;
 
@@ -21,6 +25,8 @@ const FoodscapesWidget = () => {
 
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
+
+  const { data: foodscapesData } = useFoodscapes();
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -53,6 +59,33 @@ const FoodscapesWidget = () => {
     });
   };
 
+  const handleBarGroupClick = (key: number) => {
+    const ids = foodscapesData.filter((d) => d.parentId === key).map((d) => d.value);
+
+    setFoodscapes((prev) => {
+      const fs = [...prev];
+
+      // push or slice key in fs array base on index
+      const every = ids.every((i) => fs.includes(i));
+
+      // if all ids are in fs, remove all
+      if (every) {
+        ids.forEach((i) => {
+          const index = fs.findIndex((f) => f === i);
+          fs.splice(index, 1);
+        });
+      } else {
+        ids.forEach((i) => {
+          const index = fs.findIndex((f) => f === i);
+          if (index === -1) {
+            fs.push(i);
+          }
+        });
+      }
+      return fs;
+    });
+  };
+
   return (
     <section className="space-y-4 py-10">
       <header className="flex items-center justify-between space-x-5">
@@ -73,8 +106,47 @@ const FoodscapesWidget = () => {
         </p>
       </div>
 
+      <div className="flex items-center space-x-2">
+        <input
+          type="radio"
+          name="view"
+          id="single"
+          value="single"
+          checked={view === 'single'}
+          onChange={() => setView('single')}
+        />
+        <label htmlFor="single">Single</label>
+
+        <input
+          type="radio"
+          name="view"
+          id="group"
+          value="group"
+          checked={view === 'group'}
+          onChange={() => setView('group')}
+        />
+        <label htmlFor="group">Group</label>
+      </div>
+
       <div className="h-8">
-        <Chart dataset={DATASET} selected={foodscapes} onBarClick={handleBarClick} interactive />
+        {view === 'single' && (
+          <Chart
+            //
+            dataset={DATASET}
+            selected={foodscapes}
+            onBarClick={handleBarClick}
+            interactive
+          />
+        )}
+
+        {view === 'group' && (
+          <ChartGroup
+            dataset={DATASET}
+            selected={foodscapes}
+            onBarClick={handleBarGroupClick}
+            interactive
+          />
+        )}
       </div>
     </section>
   );

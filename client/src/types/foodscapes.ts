@@ -1,9 +1,11 @@
 export interface Foodscape {
   id: number;
-  value: number;
   label: string;
   color: string;
-  parent: string;
+  value: number;
+  parentId: number;
+  parentLabel: string;
+  parentColor: string;
 }
 
 export type FoodscapeChartData = {

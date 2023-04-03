@@ -30,12 +30,12 @@ const FoodscapesSidebar = forwardRef(() => {
         <div className="border-t border-navy-500/30">
           <FoodscapesWidget />
         </div>
-        <div className="border-t border-navy-500/30">
+        {/* <div className="border-t border-navy-500/30">
           <FoodscapesWidget />
         </div>
         <div className="border-t border-navy-500/30">
           <FoodscapesWidget />
-        </div>
+        </div> */}
       </div>
     </section>
   );

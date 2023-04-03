@@ -34,7 +34,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
       Array
         // group by parent
         .from(
-          group(foodscapesData, (d) => d.parent),
+          group(foodscapesData, (d) => d.parentLabel),
           ([key, value]) => ({ key, value })
         )
         // sort by key
