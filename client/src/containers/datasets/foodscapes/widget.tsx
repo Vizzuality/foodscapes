@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -11,12 +11,12 @@ import { useFoodscapes } from 'hooks/foodscapes';
 import { DATASETS } from 'constants/datasets';
 
 import Switch from 'components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
 
 const FoodscapesWidget = () => {
-  const [view, setView] = useState<'single' | 'group'>('single');
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
   const { id } = DATASET;
 
@@ -106,48 +106,34 @@ const FoodscapesWidget = () => {
         </p>
       </div>
 
-      <div className="flex items-center space-x-2">
-        <input
-          type="radio"
-          name="view"
-          id="single"
-          value="single"
-          checked={view === 'single'}
-          onChange={() => setView('single')}
-        />
-        <label htmlFor="single">Single</label>
+      <Tabs defaultValue="single">
+        <TabsList>
+          <TabsTrigger value="single">Foodscapes</TabsTrigger>
+          <TabsTrigger value="group">Soil Groups</TabsTrigger>
+        </TabsList>
+        <TabsContent value="single">
+          <div className="h-8">
+            <Chart
+              //
+              dataset={DATASET}
+              selected={foodscapes}
+              onBarClick={handleBarClick}
+              interactive
+            />
+          </div>
+        </TabsContent>
 
-        <input
-          type="radio"
-          name="view"
-          id="group"
-          value="group"
-          checked={view === 'group'}
-          onChange={() => setView('group')}
-        />
-        <label htmlFor="group">Group</label>
-      </div>
-
-      <div className="h-8">
-        {view === 'single' && (
-          <Chart
-            //
-            dataset={DATASET}
-            selected={foodscapes}
-            onBarClick={handleBarClick}
-            interactive
-          />
-        )}
-
-        {view === 'group' && (
-          <ChartGroup
-            dataset={DATASET}
-            selected={foodscapes}
-            onBarClick={handleBarGroupClick}
-            interactive
-          />
-        )}
-      </div>
+        <TabsContent value="group">
+          <div className="h-8">
+            <ChartGroup
+              dataset={DATASET}
+              selected={foodscapes}
+              onBarClick={handleBarGroupClick}
+              interactive
+            />
+          </div>
+        </TabsContent>
+      </Tabs>
     </section>
   );
 };

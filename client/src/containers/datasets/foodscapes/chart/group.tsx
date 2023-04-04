@@ -207,7 +207,7 @@ const FoodscapesChart = ({
                           <rect
                             x={bar.x + 1}
                             y={bar.y + 1}
-                            width={bar.width - 1}
+                            width={Math.max(bar.width - 1, 0)}
                             height={Math.max(bar.height - 1, 0)}
                             fill="transparent"
                             stroke="#1C274A"
