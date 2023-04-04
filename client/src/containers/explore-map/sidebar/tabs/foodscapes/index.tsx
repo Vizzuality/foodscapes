@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 
+import FoodscapesIntensitiesWidget from 'containers/datasets/foodscapes-intensities/widget';
 import FoodscapesWidget from 'containers/datasets/foodscapes/widget';
 
 const FoodscapesSidebar = forwardRef(() => {
@@ -30,10 +31,10 @@ const FoodscapesSidebar = forwardRef(() => {
         <div className="border-t border-navy-500/30">
           <FoodscapesWidget />
         </div>
-        {/* <div className="border-t border-navy-500/30">
-          <FoodscapesWidget />
-        </div>
         <div className="border-t border-navy-500/30">
+          <FoodscapesIntensitiesWidget />
+        </div>
+        {/* <div className="border-t border-navy-500/30">
           <FoodscapesWidget />
         </div> */}
       </div>

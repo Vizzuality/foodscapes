@@ -4,6 +4,11 @@ export interface FoodscapeData {
   soil_groups: number;
 }
 
+export interface FoodscapeIntensityData {
+  id: number;
+  value: number;
+}
+
 export type PointData = {
   band_names: string[];
   coordinates: [number, number];

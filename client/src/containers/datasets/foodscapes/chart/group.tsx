@@ -16,9 +16,9 @@ import { FoodscapeChartData } from 'types/foodscapes';
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 
-import { FoodscapesChartTooltipGroup } from 'containers/datasets/foodscapes/chart/tooltips';
-
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
+
+import { FoodscapesChartTooltipGroup } from './tooltips';
 
 interface FoodscapesChartParentProps {
   dataset: Dataset;

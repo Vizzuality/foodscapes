@@ -52,10 +52,10 @@ export const LegendItem: React.FC<LegendItemProps> = ({
             [className]: !!className,
           })}
         >
-          <header className="sticky top-0 flex justify-between space-x-8 bg-white px-2.5 py-2.5">
+          <header className="sticky top-0 flex items-start justify-between space-x-8 bg-white px-2.5 py-2.5">
             <div
               className={cx({
-                'relative flex space-x-0.5': true,
+                'relative flex items-start space-x-0.5': true,
                 '-ml-1': sortable?.handle,
               })}
             >
@@ -63,7 +63,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
                 <button
                   aria-label="drag"
                   type="button"
-                  className="cursor-pointer text-navy-500 transition-colors hover:text-navy-400"
+                  className="mt-0.5 cursor-pointer text-navy-500 transition-colors hover:text-navy-400"
                   {...listeners}
                   {...attributes}
                 >

@@ -8,16 +8,16 @@ import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { FoodscapeData } from 'types/data';
+import { FoodscapeIntensityData } from 'types/data';
 import { Dataset } from 'types/datasets';
-import { FoodscapeChartData } from 'types/foodscapes';
+import { FoodscapeIntensityChartData } from 'types/foodscapes-intensities';
 
 import { useData } from 'hooks/data';
-import { useFoodscapes } from 'hooks/foodscapes';
+import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
 
-import { FoodscapesChartTooltip } from './tooltips';
+import { FoodscapesIntensitiesChartTooltip } from './tooltips';
 
 interface FoodscapesChartParentProps {
   dataset: Dataset;
@@ -41,25 +41,25 @@ const FoodscapesChart = ({
   const [hover, setHover] = useState<number | null>(null);
 
   // DATA
-  const { data: foodscapesData } = useFoodscapes();
+  const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 
-  const { data } = useData<FoodscapeData>({
+  const { data } = useData<FoodscapeIntensityData>({
     sql: dataset.widget.sql,
     shape: 'array',
   });
 
   // CONFIG
   const KEYS = useMemo(() => {
-    return data.sort((a, b) => a.soil_groups - b.soil_groups).map((d) => d.id);
+    return data.map((d) => d.id);
   }, [data]);
   const TOTAL = data.reduce((acc, curr) => acc + curr.value, 0);
 
-  const DATA = useMemo<FoodscapeChartData[]>(() => {
+  const DATA = useMemo<FoodscapeIntensityChartData[]>(() => {
     return [
       data.reduce((acc, curr) => {
         acc[curr.id] = curr.value;
         return acc;
-      }, {} as FoodscapeChartData),
+      }, {} as FoodscapeIntensityChartData),
     ];
   }, [data]);
 
@@ -83,16 +83,16 @@ const FoodscapesChart = ({
     return scaleLinear<string>({
       domain: KEYS,
       range: KEYS.map((key) => {
-        const { color } = foodscapesData.find((d) => d.value === key) || {};
+        const { color } = foodscapesIntensitiesData.find((d) => d.value === key) || {};
         return color;
       }),
     });
-  }, [foodscapesData, KEYS]);
+  }, [foodscapesIntensitiesData, KEYS]);
 
   const handleBarClick = useCallback(
     (
       bar: Omit<BarGroupBar<number>, 'value' | 'key'> & {
-        bar: SeriesPoint<FoodscapeChartData>;
+        bar: SeriesPoint<FoodscapeIntensityChartData>;
         key: number;
       }
     ) => {
@@ -107,7 +107,7 @@ const FoodscapesChart = ({
       <svg width={width} height={height}>
         <Group top={1}>
           <TooltipProvider delayDuration={0} skipDelayDuration={500}>
-            <BarStackHorizontal<FoodscapeChartData, number>
+            <BarStackHorizontal<FoodscapeIntensityChartData, number>
               data={DATA}
               keys={KEYS}
               width={Math.max(width - 2, 0)}
@@ -150,16 +150,20 @@ const FoodscapesChart = ({
 
                           <TooltipPortal>
                             <TooltipContent asChild sideOffset={2}>
-                              <FoodscapesChartTooltip {...bar} id={bar.key} total={TOTAL} />
+                              <FoodscapesIntensitiesChartTooltip
+                                {...bar}
+                                id={bar.key}
+                                total={TOTAL}
+                              />
                             </TooltipContent>
                           </TooltipPortal>
                         </Tooltip>
 
                         {hover === bar.key && (
                           <rect
-                            x={bar.x}
+                            x={bar.x + 1}
                             y={bar.y + 1}
-                            width={bar.width}
+                            width={Math.max(bar.width - 1, 0)}
                             height={Math.max(bar.height - 1, 0)}
                             fill="transparent"
                             stroke="#1C274A"

@@ -17,7 +17,6 @@ const FoodscapesLayer = ({ settings, filters, beforeId }: LayerProps<Settings>) 
       <Layer {...LAYER} beforeId={beforeId} />
     </Source>
   );
-  // return <Layer {...LAYER} {...props} />;
 };
 
 export default FoodscapesLayer;

@@ -101,8 +101,8 @@ const FoodscapesWidget = () => {
           determined by the interaction of parent material, climate, vegetation, terrain, time, and
           human activity.
         </p>
-        <p className="text-xs">
-          <em>Soil groups are inclusive of the biophysical attributes of an area.</em>
+        <p className="font-light">
+          Soil groups are inclusive of the biophysical attributes of an area.
         </p>
       </div>
 

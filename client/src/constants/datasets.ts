@@ -28,14 +28,18 @@ export const DATASETS = [
     },
   },
   {
-    id: 'foodscapes-intensity-groups',
-    label: 'Foodscapes Intensity Groups',
+    id: 'foodscapes-intensities',
+    label: 'Foodscapes Intensity',
     group: 'foodscapes',
     layer: {
       enabled: true,
     },
     widget: {
       enabled: false,
+      sql: `SELECT DISTINCT intensity_groups as id, COUNT(pixel_count) AS value
+      FROM foodscapes
+      WHERE intensity_groups NOT IN (0)
+      GROUP BY intensity_groups`,
     },
   },
   {
