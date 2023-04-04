@@ -64,7 +64,7 @@ const FoodscapesChart = ({
   const DATA = useMemo<FoodscapeChartData[]>(() => {
     return [
       data.reduce((acc, curr) => {
-        const a = acc[curr.soil_groups] || 0;
+        const a = acc[curr.soil_groups] ?? 0;
         acc[curr.soil_groups] = a + curr.value;
         return acc;
       }, {} as FoodscapeChartData),
