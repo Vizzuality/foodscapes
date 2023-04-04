@@ -67,6 +67,26 @@ export const tabAtom = atom({
   ],
 });
 
+export const filtersAtom = atom({
+  key: 'filters',
+  default: {
+    foodscapes: [],
+    intensity: [],
+    crops: [],
+    location: null,
+  },
+  effects: [
+    urlSyncEffect({
+      refine: object({
+        foodscapes: array(number()),
+        crops: array(number()),
+        intensity: array(number()),
+        location: number(),
+      }),
+    }),
+  ],
+});
+
 export function useSyncExploreMap() {
   const layers = useRecoilValue(layersAtom);
 

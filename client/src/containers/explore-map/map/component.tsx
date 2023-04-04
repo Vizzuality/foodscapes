@@ -18,11 +18,17 @@ import Popup from './popup';
 const DEFAULT_PROPS: CustomMapProps = {
   id: 'default',
   initialViewState: {
-    longitude: -122.4,
-    latitude: 37.74,
-    zoom: 11,
-    pitch: 30,
+    longitude: 0,
+    latitude: 20,
+    zoom: 2,
+    pitch: 0,
     bearing: 0,
+
+    // longitude: -122.4,
+    // latitude: 37.74,
+    // zoom: 11,
+    // pitch: 30,
+    // bearing: 0,
   },
   minZoom: 2,
   maxZoom: 20,
