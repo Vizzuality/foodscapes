@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { foodscapesAtom, layersAtom } from 'store/explore-map';
+import { intensitiesAtom, layersAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -19,8 +19,8 @@ const FoodscapesIntensitiesWidget = () => {
   const layers = useRecoilValue(layersAtom);
   const setLayers = useSetRecoilState(layersAtom);
 
-  const foodscapes = useRecoilValue(foodscapesAtom);
-  const setFoodscapes = useSetRecoilState(foodscapesAtom);
+  const intensities = useRecoilValue(intensitiesAtom);
+  const setIntensities = useSetRecoilState(intensitiesAtom);
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -37,7 +37,7 @@ const FoodscapesIntensitiesWidget = () => {
   }, [id, layers, setLayers]);
 
   const handleBarClick = (key: number) => {
-    setFoodscapes((prev) => {
+    setIntensities((prev) => {
       const fs = [...prev];
 
       // push or slice key in fs array base on index
@@ -71,7 +71,7 @@ const FoodscapesIntensitiesWidget = () => {
         <Chart
           //
           dataset={DATASET}
-          selected={foodscapes}
+          selected={intensities}
           onBarClick={handleBarClick}
           interactive
         />

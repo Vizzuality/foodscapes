@@ -83,6 +83,16 @@ export const foodscapesAtom = atom({
   ],
 });
 
+export const intensitiesAtom = atom({
+  key: 'intensities',
+  default: [],
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
 export function useSyncExploreMap() {
   const layers = useRecoilValue(layersAtom);
 

@@ -6,13 +6,9 @@ import { FoodscapeChartData } from 'types/foodscapes';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
-interface FoodscapesChartTooltipProps extends Omit<BarGroupBar<number>, 'key' | 'value'> {
-  id: number;
-  total: number;
-  bar: SeriesPoint<FoodscapeChartData>;
-}
+import { TooltipProps } from 'components/charts/horizontal-stacked-bar';
 
-export const FoodscapesChartTooltip = forwardRef<HTMLDivElement, FoodscapesChartTooltipProps>(
+export const FoodscapesChartTooltip = forwardRef<HTMLDivElement, TooltipProps<FoodscapeChartData>>(
   ({ id, bar, total }, ref) => {
     const { data: foodscapesData } = useFoodscapes();
 

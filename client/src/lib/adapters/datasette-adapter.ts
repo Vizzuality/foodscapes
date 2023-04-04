@@ -1,6 +1,9 @@
-import { ParamsProps } from './types';
+export interface DatasetteParamsProps {
+  sql?: string;
+  shape?: 'arrays' | 'objects' | 'array' | 'object';
+}
 
-export function datasetteAdapter(params: ParamsProps = {}) {
+export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   const { sql, shape = 'array' } = params;
 
   return {

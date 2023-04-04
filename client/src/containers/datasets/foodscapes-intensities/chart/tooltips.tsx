@@ -1,21 +1,14 @@
 import { forwardRef } from 'react';
 
-import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
-
 import { FoodscapeIntensityChartData } from 'types/foodscapes-intensities';
 
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
-interface FoodscapesIntensitiesChartTooltipProps
-  extends Omit<BarGroupBar<number>, 'key' | 'value'> {
-  id: number;
-  total: number;
-  bar: SeriesPoint<FoodscapeIntensityChartData>;
-}
+import { TooltipProps } from 'components/charts/horizontal-stacked-bar';
 
 export const FoodscapesIntensitiesChartTooltip = forwardRef<
   HTMLDivElement,
-  FoodscapesIntensitiesChartTooltipProps
+  TooltipProps<FoodscapeIntensityChartData>
 >(({ id, bar, total }, ref) => {
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 

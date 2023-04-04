@@ -9745,7 +9745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-scale@npm:^4.0.2":
+"d3-scale@npm:4.0.2, d3-scale@npm:^4.0.2":
   version: 4.0.2
   resolution: "d3-scale@npm:4.0.2"
   dependencies:
@@ -11856,6 +11856,7 @@ __metadata:
     cypress: 12.1.0
     d3-array: 3.2.2
     d3-ease: 2.0.0
+    d3-scale: 4.0.2
     eslint: 7.32.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-typescript: 17.0.0

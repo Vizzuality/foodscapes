@@ -1,4 +1,4 @@
-import { foodscapesAtom, layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { foodscapesAtom, intensitiesAtom, layersAtom, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue } from 'recoil';
 
@@ -10,6 +10,7 @@ const LayerManagerContainer = () => {
   const layersSettings = useRecoilValue(layersSettingsAtom);
 
   const foodscapes = useRecoilValue(foodscapesAtom);
+  const intensities = useRecoilValue(intensitiesAtom);
 
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
 
@@ -27,6 +28,7 @@ const LayerManagerContainer = () => {
             id={`${layer}-layer`}
             filters={{
               foodscapes,
+              intensities,
             }}
             settings={
               layersSettings[layer] ?? {

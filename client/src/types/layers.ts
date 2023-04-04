@@ -7,6 +7,7 @@ export type LayerProps<S> = {
   settings?: Partial<S>;
   filters?: {
     foodscapes: number[];
+    intensities: number[];
   };
 };
 

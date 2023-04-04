@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { datasetteAdapter } from 'lib/adapters/datasette-adapter';
-import { ParamsProps } from 'lib/adapters/types';
+import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
@@ -11,7 +11,7 @@ import { LngLat } from 'types/map';
 import API from 'services/api';
 import TITILER_API from 'services/titiler';
 
-export const fetchData = (params: ParamsProps) => {
+export const fetchData = (params: DatasetteParamsProps) => {
   return API.request({
     method: 'GET',
     url: '/foodscapes.json',
@@ -27,7 +27,7 @@ export const fetchPointData = ({ lng, lat }: LngLat) => {
 };
 
 export function useData<T = unknown>(
-  params: ParamsProps = {},
+  params: DatasetteParamsProps = {},
   queryOptions: UseQueryOptions<T[], unknown> = {}
 ) {
   const fetch = () => fetchData(params);

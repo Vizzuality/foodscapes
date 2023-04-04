@@ -17,17 +17,6 @@ export const DATASETS = [
     },
   },
   {
-    id: 'soil-groups',
-    label: 'Soil Groups',
-    group: 'foodscapes',
-    layer: {
-      enabled: true,
-    },
-    widget: {
-      enabled: false,
-    },
-  },
-  {
     id: 'foodscapes-intensities',
     label: 'Foodscapes Intensity',
     group: 'foodscapes',
@@ -45,17 +34,6 @@ export const DATASETS = [
   {
     id: 'crops',
     label: 'Crops',
-    group: 'foodscapes',
-    layer: {
-      enabled: true,
-    },
-    widget: {
-      enabled: false,
-    },
-  },
-  {
-    id: 'crop-groups',
-    label: 'Crop Groups',
     group: 'foodscapes',
     layer: {
       enabled: true,

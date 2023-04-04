@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { titilerAdapter } from 'lib/adapters/titiler-adapter';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { Dataset } from 'types/datasets';
@@ -11,6 +13,7 @@ import { Settings } from 'components/map/legend/types';
 interface UseFoodscapesSourceProps {
   filters: {
     foodscapes: number[];
+    intensities: number[];
   };
 }
 
@@ -25,7 +28,6 @@ interface UseFoodscapesLegendProps {
 
 export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
-  const { foodscapes } = filters;
 
   const band = 1;
   const colormap = useMemo(() => {
@@ -39,16 +41,12 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
   }, [foodscapesData]);
 
   const expression = useMemo(() => {
-    if (!foodscapes.length) return null;
-    // loop through the foodscapes and create a where expression
-    const where = foodscapes
-      .map((v) => {
-        return `(b1==${v})`;
-      })
-      .join('|');
+    const where = titilerAdapter(filters);
+
+    if (!where) return null;
 
     return `where(${where},b1,-1)`;
-  }, [foodscapes]);
+  }, [filters]);
 
   const searchParams = useMemo(() => {
     const params = new URLSearchParams();
