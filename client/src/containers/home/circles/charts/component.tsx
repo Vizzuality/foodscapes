@@ -12,18 +12,20 @@ import { useSoyCounter, useSoyFavoredCounter } from 'containers/home/animations/
 
 export interface ChartsProps {
   initialStep: number;
+  currentStep?: number;
 }
 
-const Charts = ({ initialStep }) => {
+const Charts = ({ initialStep, currentStep }: ChartsProps) => {
   const { direction } = useScrollDirection();
   const step = useRecoilValue(stepAtom);
-  const substep = step - initialStep;
+  const s = currentStep ?? step;
+  const substep = s - initialStep;
 
-  const soyCounter = useSoyCounter(step - initialStep);
-  const soyFavoredCounter = useSoyFavoredCounter(step - initialStep);
+  const soyCounter = useSoyCounter(s - initialStep);
+  const soyFavoredCounter = useSoyFavoredCounter(s - initialStep);
 
   const ANIMATE = useMemo(() => {
-    if (step - initialStep < 0)
+    if (s - initialStep < 0)
       return {
         scale: 0,
         opacity: 0,
@@ -32,7 +34,7 @@ const Charts = ({ initialStep }) => {
       scale: 1,
       opacity: 1,
     };
-  }, [initialStep, step]);
+  }, [initialStep, s]);
 
   const variants = {
     initial: (d) => ({
@@ -174,7 +176,7 @@ const Charts = ({ initialStep }) => {
 
   return (
     <motion.div
-      className="absoulte z-0 flex h-full w-full items-center"
+      className="relative z-0 flex w-full items-center justify-center pt-20 lg:h-full lg:pt-0"
       initial={{ opacity: 0 }}
       animate={ANIMATE}
       transition={{ duration: STEP_DURATION }}

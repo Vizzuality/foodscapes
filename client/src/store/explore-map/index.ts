@@ -10,11 +10,6 @@ export const sidebarOpenAtom = atom({
   default: true,
 });
 
-export const menuOpenAtom = atom({
-  key: 'menu-open',
-  default: false,
-});
-
 export const layersOpenAtom = atom({
   key: 'layers-open',
   default: false,
