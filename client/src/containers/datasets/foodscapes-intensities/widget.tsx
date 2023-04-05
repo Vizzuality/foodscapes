@@ -6,8 +6,11 @@ import { intensitiesAtom, layersAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
+
 import { DATASETS } from 'constants/datasets';
 
+import MultiSelect from 'components/ui/select/multi/component';
 import Switch from 'components/ui/switch';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
@@ -21,6 +24,8 @@ const FoodscapesIntensitiesWidget = () => {
 
   const intensities = useRecoilValue(intensitiesAtom);
   const setIntensities = useSetRecoilState(intensitiesAtom);
+
+  const { data: intensitiesData, isLoading: intensitiesIsLoading } = useFoodscapesIntensities();
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -67,14 +72,28 @@ const FoodscapesIntensitiesWidget = () => {
         </p>
       </div>
 
-      <div className="h-8">
-        <Chart
-          //
-          dataset={DATASET}
-          selected={intensities}
-          onBarClick={handleBarClick}
-          interactive
+      <div className="space-y-5">
+        <MultiSelect
+          id="foodscapes-multiselect"
+          size="s"
+          theme="light"
+          placeholder="Filter intensities"
+          options={intensitiesData}
+          values={intensities as number[]}
+          batchSelectionActive
+          clearSelectionActive
+          loading={intensitiesIsLoading}
+          onChange={(values) => setIntensities(values as number[])}
         />
+        <div className="h-8">
+          <Chart
+            //
+            dataset={DATASET}
+            selected={intensities}
+            onBarClick={handleBarClick}
+            interactive
+          />
+        </div>
       </div>
     </section>
   );

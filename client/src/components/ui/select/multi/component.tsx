@@ -102,7 +102,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       >
         {({ open }) => (
           <>
-            <div className="relative space-y-3" ref={ref}>
+            <div className="relative" ref={ref}>
               <span className="inline-block w-full">
                 <Listbox.Button
                   className={cx({
@@ -114,7 +114,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   })}
                 >
                   <span className="block truncate">{SELECTED}</span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                  <span className="pointer-events-none absolute inset-y-px right-0 flex items-center pr-3">
                     <Loading
                       visible={loading}
                       className={THEME[theme].loading}
@@ -140,7 +140,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
                 className={cx({
-                  'absolute z-10 w-full min-w-[250px] overflow-y-auto rounded-lg shadow-lg': true,
+                  'absolute bottom-full z-10 w-full min-w-[250px] overflow-y-auto shadow-lg': true,
                 })}
               >
                 <Listbox.Options
@@ -150,7 +150,12 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                     [THEME[theme].menu]: true,
                   })}
                 >
-                  <div className="flex space-x-5 px-5 text-sm">
+                  <div
+                    className={cx({
+                      'sticky top-0 z-10 flex space-x-5 px-5 text-sm': true,
+                      [THEME[theme].menuHeader]: true,
+                    })}
+                  >
                     {batchSelectionActive && (
                       <button
                         className="text-grey-20 whitespace-nowrap py-2 text-left underline"
@@ -183,10 +188,11 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                         {({ active: a, selected: s, disabled: d }) => (
                           <div
                             className={cx({
-                              'relative flex cursor-pointer select-none items-center space-x-2 py-2 pl-5 pr-4':
+                              'relative flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
                                 true,
                               [THEME[theme].item.base]: true,
                               [THEME[theme].item.active]: a,
+                              [THEME[theme].item.selected]: s,
                               [THEME[theme].item.disabled]: d,
                             })}
                           >
@@ -197,7 +203,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                             <span
                               className={cx({
-                                'block font-semibold line-clamp-2': true,
+                                'block line-clamp-2': true,
                               })}
                             >
                               {opt.label}

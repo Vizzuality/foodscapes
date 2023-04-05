@@ -72,7 +72,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
       >
         {({ open }) => (
           <>
-            <div className="relative space-y-3" ref={ref}>
+            <div className="relative" ref={ref}>
               <span className="inline-block w-full">
                 <Listbox.Button
                   className={cx({
@@ -110,7 +110,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
                 className={cx({
-                  'absolute z-10 w-full min-w-[250px] overflow-y-auto rounded-lg shadow-lg': true,
+                  'absolute z-10 w-full min-w-[250px] overflow-y-auto shadow-lg': true,
                 })}
               >
                 <Listbox.Options

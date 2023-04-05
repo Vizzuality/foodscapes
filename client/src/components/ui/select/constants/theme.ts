@@ -2,7 +2,7 @@ const THEME = {
   dark: {
     container: 'text-white text-sm',
     button: {
-      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border rounded-lg bg-gray-700',
+      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
       states: {
         none: 'border-white',
         error: 'border-red-500',
@@ -10,9 +10,10 @@ const THEME = {
         disabled: 'opacity-50',
       },
     },
-    menu: 'bg-gray-600',
+    menu: 'bg-gray-500',
+    menuHeader: 'bg-gray-500',
     item: {
-      base: 'text-sm text-white',
+      base: 'text-xs text-white',
       active: 'bg-black text-white',
       selected: 'bg-gray-700 text-white',
       disabled: 'opacity-40 text-white',
@@ -23,7 +24,7 @@ const THEME = {
   light: {
     container: 'text-gray-600 text-sm',
     button: {
-      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border rounded-lg bg-white',
+      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-white',
       states: {
         none: 'border-gray-800',
         error: 'border-red-500',
@@ -31,11 +32,12 @@ const THEME = {
         disabled: 'opacity-50',
       },
     },
-    menu: 'bg-white',
+    menu: 'bg-white border border-gray-800',
+    menuHeader: 'bg-white',
     item: {
-      base: 'text-sm',
-      active: 'bg-black/30 text-black',
-      selected: 'bg-black/40 text-black',
+      base: 'text-xs',
+      active: 'bg-black/5 text-black',
+      selected: 'bg-black/10 text-black',
       disabled: 'opacity-40 text-black',
     },
     loading: 'relative flex items-center w-full h-full',
@@ -53,8 +55,9 @@ const THEME = {
       },
     },
     menu: 'bg-white text-gray-700',
+    menuHeader: 'bg-white',
     item: {
-      base: 'text-sm',
+      base: 'text-xs',
       active: 'bg-gray-100 text-black',
       selected: 'bg-black/10 text-black',
       disabled: 'opacity-40 text-black',

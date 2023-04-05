@@ -10,6 +10,7 @@ import { useFoodscapes } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
+import MultiSelect from 'components/ui/select/multi/component';
 import Switch from 'components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
@@ -26,7 +27,7 @@ const FoodscapesWidget = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData } = useFoodscapes();
+  const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -112,14 +113,28 @@ const FoodscapesWidget = () => {
           <TabsTrigger value="group">Soil Groups</TabsTrigger>
         </TabsList>
         <TabsContent value="single">
-          <div className="h-8">
-            <Chart
-              //
-              dataset={DATASET}
-              selected={foodscapes}
-              onBarClick={handleBarClick}
-              interactive
+          <div className="mt-5 space-y-5">
+            <MultiSelect
+              id="foodscapes-multiselect"
+              size="s"
+              theme="light"
+              placeholder="Filter foodscapes"
+              options={foodscapesData}
+              values={foodscapes as number[]}
+              batchSelectionActive
+              clearSelectionActive
+              loading={foodscapesIsLoading}
+              onChange={(values) => setFoodscapes(values as number[])}
             />
+            <div className="h-8">
+              <Chart
+                //
+                dataset={DATASET}
+                selected={foodscapes}
+                onBarClick={handleBarClick}
+                interactive
+              />
+            </div>
           </div>
         </TabsContent>
 
