@@ -99,7 +99,7 @@ const FoodscapesChart = ({
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, TOTAL],
-      range: [0, width - 2],
+      range: [0, width - 4],
       round: true,
     });
   }, [width, TOTAL]);
@@ -107,7 +107,7 @@ const FoodscapesChart = ({
   const yScale = useMemo(() => {
     return scaleBand<number>({
       domain: [],
-      range: [0, height - 2],
+      range: [0, height - 4],
     });
   }, [height]);
 
@@ -137,7 +137,7 @@ const FoodscapesChart = ({
   return (
     <div className="relative">
       <svg width={width} height={height}>
-        <Group top={1}>
+        <Group top={2} left={2}>
           <TooltipProvider delayDuration={0} skipDelayDuration={500}>
             <BarStackHorizontal<FoodscapeChartData, number>
               data={DATA}
@@ -205,10 +205,10 @@ const FoodscapesChart = ({
 
                         {hover === bar.key && (
                           <rect
-                            x={bar.x + 1}
-                            y={bar.y + 1}
-                            width={Math.max(bar.width - 1, 0)}
-                            height={Math.max(bar.height - 1, 0)}
+                            x={bar.x}
+                            y={bar.y}
+                            width={bar.width}
+                            height={bar.height}
                             fill="transparent"
                             stroke="#1C274A"
                             strokeWidth={1}
@@ -265,10 +265,8 @@ const FoodscapesChart = ({
 
           {!ALL_SELECTED.length && !PARTIAL_SELECTED.length && !hover && (
             <rect
-              x={1}
-              y={1}
-              width={Math.max(width - 3, 0)}
-              height={Math.max(height - 3, 0)}
+              width={Math.max(width - 4, 0)}
+              height={Math.max(height - 4, 0)}
               fill="transparent"
               stroke="#1C274A"
               strokeWidth={1}
