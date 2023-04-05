@@ -52,7 +52,7 @@ const FoodscapesChart = ({
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, TOTAL],
-      range: [0, width - 1],
+      range: [0, width - 4],
       round: true,
     });
   }, [width, TOTAL]);
@@ -60,7 +60,7 @@ const FoodscapesChart = ({
   const yScale = useMemo(() => {
     return scaleBand<number>({
       domain: [],
-      range: [0, height - 2],
+      range: [0, height - 4],
     });
   }, [height]);
 

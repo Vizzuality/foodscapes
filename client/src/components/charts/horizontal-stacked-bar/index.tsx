@@ -78,7 +78,7 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
   return (
     <div className="relative">
       <svg width={width} height={height}>
-        <Group top={1}>
+        <Group top={2} left={2}>
           <TooltipProvider delayDuration={0} skipDelayDuration={500}>
             <BarStackHorizontal<any, number>
               data={DATA}
@@ -130,10 +130,10 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
 
                         {hover === bar.key && (
                           <rect
-                            x={bar.x + 1}
-                            y={bar.y + 1}
-                            width={Math.max(bar.width - 1, 0)}
-                            height={Math.max(bar.height - 1, 0)}
+                            x={bar.x}
+                            y={bar.y}
+                            width={bar.width}
+                            height={bar.height}
                             fill="transparent"
                             stroke="#1C274A"
                             strokeWidth={1}
@@ -171,10 +171,8 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
 
           {!selected?.length && !hover && (
             <rect
-              x={1}
-              y={1}
-              width={Math.max(width - 2, 0)}
-              height={Math.max(height - 3, 0)}
+              width={Math.max(width - 4, 0)}
+              height={Math.max(height - 4, 0)}
               fill="transparent"
               stroke="#1C274A"
               strokeWidth={1}
