@@ -4,9 +4,9 @@ import cx from 'classnames';
 
 import { Listbox, Transition } from '@headlessui/react';
 
-import THEME from 'components/forms/select/constants/theme';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
+import THEME from 'components/ui/select/constants/theme';
 
 import CHEVRON_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 import CHEVRON_UP_SVG from 'svgs/ui/arrow-up.svg?sprite';

@@ -4,10 +4,10 @@ import cx from 'classnames';
 
 import { Listbox, Transition } from '@headlessui/react';
 
-import Checkbox from 'components/forms/checkbox';
-import THEME from 'components/forms/select/constants/theme';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
+import { Checkbox } from 'components/ui/checkbox';
+import THEME from 'components/ui/select/constants/theme';
 
 import CHEVRON_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 import CHEVRON_UP_SVG from 'svgs/ui/arrow-up.svg?sprite';
@@ -193,7 +193,6 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                             <Checkbox
                               className="cursor-pointer checked:bg-black focus:text-black focus:ring-black"
                               checked={s}
-                              readOnly
                             />
 
                             <span

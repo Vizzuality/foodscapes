@@ -2110,15 +2110,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:1.7.4":
-  version: 1.7.4
-  resolution: "@headlessui/react@npm:1.7.4"
+"@headlessui/react@npm:1.7.13":
+  version: 1.7.13
+  resolution: "@headlessui/react@npm:1.7.13"
   dependencies:
     client-only: ^0.0.1
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: cd7192aa0748d715ed0da94435f217a1a618894a09df722c8b6ac0967c0c2f93b4c1e6b29c4993a3303dc453b20b05323d2a37239408740391989a64b7dce38c
+  checksum: 132e5fce86978b9a6fd9d669fb556acec783debcd8f510c99226b3b3229dad50a13aeed69fc9af66465fc7029487ecfc46e6226f14218b760d5a309e08c0d059
   languageName: node
   linkType: hard
 
@@ -3238,6 +3238,26 @@ __metadata:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
   checksum: 808ad81fb7a10281b2c3e549f40259891aff84e93d448100ce466ccb46ac8d21e68e1e8d8e45000fcf72d1f21bcffce6d58c689936f01f10b623a7abea3e9a23
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-checkbox@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@radix-ui/react-checkbox@npm:1.0.3"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-presence": 1.0.0
+    "@radix-ui/react-primitive": 1.0.2
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-previous": 1.0.0
+    "@radix-ui/react-use-size": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: aca9213eddb7f5c65b2d396421bc5a9d18fb87fad81e1964d0ac7a72fe6abb3b2c2c51ecc29b0643286843187680974ba1ff7197b2a936dd7d5edde25819800f
   languageName: node
   linkType: hard
 
@@ -11801,13 +11821,14 @@ __metadata:
     "@egjs/react-flicking": 4.9.4
     "@evilmartians/lefthook": ^1.2.7
     "@floating-ui/react-dom-interactions": 0.6.1
-    "@headlessui/react": 1.7.4
+    "@headlessui/react": 1.7.13
     "@luma.gl/constants": 8.5.18
     "@mdx-js/loader": 2.3.0
     "@mdx-js/react": 2.3.0
     "@next/font": 13.1.2
     "@next/mdx": 13.2.4
     "@radix-ui/react-accordion": 1.1.0
+    "@radix-ui/react-checkbox": 1.0.3
     "@radix-ui/react-dialog": ^1.0.2
     "@radix-ui/react-popover": 1.0.3
     "@radix-ui/react-slider": 1.1.0
