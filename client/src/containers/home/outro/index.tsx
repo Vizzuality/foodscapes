@@ -13,8 +13,8 @@ const Outro = () => {
   return (
     <div className="relative z-20 flex min-h-screen flex-col justify-center bg-white px-10 lg:px-0">
       <Wrapper>
-        <div className="flex flex-col space-y-16 lg:grid lg:grid-cols-12 lg:gap-6">
-          <div className="col-span-4 flex flex-col xl:col-start-2">
+        <div className="flex flex-col space-y-16 lg:grid lg:grid-cols-12 lg:gap-6 lg:space-y-0">
+          <div className="col-span-4 flex grow flex-col xl:col-start-2">
             <div className="flex h-full grow flex-col">
               <Link
                 href="/stories/argentina-gran-chaco"

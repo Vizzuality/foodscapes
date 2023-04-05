@@ -17,7 +17,7 @@ interface UseFoodscapesLegendProps {
   settings?: Settings;
 }
 
-export function useSource(): AnySourceData {
+export function useSource(): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
 
   const band = 1;
@@ -31,8 +31,13 @@ export function useSource(): AnySourceData {
     return encodeURIComponent(JSON.stringify(c));
   }, [foodscapesData]);
 
+  if (!foodscapesData || !foodscapesData.length) {
+    return null;
+  }
+
   return {
     id: 'foodscapes-source',
+    key: `${band}-${colormap}`,
     type: 'raster',
     tiles: [
       // `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap={{COLOR_RAMP}}&bidx={{BAND}}`,
