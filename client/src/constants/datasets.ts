@@ -1,3 +1,5 @@
+import squel from 'squel';
+
 import { Dataset } from 'types/datasets';
 
 export const DATASETS = [
@@ -10,10 +12,16 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
-      sql: `SELECT DISTINCT foodscapes as id, soil_groups, COUNT(pixel_count) AS value
-      FROM foodscapes
-      WHERE foodscapes NOT IN (1,2,3)
-      GROUP BY foodscapes, soil_groups`,
+      sql: squel
+        .select()
+        .field('foodscapes', 'id')
+        .field('soil_groups')
+        .field('COUNT(pixel_count)', 'value')
+        .distinct()
+        .from('foodscapes')
+        .where('foodscapes NOT IN (1,2,3)')
+        .group('intensity_groups')
+        .group('soil_groups'),
     },
   },
   {
@@ -25,10 +33,14 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
-      sql: `SELECT DISTINCT intensity_groups as id, COUNT(pixel_count) AS value
-      FROM foodscapes
-      WHERE intensity_groups NOT IN (0)
-      GROUP BY intensity_groups`,
+      sql: squel
+        .select()
+        .field('intensity_groups', 'id')
+        .field('COUNT(pixel_count)', 'value')
+        .distinct()
+        .from('foodscapes')
+        .where('intensity_groups NOT IN (0)')
+        .group('intensity_groups'),
     },
   },
   {

@@ -75,6 +75,13 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
     ];
   }, [data]);
 
+  console.log({
+    KEYS,
+    TOTAL,
+    DATA,
+    color: colorScale(3),
+  });
+
   return (
     <div className="relative">
       <svg width={width} height={height}>

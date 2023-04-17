@@ -1,8 +1,11 @@
 import { useCallback, useMemo } from 'react';
 
+import { foodscapesAtom } from 'store/explore-map';
+
 import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
+import { useRecoilValue } from 'recoil';
 
 import { FoodscapeIntensityData } from 'types/data';
 import { Dataset } from 'types/datasets';
@@ -34,11 +37,14 @@ const FoodscapesChart = ({
   selected,
   onBarClick,
 }: FoodscapesChartProps) => {
+  const foodscapes = useRecoilValue(foodscapesAtom);
+
   // DATA
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 
   const { data } = useData<FoodscapeIntensityData>({
     sql: dataset.widget.sql,
+    foodscapes,
     shape: 'array',
   });
 

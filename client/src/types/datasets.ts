@@ -1,3 +1,4 @@
+import { Select } from 'squel';
 export interface Dataset {
   id: string;
   label: string;
@@ -7,6 +8,6 @@ export interface Dataset {
   };
   widget: {
     enabled: boolean;
-    sql?: string;
+    sql?: Select;
   };
 }

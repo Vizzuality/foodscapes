@@ -44,13 +44,15 @@ const FoodscapesChart = ({
   // DATA
   const { data: foodscapesData } = useFoodscapes();
 
-  const { data } = useData<FoodscapeData>({
+  const { data, error } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
     shape: 'array',
   });
 
   // CONFIG
   const KEYS = useMemo(() => {
+    if (error) return [];
+
     return [
       ...new Set(
         data //
@@ -58,7 +60,7 @@ const FoodscapesChart = ({
           .map((d) => d.soil_groups)
       ),
     ];
-  }, [data]);
+  }, [data, error]);
   const TOTAL = data.reduce((acc, curr) => acc + curr.value, 0);
 
   const DATA = useMemo<FoodscapeChartData[]>(() => {
