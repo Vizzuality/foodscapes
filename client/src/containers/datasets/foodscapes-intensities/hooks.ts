@@ -14,6 +14,7 @@ interface UseFoodscapesIntensitiesSourceProps {
   filters: {
     foodscapes: number[];
     intensities: number[];
+    crops: number[];
   };
 }
 

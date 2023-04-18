@@ -1,89 +1,120 @@
 import { useMemo } from 'react';
 
+import { titilerAdapter } from 'lib/adapters/titiler-adapter';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
-import { useFoodscapes } from 'hooks/foodscapes';
+import { Dataset } from 'types/datasets';
+
+import { useCrops } from 'hooks/crops';
 
 import { Settings } from 'components/map/legend/types';
+
+interface UseCropsSourceProps {
+  filters: {
+    foodscapes: number[];
+    intensities: number[];
+    crops: number[];
+  };
+}
 
 interface UseCropsLayerProps {
   settings?: Partial<Settings>;
 }
 
 interface UseCropsLegendProps {
+  dataset: Dataset;
   settings?: Settings;
 }
 
-export function useSource(): AnySourceData {
+export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {
+  const { data: cropsData } = useCrops();
+
+  const band = 4;
+  const colormap = useMemo(() => {
+    const c = cropsData.reduce((acc, v) => {
+      return {
+        ...acc,
+        [v.value]: v.color,
+      };
+    }, {});
+    return JSON.stringify(c);
+  }, [cropsData]);
+
+  const expression = useMemo(() => {
+    const where = titilerAdapter(filters);
+
+    if (!where) return null;
+
+    return `where(${where},b${band},-1)`;
+  }, [filters]);
+
+  const searchParams = useMemo(() => {
+    const params = new URLSearchParams();
+
+    if (colormap) params.set('colormap', colormap);
+    if (band) params.set('bidx', band.toString());
+    if (expression) params.set('expression', expression);
+
+    return params.toString();
+  }, [band, colormap, expression]);
+
   return {
     id: 'crops-source',
-    type: 'vector',
-    url: 'mapbox://afilatore90.azhsjfex',
+    key: `${band}-${colormap}-${expression}`,
+    type: 'raster',
+    tiles: [
+      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
+    ],
   };
 }
 
-export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer[] {
+export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
-  const layers = useMemo(() => {
-    return [
-      {
-        id: 'crops-layer',
-        type: 'fill',
-        'source-layer': 'everest_rivers_v2-8my8fi',
-        paint: {
-          'fill-color': '#77CCFF',
-          'fill-opacity': 0.5 * (settings.opacity ?? 1),
-        },
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
+  const layer = useMemo<AnyLayer>(() => {
+    return {
+      id: 'crops-layer',
+      type: 'raster',
+      paint: {
+        'raster-opacity': settings.opacity ?? 1,
       },
-      {
-        id: 'crops-layer-line',
-        type: 'line',
-        'source-layer': 'everest_rivers_v2-8my8fi',
-        paint: {
-          'line-color': '#0044FF',
-          'line-width': 1,
-          'line-opacity': settings.opacity ?? 1,
-        },
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
+      layout: {
+        visibility: visibility ? 'visible' : 'none',
       },
-    ] as AnyLayer[];
+    };
   }, [settings, visibility]);
 
-  return layers;
+  return layer;
 }
 
 export function useLegend({
+  dataset,
   settings = {
     opacity: 1,
     visibility: true,
     expand: true,
   },
 }: UseCropsLegendProps) {
-  const { data: foodscapesData } = useFoodscapes();
+  const { data: cropsData } = useCrops();
 
   const colormap = useMemo(() => {
-    const c = foodscapesData.reduce((acc, v) => {
+    const c = cropsData.reduce((acc, v) => {
       return {
         ...acc,
         [v.value]: v.color,
       };
     }, {});
     return encodeURIComponent(JSON.stringify(c));
-  }, [foodscapesData]);
+  }, [cropsData]);
 
   const legend = useMemo(() => {
-    if (!foodscapesData || !foodscapesData.length) {
+    if (!cropsData || !cropsData.length) {
       return null;
     }
 
     return {
-      id: 'crops',
-      name: 'Crops',
+      id: dataset.id,
+      name: dataset.label,
       colormap,
       settings: settings,
       settingsManager: {
@@ -93,7 +124,7 @@ export function useLegend({
         info: true,
       },
     };
-  }, [foodscapesData, colormap, settings]);
+  }, [dataset, colormap, settings, cropsData]);
 
   return legend;
 }

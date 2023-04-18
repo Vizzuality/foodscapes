@@ -12,6 +12,7 @@ import { Settings } from 'components/map/legend/types';
 
 interface UseFoodscapesSourceProps {
   filters: {
+    crops: number[];
     foodscapes: number[];
     intensities: number[];
   };

@@ -1,8 +1,10 @@
 // Crops
+import CropsInfo from './crops/info.mdx';
 import CropsLayer from './crops/layer';
 import CropsLegend from './crops/legend';
 import CropsPopup from './crops/popup';
 // Foodscapes intensity groups
+import FoodscapesIntensitiesInfo from './foodscapes-intensities/info.mdx';
 import FoodscapesIntensitiesLayer from './foodscapes-intensities/layer';
 import FoodscapesIntensitiesLegend from './foodscapes-intensities/legend';
 import FoodscapesIntensitiesPopup from './foodscapes-intensities/popup';
@@ -32,4 +34,6 @@ export const POPUPS = {
 
 export const INFO = {
   foodscapes: FoodscapesInfo,
+  'foodscapes-intensities': FoodscapesIntensitiesInfo,
+  crops: CropsInfo,
 };

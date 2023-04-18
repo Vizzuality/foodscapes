@@ -20,8 +20,7 @@ export const DATASETS = [
         .distinct()
         .from('foodscapes')
         .where('foodscapes NOT IN (1,2,3)')
-        .group('intensity_groups')
-        .group('soil_groups'),
+        .group('foodscapes'),
     },
   },
   {
@@ -52,6 +51,15 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      sql: squel
+        .select()
+        .field('crops', 'id')
+        .field('crop_groups', 'parent_id')
+        .field('COUNT(pixel_count)', 'value')
+        .distinct()
+        .from('foodscapes')
+        .where('crops NOT IN (-9999)')
+        .group('crops'),
     },
   },
 

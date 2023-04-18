@@ -1,0 +1,380 @@
+[
+  {
+    "id": 0,
+    "value": 1,
+    "label": "temperate fruit",
+    "color": "#E3CCEE",
+    "parentId": 4,
+    "parentLabel": "Perennials",
+    "parentColor": "#D588CE"
+  },
+  {
+    "id": 1,
+    "value": 2,
+    "label": "yams",
+    "color": "#FF8366",
+    "parentId": 2,
+    "parentLabel": "Roots and tubers",
+    "parentColor": "#FF8366"
+  },
+  {
+    "id": 2,
+    "value": 3,
+    "label": "other cereals",
+    "color": "#1A9172",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 3,
+    "value": 4,
+    "label": "barley",
+    "color": "#105E6E",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 4,
+    "value": 5,
+    "label": "coconut",
+    "color": "#4EB46E",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 5,
+    "value": 6,
+    "label": "pearl millet",
+    "color": "#137177",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 6,
+    "value": 7,
+    "label": "groundnut",
+    "color": "#35A76B",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 7,
+    "value": 8,
+    "label": "tea",
+    "color": "#787CC3",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 8,
+    "value": 9,
+    "label": "robusta coffee",
+    "color": "#624DAD",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 9,
+    "value": 10,
+    "label": "sorghum",
+    "color": "#188977",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 10,
+    "value": 11,
+    "label": "soybean",
+    "color": "#1D9A6C",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 11,
+    "value": 12,
+    "label": "lentil",
+    "color": "#B3D0D8",
+    "parentId": 3,
+    "parentLabel": "Legumes and pulses",
+    "parentColor": "#7389B3"
+  },
+  {
+    "id": 12,
+    "value": 13,
+    "label": "cassava",
+    "color": "#FF9999",
+    "parentId": 2,
+    "parentLabel": "Roots and tubers",
+    "parentColor": "#FF8366"
+  },
+  {
+    "id": 13,
+    "value": 14,
+    "label": "rest of crops",
+    "color": "#ACB8E7",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 14,
+    "value": 15,
+    "label": "sesameseed",
+    "color": "#C4E3B5",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 15,
+    "value": 16,
+    "label": "other oil crops",
+    "color": "#DEEDCF",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 16,
+    "value": 17,
+    "label": "cocoa",
+    "color": "#6962B8",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 17,
+    "value": 18,
+    "label": "plantain",
+    "color": "#B94484",
+    "parentId": 4,
+    "parentLabel": "Perennials",
+    "parentColor": "#D588CE"
+  },
+  {
+    "id": 18,
+    "value": 19,
+    "label": "sugarcane",
+    "color": "#5D1150",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 19,
+    "value": 20,
+    "label": "chickpea",
+    "color": "#535C9F",
+    "parentId": 3,
+    "parentLabel": "Legumes and pulses",
+    "parentColor": "#7389B3"
+  },
+  {
+    "id": 20,
+    "value": 21,
+    "label": "bean",
+    "color": "#3D348B",
+    "parentId": 3,
+    "parentLabel": "Legumes and pulses",
+    "parentColor": "#7389B3"
+  },
+  {
+    "id": 21,
+    "value": 22,
+    "label": "other pulses",
+    "color": "#D5EAE9",
+    "parentId": 3,
+    "parentLabel": "Legumes and pulses",
+    "parentColor": "#7389B3"
+  },
+  {
+    "id": 22,
+    "value": 23,
+    "label": "oilpalm",
+    "color": "#67C075",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 23,
+    "value": 24,
+    "label": "maize",
+    "color": "#0E4D64",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 24,
+    "value": 25,
+    "label": "tobacco",
+    "color": "#8D9ACE",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 25,
+    "value": 26,
+    "label": "arabica coffee",
+    "color": "#5E38A1",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 26,
+    "value": 27,
+    "label": "sweet potato",
+    "color": "#FF9833",
+    "parentId": 2,
+    "parentLabel": "Roots and tubers",
+    "parentColor": "#FF8366"
+  },
+  {
+    "id": 27,
+    "value": 28,
+    "label": "cowpea",
+    "color": "#7389B3",
+    "parentId": 3,
+    "parentLabel": "Legumes and pulses",
+    "parentColor": "#7389B3"
+  },
+  {
+    "id": 28,
+    "value": 29,
+    "label": "potato",
+    "color": "#FDC500",
+    "parentId": 2,
+    "parentLabel": "Roots and tubers",
+    "parentColor": "#FF8366"
+  },
+  {
+    "id": 29,
+    "value": 30,
+    "label": "rice",
+    "color": "#0C3D5B",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 30,
+    "value": 31,
+    "label": "sunflower",
+    "color": "#81CC80",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 31,
+    "value": 32,
+    "label": "other fibre crops",
+    "color": "#5C2395",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 32,
+    "value": 33,
+    "label": "cotton",
+    "color": "#651E88",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 33,
+    "value": 34,
+    "label": "rapeseed",
+    "color": "#A5D89A",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 34,
+    "value": 35,
+    "label": "banana",
+    "color": "#9A031E",
+    "parentId": 4,
+    "parentLabel": "Perennials",
+    "parentColor": "#D588CE"
+  },
+  {
+    "id": 35,
+    "value": 36,
+    "label": "pigeonpea",
+    "color": "#93AFC5",
+    "parentId": 3,
+    "parentLabel": "Legumes and pulses",
+    "parentColor": "#7389B3"
+  },
+  {
+    "id": 36,
+    "value": 37,
+    "label": "other roots",
+    "color": "#FFCCDC",
+    "parentId": 2,
+    "parentLabel": "Roots and tubers",
+    "parentColor": "#FF8366"
+  },
+  {
+    "id": 37,
+    "value": 38,
+    "label": "tropical fruit",
+    "color": "#D588CE",
+    "parentId": 4,
+    "parentLabel": "Perennials",
+    "parentColor": "#D588CE"
+  },
+  {
+    "id": 38,
+    "value": 39,
+    "label": "vegetables",
+    "color": "#B7CC00",
+    "parentId": 5,
+    "parentLabel": "Vegetables",
+    "parentColor": "#B7CC00"
+  },
+  {
+    "id": 39,
+    "value": 40,
+    "label": "small millet",
+    "color": "#15807B",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  },
+  {
+    "id": 40,
+    "value": 41,
+    "label": "sugarbeet",
+    "color": "#6C156B",
+    "parentId": 6,
+    "parentLabel": "Other",
+    "parentColor": "#651E88"
+  },
+  {
+    "id": 41,
+    "value": 42,
+    "label": "wheat",
+    "color": "#0A2F51",
+    "parentId": 1,
+    "parentLabel": "Cereals and oils",
+    "parentColor": "#0E4D64"
+  }
+]

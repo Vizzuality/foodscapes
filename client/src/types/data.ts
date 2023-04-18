@@ -9,6 +9,12 @@ export interface FoodscapeIntensityData {
   value: number;
 }
 
+export interface CropData {
+  id: number;
+  value: number;
+  parent_id: number;
+}
+
 export type PointData = {
   band_names: string[];
   coordinates: [number, number];

@@ -93,6 +93,16 @@ export const intensitiesAtom = atom({
   ],
 });
 
+export const cropsAtom = atom({
+  key: 'crops',
+  default: [],
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
 export function useSyncExploreMap() {
   const layers = useRecoilValue(layersAtom);
 

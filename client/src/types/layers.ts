@@ -8,6 +8,7 @@ export type LayerProps<S> = {
   filters?: {
     foodscapes: number[];
     intensities: number[];
+    crops: number[];
   };
 };
 
