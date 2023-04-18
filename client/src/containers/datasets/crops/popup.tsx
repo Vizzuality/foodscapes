@@ -27,7 +27,7 @@ const CropsPopup = ({ latLng }: CropsPopupProps) => {
     if (!cropsData || !pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const band = 'b1';
+    const band = 'b4';
     const value = pointData[band];
 
     return cropsData.find((d) => d.value === value);

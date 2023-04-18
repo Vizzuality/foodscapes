@@ -31,7 +31,7 @@ export function useCrops(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
       return [];
     }
 
-    return data.filter((d) => ![1, 2, 3].includes(d.value));
+    return data.sort((a, b) => a.label.localeCompare(b.label));
   }, [data]);
 
   return useMemo(() => {
