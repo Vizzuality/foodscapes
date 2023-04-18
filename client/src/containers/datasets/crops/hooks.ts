@@ -38,6 +38,8 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
         [v.value]: v.color,
       };
     }, {});
+    c[-1] = '#00000000';
+
     return JSON.stringify(c);
   }, [cropsData]);
 

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { intensitiesAtom } from 'store/explore-map';
+import { filtersSelector } from 'store/explore-map';
 
 import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
@@ -37,16 +37,15 @@ const CropsChart = ({
   selected,
   onBarClick,
 }: CropsChartProps) => {
-  const intensities = useRecoilValue(intensitiesAtom);
+  const filters = useRecoilValue(filtersSelector('crops'));
 
   // DATA
   const { data: cropsData } = useCrops();
 
-  console.log(dataset.widget.sql.toString());
   const { data } = useData<CropData>({
     sql: dataset.widget.sql,
-    intensities,
     shape: 'array',
+    ...filters,
   });
 
   // CONFIG
@@ -59,11 +58,6 @@ const CropsChart = ({
     return data.sort((a, b) => a.parent_id - b.parent_id);
   }, [data]);
 
-  console.log({
-    KEYS,
-    TOTAL,
-    DATA,
-  });
   // SCALES
   const xScale = useMemo(() => {
     return scaleLinear<number>({

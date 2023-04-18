@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 
 import { array, bool, dict, number, object, string } from '@recoiljs/refine';
-import { atom, useRecoilCallback, useRecoilValue } from 'recoil';
+import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
+
+import { FiltersOmitProps, FiltersProps } from 'types/data';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -101,6 +103,17 @@ export const cropsAtom = atom({
       refine: array(number()),
     }),
   ],
+});
+
+export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
+  key: 'filters',
+  get:
+    (omit) =>
+    ({ get }) => ({
+      ...(omit !== 'foodscapes' && { foodscapes: get(foodscapesAtom) }),
+      ...(omit !== 'intensities' && { intensities: get(intensitiesAtom) }),
+      ...(omit !== 'crops' && { crops: get(cropsAtom) }),
+    }),
 });
 
 export function useSyncExploreMap() {

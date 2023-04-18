@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { foodscapesAtom } from 'store/explore-map';
+import { filtersSelector } from 'store/explore-map';
 
 import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
@@ -37,15 +37,15 @@ const FoodscapesChart = ({
   selected,
   onBarClick,
 }: FoodscapesChartProps) => {
-  const foodscapes = useRecoilValue(foodscapesAtom);
+  const filters = useRecoilValue(filtersSelector('intensities'));
 
   // DATA
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 
   const { data } = useData<FoodscapeIntensityData>({
     sql: dataset.widget.sql,
-    foodscapes,
     shape: 'array',
+    ...filters,
   });
 
   // CONFIG

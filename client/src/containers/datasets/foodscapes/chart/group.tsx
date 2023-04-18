@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
+import { filtersSelector } from 'store/explore-map';
+
 import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { Group } from '@visx/group';
 import { ParentSize } from '@visx/responsive';
@@ -8,6 +10,7 @@ import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { group } from 'd3-array';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
 import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
@@ -41,12 +44,15 @@ const FoodscapesChart = ({
 }: FoodscapesChartProps) => {
   const [hover, setHover] = useState<number | null>(null);
 
+  const filters = useRecoilValue(filtersSelector('foodscapes'));
+
   // DATA
   const { data: foodscapesData } = useFoodscapes();
 
   const { data, error } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
     shape: 'array',
+    ...filters,
   });
 
   // CONFIG

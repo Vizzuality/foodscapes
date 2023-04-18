@@ -20,3 +20,11 @@ export type PointData = {
   coordinates: [number, number];
   values: number[];
 };
+
+export type FiltersProps = {
+  foodscapes?: readonly number[];
+  intensities?: readonly number[];
+  crops?: readonly number[];
+};
+
+export type FiltersOmitProps = 'foodscapes' | 'intensities' | 'crops' | null;

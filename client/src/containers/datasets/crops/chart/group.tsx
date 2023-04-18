@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
+import { filtersSelector } from 'store/explore-map';
+
 import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { Group } from '@visx/group';
 import { ParentSize } from '@visx/responsive';
@@ -8,6 +10,7 @@ import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { group } from 'd3-array';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
 import { CropChartData } from 'types/crops';
 import { CropData } from 'types/data';
@@ -39,6 +42,8 @@ const CropsChart = ({
   selected,
   onBarClick,
 }: CropsChartProps) => {
+  const filters = useRecoilValue(filtersSelector('crops'));
+
   const [hover, setHover] = useState<number | null>(null);
 
   // DATA
@@ -47,6 +52,7 @@ const CropsChart = ({
   const { data, error } = useData<CropData>({
     sql: dataset.widget.sql,
     shape: 'array',
+    ...filters,
   });
 
   // CONFIG
