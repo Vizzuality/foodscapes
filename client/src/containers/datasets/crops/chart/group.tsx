@@ -8,7 +8,6 @@ import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
-import { group } from 'd3-array';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
@@ -16,7 +15,7 @@ import { CropChartData } from 'types/crops';
 import { CropData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
-import { useCrops } from 'hooks/crops';
+import { useCrops, useCropsGroups } from 'hooks/crops';
 import { useData } from 'hooks/data';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
@@ -48,6 +47,7 @@ const CropsChart = ({
 
   // DATA
   const { data: cropsData } = useCrops();
+  const { data: cropsGroupsData } = useCropsGroups();
 
   const { data, error } = useData<CropData>({
     sql: dataset.widget.sql,
@@ -79,29 +79,21 @@ const CropsChart = ({
     ];
   }, [data]);
 
-  const GROUPS = useMemo(() => {
-    return Array.from(
-      group(cropsData, (d) => d.parentId),
-      ([key, value]) => ({
-        key,
-        value,
-        label: value.map((v) => v.parentLabel).reduce((_, v) => v, ''),
-        color: value.map((v) => v.parentColor).reduce((_, v) => v, ''),
-      })
-    );
-  }, [cropsData]);
-
   const ALL_SELECTED = useMemo(() => {
-    return GROUPS.filter((g) => {
-      return g.value.every((v) => selected.includes(v.value));
-    }).map((s) => s.key);
-  }, [selected, GROUPS]);
+    return cropsGroupsData
+      .filter((g) => {
+        return g.values.every((v) => selected.includes(v.value));
+      })
+      .map((s) => s.key);
+  }, [selected, cropsGroupsData]);
 
   const PARTIAL_SELECTED = useMemo(() => {
-    return GROUPS.filter((g) => {
-      return g.value.some((v) => selected.includes(v.value));
-    }).map((s) => s.key);
-  }, [selected, GROUPS]);
+    return cropsGroupsData
+      .filter((g) => {
+        return g.values.some((v) => selected.includes(v.value));
+      })
+      .map((s) => s.key);
+  }, [selected, cropsGroupsData]);
 
   // SCALES
   const xScale = useMemo(() => {
@@ -171,7 +163,7 @@ const CropsChart = ({
                       opacity = 0.75;
                     }
 
-                    const g = GROUPS.find((s) => s.key === bar.key);
+                    const g = cropsGroupsData.find((s) => s.key === bar.key);
 
                     return (
                       <g key={`bar-stack-${barStack.index}-${bar.index}`}>

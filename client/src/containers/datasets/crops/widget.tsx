@@ -90,21 +90,13 @@ const CropsWidget = () => {
   return (
     <section className="space-y-4 py-10">
       <header className="flex items-center justify-between space-x-5">
-        <h3 className="font-display text-2xl">Crops</h3>
+        <h3 className="font-display text-2xl">Crop production</h3>
 
         <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
       </header>
 
       <div className="space-y-2">
-        <p>
-          <strong>Crops</strong> can be consolidated into biophysical groupings that are identified
-          by the dominant <strong>soil type</strong> found in each of them. Soil type is determined
-          by the interaction of parent material, climate, vegetation, terrain, time, and human
-          activity.
-        </p>
-        <p className="font-light">
-          Soil groups are inclusive of the biophysical attributes of an area.
-        </p>
+        <p>Crop output in fresh weight of major crop groupings from each foodscape.</p>
       </div>
 
       <Tabs defaultValue="single">

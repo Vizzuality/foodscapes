@@ -8,6 +8,14 @@ export interface Crop {
   parentColor: string;
 }
 
+export interface CropGroup {
+  key: number;
+  value: number;
+  values: Crop[];
+  label: string;
+  color: string;
+}
+
 export type CropChartData = {
   '101': number;
   '102': number;

@@ -1,9 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
 import { foodscapesAtom, layersAtom } from 'store/explore-map';
 
+import { group } from 'd3-array';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -28,6 +29,34 @@ const FoodscapesWidget = () => {
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
   const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
+
+  const GROUPED_DATA = useMemo(() => {
+    return (
+      Array
+        // group by parent
+        .from(
+          group(foodscapesData, (d) => d.parentId),
+          ([key, value]) => {
+            const label = value.find((v) => v.parentId === key)?.parentLabel || '';
+            return { value: key, label, values: value };
+          }
+        )
+        // sort by label
+        .sort((a, b) => a.label.localeCompare(b.label))
+    );
+  }, [foodscapesData]);
+
+  const GROUPED_SELECTED = useMemo<number[]>(() => {
+    return (
+      GROUPED_DATA
+        //
+        .filter((g) => {
+          const ids = g.values.map((v) => v.value);
+          return ids.every((i) => foodscapes.includes(i));
+        })
+        .map((g) => g.value)
+    );
+  }, [GROUPED_DATA, foodscapes]);
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -87,6 +116,36 @@ const FoodscapesWidget = () => {
     });
   };
 
+  const handleSelectGroupOnChange = useCallback(
+    (values: number[]) => {
+      const newFoodscapes = [...foodscapes];
+
+      values.forEach((v) => {
+        const ids = foodscapesData.filter((d) => d.parentId === v).map((d) => d.value);
+        ids.forEach((i) => {
+          const index = newFoodscapes.findIndex((f) => f === i);
+          if (index === -1) {
+            newFoodscapes.push(i);
+          }
+        });
+      });
+
+      // Remove foodscapes that are not in the selected groups
+      GROUPED_SELECTED.forEach((g: number) => {
+        if (!values.includes(g)) {
+          const ids = foodscapesData.filter((d) => d.parentId === g).map((d) => d.value);
+          ids.forEach((i) => {
+            const index = newFoodscapes.findIndex((f) => f === i);
+            newFoodscapes.splice(index, 1);
+          });
+        }
+      });
+
+      setFoodscapes(newFoodscapes);
+    },
+    [foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
+  );
+
   return (
     <section className="space-y-4 py-10">
       <header className="flex items-center justify-between space-x-5">
@@ -139,13 +198,28 @@ const FoodscapesWidget = () => {
         </TabsContent>
 
         <TabsContent value="group">
-          <div className="h-8">
-            <ChartGroup
-              dataset={DATASET}
-              selected={foodscapes}
-              onBarClick={handleBarGroupClick}
-              interactive
+          <div className="mt-5 space-y-5">
+            <MultiSelect
+              id="foodscapes-multiselect"
+              size="s"
+              theme="light"
+              placeholder="Filter soil groups"
+              options={GROUPED_DATA}
+              values={GROUPED_SELECTED}
+              batchSelectionActive
+              clearSelectionActive
+              loading={foodscapesIsLoading}
+              onChange={handleSelectGroupOnChange}
             />
+
+            <div className="h-8">
+              <ChartGroup
+                dataset={DATASET}
+                selected={foodscapes}
+                onBarClick={handleBarGroupClick}
+                interactive
+              />
+            </div>
           </div>
         </TabsContent>
       </Tabs>
