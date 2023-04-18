@@ -1,3 +1,4 @@
+import cn from 'lib/classnames';
 import { ScrollProvider } from 'lib/scroll';
 
 import { lastStepAtom, stepAtom } from 'store/stories/gran-chaco';
@@ -6,6 +7,16 @@ import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
+import { Media } from 'components/media-query';
+
+// Mobile
+import IntroBackgroundMobile from './intro-mobile/background';
+import IntroHeroMobile from './intro-mobile/hero';
+import IntroHowMobile from './intro-mobile/how';
+import IntroMaskMobile from './intro-mobile/mask';
+import IntroRiskMobile from './intro-mobile/risk';
+
+// Desktop
 import IntroBackground from './intro/background';
 import IntroHero from './intro/hero';
 import IntroHow from './intro/how';
@@ -34,58 +45,100 @@ const GranChaco = () => {
   }, 100);
 
   return (
-    <ScrollProvider>
-      <ScrollItem step={0} onChange={onChange}>
-        <IntroHero />
-      </ScrollItem>
+    <>
+      <Media lessThan="sm">
+        <div
+          className={cn({
+            'w-full overflow-hidden': true,
+          })}
+        >
+          <ScrollItem step={0} onChange={onChange}>
+            <IntroHeroMobile />
+          </ScrollItem>
+          <ScrollItem step={1} onChange={onChange}>
+            <IntroHowMobile />
+          </ScrollItem>
+          <ScrollItem step={2} onChange={onChange}>
+            <IntroRiskMobile />
+          </ScrollItem>
 
-      <ScrollItem step={1} onChange={onChange}>
-        <IntroHow />
-      </ScrollItem>
+          <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
+            <IntroBackground />
 
-      <ScrollItem step={2} onChange={onChange}>
-        <IntroRisk />
-      </ScrollItem>
+            <IntroMask />
+          </motion.div>
 
-      <ScrollItem step={3} onChange={onChange}>
-        <NatureBasedHero />
-      </ScrollItem>
+          <motion.div
+            initial={false}
+            animate={{ opacity: [3, 4, 5, 6, 7, 8].includes(step) ? 1 : 0 }}
+          >
+            <NatureBasedBackground1 />
+            <NatureBasedBackground2 />
+            <NatureBasedBackground3 />
 
-      <ScrollItem step={4} onChange={onChange}>
-        <NatureBasedChart1 />
-      </ScrollItem>
+            <NatureBasedMask />
+          </motion.div>
+        </div>
+      </Media>
 
-      <ScrollItem step={5} onChange={onChange}>
-        <NatureBasedChart2 />
-      </ScrollItem>
+      <Media greaterThanOrEqual="sm">
+        <ScrollProvider>
+          <ScrollItem step={0} onChange={onChange}>
+            <IntroHero />
+          </ScrollItem>
 
-      <ScrollItem step={6} onChange={onChange}>
-        <NatureBasedChart3 />
-      </ScrollItem>
+          <ScrollItem step={1} onChange={onChange}>
+            <IntroHow />
+          </ScrollItem>
 
-      <ScrollItem step={7} onChange={onChange}>
-        <NatureBasedChart4 />
-      </ScrollItem>
+          <ScrollItem step={2} onChange={onChange}>
+            <IntroRisk />
+          </ScrollItem>
 
-      <ScrollItem step={8} onChange={onChange}>
-        <Outro />
-      </ScrollItem>
+          <ScrollItem step={3} onChange={onChange}>
+            <NatureBasedHero />
+          </ScrollItem>
 
-      {/* Backgrounds and masks */}
-      <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
-        <IntroBackground />
+          <ScrollItem step={4} onChange={onChange}>
+            <NatureBasedChart1 />
+          </ScrollItem>
 
-        <IntroMask />
-      </motion.div>
+          <ScrollItem step={5} onChange={onChange}>
+            <NatureBasedChart2 />
+          </ScrollItem>
 
-      <motion.div initial={false} animate={{ opacity: [3, 4, 5, 6, 7, 8].includes(step) ? 1 : 0 }}>
-        <NatureBasedBackground1 />
-        <NatureBasedBackground2 />
-        <NatureBasedBackground3 />
+          <ScrollItem step={6} onChange={onChange}>
+            <NatureBasedChart3 />
+          </ScrollItem>
 
-        <NatureBasedMask />
-      </motion.div>
-    </ScrollProvider>
+          <ScrollItem step={7} onChange={onChange}>
+            <NatureBasedChart4 />
+          </ScrollItem>
+
+          <ScrollItem step={8} onChange={onChange}>
+            <Outro />
+          </ScrollItem>
+
+          {/* Backgrounds and masks */}
+          <motion.div initial={false} animate={{ opacity: [0, 1, 2].includes(step) ? 1 : 0 }}>
+            <IntroBackground />
+
+            <IntroMask />
+          </motion.div>
+
+          <motion.div
+            initial={false}
+            animate={{ opacity: [3, 4, 5, 6, 7, 8].includes(step) ? 1 : 0 }}
+          >
+            <NatureBasedBackground1 />
+            <NatureBasedBackground2 />
+            <NatureBasedBackground3 />
+
+            <NatureBasedMask />
+          </motion.div>
+        </ScrollProvider>
+      </Media>
+    </>
   );
 };
 
