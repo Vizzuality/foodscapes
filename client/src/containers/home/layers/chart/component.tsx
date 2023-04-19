@@ -32,34 +32,36 @@ const LAYERS = [
 
 export interface LayersChartProps {
   initialStep: number;
+  currentStep?: number;
 }
 
-const LayersChart = ({ initialStep }: LayersChartProps) => {
+const LayersChart = ({ initialStep, currentStep }: LayersChartProps) => {
   const step = useRecoilValue(stepAtom);
+  const s = currentStep ?? step;
 
   const SELECTED = useMemo(() => {
-    return LAYERS.filter((l) => l.step === step - initialStep);
-  }, [initialStep, step]);
+    return LAYERS.filter((l) => l.step === s - initialStep);
+  }, [initialStep, s]);
 
   const PRELOADED_IMAGES = useMemo(() => {
     return LAYERS.map((l) => l.imageUrl);
   }, []);
 
   const ANIMATE = useMemo(() => {
-    if (step - initialStep < 0 || step - initialStep > LAYERS.length - 1)
+    if (s - initialStep < 0 || s - initialStep > LAYERS.length - 1)
       return {
         opacity: 0,
       };
     return {
       opacity: 1,
     };
-  }, [initialStep, step]);
+  }, [initialStep, s]);
 
   useImagesPreloader(PRELOADED_IMAGES);
 
   return (
     <motion.div
-      className="absolute z-10 flex h-full w-full scale-125 flex-col items-center justify-center"
+      className="relative z-10 flex w-full flex-col items-center justify-center lg:absolute lg:h-full lg:scale-125"
       initial={{ opacity: 0 }}
       animate={ANIMATE}
     >
