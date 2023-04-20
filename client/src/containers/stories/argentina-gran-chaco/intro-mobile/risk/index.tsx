@@ -11,7 +11,7 @@ const Risk = () => {
           <div>
             <Image
               src="/images/stories/argentina-gran-chaco/mobile/granchaco-mobile-2.jpg"
-              alt="Gran Chaco"
+              alt="Gran Chaco Risk"
               width={368}
               height={338}
               className="h-full w-full"

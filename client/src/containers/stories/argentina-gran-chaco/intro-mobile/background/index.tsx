@@ -29,6 +29,11 @@ const IntroBackground = () => {
         priority
       />
       <div className="absolute top-0 left-0 h-full w-full bg-black/20" />
+
+      <div className="absolute bottom-3 left-3">
+        <p className="text-xxs text-white">Gran Chaco. Argentina.</p>
+        <p className="text-xxs text-white">© AlejandraPinzón</p>
+      </div>
     </motion.div>
   );
 };
