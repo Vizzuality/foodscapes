@@ -1,10 +1,8 @@
-import { useCallback, useMemo, useState, useRef } from 'react';
+import { useCallback, useState, useRef } from 'react';
 
 import { stepAtom } from 'store/home';
 
 import { useRecoilValue } from 'recoil';
-
-import FadeY from 'containers/animations/fadeY';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
@@ -13,7 +11,6 @@ import LayerManager from './layer-manager';
 import Spin from './spin';
 
 const DEFAULT_PROPS: CustomMapProps = {
-  id: 'default',
   initialViewState: {
     latitude: 20,
     longitude: 0,
@@ -47,20 +44,12 @@ const DEFAULT_PROPS: CustomMapProps = {
   // },
 };
 
-const MapContainer = () => {
-  const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
+const MapContainer = ({ currentId }) => {
+  const { initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
   const [interacting, setInteracting] = useState(false);
   const timeoutRef = useRef(null);
 
   const step = useRecoilValue(stepAtom);
-
-  const ANIMATE = useMemo(() => {
-    if (step >= 10) {
-      return 'animate';
-    }
-
-    return 'exit';
-  }, [step]);
 
   const handleMouseDown = useCallback(() => {
     if (timeoutRef.current) {
@@ -74,38 +63,39 @@ const MapContainer = () => {
   }, []);
 
   return (
-    <FadeY animate={ANIMATE}>
-      <div id="home-globe" className="relative flex h-full w-full items-center justify-center">
-        <div className="aspect-square w-full">
-          <div className="relative flex h-full w-full items-center justify-center">
-            <Map
-              id={id}
-              mapStyle={mapStyle}
-              minZoom={minZoom}
-              maxZoom={maxZoom}
-              viewState={initialViewState}
-              projection="globe"
-              mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
-              constrainedAxis="y"
-              dragPan={true}
-              dragRotate={false}
-              scrollZoom={false}
-              doubleClickZoom={false}
-              keyboard={false}
-              onMouseDown={handleMouseDown}
-              onMapViewStateChange={handleMapViewStateChange}
-            >
-              {() => (
-                <>
-                  <LayerManager />
-                  <Spin enabled={step >= 10 && !interacting} />
-                </>
-              )}
-            </Map>
-          </div>
+    <div
+      id="home-globe"
+      className="relative flex h-[300px] w-full items-center justify-center lg:h-full"
+    >
+      <div className="aspect-square w-full">
+        <div className="relative flex h-full w-full items-center justify-center">
+          <Map
+            id={currentId}
+            mapStyle={mapStyle}
+            minZoom={minZoom}
+            maxZoom={maxZoom}
+            viewState={initialViewState}
+            projection="globe"
+            mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+            constrainedAxis="y"
+            dragPan={true}
+            dragRotate={false}
+            scrollZoom={false}
+            doubleClickZoom={false}
+            keyboard={false}
+            onMouseDown={handleMouseDown}
+            onMapViewStateChange={handleMapViewStateChange}
+          >
+            {() => (
+              <>
+                <LayerManager />
+                <Spin enabled={step >= 10 && !interacting} />
+              </>
+            )}
+          </Map>
         </div>
       </div>
-    </FadeY>
+    </div>
   );
 };
 

@@ -2,7 +2,8 @@ import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
-import { menuOpenAtom, popupAtom } from 'store/explore-map';
+import { popupAtom } from 'store/explore-map';
+import { menuOpenAtom } from 'store/menu';
 
 import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';

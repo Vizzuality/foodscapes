@@ -2,10 +2,11 @@ import { useSyncExploreMap } from 'store/explore-map';
 
 import Sidebar from 'containers/explore-map/sidebar';
 
+import Menu from '../header/menu';
+
 import Layers from './layers';
 import Legend from './legend';
 import Map from './map';
-import Menu from './menu';
 
 const ExploreMap = () => {
   useSyncExploreMap();

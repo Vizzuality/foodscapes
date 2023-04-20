@@ -11,10 +11,10 @@ import ARROW_RIGHT_SVG from 'svgs/ui/arrow-right.svg?sprite';
 
 const Outro = () => {
   return (
-    <div className="relative z-20 flex min-h-screen flex-col justify-center bg-white">
+    <div className="relative z-20 flex min-h-screen flex-col justify-center bg-white px-10 lg:px-0">
       <Wrapper>
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-4 flex flex-col xl:col-start-2">
+        <div className="flex flex-col space-y-16 lg:grid lg:grid-cols-12 lg:gap-6 lg:space-y-0">
+          <div className="col-span-4 flex grow flex-col xl:col-start-2">
             <div className="flex h-full grow flex-col">
               <Link
                 href="/stories/argentina-gran-chaco"
@@ -29,8 +29,8 @@ const Outro = () => {
                 >
                   <div className="relative z-10 flex h-full grow flex-col justify-between space-y-8">
                     <header className="space-y-8">
-                      <h2 className="font-display text-4xl">Continue learning.</h2>
-                      <p>
+                      <h2 className="font-display text-2xl lg:text-4xl">Continue learning.</h2>
+                      <p className="text-sm lg:text-base">
                         See soy production in action and how its foodscapes interact within the
                         specific boundary of Argentina Gran Chaco. Discover the risks that apply to
                         a real area and how nature-based solutions can help to ensure the integrity
@@ -39,12 +39,14 @@ const Outro = () => {
                     </header>
 
                     <div className="flex items-end justify-between">
-                      <Image
-                        width={81}
-                        height={131}
-                        src="/images/outro/plant.png"
-                        alt="Grand chaco plant"
-                      />
+                      <div className="max-w-[49px] lg:max-w-none">
+                        <Image
+                          width={81}
+                          height={131}
+                          src="/images/outro/plant.png"
+                          alt="Grand chaco plant"
+                        />
+                      </div>
                       <Icon
                         icon={ARROW_RIGHT_SVG}
                         className="h-4 w-4 group-hover:animate-bounce-horizontal"
@@ -67,8 +69,8 @@ const Outro = () => {
                 >
                   <div className="relative z-10 flex h-full grow flex-col justify-between space-y-8">
                     <header className="space-y-8">
-                      <h2 className="font-display text-4xl text-white">Explore map.</h2>
-                      <p className="text-white">
+                      <h2 className="font-display text-2xl text-white lg:text-4xl">Explore map.</h2>
+                      <p className="text-sm text-white lg:text-base">
                         Have a look at the 83 foodscapes in the map tool. Play with the different
                         filters to understand all their risks and opportunities, and learn about
                         specific case studies.
@@ -76,12 +78,14 @@ const Outro = () => {
                     </header>
 
                     <div className="flex items-end justify-between">
-                      <Image
-                        width={194}
-                        height={99}
-                        src="/images/outro/map.svg"
-                        alt="Explore map image"
-                      />
+                      <div className="max-w-[137px] lg:max-w-none">
+                        <Image
+                          width={194}
+                          height={99}
+                          src="/images/outro/map.svg"
+                          alt="Explore map image"
+                        />
+                      </div>
                       <Icon
                         icon={ARROW_RIGHT_SVG}
                         className="h-4 w-4 text-white group-hover:animate-bounce-horizontal"

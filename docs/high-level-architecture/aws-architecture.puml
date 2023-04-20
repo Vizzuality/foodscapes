@@ -1,0 +1,34 @@
+@startuml "Foodscapes"
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v15.0/dist/
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/Groups/AWSCloud.puml
+!include AWSPuml/Groups/VPC.puml
+!include AWSPuml/Containers/ElasticContainerService.puml
+!include AWSPuml/Containers/ElasticContainerServiceTask.puml
+!include AWSPuml/Containers/Fargate.puml
+!include AWSPuml/NetworkingContentDelivery/all.puml
+!include AWSPuml/Groups/VPC.puml
+!include AWSPuml/Groups/PrivateSubnet.puml
+
+!define ECSClusterGroup(g_alias, g_label="ECS Cluster") AWSGroupEntity(g_alias, g_label, AWS_COLOR_ORANGE, ElasticContainerService, ECSClusterGroup)
+!define FargateGroup(g_alias, g_label="Fargate") AWSGroupEntity(g_alias, g_label, AWS_COLOR_ORANGE, Fargate, FargateGroup)
+
+AWSCloudGroup(foodscapes_aws, "Foodscapes AWS account") {
+  ElasticLoadBalancingApplicationLoadBalancer(alb, "Application Load Balancer", "")
+  
+  VPCGroup(vpc) {
+    PrivateSubnetGroup(private_subnet, "Private subnet") {
+      FargateGroup(aws_fargate, "AWS Fargate") {
+        ECSClusterGroup(ecs, "ECS Cluster") {
+          ElasticContainerServiceTask(tiler_ecs_task, "TiTiler ECS task", "")
+          ElasticContainerServiceTask(app_ecs_task, "Foodscapes app ECS task", "")
+          ElasticContainerServiceTask(datasette_ecs_task, "Datasette ECS task", "")
+        }
+      }
+    }
+  }
+  alb -> ecs
+}
+
+@enduml
+

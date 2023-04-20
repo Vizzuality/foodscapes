@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
-import { layersAtom, layersSettingsAtom, menuOpenAtom } from 'store/explore-map';
+import { layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { menuOpenAtom } from 'store/menu';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';

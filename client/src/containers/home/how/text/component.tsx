@@ -2,9 +2,9 @@ import FadeYScroll from 'containers/animations/fadeYScroll';
 
 const HowText = () => {
   return (
-    <div className="flex h-small-screen flex-col justify-center space-y-10">
+    <div className="flex flex-col space-y-4 pt-20 lg:h-small-screen lg:justify-center lg:space-y-10 lg:pt-0">
       <FadeYScroll>
-        <h2 className="font-display text-6xl">How do we feed the world?</h2>
+        <h2 className="font-display text-5xl lg:text-6xl">How do we feed the world?</h2>
       </FadeYScroll>
 
       <div className="space-y-4">
