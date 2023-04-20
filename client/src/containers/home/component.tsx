@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import Image from 'next/image';
+
 import cn from 'lib/classnames';
 
 import { lastStepAtom, stepAtom } from 'store/home';
@@ -106,7 +108,13 @@ const Home = () => {
         <ScrollItem step={10} onChange={onChange}>
           <div className="flex flex-col space-y-20">
             <GlobeText />
-            <GlobeMap currentId="mobile-globe" />
+            <Image
+              width={414}
+              height={317}
+              src="/images/globe/globe-mobile.jpg"
+              alt="Globe with Foodscapes image"
+              className="object-fill"
+            />
           </div>
         </ScrollItem>
       </Media>
