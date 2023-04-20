@@ -10,8 +10,6 @@ import LayoutMap from 'layouts/map';
 import ExploreMap from 'containers/explore-map';
 import MetaTags from 'containers/meta-tags';
 
-import { Media } from 'components/media-query';
-
 const TITLE_TEXT = 'Explore Map | Towards Food System Transition';
 const DESCRIPTION_TEXT =
   'Explaining what foodscapes are and how they can contribute to the transformation of the world food system.';
@@ -49,9 +47,7 @@ const ExploreMapPage = () => {
           imageURL={IMAGE_URL}
         />
 
-        <Media greaterThanOrEqual="lg">
-          <ExploreMap />
-        </Media>
+        <ExploreMap />
       </RecoilURLSyncNext>
     </RecoilRoot>
   );
