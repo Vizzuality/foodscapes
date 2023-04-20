@@ -48,6 +48,8 @@ const CropsChart = ({
     ...filters,
   });
 
+  console.log(dataset.widget.sql.toString());
+
   // CONFIG
   const KEYS = useMemo(() => {
     return data.sort((a, b) => a.parent_id - b.parent_id).map((d) => d.id);
@@ -57,6 +59,11 @@ const CropsChart = ({
   const DATA = useMemo(() => {
     return data.sort((a, b) => a.parent_id - b.parent_id);
   }, [data]);
+
+  console.log({
+    KEYS,
+    DATA,
+  });
 
   // SCALES
   const xScale = useMemo(() => {

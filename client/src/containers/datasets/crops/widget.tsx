@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -6,7 +6,7 @@ import { cropsAtom, layersAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useCrops } from 'hooks/crops';
+import { useCrops, useCropsGroups } from 'hooks/crops';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -28,6 +28,19 @@ const CropsWidget = () => {
   const setCrops = useSetRecoilState(cropsAtom);
 
   const { data: cropsData, isLoading: cropsIsLoading } = useCrops();
+  const { data: cropsGroupData, isLoading: cropsGroupIsLoading } = useCropsGroups();
+
+  const GROUPED_SELECTED = useMemo<number[]>(() => {
+    return (
+      cropsGroupData
+        //
+        .filter((g) => {
+          const ids = g.values.map((v) => v.value);
+          return ids.every((i) => crops.includes(i));
+        })
+        .map((g) => g.value)
+    );
+  }, [cropsGroupData, crops]);
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -87,6 +100,36 @@ const CropsWidget = () => {
     });
   };
 
+  const handleSelectGroupOnChange = useCallback(
+    (values: number[]) => {
+      const newCrops = [...crops];
+
+      values.forEach((v) => {
+        const ids = cropsData.filter((d) => d.parentId === v).map((d) => d.value);
+        ids.forEach((i) => {
+          const index = newCrops.findIndex((f) => f === i);
+          if (index === -1) {
+            newCrops.push(i);
+          }
+        });
+      });
+
+      // Remove crops that are not in the selected groups
+      GROUPED_SELECTED.forEach((g: number) => {
+        if (!values.includes(g)) {
+          const ids = cropsData.filter((d) => d.parentId === g).map((d) => d.value);
+          ids.forEach((i) => {
+            const index = newCrops.findIndex((f) => f === i);
+            newCrops.splice(index, 1);
+          });
+        }
+      });
+
+      setCrops(newCrops);
+    },
+    [crops, cropsData, GROUPED_SELECTED, setCrops]
+  );
+
   return (
     <section className="space-y-4 py-10">
       <header className="flex items-center justify-between space-x-5">
@@ -131,13 +174,27 @@ const CropsWidget = () => {
         </TabsContent>
 
         <TabsContent value="group">
-          <div className="h-8">
-            <ChartGroup
-              dataset={DATASET}
-              selected={crops}
-              onBarClick={handleBarGroupClick}
-              interactive
+          <div className="mt-5 space-y-5">
+            <MultiSelect
+              id="crops-groups-multiselect"
+              size="s"
+              theme="light"
+              placeholder="Filter crop groups"
+              options={cropsGroupData}
+              values={GROUPED_SELECTED}
+              batchSelectionActive
+              clearSelectionActive
+              loading={cropsGroupIsLoading}
+              onChange={handleSelectGroupOnChange}
             />
+            <div className="h-8">
+              <ChartGroup
+                dataset={DATASET}
+                selected={crops}
+                onBarClick={handleBarGroupClick}
+                interactive
+              />
+            </div>
           </div>
         </TabsContent>
       </Tabs>

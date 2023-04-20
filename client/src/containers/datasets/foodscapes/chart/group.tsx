@@ -8,7 +8,6 @@ import { ParentSize } from '@visx/responsive';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
-import { group } from 'd3-array';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
@@ -17,7 +16,7 @@ import { Dataset } from 'types/datasets';
 import { FoodscapeChartData } from 'types/foodscapes';
 
 import { useData } from 'hooks/data';
-import { useFoodscapes } from 'hooks/foodscapes';
+import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
 
@@ -48,6 +47,7 @@ const FoodscapesChart = ({
 
   // DATA
   const { data: foodscapesData } = useFoodscapes();
+  const { data: foodscapesGroupsData } = useFoodscapesGroups();
 
   const { data, error } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
@@ -62,8 +62,8 @@ const FoodscapesChart = ({
     return [
       ...new Set(
         data //
-          .sort((a, b) => a.soil_groups - b.soil_groups)
-          .map((d) => d.soil_groups)
+          .sort((a, b) => a.parent_id - b.parent_id)
+          .map((d) => d.parent_id)
       ),
     ];
   }, [data, error]);
@@ -72,36 +72,28 @@ const FoodscapesChart = ({
   const DATA = useMemo<FoodscapeChartData[]>(() => {
     return [
       data.reduce((acc, curr) => {
-        const a = acc[curr.soil_groups] ?? 0;
-        acc[curr.soil_groups] = a + curr.value;
+        const a = acc[curr.parent_id] ?? 0;
+        acc[curr.parent_id] = a + curr.value;
         return acc;
       }, {} as FoodscapeChartData),
     ];
   }, [data]);
 
-  const GROUPS = useMemo(() => {
-    return Array.from(
-      group(foodscapesData, (d) => d.parentId),
-      ([key, value]) => ({
-        key,
-        value,
-        label: value.map((v) => v.parentLabel).reduce((_, v) => v, ''),
-        color: value.map((v) => v.parentColor).reduce((_, v) => v, ''),
-      })
-    );
-  }, [foodscapesData]);
-
   const ALL_SELECTED = useMemo(() => {
-    return GROUPS.filter((g) => {
-      return g.value.every((v) => selected.includes(v.value));
-    }).map((s) => s.key);
-  }, [selected, GROUPS]);
+    return foodscapesGroupsData
+      .filter((g) => {
+        return g.values.every((v) => selected.includes(v.value));
+      })
+      .map((s) => s.key);
+  }, [selected, foodscapesGroupsData]);
 
   const PARTIAL_SELECTED = useMemo(() => {
-    return GROUPS.filter((g) => {
-      return g.value.some((v) => selected.includes(v.value));
-    }).map((s) => s.key);
-  }, [selected, GROUPS]);
+    return foodscapesGroupsData
+      .filter((g) => {
+        return g.values.some((v) => selected.includes(v.value));
+      })
+      .map((s) => s.key);
+  }, [selected, foodscapesGroupsData]);
 
   // SCALES
   const xScale = useMemo(() => {
@@ -171,7 +163,7 @@ const FoodscapesChart = ({
                       opacity = 0.75;
                     }
 
-                    const g = GROUPS.find((s) => s.key === bar.key);
+                    const g = foodscapesGroupsData.find((s) => s.key === bar.key);
 
                     return (
                       <g key={`bar-stack-${barStack.index}-${bar.index}`}>

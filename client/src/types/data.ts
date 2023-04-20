@@ -1,7 +1,7 @@
 export interface FoodscapeData {
   id: number;
   value: number;
-  soil_groups: number;
+  parent_id: number;
 }
 
 export interface FoodscapeIntensityData {

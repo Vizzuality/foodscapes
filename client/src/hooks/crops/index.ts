@@ -43,7 +43,7 @@ export function useCrops(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
   }, [query, DATA]);
 }
 
-export function useCropsGroups(queryOptions: UseQueryOptions<Crop[], unknown, CropGroup[]> = {}) {
+export function useCropsGroups(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
   const fetchCrops = () =>
     new Promise((resolve) => {
       resolve(DATA_JSON);

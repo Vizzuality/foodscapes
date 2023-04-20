@@ -4,10 +4,9 @@ import dynamic from 'next/dynamic';
 
 import { foodscapesAtom, layersAtom } from 'store/explore-map';
 
-import { group } from 'd3-array';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useFoodscapes } from 'hooks/foodscapes';
+import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -29,26 +28,11 @@ const FoodscapesWidget = () => {
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
   const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
-
-  const GROUPED_DATA = useMemo(() => {
-    return (
-      Array
-        // group by parent
-        .from(
-          group(foodscapesData, (d) => d.parentId),
-          ([key, value]) => {
-            const label = value.find((v) => v.parentId === key)?.parentLabel || '';
-            return { value: key, label, values: value };
-          }
-        )
-        // sort by label
-        .sort((a, b) => a.label.localeCompare(b.label))
-    );
-  }, [foodscapesData]);
+  const { data: foodscapesGroupData, isLoading: foodscapesGroupIsLoading } = useFoodscapesGroups();
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     return (
-      GROUPED_DATA
+      foodscapesGroupData
         //
         .filter((g) => {
           const ids = g.values.map((v) => v.value);
@@ -56,7 +40,7 @@ const FoodscapesWidget = () => {
         })
         .map((g) => g.value)
     );
-  }, [GROUPED_DATA, foodscapes]);
+  }, [foodscapesGroupData, foodscapes]);
 
   const handleToggleLayer = useCallback(() => {
     const lys = [...layers];
@@ -200,15 +184,15 @@ const FoodscapesWidget = () => {
         <TabsContent value="group">
           <div className="mt-5 space-y-5">
             <MultiSelect
-              id="foodscapes-multiselect"
+              id="foodscapes-groups-multiselect"
               size="s"
               theme="light"
               placeholder="Filter soil groups"
-              options={GROUPED_DATA}
+              options={foodscapesGroupData}
               values={GROUPED_SELECTED}
               batchSelectionActive
               clearSelectionActive
-              loading={foodscapesIsLoading}
+              loading={foodscapesGroupIsLoading}
               onChange={handleSelectGroupOnChange}
             />
 

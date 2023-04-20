@@ -15,7 +15,7 @@ export const DATASETS = [
       sql: squel
         .select()
         .field('foodscapes', 'id')
-        .field('soil_groups')
+        .field('soil_groups', 'parent_id')
         .field('COUNT(pixel_count)', 'value')
         .distinct()
         .from('foodscapes')

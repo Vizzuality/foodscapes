@@ -50,12 +50,12 @@ const FoodscapesChart = ({
 
   // CONFIG
   const KEYS = useMemo(() => {
-    return data.sort((a, b) => a.soil_groups - b.soil_groups).map((d) => d.id);
+    return data.sort((a, b) => a.parent_id - b.parent_id).map((d) => d.id);
   }, [data]);
   const TOTAL = data.reduce((acc, curr) => acc + curr.value, 0);
 
   const DATA = useMemo(() => {
-    return data.sort((a, b) => a.soil_groups - b.soil_groups);
+    return data.sort((a, b) => a.parent_id - b.parent_id);
   }, [data]);
 
   // SCALES

@@ -8,6 +8,14 @@ export interface Foodscape {
   parentColor: string;
 }
 
+export interface FoodscapeGroup {
+  key: number;
+  value: number;
+  values: Foodscape[];
+  label: string;
+  color: string;
+}
+
 export type FoodscapeChartData = {
   '101': number;
   '102': number;
