@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 
 import CropsWidget from 'containers/datasets/crops/widget';
 import FoodscapesIntensitiesWidget from 'containers/datasets/foodscapes-intensities/widget';
+import FoodscapesSummaryWidget from 'containers/datasets/foodscapes-summary/widget';
 import FoodscapesWidget from 'containers/datasets/foodscapes/widget';
 
 const FoodscapesSidebar = forwardRef(() => {
@@ -26,6 +27,8 @@ const FoodscapesSidebar = forwardRef(() => {
             The need for food is a universal constant, but how it’s produced is different across the
             globe.
           </p>
+
+          <FoodscapesSummaryWidget />
         </div>
       </header>
       <div className="w-full px-20">

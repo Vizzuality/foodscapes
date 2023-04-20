@@ -50,7 +50,7 @@ const Sidebar = () => {
               },
             }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-xl bg-white"
+            className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-[640px] bg-white"
           >
             <Tabs value={tab} onValueChange={setTab} asChild>
               <div className="flex h-full flex-col overflow-auto">
