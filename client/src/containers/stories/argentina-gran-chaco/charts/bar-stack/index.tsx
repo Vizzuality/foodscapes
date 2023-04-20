@@ -8,6 +8,9 @@ import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarStack } from '@visx/shape';
 import { group } from 'd3-array';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from 'usehooks-ts';
+
+import { screens } from 'styles/styles.config';
 
 import type { BarStackChartProps, GroupBarStackChartData } from './types';
 
@@ -15,6 +18,7 @@ import type { BarStackChartProps, GroupBarStackChartData } from './types';
 const xAccessor = (d: GroupBarStackChartData) => d.key;
 
 export const BarStackChart: FC<BarStackChartProps> = ({
+  id,
   data,
   width,
   height,
@@ -42,6 +46,8 @@ export const BarStackChart: FC<BarStackChartProps> = ({
     ) as GroupBarStackChartData[];
   }, [data]);
 
+  const lg = useMediaQuery(`(min-width: ${screens.lg})`);
+
   const keys = groups.map((g) => g.key);
   const stackedKeys = useMemo(() => ['t1', 't2', 't3'], []);
 
@@ -50,9 +56,9 @@ export const BarStackChart: FC<BarStackChartProps> = ({
       scaleBand<string>({
         range: [0, xMax],
         domain: keys,
-        padding: 0.7,
+        padding: lg ? 0.7 : 0.55,
       }),
-    [keys, xMax]
+    [keys, xMax, lg]
   );
 
   const yScale = useMemo(
@@ -78,7 +84,7 @@ export const BarStackChart: FC<BarStackChartProps> = ({
   return (
     <svg width={width} height={height}>
       <PatternLines
-        id="lines"
+        id={`lines-${id}`}
         height={5}
         width={5}
         stroke={'white'}
@@ -146,7 +152,7 @@ export const BarStackChart: FC<BarStackChartProps> = ({
 
                 {barStacks.map((barStack) =>
                   barStack.bars.map((bar) => (
-                    <>
+                    <g key={bar.index}>
                       <motion.rect
                         key={`bar-stack-${barStack.index}-${bar.index}`}
                         initial={{
@@ -164,7 +170,7 @@ export const BarStackChart: FC<BarStackChartProps> = ({
                         }}
                         x={bar.x}
                         width={bar.width}
-                        {...(bar.key === 't1' && { fill: 'url(#lines)' })}
+                        {...(bar.key === 't1' && { fill: `url(#lines-${id})` })}
                         {...(bar.key !== 't1' && { fill: bar.color })}
                       />
 
@@ -240,7 +246,7 @@ export const BarStackChart: FC<BarStackChartProps> = ({
                           </HtmlLabel>
                         </Annotation>
                       )}
-                    </>
+                    </g>
                   ))
                 )}
               </>

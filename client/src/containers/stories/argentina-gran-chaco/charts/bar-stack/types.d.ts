@@ -14,6 +14,7 @@ export type BarStackChartData = {
 };
 
 export interface BarStackChartProps {
+  id: string;
   data: BarStackChartData[];
   margin?: {
     top: number;
