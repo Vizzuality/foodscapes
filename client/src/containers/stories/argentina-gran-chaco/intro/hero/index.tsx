@@ -71,11 +71,6 @@ const Hero = () => {
                   </button>
                 </Media>
               </div>
-
-              <div className="pt-11">
-                <p className="text-xxs text-white">Gran Chaco. Argentina.</p>
-                <p className="text-xxs text-white">© Yawar Motion Films</p>
-              </div>
             </div>
           </motion.div>
         </Wrapper>

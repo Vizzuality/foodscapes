@@ -1,19 +1,13 @@
-import { clamp, useScrollItem } from 'lib/scroll';
-
-import { motion, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import Wrapper from 'containers/wrapper';
 
 const HeroMobile = () => {
-  const { scrollYProgress } = useScrollItem('scroll-0');
-
-  const opacity = useTransform(scrollYProgress, (v) => 1 - clamp(v * 2));
-
   return (
     <section className="relative z-20 h-[100vh] lg:h-[200vh]">
       <div className="left-0 top-0 z-10 flex h-full w-full items-end lg:fixed">
         <Wrapper>
-          <motion.div className="grid grid-cols-12 items-end gap-6 pb-20" style={{ opacity }}>
+          <motion.div className="grid grid-cols-12 items-end gap-6 pb-20">
             <div className="col-span-12 lg:col-span-5 lg:col-start-7">
               <div className="flex flex-col items-end space-y-5 text-right text-white">
                 <h1 className="max-w-xs font-display text-4xl lg:max-w-none lg:text-5xl">
