@@ -56,7 +56,7 @@ const Chart1Mobile = () => {
                   width={width}
                   height={300}
                   data={data}
-                  margin={{ top: 20, left: 20, bottom: 50, right: 20 }}
+                  margin={{ top: 20, left: 0, bottom: 50, right: 0 }}
                 />
               )}
             </ParentSize>

@@ -3,10 +3,7 @@ import { PropsWithChildren, useEffect, useRef } from 'react';
 import cn from 'lib/classnames';
 import { useAddScrollItem } from 'lib/scroll';
 
-import { stepAtom } from 'store/home';
-
 import { useInView, useScroll } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
 
 import { SCROLL_ITEMS_METADATA } from './constants';
 
@@ -17,7 +14,6 @@ interface ScrollItemProps extends PropsWithChildren {
 }
 
 const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) => {
-  const s = useRecoilValue(stepAtom);
   const { inViewProps, useScrollProps } = SCROLL_ITEMS_METADATA[step];
 
   const ref = useRef<HTMLDivElement>(null);
@@ -34,10 +30,10 @@ const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) =>
   });
 
   useEffect(() => {
-    if (inView && s !== step) {
+    if (inView) {
       onChange(step);
     }
-  }, [s, step, inView, onChange]);
+  }, [inView, onChange]); // eslint-disable-line
 
   return (
     <section

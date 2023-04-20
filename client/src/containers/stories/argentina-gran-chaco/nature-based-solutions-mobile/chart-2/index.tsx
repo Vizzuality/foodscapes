@@ -53,6 +53,7 @@ const Chart2Mobile = () => {
               <ParentSize>
                 {({ width }) => (
                   <BarStackChart
+                    id="stacked-bar-mobile"
                     width={width}
                     height={300}
                     data={data}
