@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <header
       className={cn({
-        'fixed top-0 z-30 w-full py-4 lg:py-6': true,
+        'fixed top-0 z-30 w-full bg-white py-4 lg:bg-transparent lg:py-6': true,
         'bg-white': pathname === '/stories/argentina-gran-chaco' && THEME === 'dark',
       })}
     >
