@@ -68,7 +68,9 @@ const FoodscapesSummaryWidget = () => {
           <dt className="text-xs">Foodscapes classes</dt>
         </div>
         <div className="w-full text-center">
-          <dd className="font-display text-3xl">{`>${format(SUMMARY.total_pixels)}`}</dd>
+          <dd className="font-display text-3xl">{`~${format(
+            (SUMMARY.total_pixels * 3086.9136) / 1000000
+          )}`}</dd>
           <dt className="text-xs">Million Hectares</dt>
         </div>
         <div className="w-full text-center">
