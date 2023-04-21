@@ -10,7 +10,7 @@ export interface DatasetteParamsProps {
 }
 
 export function datasetteAdapter(params: DatasetteParamsProps = {}) {
-  const { sql, foodscapes = [], intensities = [], shape = 'array' } = params;
+  const { sql, foodscapes = [], intensities = [], crops = [], shape = 'array' } = params;
   const s = sql?.clone();
 
   // Foodscapes
@@ -21,6 +21,11 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   // Intensities
   if (!!intensities?.length) {
     s.where('intensity_groups IN ?', intensities);
+  }
+
+  // Intensities
+  if (!!crops?.length) {
+    s.where('crops IN ?', crops);
   }
 
   return {
