@@ -23,7 +23,7 @@ const Outro = () => {
                 <div
                   className={cn({
                     'group relative flex h-full grow flex-col justify-between space-y-8': true,
-                    'z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-yellow-700 after:opacity-0 after:transition-opacity hover:after:opacity-100':
+                    ':after:opacity-100 z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-yellow-700 after:transition-opacity hover:after:opacity-100 lg:after:opacity-0':
                       true,
                   })}
                 >

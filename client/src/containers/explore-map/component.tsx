@@ -2,6 +2,8 @@ import { useSyncExploreMap } from 'store/explore-map';
 
 import Sidebar from 'containers/explore-map/sidebar';
 
+import { Media } from 'components/media-query';
+
 import Menu from '../header/menu';
 
 import Layers from './layers';
@@ -14,10 +16,16 @@ const ExploreMap = () => {
   return (
     <div className="relative h-screen w-full">
       <Map />
-      <Legend />
+      <Media greaterThanOrEqual="sm">
+        <Legend />
+      </Media>
       <Menu />
-      <Layers />
-      <Sidebar />
+      <Media greaterThanOrEqual="sm">
+        <Layers />
+      </Media>
+      <Media greaterThanOrEqual="sm">
+        <Sidebar />
+      </Media>
     </div>
   );
 };

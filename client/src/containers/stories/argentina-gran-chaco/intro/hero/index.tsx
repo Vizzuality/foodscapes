@@ -26,26 +26,24 @@ const Hero = () => {
       <div className="left-0 top-0 z-10 flex h-full w-full items-end lg:fixed">
         <Wrapper>
           <motion.div className="grid grid-cols-12 items-end gap-6 pb-10" style={{ opacity }}>
-            <Media greaterThanOrEqual="sm">
-              <motion.div
-                className="col-span-5 col-start-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.75 }}
-              >
-                <Image
-                  src="/images/stories/argentina-gran-chaco/argentina-map-state-2.svg"
-                  alt="Argentina map - Gran chaco"
-                  width={308}
-                  height={448}
-                  priority
-                />
-              </motion.div>
-            </Media>
+            <motion.div
+              className="col-span-5 col-start-2 hidden lg:block"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.75 }}
+            >
+              <Image
+                src="/images/stories/argentina-gran-chaco/argentina-map-state-2.svg"
+                alt="Argentina map - Gran chaco"
+                width={308}
+                height={448}
+                priority
+              />
+            </motion.div>
 
-            <div className="col-span-12 lg:col-span-5 lg:col-start-7">
+            <div className="col-span-12 md:col-span-5 md:col-start-7">
               <div className="flex flex-col items-end space-y-5 text-right text-white">
-                <h1 className="max-w-xs font-display text-4xl lg:max-w-none lg:text-5xl">
+                <h1 className="max-w-xs font-display text-4xl md:max-w-none md:text-5xl">
                   Foodscapes in action.
                 </h1>
                 <motion.p
