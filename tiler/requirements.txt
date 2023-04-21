@@ -1,2 +1,3 @@
 titiler.application==0.11.5
 uvicorn
+hypercorn[trio]

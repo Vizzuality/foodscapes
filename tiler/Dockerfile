@@ -31,4 +31,4 @@ USER $USER
 # @todo Consider whether to use a shell script as entrypoint to allow for
 # different run modes (e.g. debug, dev, prod, etc.) via Docker commands
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["hypercorn", "app.main:app", "--worker-class", "trio", "--bind", "0.0.0.0:3000"]
