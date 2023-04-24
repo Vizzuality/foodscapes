@@ -10,12 +10,17 @@ import { useCrops, useCropsGroups } from 'hooks/crops';
 
 import { DATASETS } from 'constants/datasets';
 
+import Icon from 'components/icon';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import MultiSelect from 'components/ui/select/multi/component';
 import Switch from 'components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
+import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
+const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const CropsWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'crops');
@@ -170,6 +175,20 @@ const CropsWidget = () => {
                 interactive
               />
             </div>
+
+            <Collapsible>
+              <CollapsibleTrigger className="mt-5 flex items-center space-x-2 font-semibold text-navy-500 hover:underline">
+                <span>See top largest crops</span>
+
+                <Icon icon={ARROW_DOWN_SVG} className="relative top-px h-3 w-3 text-navy-500" />
+              </CollapsibleTrigger>
+
+              <CollapsibleContent asChild>
+                <div className="mt-5">
+                  <ChartTop dataset={DATASET} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         </TabsContent>
 

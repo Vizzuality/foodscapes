@@ -102,7 +102,7 @@ const FoodscapesIntensitiesWidget = () => {
 
         <Collapsible>
           <CollapsibleTrigger className="mt-5 flex items-center space-x-2 font-semibold text-navy-500 hover:underline">
-            <span>See top largest foodscapes</span>
+            <span>See top largest foodscapes intensities</span>
 
             <Icon icon={ARROW_DOWN_SVG} className="relative top-px h-3 w-3 text-navy-500" />
           </CollapsibleTrigger>

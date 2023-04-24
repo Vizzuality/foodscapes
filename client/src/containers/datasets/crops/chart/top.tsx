@@ -5,35 +5,32 @@ import { filtersSelector } from 'store/explore-map';
 import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { FoodscapeIntensityData } from 'types/data';
+import { CropData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
+import { useCrops } from 'hooks/crops';
 import { useData } from 'hooks/data';
-import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
-interface FoodscapesIntensitiesTopChartProps {
+interface CropsTopChartProps {
   dataset: Dataset;
   selected?: readonly number[];
   onBarClick?: (key: number) => void;
 }
 
-const FoodscapesIntensitiesTopChart = ({
-  dataset,
-  onBarClick,
-}: FoodscapesIntensitiesTopChartProps) => {
-  const filters = useRecoilValue(filtersSelector('intensities'));
+const CropsTopChart = ({ dataset, onBarClick }: CropsTopChartProps) => {
+  const filters = useRecoilValue(filtersSelector('crops'));
 
   // DATA
-  const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
+  const { data: cropsData } = useCrops();
   const sql = dataset.widget.sql
     //
     .clone()
     .order('value', false)
     .limit(5);
 
-  const { data } = useData<FoodscapeIntensityData>({
+  const { data } = useData<CropData>({
     sql,
     shape: 'array',
     ...filters,
@@ -47,10 +44,10 @@ const FoodscapesIntensitiesTopChart = ({
   const DATA = useMemo(() => {
     // Loop through the data and add the label
     return data.map((d) => {
-      const { label } = foodscapesIntensitiesData.find((f) => f.value === d.id) || {};
+      const { label } = cropsData.find((f) => f.value === d.id) || {};
       return { ...d, label };
     });
-  }, [data, foodscapesIntensitiesData]);
+  }, [data, cropsData]);
 
   const MAX = Math.max(...DATA.map((d) => d.value));
 
@@ -67,14 +64,14 @@ const FoodscapesIntensitiesTopChart = ({
     return scaleOrdinal<string, string>({
       domain: KEYS.map((key) => key.toString()),
       range: KEYS.map((key) => {
-        const { color } = foodscapesIntensitiesData.find((d) => d.value === key) || {};
+        const { color } = cropsData.find((d) => d.value === key) || {};
         return color;
       }),
     });
-  }, [foodscapesIntensitiesData, KEYS]);
+  }, [cropsData, KEYS]);
 
   const handleBarClick = useCallback(
-    (bar: FoodscapeIntensityData) => {
+    (bar: CropData) => {
       const { id } = bar;
       if (onBarClick) onBarClick(id);
     },
@@ -82,7 +79,7 @@ const FoodscapesIntensitiesTopChart = ({
   );
 
   return (
-    <HorizontalBar<FoodscapeIntensityData & { label: string }>
+    <HorizontalBar<CropData & { label: string }>
       data={DATA}
       xScale={xScale}
       colorScale={colorScale}
@@ -91,4 +88,4 @@ const FoodscapesIntensitiesTopChart = ({
   );
 };
 
-export default FoodscapesIntensitiesTopChart;
+export default CropsTopChart;

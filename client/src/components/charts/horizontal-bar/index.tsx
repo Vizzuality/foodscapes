@@ -33,7 +33,7 @@ const HorizontalBar = <D extends DataProps>({
         {data.map((d, i) => {
           const { id, label, value } = d;
           return (
-            <li key={id} className="space-y-1">
+            <li key={id}>
               <motion.div
                 initial={{
                   width: 0,
