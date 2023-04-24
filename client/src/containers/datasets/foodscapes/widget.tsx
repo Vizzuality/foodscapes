@@ -10,12 +10,14 @@ import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import MultiSelect from 'components/ui/select/multi/component';
 import Switch from 'components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
+const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
@@ -178,6 +180,18 @@ const FoodscapesWidget = () => {
                 interactive
               />
             </div>
+
+            <Collapsible>
+              <CollapsibleTrigger className="mt-5 font-semibold text-navy-500">
+                See top largest foodscapes
+              </CollapsibleTrigger>
+
+              <CollapsibleContent asChild>
+                <div className="mt-5">
+                  <ChartTop dataset={DATASET} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         </TabsContent>
 
