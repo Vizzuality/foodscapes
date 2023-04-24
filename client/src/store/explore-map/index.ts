@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 
 import { array, bool, dict, number, object, string } from '@recoiljs/refine';
-import { atom, useRecoilCallback, useRecoilValue } from 'recoil';
+import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
+
+import { FiltersOmitProps, FiltersProps } from 'types/data';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -67,24 +69,46 @@ export const tabAtom = atom({
   ],
 });
 
-export const filtersAtom = atom({
-  key: 'filters',
-  default: {
-    foodscapes: [],
-    intensity: [],
-    crops: [],
-    location: null,
-  },
+// Filters
+export const foodscapesAtom = atom({
+  key: 'foodscapes',
+  default: [],
   effects: [
     urlSyncEffect({
-      refine: object({
-        foodscapes: array(number()),
-        crops: array(number()),
-        intensity: array(number()),
-        location: number(),
-      }),
+      refine: array(number()),
     }),
   ],
+});
+
+export const intensitiesAtom = atom({
+  key: 'intensities',
+  default: [],
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
+export const cropsAtom = atom({
+  key: 'crops',
+  default: [],
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
+export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
+  key: 'filters',
+  get:
+    (omit) =>
+    ({ get }) => ({
+      ...(omit !== 'foodscapes' && { foodscapes: get(foodscapesAtom) }),
+      ...(omit !== 'intensities' && { intensities: get(intensitiesAtom) }),
+      ...(omit !== 'crops' && { crops: get(cropsAtom) }),
+    }),
 });
 
 export function useSyncExploreMap() {

@@ -8,11 +8,16 @@ import { noPointData, usePointData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 import { useIsLoading } from 'hooks/utils';
 
+import { DATASETS } from 'constants/datasets';
+
 interface FoodscapesPopupProps {
   latLng: LngLat;
 }
 
 const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
+  const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
+  const band = `b${DATASET.layer.band}`;
+
   const f = useFoodscapes();
   const p = usePointData(latLng, {
     keepPreviousData: false,
@@ -27,11 +32,10 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
     if (!foodscapesData || !pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const band = 'b1';
     const value = pointData[band];
 
     return foodscapesData.find((d) => d.value === value);
-  }, [foodscapesData, pointData]);
+  }, [band, foodscapesData, pointData]);
 
   return (
     <div>

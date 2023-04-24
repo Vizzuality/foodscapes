@@ -106,7 +106,7 @@ const MapContainer = () => {
   useMemo(() => {
     map?.easeTo({
       padding: {
-        left: sidebarOpen ? 576 : 0,
+        left: sidebarOpen ? 640 : 0,
         right: 0,
         top: 0,
         bottom: 0,

@@ -1,12 +1,24 @@
 import { useMemo } from 'react';
 
+import { titilerAdapter } from 'lib/adapters/titiler-adapter';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { Dataset } from 'types/datasets';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
+import { DATASETS } from 'constants/datasets';
+
 import { Settings } from 'components/map/legend/types';
+
+interface UseFoodscapesSourceProps {
+  filters: {
+    crops: number[];
+    foodscapes: number[];
+    intensities: number[];
+  };
+}
 
 interface UseFoodscapesLayerProps {
   settings?: Partial<Settings>;
@@ -17,10 +29,12 @@ interface UseFoodscapesLegendProps {
   settings?: Settings;
 }
 
-export function useSource(): AnySourceData & { key: string } {
+export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
 
-  const band = 1;
+  const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
+
+  const band = DATASET.layer.band;
   const colormap = useMemo(() => {
     const c = foodscapesData.reduce((acc, v) => {
       return {
@@ -28,20 +42,33 @@ export function useSource(): AnySourceData & { key: string } {
         [v.value]: v.color,
       };
     }, {});
-    return encodeURIComponent(JSON.stringify(c));
+    return JSON.stringify(c);
   }, [foodscapesData]);
 
-  if (!foodscapesData || !foodscapesData.length) {
-    return null;
-  }
+  const expression = useMemo(() => {
+    const where = titilerAdapter(filters);
+
+    if (!where) return null;
+
+    return `where(${where},b${band},-1)`;
+  }, [filters, band]);
+
+  const searchParams = useMemo(() => {
+    const params = new URLSearchParams();
+
+    if (colormap) params.set('colormap', colormap);
+    if (band) params.set('bidx', band.toString());
+    if (expression) params.set('expression', expression);
+
+    return params.toString();
+  }, [band, colormap, expression]);
 
   return {
     id: 'foodscapes-source',
-    key: `${band}-${colormap}`,
+    key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
-      // `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap={{COLOR_RAMP}}&bidx={{BAND}}`,
-      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?colormap=${colormap}&bidx=${band}`,
+      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
     ],
   };
 }

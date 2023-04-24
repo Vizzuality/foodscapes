@@ -5,6 +5,11 @@ export type LayerProps<S> = {
   beforeId?: string;
   zIndex?: number;
   settings?: Partial<S>;
+  filters?: {
+    foodscapes: number[];
+    intensities: number[];
+    crops: number[];
+  };
 };
 
 export type MapboxLayerProps<T> = Partial<Omit<T, 'id'>> & {

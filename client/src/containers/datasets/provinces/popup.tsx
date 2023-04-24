@@ -8,6 +8,8 @@ import { noPointData, usePointData } from 'hooks/data';
 import { useProvinces } from 'hooks/provinces';
 import { useIsLoading } from 'hooks/utils';
 
+import { DATASETS } from 'constants/datasets';
+
 import Icon from 'components/icon';
 
 import PIN_SVG from 'svgs/map/pin.svg?sprite';
@@ -17,6 +19,9 @@ interface ProvincesPopupProps {
 }
 
 const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
+  const DATASET = DATASETS.find((d) => d.id === 'provinces');
+  const band = `b${DATASET.layer.band}`;
+
   const f = useProvinces();
   const p = usePointData(latLng, {
     keepPreviousData: false,
@@ -32,11 +37,10 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
 
     if (noPointData(pointData)) return null;
 
-    const band = 'b4';
     const value = pointData[band];
 
     return provincesData.find((d) => d.value === value);
-  }, [provincesData, pointData]);
+  }, [band, provincesData, pointData]);
 
   return (
     <div>

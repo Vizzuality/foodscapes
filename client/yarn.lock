@@ -2110,15 +2110,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:1.7.4":
-  version: 1.7.4
-  resolution: "@headlessui/react@npm:1.7.4"
+"@headlessui/react@npm:1.7.13":
+  version: 1.7.13
+  resolution: "@headlessui/react@npm:1.7.13"
   dependencies:
     client-only: ^0.0.1
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: cd7192aa0748d715ed0da94435f217a1a618894a09df722c8b6ac0967c0c2f93b4c1e6b29c4993a3303dc453b20b05323d2a37239408740391989a64b7dce38c
+  checksum: 132e5fce86978b9a6fd9d669fb556acec783debcd8f510c99226b3b3229dad50a13aeed69fc9af66465fc7029487ecfc46e6226f14218b760d5a309e08c0d059
   languageName: node
   linkType: hard
 
@@ -3241,6 +3241,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-checkbox@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@radix-ui/react-checkbox@npm:1.0.3"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-presence": 1.0.0
+    "@radix-ui/react-primitive": 1.0.2
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-previous": 1.0.0
+    "@radix-ui/react-use-size": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: aca9213eddb7f5c65b2d396421bc5a9d18fb87fad81e1964d0ac7a72fe6abb3b2c2c51ecc29b0643286843187680974ba1ff7197b2a936dd7d5edde25819800f
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-collapsible@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-collapsible@npm:1.0.1"
@@ -3692,6 +3712,25 @@ __metadata:
   peerDependencies:
     react: ^16.8 || ^17.0 || ^18.0
   checksum: a20693f8ce532bd6cbff12ba543dfcf90d451f22923bd60b57dc9e639f6e53348915e182002b33444feb6ab753434e78e2a54085bf7092aadda4418f0423763f
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-switch@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@radix-ui/react-switch@npm:1.0.2"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-primitive": 1.0.2
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-previous": 1.0.0
+    "@radix-ui/react-use-size": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: 51dda47620938504e540383435a1b8f038fa8ce1e0179a0ce32be500fa39e7a40ac518d9a2f223f7cac4d5fac1c1b8a1a8c5f75104c54bea1431dfdfa76cb1e5
   languageName: node
   linkType: hard
 
@@ -6714,6 +6753,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:*":
+  version: 18.0.11
+  resolution: "@types/react-dom@npm:18.0.11"
+  dependencies:
+    "@types/react": "*"
+  checksum: 579691e4d5ec09688087568037c35edf8cfb1ab3e07f6c60029280733ee7b5c06d66df6fcc90786702c93ac8cb13bc7ff16c79ddfc75d082938fbaa36e1cdbf4
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:18.0.6":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
@@ -7069,6 +7117,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@visx/bounds@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@visx/bounds@npm:3.0.0"
+  dependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    prop-types: ^15.5.10
+  peerDependencies:
+    react: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+    react-dom: ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 3c50dad1c78b526bebe20a690360ae5ad3dd2a31c86150553071671e49309a9fcf3bca3303eab7f7ac2e28be8d7987ac9ce5daa28b8df32c647b0aa97f118fa9
+  languageName: node
+  linkType: hard
+
 "@visx/curve@npm:3.0.0":
   version: 3.0.0
   resolution: "@visx/curve@npm:3.0.0"
@@ -7199,6 +7261,22 @@ __metadata:
   peerDependencies:
     react: ^16.3.0-0 || ^17.0.0-0 || ^18.0.0-0
   checksum: a8456fceb785db17487103ee3c2c5acb5988f0ec883735ecaf60fa734d8876c0d72eab6862dc8e272cf87644694bc21aff5c9cb9eccf4e948bd0899926513efd
+  languageName: node
+  linkType: hard
+
+"@visx/tooltip@npm:3.1.2":
+  version: 3.1.2
+  resolution: "@visx/tooltip@npm:3.1.2"
+  dependencies:
+    "@types/react": "*"
+    "@visx/bounds": 3.0.0
+    classnames: ^2.3.1
+    prop-types: ^15.5.10
+    react-use-measure: ^2.0.4
+  peerDependencies:
+    react: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
+    react-dom: ^16.8.0-0 || ^17.0.0-0 || ^18.0.0-0
+  checksum: 4c2127068f22766e984ed3ed1452dcece919bacb0297b17ba862a6815bb7f04c4fc462a100d3934e0cb56a9c7962b82f7c4184748ef4b2dbef3b4b0d5b717fdd
   languageName: node
   linkType: hard
 
@@ -9687,7 +9765,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-scale@npm:^4.0.2":
+"d3-scale@npm:4.0.2, d3-scale@npm:^4.0.2":
   version: 4.0.2
   resolution: "d3-scale@npm:4.0.2"
   dependencies:
@@ -11743,16 +11821,18 @@ __metadata:
     "@egjs/react-flicking": 4.9.4
     "@evilmartians/lefthook": ^1.2.7
     "@floating-ui/react-dom-interactions": 0.6.1
-    "@headlessui/react": 1.7.4
+    "@headlessui/react": 1.7.13
     "@luma.gl/constants": 8.5.18
     "@mdx-js/loader": 2.3.0
     "@mdx-js/react": 2.3.0
     "@next/font": 13.1.2
     "@next/mdx": 13.2.4
     "@radix-ui/react-accordion": 1.1.0
+    "@radix-ui/react-checkbox": 1.0.3
     "@radix-ui/react-dialog": ^1.0.2
     "@radix-ui/react-popover": 1.0.3
     "@radix-ui/react-slider": 1.1.0
+    "@radix-ui/react-switch": 1.0.2
     "@radix-ui/react-tabs": 1.0.3
     "@radix-ui/react-tooltip": 1.0.3
     "@react-aria/button": 3.6.0
@@ -11789,6 +11869,7 @@ __metadata:
     "@visx/responsive": 3.0.0
     "@visx/scale": 3.0.0
     "@visx/shape": 3.0.0
+    "@visx/tooltip": 3.1.2
     assert: 2.0.0
     autoprefixer: 10.4.7
     axios: 0.21.1
@@ -11796,6 +11877,7 @@ __metadata:
     cypress: 12.1.0
     d3-array: 3.2.2
     d3-ease: 2.0.0
+    d3-scale: 4.0.2
     eslint: 7.32.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-typescript: 17.0.0
@@ -11827,6 +11909,7 @@ __metadata:
     react-use-cookie: 1.4.0
     recoil: 0.7.6
     recoil-sync: 0.2.0
+    squel: 5.13.0
     start-server-and-test: 1.12.1
     storybook-addon-swc: 1.1.8
     svg-sprite-loader: 6.0.11
@@ -19375,6 +19458,13 @@ __metadata:
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
   checksum: 19d79aec211f09b99ec3099b5b2ae2f6e9cdefe50bc91ac4c69144b6d3928a640bb6ae5b3def70c2e85a2c3d9f5ec2719921e3a59d3ca3ef4b2fd1a4656a0df3
+  languageName: node
+  linkType: hard
+
+"squel@npm:5.13.0":
+  version: 5.13.0
+  resolution: "squel@npm:5.13.0"
+  checksum: c68cfb89a820a6e99de66fcf0b16c1c45390cba7ec444597b5ff28508e8dc6aa29dc2bf75199bf790d71dc2afce3a454961d8b5fa99cd05e4f60656dfa9d5217
   languageName: node
   linkType: hard
 

@@ -34,7 +34,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
       Array
         // group by parent
         .from(
-          group(foodscapesData, (d) => d.parent),
+          group(foodscapesData, (d) => d.parentLabel),
           ([key, value]) => ({ key, value })
         )
         // sort by key
@@ -46,7 +46,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
     <LegendItem {...legend} {...props}>
       <div className="divide-y divide-navy-500/20">
         <div className="ml-0.5 px-4 pt-3 pb-5">
-          <div className="h-3.5 border border-navy-500">
+          <div className="h-3.5">
             <Chart dataset={dataset} />
           </div>
         </div>
