@@ -1,7 +1,5 @@
 import { useSyncExploreMap } from 'store/explore-map';
 
-import Sidebar from 'containers/explore-map/sidebar';
-
 import { Media } from 'components/media-query';
 
 import Menu from '../header/menu';
@@ -23,9 +21,9 @@ const ExploreMap = () => {
       <Media greaterThanOrEqual="sm">
         <Layers />
       </Media>
-      <Media greaterThanOrEqual="sm">
+      {/* <Media greaterThanOrEqual="sm">
         <Sidebar />
-      </Media>
+      </Media> */}
     </div>
   );
 };
