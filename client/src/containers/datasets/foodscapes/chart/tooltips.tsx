@@ -37,7 +37,7 @@ export const FoodscapesChartTooltip = forwardRef<HTMLDivElement, TooltipProps<Fo
 
 FoodscapesChartTooltip.displayName = 'FoodscapesChartTooltip';
 
-interface FoodscapesChartTooltipGroupProps extends Omit<BarGroupBar<number>, 'key' | 'value'> {
+interface FoodscapesChartTooltipGroupProps extends BarGroupBar<number> {
   id: number;
   total: number;
   label: string;

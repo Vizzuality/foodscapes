@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import { filtersSelector } from 'store/explore-map';
 
 import { ParentSize } from '@visx/responsive';
-import { scaleBand, scaleLinear } from '@visx/scale';
+import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { useRecoilValue } from 'recoil';
 
@@ -71,8 +71,8 @@ const FoodscapesChart = ({
   }, [height]);
 
   const colorScale = useMemo(() => {
-    return scaleLinear<string>({
-      domain: KEYS,
+    return scaleOrdinal<string, string>({
+      domain: KEYS.map((key) => key.toString()),
       range: KEYS.map((key) => {
         const { color } = foodscapesIntensitiesData.find((d) => d.value === key) || {};
         return color;

@@ -32,7 +32,9 @@ export function useCrops(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
       return [];
     }
 
-    return data.sort((a, b) => a.label.localeCompare(b.label));
+    return data.sort((a, b) => {
+      return a.value - b.value;
+    });
   }, [data]);
 
   return useMemo(() => {

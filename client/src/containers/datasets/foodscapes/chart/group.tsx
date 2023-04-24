@@ -1,24 +1,20 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { filtersSelector } from 'store/explore-map';
 
-import { TooltipPortal } from '@radix-ui/react-tooltip';
-import { Group } from '@visx/group';
 import { ParentSize } from '@visx/responsive';
-import { scaleBand, scaleLinear } from '@visx/scale';
-import { BarStackHorizontal } from '@visx/shape';
+import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
-import { FoodscapeChartData } from 'types/foodscapes';
+import { FoodscapeChartData, FoodscapeGroup } from 'types/foodscapes';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
+import HorizontalStackedGroupedBar from 'components/charts/horizontal-stacked-grouped-bar';
 
 import { FoodscapesChartTooltipGroup } from './tooltips';
 
@@ -41,8 +37,6 @@ const FoodscapesChart = ({
   selected,
   onBarClick,
 }: FoodscapesChartProps) => {
-  const [hover, setHover] = useState<number | null>(null);
-
   const filters = useRecoilValue(filtersSelector('foodscapes'));
 
   // DATA
@@ -69,32 +63,6 @@ const FoodscapesChart = ({
   }, [data, error]);
   const TOTAL = data.reduce((acc, curr) => acc + curr.value, 0);
 
-  const DATA = useMemo<FoodscapeChartData[]>(() => {
-    return [
-      data.reduce((acc, curr) => {
-        const a = acc[curr.parent_id] ?? 0;
-        acc[curr.parent_id] = a + curr.value;
-        return acc;
-      }, {} as FoodscapeChartData),
-    ];
-  }, [data]);
-
-  const ALL_SELECTED = useMemo(() => {
-    return foodscapesGroupsData
-      .filter((g) => {
-        return g.values.every((v) => selected.includes(v.value));
-      })
-      .map((s) => s.key);
-  }, [selected, foodscapesGroupsData]);
-
-  const PARTIAL_SELECTED = useMemo(() => {
-    return foodscapesGroupsData
-      .filter((g) => {
-        return g.values.some((v) => selected.includes(v.value));
-      })
-      .map((s) => s.key);
-  }, [selected, foodscapesGroupsData]);
-
   // SCALES
   const xScale = useMemo(() => {
     return scaleLinear<number>({
@@ -112,8 +80,8 @@ const FoodscapesChart = ({
   }, [height]);
 
   const colorScale = useMemo(() => {
-    return scaleLinear<string>({
-      domain: KEYS,
+    return scaleOrdinal<string, string>({
+      domain: KEYS.map((key) => key.toString()),
       range: KEYS.map((key) => {
         const { parentColor } = foodscapesData.find((d) => d.parentId === key) || {};
         return parentColor;
@@ -135,148 +103,19 @@ const FoodscapesChart = ({
   );
 
   return (
-    <div className="relative">
-      <svg width={width} height={height}>
-        <Group top={2} left={2}>
-          <TooltipProvider delayDuration={0} skipDelayDuration={500}>
-            <BarStackHorizontal<FoodscapeChartData, number>
-              data={DATA}
-              keys={KEYS}
-              width={Math.max(width - 2, 0)}
-              height={Math.max(height - 2, 0)}
-              y={() => height}
-              xScale={xScale}
-              yScale={yScale}
-              color={(d) => colorScale(+d)}
-            >
-              {(barStacks) =>
-                barStacks.map((barStack) =>
-                  barStack.bars.map((bar) => {
-                    let opacity = 1;
-                    if (!!ALL_SELECTED.length && !ALL_SELECTED.includes(bar.key)) {
-                      opacity = 0.5;
-                    }
-                    if (!!PARTIAL_SELECTED.length && !PARTIAL_SELECTED.includes(bar.key)) {
-                      opacity = 0.5;
-                    }
-                    if (!!PARTIAL_SELECTED.length && PARTIAL_SELECTED.includes(bar.key)) {
-                      opacity = 0.75;
-                    }
-
-                    const g = foodscapesGroupsData.find((s) => s.key === bar.key);
-
-                    return (
-                      <g key={`bar-stack-${barStack.index}-${bar.index}`}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <motion.rect
-                              x={bar.x}
-                              y={bar.y}
-                              width={bar.width}
-                              height={bar.height}
-                              fill={bar.color}
-                              {...(interactive && {
-                                onClick: () => handleBarClick(bar),
-                                onMouseEnter: () => {
-                                  setHover(bar.key);
-                                },
-                                onMouseLeave: () => {
-                                  setHover(null);
-                                },
-                              })}
-                              cursor={interactive ? 'pointer' : 'default'}
-                              animate={{
-                                fillOpacity: opacity,
-                              }}
-                            />
-                          </TooltipTrigger>
-
-                          <TooltipPortal>
-                            <TooltipContent asChild sideOffset={2}>
-                              <FoodscapesChartTooltipGroup
-                                {...bar}
-                                {...g}
-                                id={bar.key}
-                                total={TOTAL}
-                              />
-                            </TooltipContent>
-                          </TooltipPortal>
-                        </Tooltip>
-
-                        {hover === bar.key && (
-                          <rect
-                            x={bar.x}
-                            y={bar.y}
-                            width={bar.width}
-                            height={bar.height}
-                            fill="transparent"
-                            stroke="#1C274A"
-                            strokeWidth={1}
-                            pointerEvents="none"
-                            shapeRendering="crispEdges"
-                          />
-                        )}
-
-                        <AnimatePresence>
-                          {ALL_SELECTED.includes(bar.key) && (
-                            <motion.rect
-                              key={`bar-stack-${barStack.index}-${bar.index}-selected`}
-                              x={bar.x}
-                              y={bar.y}
-                              width={bar.width}
-                              height={bar.height}
-                              fill="transparent"
-                              stroke="#1C274A"
-                              strokeWidth={2}
-                              pointerEvents="none"
-                              shapeRendering="crispEdges"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                            />
-                          )}
-
-                          {PARTIAL_SELECTED.includes(bar.key) && (
-                            <motion.rect
-                              key={`bar-stack-${barStack.index}-${bar.index}-partial-selected`}
-                              x={bar.x}
-                              y={bar.y}
-                              width={bar.width}
-                              height={bar.height}
-                              fill="transparent"
-                              stroke="#1C274A"
-                              strokeWidth={2}
-                              strokeDasharray="4"
-                              pointerEvents="none"
-                              shapeRendering="crispEdges"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                            />
-                          )}
-                        </AnimatePresence>
-                      </g>
-                    );
-                  })
-                )
-              }
-            </BarStackHorizontal>
-          </TooltipProvider>
-
-          {!ALL_SELECTED.length && !PARTIAL_SELECTED.length && !hover && (
-            <rect
-              width={Math.max(width - 4, 0)}
-              height={Math.max(height - 4, 0)}
-              fill="transparent"
-              stroke="#1C274A"
-              strokeWidth={1}
-              pointerEvents="none"
-              shapeRendering="crispEdges"
-            />
-          )}
-        </Group>
-      </svg>
-    </div>
+    <HorizontalStackedGroupedBar<FoodscapeData, FoodscapeGroup, FoodscapeChartData>
+      data={data}
+      groupedData={foodscapesGroupsData}
+      width={width}
+      height={height}
+      selected={selected}
+      interactive={interactive}
+      xScale={xScale}
+      yScale={yScale}
+      colorScale={colorScale}
+      onBarClick={handleBarClick}
+      TooltipComponent={FoodscapesChartTooltipGroup}
+    />
   );
 };
 

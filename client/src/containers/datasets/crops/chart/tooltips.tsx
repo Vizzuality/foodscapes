@@ -37,7 +37,7 @@ export const CropsChartTooltip = forwardRef<HTMLDivElement, TooltipProps<CropCha
 
 CropsChartTooltip.displayName = 'CropsChartTooltip';
 
-interface CropsChartTooltipGroupProps extends Omit<BarGroupBar<number>, 'key' | 'value'> {
+interface CropsChartTooltipGroupProps extends BarGroupBar<number> {
   id: number;
   total: number;
   label: string;

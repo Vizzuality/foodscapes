@@ -4,7 +4,7 @@ import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { Group } from '@visx/group';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
-import { ScaleLinear, ScaleBand } from 'd3-scale';
+import { ScaleLinear, ScaleBand, ScaleOrdinal } from 'd3-scale';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
@@ -33,7 +33,7 @@ interface HorizontalStackedBarProps<D extends DataProps, C extends ChartDataProp
   height: number;
   xScale: ScaleLinear<number, number, never>;
   yScale: ScaleBand<number>;
-  colorScale: ScaleLinear<string, string, never>;
+  colorScale: ScaleOrdinal<string, string, never>;
   interactive?: boolean;
   selected?: readonly number[];
   onBarClick?: (
@@ -75,6 +75,8 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
     ];
   }, [data]);
 
+  if (width === 0 || height === 0) return null;
+
   return (
     <div className="relative">
       <svg width={width} height={height}>
@@ -88,7 +90,9 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
               y={() => height}
               xScale={xScale}
               yScale={yScale}
-              color={(d) => colorScale(+d) || colorScale.range()[0]}
+              color={(d) => {
+                return colorScale(`${d}`) || colorScale.range()[0];
+              }}
             >
               {(barStacks) =>
                 barStacks.map((barStack) =>
