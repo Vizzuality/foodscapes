@@ -12,24 +12,27 @@ CREATE TABLE IF NOT EXISTS foodscapes (
 [water_scarcity] integer,
 [climate_risk] integer,
 [pesticide_risk] integer,
-[cropland_areas_for_restoration_fraq] float,
-[cropland_areas_for_restoration_area] float,
-[cropland_areas_for_restoration_Cseq] float,
-[grassland_area_for_restoration_fraq] float,
-[grassland_area_for_restoration_area] float,
-[grassland_area_for_restoration_Cseq] float,
-[conversion_of_cropland_to_silvoarable_fraq] float,
-[conversion_of_cropland_to_silvoarable_area] float,
-[conversion_of_cropland_to_silvoarable_Cseq] float,
-[conversion_of_grassland_to_silvopastoral_fraq] float,
-[conversion_of_grassland_to_silvopastoral_area] float,
-[conversion_of_grassland_to_silvopastoral_Cseq] float,
-[cover_crops_fraq] float,
-[cover_crops_area] float,
-[cover_crops_Cseq] float,
-[minimum_tillage_fraq] float,
-[minimum_tillage_area] float,
-[minimum_tillage_Cseq] float,
+[cropland_areas_suitable_for_restoration_fraq] float,
+[cropland_areas_suitable_for_restoration_area] float,
+[cropland_areas_suitable_for_restoration_Cseq] float,
+[grassland_areas_suitable_for_restoration_fraq] float,
+[grassland_areas_suitable_for_restoration_area] float,
+[grassland_areas_suitable_for_restoration_Cseq] float,
+[cropland_areas_suitable_for_silvoarable_fraq] float,
+[cropland_areas_suitable_for_silvoarable_area] float,
+[cropland_areas_suitable_for_silvoarable_Cseq] float,
+[forest_ecoregions_suitable_for_silvopastoral_fraq] float,
+[forest_ecoregions_suitable_for_silvopastoral_area] float,
+[forest_ecoregions_suitable_for_silvopastoral_Cseq] float,
+[grassland_ecoregions_suitable_for_silvopastoral_fraq] float,
+[grassland_ecoregions_suitable_for_silvopastoral_area] float,
+[grassland_ecoregions_suitable_for_silvopastoral_Cseq] float,
+[areas_suitable_for_cover_cropping_fraq] float,
+[areas_suitable_for_cover_cropping_area] float,
+[areas_suitable_for_cover_cropping_Cseq] float,
+[areas_suitable_for_minimum_tillage_fraq] float,
+[areas_suitable_for_minimum_tillage_area] float,
+[areas_suitable_for_minimum_tillage_Cseq] float,
 [country] integer,
 [province] integer,
 [pixel_count] integer
@@ -47,23 +50,26 @@ CREATE INDEX soil_erosion_idx ON foodscapes(soil_erosion);
 CREATE INDEX water_scarcity_idx ON foodscapes(water_scarcity);
 CREATE INDEX climate_risk_idx ON foodscapes(climate_risk);
 CREATE INDEX pesticide_risk_idx ON foodscapes(pesticide_risk);
-CREATE INDEX cropland_areas_for_restoration_fraq_idx ON foodscapes(cropland_areas_for_restoration_fraq);
-CREATE INDEX cropland_areas_for_restoration_area_idx ON foodscapes(cropland_areas_for_restoration_area);
-CREATE INDEX cropland_areas_for_restoration_Cseq_idx ON foodscapes(cropland_areas_for_restoration_Cseq);
-CREATE INDEX grassland_area_for_restoration_fraq_idx ON foodscapes(grassland_area_for_restoration_fraq);
-CREATE INDEX grassland_area_for_restoration_area_idx ON foodscapes(grassland_area_for_restoration_area);
-CREATE INDEX grassland_area_for_restoration_Cseq_idx ON foodscapes(grassland_area_for_restoration_Cseq);
-CREATE INDEX conversion_of_cropland_to_silvoarable_fraq_idx ON foodscapes(conversion_of_cropland_to_silvoarable_fraq);
-CREATE INDEX conversion_of_cropland_to_silvoarable_area_idx ON foodscapes(conversion_of_cropland_to_silvoarable_area);
-CREATE INDEX conversion_of_cropland_to_silvoarable_Cseq_idx ON foodscapes(conversion_of_cropland_to_silvoarable_Cseq);
-CREATE INDEX conversion_of_grassland_to_silvopastoral_fraq_idx ON foodscapes(conversion_of_grassland_to_silvopastoral_fraq);
-CREATE INDEX conversion_of_grassland_to_silvopastoral_area_idx ON foodscapes(conversion_of_grassland_to_silvopastoral_area);
-CREATE INDEX conversion_of_grassland_to_silvopastoral_Cseq_idx ON foodscapes(conversion_of_grassland_to_silvopastoral_Cseq);
-CREATE INDEX cover_crops_fraq_idx ON foodscapes(cover_crops_fraq);
-CREATE INDEX cover_crops_area_idx ON foodscapes(cover_crops_area);
-CREATE INDEX cover_crops_Cseq_idx ON foodscapes(cover_crops_Cseq);
-CREATE INDEX minimum_tillage_fraq_idx ON foodscapes(minimum_tillage_fraq);
-CREATE INDEX minimum_tillage_area_idx ON foodscapes(minimum_tillage_area);
-CREATE INDEX minimum_tillage_Cseq_idx ON foodscapes(minimum_tillage_Cseq);
+CREATE INDEX cropland_areas_suitable_for_restoration_fraq_idx ON foodscapes(cropland_areas_suitable_for_restoration_fraq);
+CREATE INDEX cropland_areas_suitable_for_restoration_area_idx ON foodscapes(cropland_areas_suitable_for_restoration_area);
+CREATE INDEX cropland_areas_suitable_for_restoration_Cseq_idx ON foodscapes(cropland_areas_suitable_for_restoration_Cseq);
+CREATE INDEX grassland_areas_suitable_for_restoration_fraq_idx ON foodscapes(grassland_areas_suitable_for_restoration_fraq);
+CREATE INDEX grassland_areas_suitable_for_restoration_area_idx ON foodscapes(grassland_areas_suitable_for_restoration_area);
+CREATE INDEX grassland_areas_suitable_for_restoration_Cseq_idx ON foodscapes(grassland_areas_suitable_for_restoration_Cseq);
+CREATE INDEX cropland_areas_suitable_for_silvoarable_fraq_idx ON foodscapes(cropland_areas_suitable_for_silvoarable_fraq);
+CREATE INDEX cropland_areas_suitable_for_silvoarable_area_idx ON foodscapes(cropland_areas_suitable_for_silvoarable_area);
+CREATE INDEX cropland_areas_suitable_for_silvoarable_Cseq_idx ON foodscapes(cropland_areas_suitable_for_silvoarable_Cseq);
+CREATE INDEX forest_ecoregions_suitable_for_silvopastoral_fraq_idx ON foodscapes(forest_ecoregions_suitable_for_silvopastoral_fraq);
+CREATE INDEX forest_ecoregions_suitable_for_silvopastoral_area_idx ON foodscapes(forest_ecoregions_suitable_for_silvopastoral_area);
+CREATE INDEX forest_ecoregions_suitable_for_silvopastoral_Cseq_idx ON foodscapes(forest_ecoregions_suitable_for_silvopastoral_Cseq);
+CREATE INDEX grassland_ecoregions_suitable_for_silvopastoral_fraq_idx ON foodscapes(grassland_ecoregions_suitable_for_silvopastoral_fraq);
+CREATE INDEX grassland_ecoregions_suitable_for_silvopastoral_area_idx ON foodscapes(grassland_ecoregions_suitable_for_silvopastoral_area);
+CREATE INDEX grassland_ecoregions_suitable_for_silvopastoral_Cseq_idx ON foodscapes(grassland_ecoregions_suitable_for_silvopastoral_Cseq);
+CREATE INDEX areas_suitable_for_cover_cropping_fraq_idx ON foodscapes(areas_suitable_for_cover_cropping_fraq);
+CREATE INDEX areas_suitable_for_cover_cropping_area_idx ON foodscapes(areas_suitable_for_cover_cropping_area);
+CREATE INDEX areas_suitable_for_cover_cropping_Cseq_idx ON foodscapes(areas_suitable_for_cover_cropping_Cseq);
+CREATE INDEX areas_suitable_for_minimum_tillage_fraq_idx ON foodscapes(areas_suitable_for_minimum_tillage_fraq);
+CREATE INDEX areas_suitable_for_minimum_tillage_area_idx ON foodscapes(areas_suitable_for_minimum_tillage_area);
+CREATE INDEX areas_suitable_for_minimum_tillage_Cseq_idx ON foodscapes(areas_suitable_for_minimum_tillage_Cseq);
 CREATE INDEX country_idx ON foodscapes(country);
 CREATE INDEX province_idx ON foodscapes(province);

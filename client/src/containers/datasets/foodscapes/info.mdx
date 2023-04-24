@@ -1,0 +1,16 @@
+import LayoutMdx from 'layouts/mdx';
+
+## {props.label}
+
+A foodscape is a terrestrial or aquatic food production area defined by a series of distinct
+biophysical attributes and management patterns, which can be mapped. They cover all parts of
+the globe where food is produced.
+
+*Copyright © 2021 The Nature Conservancy; International Institute for Applied Systems
+Analysis; SYSTEMIQ*
+
+export default ({ children, ...props }) => (
+  <LayoutMdx {...props}>
+    {children}
+  </LayoutMdx>
+);

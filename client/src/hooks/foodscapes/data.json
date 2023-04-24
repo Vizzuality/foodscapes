@@ -4,601 +4,773 @@
     "value": 1,
     "label": "Areas with little or only subsistence food production",
     "color": "#bcbcbc",
-    "parent": "Areas with little or only subsistence food production"
+    "parentId": 0,
+    "parentLabel": "No production",
+    "parentColor": "#000"
   },
   {
     "id": 1,
     "value": 2,
     "label": "Highly urbanized land",
     "color": "#ff2a00",
-    "parent": "Urbanized land"
+    "parentId": 0,
+    "parentLabel": "No production",
+    "parentColor": "#000"
   },
   {
     "id": 2,
     "value": 3,
     "label": "Inland water",
     "color": "#add8e6",
-    "parent": "Inland water"
+    "parentId": 0,
+    "parentLabel": "No production",
+    "parentColor": "#000"
   },
   {
     "id": 3,
     "value": 101,
     "label": "Entisols on plains with bare land, little food production and grass cover",
     "color": "#ffebbe",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 4,
     "value": 102,
     "label": "Entisols on plains with grazed bare land and grass cover",
     "color": "#f9e5ba",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 5,
     "value": 103,
     "label": "Entisols on plains with bare land and scattered mixed crop production and low nutrient application rate",
     "color": "#f4e0b5",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 6,
     "value": 104,
     "label": "Entisols on dry plains and large cultivated fields and livestock",
     "color": "#e3cfa8",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 7,
     "value": 105,
     "label": "Entisols on dry rainfed plains with legumes and pulses production and occassionaly other crops",
     "color": "#d2be9a",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 8,
     "value": 109,
     "label": "Entisols on dry plains and bare land with mixed irrigated crop production",
     "color": "#ccb896",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 9,
     "value": 110,
     "label": "Entisols on dry plains and bare land with irrigated vegetable production and high nutrient application rates",
     "color": "#bdaa8b",
-    "parent": "Entisols"
+    "parentId": 1,
+    "parentLabel": "Entisols",
+    "parentColor": "#FBE1B4"
   },
   {
     "id": 10,
     "value": 201,
     "label": "Inceptisols on humid hilly tree-covered land with scattered crop production",
     "color": "#bed2ff",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 11,
     "value": 202,
     "label": "Inceptisols on humid mountaineous land with tree cover and scattered mixed crop production",
     "color": "#96a9da",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 12,
     "value": 203,
     "label": "Inceptisols on humid hilly-mountains with tree cover and small farmed mixed and intensive diverse production",
     "color": "#8495c7",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 13,
     "value": 204,
     "label": "Inceptisols on humid forested hills with intensive mixed crop production and grazing",
     "color": "#7282b4",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 14,
     "value": 205,
     "label": "Inceptisols on humid hilly mixed tree-covered land with rainfed perennial crops and other livestock",
     "color": "#6270a1",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 15,
     "value": 206,
     "label": "Mixed rainfed highly productive land with agroforestry and diverse crops",
     "color": "#536089",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 16,
     "value": 209,
     "label": "Inceptisols on humid land with intensive mixed perrenial tree crops and non-ruminant grazing",
     "color": "#363f6e",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 17,
     "value": 210,
     "label": "Inceptisols on humid hilly land with intensive mixed livestock and other crops grown with high nutrient application rates",
     "color": "#2b3257",
-    "parent": "Inceptisols"
+    "parentId": 2,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 18,
     "value": 301,
     "label": "Mixed urban and peri-urban areas with some agriculture and livestock",
     "color": "#f50000",
-    "parent": "Urbanized land"
+    "parentId": 3,
+    "parentLabel": "Urbanized land",
+    "parentColor": "#E60217"
   },
   {
     "id": 19,
     "value": 304,
     "label": "Peri-urban areas with marginal agriculture and livestock",
     "color": "#e00000",
-    "parent": "Urbanized land"
+    "parentId": 3,
+    "parentLabel": "Urbanized land",
+    "parentColor": "#E60217"
   },
   {
     "id": 20,
     "value": 306,
     "label": "Peri-urban area interspersed with intensive irrigated agriculture and livestock",
     "color": "#d40000",
-    "parent": "Urbanized land"
+    "parentId": 3,
+    "parentLabel": "Urbanized land",
+    "parentColor": "#E60217"
   },
   {
     "id": 21,
     "value": 401,
     "label": "Mollisols in mountaineous bare areas with little crop production and grazing",
     "color": "#d1b06f",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 22,
     "value": 402,
     "label": "Mollisols in mountaineous-hilly areas with low density livestock grazing and scattered crop production",
     "color": "#c29f5c",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 23,
     "value": 403,
     "label": "Mollisols in mountaineous-hilly cultivated land with grazing ruminants and rainfed mixed crops",
     "color": "#a5813a",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 24,
     "value": 404,
     "label": "Mollisols in hilly conventionally tillaged cultivated land with interspersed grazing",
     "color": "#96722c",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 25,
     "value": 406,
     "label": "Mollisols and Inceptisols in plains with irrigated intensive crop production",
     "color": "#876420",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 26,
     "value": 407,
     "label": "Mollisols in plains with intensive irrigated cereal and oil crop production and high nutrient application rates",
     "color": "#795715",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 27,
     "value": 408,
     "label": "Mollisols in intensive rainfed cereal and oil crop producing land with high nutrient application rates",
     "color": "#6a4a0c",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 28,
     "value": 409,
     "label": "Mollisols in plains with intensive rainfed large field with cereal and oil crop production",
     "color": "#5b3e05",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 29,
     "value": 410,
     "label": "Mollisols in plains with intensive rainfed cereal and oil crop producing land that is single cropped",
     "color": "#3b2700",
-    "parent": "Mollisols"
+    "parentId": 4,
+    "parentLabel": "Mollisols",
+    "parentColor": "#3b2700"
   },
   {
     "id": 30,
     "value": 501,
     "label": "Vertisols in plains with grazed shrubby land and scattered mixed crop production",
     "color": "#d9ca77",
-    "parent": "Vertisols"
+    "parentId": 5,
+    "parentLabel": "Vertisols",
+    "parentColor": "#A6943E"
   },
   {
     "id": 31,
     "value": 504,
     "label": "Vertisols in plains diversely cultivated land and interspersed grazing",
     "color": "#b1a241",
-    "parent": "Vertisols"
+    "parentId": 5,
+    "parentLabel": "Vertisols",
+    "parentColor": "#A6943E"
   },
   {
     "id": 32,
     "value": 506,
     "label": "Vertisols in plains with mixed crop and livestock production",
     "color": "#a49632",
-    "parent": "Vertisols"
+    "parentId": 5,
+    "parentLabel": "Vertisols",
+    "parentColor": "#A6943E"
   },
   {
     "id": 33,
     "value": 508,
     "label": "Vertisols in plains with mixed irrigated and rainfed production with mixed crop production",
     "color": "#978925",
-    "parent": "Vertisols"
+    "parentId": 5,
+    "parentLabel": "Vertisols",
+    "parentColor": "#A6943E"
   },
   {
     "id": 34,
     "value": 509,
     "label": "Vertisols in plains with rainfed intensively cultivated land with mixed production and sparse grazing",
     "color": "#7d700f",
-    "parent": "Vertisols"
+    "parentId": 5,
+    "parentLabel": "Vertisols",
+    "parentColor": "#A6943E"
   },
   {
     "id": 35,
     "value": 510,
     "label": "Vertisols in plains with larger intensively cultivated fields with reduced tillage",
     "color": "#6f6407",
-    "parent": "Vertisols"
+    "parentId": 5,
+    "parentLabel": "Vertisols",
+    "parentColor": "#A6943E"
   },
   {
     "id": 36,
     "value": 601,
     "label": "Inceptisols on bare grassy land with scattered grazing",
     "color": "#d4f0ff",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 37,
     "value": 602,
     "label": "Inceptisols on mixed forest and grassland",
     "color": "#b3ddf2",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 38,
     "value": 603,
     "label": "Inceptisols in hilly grassy land with scattered grazing and marginal crop production",
     "color": "#94cbe5",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 39,
     "value": 604,
     "label": "Inceptisols in mountaineous bare land with small fields and traditional tillage",
     "color": "#77bad8",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 40,
     "value": 605,
     "label": "Inceptisols in forested land with few scattered large farms and low crop diversity",
     "color": "#72b3cf",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 41,
     "value": 606,
     "label": "Inceptisols in hilly land with mixed production of conventional tillage and high nutrient application",
     "color": "#5398b3",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 42,
     "value": 607,
     "label": "Inceptisols in arid hilly land with rainfed cereal and legume production and other livestock",
     "color": "#007ea1",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 43,
     "value": 609,
     "label": "Inceptisols in hills and mountains with irrigated intensive mixed crop production",
     "color": "#006783",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 44,
     "value": 610,
     "label": "Inceptisols in hilly shrubland with irrigated intensive mixed crop production and high nutrient application",
     "color": "#005168",
-    "parent": "Inceptisols"
+    "parentId": 6,
+    "parentLabel": "Inceptisols",
+    "parentColor": "#768ABD"
   },
   {
     "id": 45,
     "value": 701,
     "label": "Alfisols in plains and grasslands with little crop production and grazing",
     "color": "#ffd9d9",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 46,
     "value": 702,
     "label": "Alfisols in shrubby plains that are grazed with scattered cropland",
     "color": "#efb4b4",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 47,
     "value": 703,
     "label": "Alfisols in mixed food production landscapes with scattered grazing",
     "color": "#de9393",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 48,
     "value": 704,
     "label": "Alfisols in mixed diverse crop systems on small fields with some livestock and agroforestry and low nutrient application rates",
     "color": "#ce7575",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 49,
     "value": 705,
     "label": "Alfisols with mixed crop production, some ruminants, and higher nutrient application rates",
     "color": "#bd5959",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 50,
     "value": 706,
     "label": "Alfisols with rainfed crop production on large fields with some livestock",
     "color": "#a64e4e",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 51,
     "value": 707,
     "label": "Alfisols with rainfed diverse crop production with some livestock",
     "color": "#904444",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 52,
     "value": 708,
     "label": "Alfisols with irrigated intensive mixed crop production and ruminants",
     "color": "#803c3c",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 53,
     "value": 709,
     "label": "Alfisols with mixed irrigated intensive cereal production and livestock with high nutrient application rates",
     "color": "#700000",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 54,
     "value": 710,
     "label": "Alfisols with rainfed intensive cereal production and livestock with high nutrient application rates",
     "color": "#560000",
-    "parent": "Alfisols"
+    "parentId": 7,
+    "parentLabel": "Alfisols",
+    "parentColor": "#BC4F51"
   },
   {
     "id": 55,
     "value": 801,
     "label": "Andisols on bare land with little crop production",
     "color": "#cccccc",
-    "parent": "Andisols"
+    "parentId": 8,
+    "parentLabel": "Andisols",
+    "parentColor": "#999999"
   },
   {
     "id": 56,
     "value": 802,
     "label": "Andisols on hilly land with little crop production",
     "color": "#b3b3b3",
-    "parent": "Andisols"
+    "parentId": 8,
+    "parentLabel": "Andisols",
+    "parentColor": "#999999"
   },
   {
     "id": 57,
     "value": 803,
     "label": "Andisols on hilly and mountainous land with sparse crop production and ruminants",
     "color": "#999999",
-    "parent": "Andisols"
+    "parentId": 8,
+    "parentLabel": "Andisols",
+    "parentColor": "#999999"
   },
   {
     "id": 58,
     "value": 804,
     "label": "Andisols on hilly tree and shrub land with scattered crop production",
     "color": "#4d4d4d",
-    "parent": "Andisols"
+    "parentId": 8,
+    "parentLabel": "Andisols",
+    "parentColor": "#999999"
   },
   {
     "id": 59,
     "value": 901,
     "label": "Histosols and Spodosols on wet mountainous land with little crop production",
     "color": "#bed2ff",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 60,
     "value": 902,
     "label": "Spodosols on hilly tree-covered land with scattered crop production",
     "color": "#9fafef",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 61,
     "value": 903,
     "label": "Histosols and Spodosols with rainfed mixed crop production and livestock including ruminants",
     "color": "#6967d0",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 62,
     "value": 904,
     "label": "Histosols and Spodosols in tree-covered landscapes with scattered crop production on large fields",
     "color": "#5a58b3",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 63,
     "value": 905,
     "label": "Histosols and Spodosols on mountainous land with grazing and interspersed food production",
     "color": "#5352a6",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 64,
     "value": 906,
     "label": "Histosols and Spodosols on hilly tree-covered land grazed and cultivated with high nutrient application rate",
     "color": "#443b8e",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 65,
     "value": 909,
     "label": "Histosols and Spodosols on intensively cultivated land with high livestock production",
     "color": "#5128a2",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 66,
     "value": 910,
     "label": "Spodosols on intensively cultivated land high livestock production and nutrient application rate",
     "color": "#4f1892",
-    "parent": "Histosols and/or Spodosols"
+    "parentId": 9,
+    "parentLabel": "Histosols and/or Spodosols",
+    "parentColor": "#6165BA"
   },
   {
     "id": 67,
     "value": 1001,
     "label": "Oxisols on humid tree-covered land with little food production",
     "color": "#dbf0b3",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 68,
     "value": 1002,
     "label": "Oxisols and Ultisols on humid tree-covered land with scattered cropland and livestock",
     "color": "#c5df93",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 69,
     "value": 1003,
     "label": "Oxisols and Ultisols on humid hilly tree-covered land with agroforestry and some livestock",
     "color": "#a3ca53",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 70,
     "value": 1004,
     "label": "Oxisols and Ultisols on humid tree-covered land with diverse small field production and agroforestry",
     "color": "#93b44a",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 71,
     "value": 1005,
     "label": "Oxisols and Ultisols with rainfed perennial crops and agroforestry and some livestock",
     "color": "#699d00",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 72,
     "value": 1006,
     "label": "Oxisols and Ultisols with mixed grazing and crop production on large fields",
     "color": "#568100",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 73,
     "value": 1007,
     "label": "Oxisols and Ultisols with rainfed perennial crops and agroforestry and high nutrient rates and livestock",
     "color": "#507800",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 74,
     "value": 1009,
     "label": "Oxisols and Ultisols on land with humid rainfed and irrigated perennial production and other mixed crops and livestock",
     "color": "#446600",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 75,
     "value": 1010,
     "label": "Oxisols and Ultisols on humid irrigated intensive perennial production and other mixed crops and livestock",
     "color": "#395700",
-    "parent": "Oxisols"
+    "parentId": 10,
+    "parentLabel": "Oxisols",
+    "parentColor": "#86AB49"
   },
   {
     "id": 76,
     "value": 1101,
     "label": "Ultisols on humid tree-covered land with little crop production",
     "color": "#f5f57a",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 77,
     "value": 1102,
     "label": "Ultisols on humid tree-covered land with scattered crop production",
     "color": "#e5e565",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 78,
     "value": 1103,
     "label": "Ultisols on humid tree-covered land with scattered crop production on large fields",
     "color": "#d5d553",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 79,
     "value": 1104,
     "label": "Ultisols on humid tree-covered land with diverse crop production",
     "color": "#c8c84d",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 80,
     "value": 1105,
     "label": "Ultisols on hilly and mountainous tree-covered land with diverse crop production and high nutrient application rates",
     "color": "#a0a035",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 81,
     "value": 1106,
     "label": "Ultisols with mixed crop and livestock production and high nutrient application rates",
     "color": "#8c8c0f",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 82,
     "value": 1107,
     "label": "Ultisols on humid tree-covered land with diverse crop production and some livestock",
     "color": "#979729",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 83,
     "value": 1108,
     "label": "Ultisols with mixed crops including perennials and livestock production",
     "color": "#666600",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 84,
     "value": 1109,
     "label": "Ultisols with intensively cultivated rainfed and irrigated mixed crop and livestock production",
     "color": "#595900",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   },
   {
     "id": 85,
     "value": 1110,
     "label": "Ultisols with intensively cultivated rainfed and irrigated mixed crop and livestock production and high nutrient application rates",
     "color": "#5b5b00",
-    "parent": "Ultisols"
+    "parentId": 11,
+    "parentLabel": "Ultisols",
+    "parentColor": "#838222"
   }
 ]

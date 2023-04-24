@@ -9,8 +9,8 @@ const Outro = () => {
   return (
     <section className="relative z-20">
       <Wrapper>
-        <motion.div className="grid min-h-screen grid-cols-12 items-center gap-6 pt-24">
-          <div className="col-span-6 col-start-4 space-y-20">
+        <motion.div className="grid min-h-screen grid-cols-12 items-center gap-6 lg:pt-24">
+          <div className="col-span-12 space-y-20 lg:col-span-6 lg:col-start-4">
             <div className="space-y-5 text-center text-white">
               <p className="font-semibold">
                 To guide that action, we can take inspiration from the nature-based solutions that

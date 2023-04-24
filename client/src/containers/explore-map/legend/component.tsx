@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
-import { layersAtom, layersSettingsAtom, menuOpenAtom } from 'store/explore-map';
+import { layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { menuOpenAtom } from 'store/menu';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -80,10 +81,10 @@ const LegendContainer = () => {
             id={layer}
             key={layer}
             dataset={DATASET}
+            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             Components={{
               Info: InfoComponent ? <InfoComponent {...DATASET} /> : null,
             }}
-            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
             onChangeOpacity={(opacity) => {
               onChangeOpacity(layer, opacity);
             }}

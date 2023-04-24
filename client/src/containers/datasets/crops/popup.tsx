@@ -1,35 +1,41 @@
+import { useMemo } from 'react';
+
+import cn from 'lib/classnames';
+
 import { LngLat } from 'types/map';
 
-import { usePointData } from 'hooks/data';
+import { useCrops } from 'hooks/crops';
+import { noPointData, usePointData } from 'hooks/data';
 import { useIsLoading } from 'hooks/utils';
+
+import { DATASETS } from 'constants/datasets';
 
 interface CropsPopupProps {
   latLng: LngLat;
 }
 
 const CropsPopup = ({ latLng }: CropsPopupProps) => {
+  const DATASET = DATASETS.find((d) => d.id === 'crops');
+  const band = `b${DATASET.layer.band}`;
+
+  const f = useCrops();
   const p = usePointData(latLng, {
     keepPreviousData: false,
   });
 
-  // const { data: pointData } = p;
+  const { data: cropsData } = f;
+  const { data: pointData } = p;
 
-  const { isFetching, isFetched } = useIsLoading([p]);
+  const { isFetching, isFetched } = useIsLoading([f, p]);
 
-  const DATA = {
-    color: '#000',
-    label: 'Just testing soil groups',
-  };
+  const DATA = useMemo(() => {
+    if (!cropsData || !pointData) return null;
+    if (noPointData(pointData)) return null;
 
-  // const DATA = useMemo(() => {
-  //   if (!soilgroupsData || !pointData) return null;
-  // if (noPointData(pointData)) return null;
+    const value = pointData[band];
 
-  //   const band = 'b1';
-  //   const value = pointData[band];
-
-  //   return soilgroupsData.find((d) => d.value === value);
-  // }, [soilgroupsData, pointData]);
+    return cropsData.find((d) => d.value === value);
+  }, [band, cropsData, pointData]);
 
   return (
     <div>
@@ -44,11 +50,10 @@ const CropsPopup = ({ latLng }: CropsPopupProps) => {
                 borderColor: DATA?.color ?? 'var(--color-navy-500)',
               }}
             />
-
-            <h2 className="text-base font-semibold">Soil Group</h2>
+            <h2 className="text-base font-semibold">Crop</h2>
           </header>
 
-          <div className="mt-2 pl-6">
+          <div className={cn({ 'mt-2 pl-6': true })}>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && <h3 className="text-sm font-light">{DATA.label}</h3>}
           </div>

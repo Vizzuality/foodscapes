@@ -62,6 +62,7 @@ const Chart2 = () => {
                   <ParentSize>
                     {({ width }) => (
                       <BarStackChart
+                        id="stacked-bar"
                         width={width}
                         height={400}
                         data={data}

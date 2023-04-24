@@ -7,15 +7,15 @@ const About = () => {
     <>
       <Wrapper>
         <div className="space-y-10 py-24 lg:py-48">
-          <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-6 xl:col-span-5 xl:col-start-2">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-6">
+            <div className="lg:col-span-6 xl:col-span-5 xl:col-start-2">
               <h2 className="font-display text-5xl">About Foodscapes.</h2>
             </div>
           </div>
 
-          <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-6 xl:col-span-5 xl:col-start-2">
-              <div className="flex flex-col justify-center space-y-5">
+          <div className="flex flex-col space-y-8 lg:grid lg:grid-cols-12 lg:gap-6 lg:space-y-0">
+            <div className="lg:col-span-6 xl:col-span-5 xl:col-start-2">
+              <div className="flex flex-col justify-center space-y-6">
                 <p className="font-light">
                   The Nature Conservancy is a global environmental nonprofit working to create a
                   world where people and nature can thrive. Founded in the U.S. through grassroots
@@ -40,8 +40,8 @@ const About = () => {
                   Analysis (IIASA), and SYSTEMIQ.
                 </p>
 
-                <div className="flex space-x-6">
-                  <div>
+                <div className="flex flex-wrap justify-center lg:flex-nowrap lg:justify-between">
+                  <div className="pb-4 pr-4 lg:pb-0 lg:pr-0">
                     <Image
                       width={139}
                       height={57}
@@ -50,7 +50,7 @@ const About = () => {
                       className="h-auto"
                     />
                   </div>
-                  <div>
+                  <div className="pb-4 pl-4 lg:pb-0 lg:pl-0">
                     <Image
                       width={139}
                       height={63}
@@ -70,7 +70,7 @@ const About = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col space-y-6 pt-4">
+                <div className="flex space-x-3 pt-4 lg:flex-col lg:space-x-0 lg:space-y-6">
                   <p className="text-sm font-light">Designed and developed by:</p>
                   <a href="https://www.vizzuality.com/" target="_blank" rel="noopener noreferrer">
                     <Image
@@ -86,14 +86,9 @@ const About = () => {
 
             <div className="col-span-5 col-start-8">
               <div className="flex flex-col items-end">
-                <Image
-                  width={456}
-                  height={280}
-                  src="/images/about/about.jpg"
-                  alt="About field image"
-                />
+                <video src="/videos/about.mp4" autoPlay loop muted className="aspect-{1200/800}" />
               </div>
-              <p className="pl-2 pt-2 text-xxs font-light">
+              <p className="pt-2 text-xxs font-light">
                 © {new Date().getFullYear()} The Nature Conservancy
               </p>
             </div>

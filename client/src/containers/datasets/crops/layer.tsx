@@ -6,20 +6,17 @@ import { Settings } from 'components/map/legend/types';
 
 import { useLayer, useSource } from './hooks';
 
-const CropsLayer = ({ settings, beforeId }: LayerProps<Settings>) => {
-  const SOURCE = useSource();
-  const LAYERS = useLayer({ settings });
+const CropsLayer = ({ settings, filters, beforeId }: LayerProps<Settings>) => {
+  const SOURCE = useSource({ filters });
+  const LAYER = useLayer({ settings });
 
-  if (!SOURCE || !LAYERS) return null;
+  if (!SOURCE || !LAYER) return null;
 
   return (
     <Source {...SOURCE}>
-      {LAYERS.map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-      ))}
+      <Layer {...LAYER} beforeId={beforeId} />
     </Source>
   );
-  // return <Layer {...LAYER} {...props} />;
 };
 
 export default CropsLayer;

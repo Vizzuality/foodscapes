@@ -1,3 +1,5 @@
+import squel from 'squel';
+
 import { Dataset } from 'types/datasets';
 
 export const DATASETS = [
@@ -7,35 +9,41 @@ export const DATASETS = [
     group: 'foodscapes',
     layer: {
       enabled: true,
+      visible: true,
+      band: 1,
     },
     widget: {
       enabled: false,
-      sql: `SELECT DISTINCT foodscapes as id, soil_groups, COUNT(pixel_count) AS value
-      FROM foodscapes
-      WHERE foodscapes NOT IN (1,2,3)
-      GROUP BY foodscapes, soil_groups`,
+      sql: squel
+        .select()
+        .field('foodscapes', 'id')
+        .field('soil_groups', 'parent_id')
+        .field('COUNT(pixel_count)', 'value')
+        .distinct()
+        .from('foodscapes')
+        .where('foodscapes NOT IN (1,2,3)')
+        .group('foodscapes'),
     },
   },
   {
-    id: 'soil-groups',
-    label: 'Soil Groups',
+    id: 'foodscapes-intensities',
+    label: 'Foodscapes Intensity',
     group: 'foodscapes',
     layer: {
-      enabled: false,
+      enabled: true,
+      visible: true,
+      band: 3,
     },
     widget: {
       enabled: false,
-    },
-  },
-  {
-    id: 'foodscapes-intensity-groups',
-    label: 'Foodscapes Intensity Groups',
-    group: 'foodscapes',
-    layer: {
-      enabled: false,
-    },
-    widget: {
-      enabled: false,
+      sql: squel
+        .select()
+        .field('intensity_groups', 'id')
+        .field('COUNT(pixel_count)', 'value')
+        .distinct()
+        .from('foodscapes')
+        .where('intensity_groups NOT IN (0)')
+        .group('intensity_groups'),
     },
   },
   {
@@ -43,21 +51,21 @@ export const DATASETS = [
     label: 'Crops',
     group: 'foodscapes',
     layer: {
-      enabled: false,
+      enabled: true,
+      visible: true,
+      band: 4,
     },
     widget: {
       enabled: false,
-    },
-  },
-  {
-    id: 'crop-groups',
-    label: 'Crop Groups',
-    group: 'foodscapes',
-    layer: {
-      enabled: false,
-    },
-    widget: {
-      enabled: false,
+      sql: squel
+        .select()
+        .field('crops', 'id')
+        .field('crop_groups', 'parent_id')
+        .field('COUNT(pixel_count)', 'value')
+        .distinct()
+        .from('foodscapes')
+        .where('crops NOT IN (-9999)')
+        .group('crops'),
     },
   },
 
@@ -67,7 +75,8 @@ export const DATASETS = [
     label: 'Land Use Change',
     group: 'risks',
     layer: {
-      enabled: false,
+      enabled: true,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -79,6 +88,7 @@ export const DATASETS = [
     group: 'risks',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -90,6 +100,7 @@ export const DATASETS = [
     group: 'risks',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -103,6 +114,7 @@ export const DATASETS = [
     group: 'opportunities',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -114,6 +126,7 @@ export const DATASETS = [
     group: 'opportunities',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -125,6 +138,20 @@ export const DATASETS = [
     group: 'opportunities',
     layer: {
       enabled: false,
+      visible: true,
+    },
+    widget: {
+      enabled: false,
+    },
+  },
+  {
+    id: 'provinces',
+    label: 'Provinces',
+    group: 'other',
+    layer: {
+      enabled: true,
+      visible: false,
+      band: 34,
     },
     widget: {
       enabled: false,

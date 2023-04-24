@@ -11,8 +11,8 @@ import { Dataset } from 'types/datasets';
 
 import { INFO } from 'containers/datasets';
 
-import Checkbox from 'components/forms/checkbox';
 import Icon from 'components/icon';
+import { Checkbox } from 'components/ui/checkbox';
 import { DialogContent, DialogTrigger } from 'components/ui/dialog';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
@@ -45,27 +45,25 @@ const LayerItem = (props: Dataset) => {
         'pointer-events-none opacity-25': !layer.enabled,
       })}
     >
-      <button
-        className="flex grow space-x-3"
-        type="button"
-        disabled={!layer.enabled}
-        onClick={handleToggleLayer}
-      >
+      <div className="flex grow space-x-3">
         <Checkbox
+          id={id}
           checked={layers.includes(id)}
-          readOnly
+          disabled={!layer.enabled}
           className="pointer-events-none mt-1 h-3 w-3 rounded-sm group-hover:border-navy-400 group-hover:bg-navy-400"
+          onCheckedChange={handleToggleLayer}
         />
 
-        <span
+        <label
+          htmlFor={id}
           className={cn({
-            'text-sm font-light text-navy-500 transition-colors': true,
+            'cursor-pointer text-sm font-light text-navy-500 transition-colors': true,
             'group-hover:text-navy-400': true,
           })}
         >
           {label}
-        </span>
-      </button>
+        </label>
+      </div>
 
       <Dialog>
         <DialogTrigger asChild>
