@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import Image from 'next/image';
+
 import cn from 'lib/classnames';
 
 import { lastStepAtom, stepAtom } from 'store/home';
@@ -104,9 +106,17 @@ const Home = () => {
           <CirclesChart initialStep={6} currentStep={9} />
         </ScrollItem>
         <ScrollItem step={10} onChange={onChange}>
-          <div className="flex flex-col space-y-20">
+          <div className="flex flex-col">
             <GlobeText />
-            <GlobeMap currentId="mobile-globe" />
+            <div className="-mx-10">
+              <Image
+                width={414}
+                height={317}
+                src="/images/globe/globe-mobile.jpg"
+                alt="Globe with Foodscapes image"
+                className="object-fill"
+              />
+            </div>
           </div>
         </ScrollItem>
       </Media>

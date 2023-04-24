@@ -11,7 +11,7 @@ import ARROW_RIGHT_SVG from 'svgs/ui/arrow-right.svg?sprite';
 
 const Outro = () => {
   return (
-    <div className="relative z-20 flex min-h-screen flex-col justify-center bg-white px-10 lg:px-0">
+    <div className="relative z-20 flex min-h-screen flex-col justify-center bg-white px-10 py-10 lg:px-0 lg:py-0">
       <Wrapper>
         <div className="flex flex-col space-y-16 lg:grid lg:grid-cols-12 lg:gap-6 lg:space-y-0">
           <div className="col-span-4 flex grow flex-col xl:col-start-2">
@@ -23,7 +23,7 @@ const Outro = () => {
                 <div
                   className={cn({
                     'group relative flex h-full grow flex-col justify-between space-y-8': true,
-                    'z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-yellow-700 after:opacity-0 after:transition-opacity hover:after:opacity-100':
+                    ':after:opacity-100 z-0 after:absolute after:top-0 after:left-0 after:-mt-6 after:-ml-6 after:h-[calc(100%_+_theme(space.12))] after:w-[calc(100%_+_theme(space.12))] after:bg-yellow-700 after:transition-opacity hover:after:opacity-100 lg:after:opacity-0':
                       true,
                   })}
                 >

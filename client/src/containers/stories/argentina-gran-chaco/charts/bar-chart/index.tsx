@@ -5,6 +5,9 @@ import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
 import { scaleBand, scaleLinear } from '@visx/scale';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from 'usehooks-ts';
+
+import { screens } from 'styles/styles.config';
 
 import type { BarChartProps, BarChartData } from './types';
 
@@ -22,15 +25,17 @@ export const BarChart = ({
   const yMax = height - margin.top - margin.bottom;
   const dataMax = Math.max(...data.map(y));
 
+  const lg = useMediaQuery(`(min-width: ${screens.lg})`);
+
   const xScale = useMemo(
     () =>
       scaleBand<string>({
         range: [0, xMax],
         round: true,
         domain: data.map(x),
-        padding: 0.7,
+        padding: lg ? 0.7 : 0.55,
       }),
-    [data, xMax]
+    [data, xMax, lg]
   );
   const yScale = useMemo(
     () =>
@@ -107,7 +112,7 @@ export const BarChart = ({
                 />
               </path>
 
-              <Annotation x={barX + w} y={barY} dx={0} dy={0}>
+              <Annotation x={barX + w} y={lg ? barY : barY - w * 0.4} dx={lg ? 0 : -w / 2} dy={0}>
                 <HtmlLabel horizontalAnchor="start" verticalAnchor="end" showAnchorLine={false}>
                   <motion.div
                     className="whitespace-nowrap font-semibold text-white"
