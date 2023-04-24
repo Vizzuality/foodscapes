@@ -8,6 +8,8 @@ import { Dataset } from 'types/datasets';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
+import { DATASETS } from 'constants/datasets';
+
 import { Settings } from 'components/map/legend/types';
 
 interface UseFoodscapesSourceProps {
@@ -30,7 +32,9 @@ interface UseFoodscapesLegendProps {
 export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
 
-  const band = 1;
+  const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
+
+  const band = DATASET.layer.band;
   const colormap = useMemo(() => {
     const c = foodscapesData.reduce((acc, v) => {
       return {
@@ -46,8 +50,8 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
 
     if (!where) return null;
 
-    return `where(${where},b1,-1)`;
-  }, [filters]);
+    return `where(${where},b${band},-1)`;
+  }, [filters, band]);
 
   const searchParams = useMemo(() => {
     const params = new URLSearchParams();

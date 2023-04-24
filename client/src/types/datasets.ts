@@ -5,6 +5,8 @@ export interface Dataset {
   group: string;
   layer: {
     enabled: boolean;
+    visible: boolean;
+    band?: number;
   };
   widget: {
     enabled: boolean;

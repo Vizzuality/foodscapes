@@ -8,6 +8,8 @@ import { Dataset } from 'types/datasets';
 
 import { useCrops } from 'hooks/crops';
 
+import { DATASETS } from 'constants/datasets';
+
 import { Settings } from 'components/map/legend/types';
 
 interface UseCropsSourceProps {
@@ -30,7 +32,9 @@ interface UseCropsLegendProps {
 export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {
   const { data: cropsData } = useCrops();
 
-  const band = 4;
+  const DATASET = DATASETS.find((d) => d.id === 'crops');
+
+  const band = DATASET.layer.band;
   const colormap = useMemo(() => {
     const c = cropsData.reduce((acc, v) => {
       return {
@@ -49,7 +53,7 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
     if (!where) return null;
 
     return `where(${where},b${band},-1)`;
-  }, [filters]);
+  }, [filters, band]);
 
   const searchParams = useMemo(() => {
     const params = new URLSearchParams();

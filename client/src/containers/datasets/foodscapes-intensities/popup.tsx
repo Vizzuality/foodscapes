@@ -8,11 +8,16 @@ import { noPointData, usePointData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 import { useIsLoading } from 'hooks/utils';
 
+import { DATASETS } from 'constants/datasets';
+
 interface FoodscapesIntensitiesPopupProps {
   latLng: LngLat;
 }
 
 const FoodscapesIntensitiesPopup = ({ latLng }: FoodscapesIntensitiesPopupProps) => {
+  const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
+  const band = `b${DATASET.layer.band}`;
+
   const f = useFoodscapesIntensities();
   const p = usePointData(latLng, {
     keepPreviousData: false,
@@ -27,11 +32,10 @@ const FoodscapesIntensitiesPopup = ({ latLng }: FoodscapesIntensitiesPopupProps)
     if (!foodscapesIntensitiesData || !pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const band = 'b3';
     const value = pointData[band];
 
     return foodscapesIntensitiesData.find((d) => d.value === value);
-  }, [foodscapesIntensitiesData, pointData]);
+  }, [band, foodscapesIntensitiesData, pointData]);
 
   return (
     <div>

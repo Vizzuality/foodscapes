@@ -8,6 +8,8 @@ import { Dataset } from 'types/datasets';
 
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
+import { DATASETS } from 'constants/datasets';
+
 import { Settings } from 'components/map/legend/types';
 
 interface UseFoodscapesIntensitiesSourceProps {
@@ -32,7 +34,9 @@ export function useSource({
 }: UseFoodscapesIntensitiesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 
-  const band = 3;
+  const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
+
+  const band = DATASET.layer.band;
   const colormap = useMemo(() => {
     const c = foodscapesIntensitiesData.reduce((acc, v) => {
       return {
@@ -52,7 +56,7 @@ export function useSource({
     if (!where) return null;
 
     return `where(${where},b${band},-1)`;
-  }, [filters]);
+  }, [filters, band]);
 
   const searchParams = useMemo(() => {
     const params = new URLSearchParams();

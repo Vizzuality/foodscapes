@@ -9,6 +9,8 @@ export const DATASETS = [
     group: 'foodscapes',
     layer: {
       enabled: true,
+      visible: true,
+      band: 1,
     },
     widget: {
       enabled: false,
@@ -29,6 +31,8 @@ export const DATASETS = [
     group: 'foodscapes',
     layer: {
       enabled: true,
+      visible: true,
+      band: 3,
     },
     widget: {
       enabled: false,
@@ -48,6 +52,8 @@ export const DATASETS = [
     group: 'foodscapes',
     layer: {
       enabled: true,
+      visible: true,
+      band: 4,
     },
     widget: {
       enabled: false,
@@ -70,6 +76,7 @@ export const DATASETS = [
     group: 'risks',
     layer: {
       enabled: true,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -81,6 +88,7 @@ export const DATASETS = [
     group: 'risks',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -92,6 +100,7 @@ export const DATASETS = [
     group: 'risks',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -105,6 +114,7 @@ export const DATASETS = [
     group: 'opportunities',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -116,6 +126,7 @@ export const DATASETS = [
     group: 'opportunities',
     layer: {
       enabled: false,
+      visible: true,
     },
     widget: {
       enabled: false,
@@ -127,6 +138,20 @@ export const DATASETS = [
     group: 'opportunities',
     layer: {
       enabled: false,
+      visible: true,
+    },
+    widget: {
+      enabled: false,
+    },
+  },
+  {
+    id: 'provinces',
+    label: 'Provinces',
+    group: 'other',
+    layer: {
+      enabled: true,
+      visible: false,
+      band: 34,
     },
     widget: {
       enabled: false,

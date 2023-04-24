@@ -8,11 +8,16 @@ import { useCrops } from 'hooks/crops';
 import { noPointData, usePointData } from 'hooks/data';
 import { useIsLoading } from 'hooks/utils';
 
+import { DATASETS } from 'constants/datasets';
+
 interface CropsPopupProps {
   latLng: LngLat;
 }
 
 const CropsPopup = ({ latLng }: CropsPopupProps) => {
+  const DATASET = DATASETS.find((d) => d.id === 'crops');
+  const band = `b${DATASET.layer.band}`;
+
   const f = useCrops();
   const p = usePointData(latLng, {
     keepPreviousData: false,
@@ -27,11 +32,10 @@ const CropsPopup = ({ latLng }: CropsPopupProps) => {
     if (!cropsData || !pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const band = 'b4';
     const value = pointData[band];
 
     return cropsData.find((d) => d.value === value);
-  }, [cropsData, pointData]);
+  }, [band, cropsData, pointData]);
 
   return (
     <div>
