@@ -83,6 +83,7 @@ const Menu = () => {
                   className={cn({
                     'py-1 font-display text-2xl text-navy-500 transition-colors': true,
                   })}
+                  onClick={handleClose}
                 >
                   Foodscapes
                 </Link>
@@ -114,6 +115,7 @@ const Menu = () => {
                             'after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-full after:bg-navy-500':
                               pathname === href,
                           })}
+                          onClick={handleClose}
                         >
                           {label}
                         </Link>
