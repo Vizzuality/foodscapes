@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { foodscapesAtom, layersAtom } from 'store/explore-map';
+import { foodscapesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -10,13 +10,10 @@ import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
-import Icon from 'components/icon';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-import MultiSelect from 'components/ui/select/multi/component';
-import Switch from 'components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
+import { WidgetHeader, WidgetTop } from 'containers/widget';
 
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
+import MultiSelect from 'components/ui/select/multi/component';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
@@ -24,10 +21,6 @@ const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
-  const { id } = DATASET;
-
-  const layers = useRecoilValue(layersAtom);
-  const setLayers = useSetRecoilState(layersAtom);
 
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
@@ -46,20 +39,6 @@ const FoodscapesWidget = () => {
         .map((g) => g.value)
     );
   }, [foodscapesGroupData, foodscapes]);
-
-  const handleToggleLayer = useCallback(() => {
-    const lys = [...layers];
-
-    // push or slice layer in lys array base on index
-    const index = lys.findIndex((ly) => ly === id);
-    if (index === -1) {
-      lys.unshift(id);
-    } else {
-      lys.splice(index, 1);
-    }
-
-    setLayers(lys);
-  }, [id, layers, setLayers]);
 
   const handleBarClick = (key: number) => {
     setFoodscapes((prev) => {
@@ -137,11 +116,7 @@ const FoodscapesWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <header className="flex items-center justify-between space-x-5">
-        <h3 className="font-display text-2xl">Global Foodscapes</h3>
-
-        <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
-      </header>
+      <WidgetHeader title="Global Foodscapes" dataset={DATASET} />
 
       <div className="space-y-2">
         <p>
@@ -184,19 +159,9 @@ const FoodscapesWidget = () => {
               />
             </div>
 
-            <Collapsible>
-              <CollapsibleTrigger className="mt-5 flex items-center space-x-2 font-semibold text-navy-500 hover:underline">
-                <span>See top largest foodscapes</span>
-
-                <Icon icon={ARROW_DOWN_SVG} className="relative top-px h-3 w-3 text-navy-500" />
-              </CollapsibleTrigger>
-
-              <CollapsibleContent asChild>
-                <div className="mt-5">
-                  <ChartTop dataset={DATASET} />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
+            <WidgetTop label="See top largest foodscapes">
+              <ChartTop dataset={DATASET} />
+            </WidgetTop>
           </div>
         </TabsContent>
 
