@@ -33,7 +33,7 @@ const HorizontalBar = <D extends DataProps>({
         {data.map((d, i) => {
           const { id, label, value } = d;
           return (
-            <li key={id}>
+            <li key={label + i}>
               <motion.div
                 initial={{
                   width: 0,
@@ -50,9 +50,14 @@ const HorizontalBar = <D extends DataProps>({
                   onClick={() => onBarClick(d)}
                 />
 
-                <div className="shrink whitespace-nowrap text-[8px] font-bold text-navy-500">
+                <motion.div
+                  className="shrink whitespace-nowrap text-[8px] font-bold text-navy-500"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.05 * i + 0.25 }}
+                >
                   {format(value)}M Ha
-                </div>
+                </motion.div>
               </motion.div>
 
               <motion.div

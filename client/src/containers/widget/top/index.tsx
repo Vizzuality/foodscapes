@@ -33,7 +33,9 @@ const WidgetTop = ({ label, children }: WidgetTopProps) => {
         />
       </CollapsibleTrigger>
 
-      <CollapsibleContent>{children}</CollapsibleContent>
+      <CollapsibleContent>
+        <div className="relative mt-5 min-h-[40px]">{children}</div>
+      </CollapsibleContent>
     </Collapsible>
   );
 };

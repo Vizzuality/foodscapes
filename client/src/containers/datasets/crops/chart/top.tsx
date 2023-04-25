@@ -10,8 +10,10 @@ import { Dataset } from 'types/datasets';
 
 import { useCrops } from 'hooks/crops';
 import { useData } from 'hooks/data';
+import { useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
+import Loading from 'components/loading';
 
 interface CropsTopChartProps {
   dataset: Dataset;
@@ -23,18 +25,23 @@ const CropsTopChart = ({ dataset, onBarClick }: CropsTopChartProps) => {
   const filters = useRecoilValue(filtersSelector('crops'));
 
   // DATA
-  const { data: cropsData } = useCrops();
+  const fQuery = useCrops();
+
   const sql = dataset.widget.sql
     //
     .clone()
     .order('value', false)
     .limit(5);
 
-  const { data } = useData<CropData>({
+  const dQuery = useData<CropData>({
     sql,
     shape: 'array',
     ...filters,
   });
+
+  const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
+  const { data: cropsData } = fQuery;
+  const { data } = dQuery;
 
   // CONFIG
   const KEYS = useMemo(() => {
@@ -79,12 +86,20 @@ const CropsTopChart = ({ dataset, onBarClick }: CropsTopChartProps) => {
   );
 
   return (
-    <HorizontalBar<CropData & { label: string }>
-      data={DATA}
-      xScale={xScale}
-      colorScale={colorScale}
-      onBarClick={handleBarClick}
-    />
+    <>
+      <Loading
+        visible={isFetching && !isFetched}
+        className="absolute top-0.5 left-0 h-5 w-full -translate-y-full"
+        iconClassName="text-navy-500 h-3 h-3"
+      />
+
+      <HorizontalBar<CropData & { label: string }>
+        data={DATA}
+        xScale={xScale}
+        colorScale={colorScale}
+        onBarClick={handleBarClick}
+      />
+    </>
   );
 };
 

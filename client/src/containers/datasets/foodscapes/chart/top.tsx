@@ -10,8 +10,10 @@ import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
+import { useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
+import Loading from 'components/loading';
 
 interface FoodscapesTopChartProps {
   dataset: Dataset;
@@ -23,18 +25,23 @@ const FoodscapesTopChart = ({ dataset, onBarClick }: FoodscapesTopChartProps) =>
   const filters = useRecoilValue(filtersSelector('foodscapes'));
 
   // DATA
-  const { data: foodscapesData } = useFoodscapes();
+  const fQuery = useFoodscapes();
+
   const sql = dataset.widget.sql
     //
     .clone()
     .order('value', false)
     .limit(5);
 
-  const { data } = useData<FoodscapeData>({
+  const dQuery = useData<FoodscapeData>({
     sql,
     shape: 'array',
     ...filters,
   });
+
+  const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
+  const { data: foodscapesData } = fQuery;
+  const { data } = dQuery;
 
   // CONFIG
   const KEYS = useMemo(() => {
@@ -79,12 +86,20 @@ const FoodscapesTopChart = ({ dataset, onBarClick }: FoodscapesTopChartProps) =>
   );
 
   return (
-    <HorizontalBar<FoodscapeData & { label: string }>
-      data={DATA}
-      xScale={xScale}
-      colorScale={colorScale}
-      onBarClick={handleBarClick}
-    />
+    <>
+      <Loading
+        visible={isFetching && !isFetched}
+        className="absolute top-0.5 left-0 h-5 w-full -translate-y-full"
+        iconClassName="text-navy-500 h-3 h-3"
+      />
+
+      <HorizontalBar<FoodscapeData & { label: string }>
+        data={DATA}
+        xScale={xScale}
+        colorScale={colorScale}
+        onBarClick={handleBarClick}
+      />
+    </>
   );
 };
 
