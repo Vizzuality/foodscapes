@@ -54,10 +54,9 @@ def main(files: list[Path], description_file: Path, output_path: Path):
     if "intensity_groups" in column_paths_dict.keys():
         null_idexes = df[df["foodscapes"] == -9999].index
         df.loc[null_idexes, "intensity_groups"] = -9999
-    # change data type and shift crop values 1
+    # change data type
     if "crops" in column_paths_dict.keys():
         df["crops"].fillna(-9999, inplace=True)
-        df["crops"] = df["crops"].apply(lambda x: x + 1 if x != -9999 else x)
         df["crops"] = df["crops"].astype("int16")
     # change data type
     if "crop_groups" in column_paths_dict.keys():
