@@ -2,7 +2,7 @@
   {
     "id": 0,
     "value": 1,
-    "label": "wheat",
+    "label": "Wheat",
     "color": "#0a2f51",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -11,7 +11,7 @@
   {
     "id": 1,
     "value": 2,
-    "label": "rice",
+    "label": "Rice",
     "color": "#0c3d5b",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -20,7 +20,7 @@
   {
     "id": 2,
     "value": 3,
-    "label": "maize",
+    "label": "Maize",
     "color": "#0e4d64",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -29,7 +29,7 @@
   {
     "id": 3,
     "value": 4,
-    "label": "barley",
+    "label": "Barley",
     "color": "#105e6e",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -38,7 +38,7 @@
   {
     "id": 4,
     "value": 5,
-    "label": "pearl millet",
+    "label": "Pearl millet",
     "color": "#137177",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -47,7 +47,7 @@
   {
     "id": 5,
     "value": 6,
-    "label": "small millet",
+    "label": "Small millet",
     "color": "#15807b",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -56,7 +56,7 @@
   {
     "id": 6,
     "value": 7,
-    "label": "sorghum",
+    "label": "Sorghum",
     "color": "#188977",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -65,7 +65,7 @@
   {
     "id": 7,
     "value": 8,
-    "label": "other cereals",
+    "label": "Other cereals",
     "color": "#1a9172",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -74,7 +74,7 @@
   {
     "id": 8,
     "value": 9,
-    "label": "potato",
+    "label": "Potato",
     "color": "#fdc500",
     "parentId": 2,
     "parentLabel": "Roots and tubers",
@@ -83,7 +83,7 @@
   {
     "id": 9,
     "value": 10,
-    "label": "sweet potato",
+    "label": "Sweet potato",
     "color": "#ff9833",
     "parentId": 2,
     "parentLabel": "Roots and tubers",
@@ -92,7 +92,7 @@
   {
     "id": 10,
     "value": 11,
-    "label": "yams",
+    "label": "Yams",
     "color": "#ff8366",
     "parentId": 2,
     "parentLabel": "Roots and tubers",
@@ -101,7 +101,7 @@
   {
     "id": 11,
     "value": 12,
-    "label": "cassava",
+    "label": "Cassava",
     "color": "#ff9999",
     "parentId": 2,
     "parentLabel": "Roots and tubers",
@@ -110,7 +110,7 @@
   {
     "id": 12,
     "value": 13,
-    "label": "other roots",
+    "label": "Other roots",
     "color": "#ffccdc",
     "parentId": 2,
     "parentLabel": "Roots and tubers",
@@ -119,7 +119,7 @@
   {
     "id": 13,
     "value": 14,
-    "label": "bean",
+    "label": "Bean",
     "color": "#3d348b",
     "parentId": 3,
     "parentLabel": "Legumes and pulses",
@@ -128,7 +128,7 @@
   {
     "id": 14,
     "value": 15,
-    "label": "chickpea",
+    "label": "Chickpea",
     "color": "#535c9f",
     "parentId": 3,
     "parentLabel": "Legumes and pulses",
@@ -137,7 +137,7 @@
   {
     "id": 15,
     "value": 16,
-    "label": "cowpea",
+    "label": "Cowpea",
     "color": "#7389b3",
     "parentId": 3,
     "parentLabel": "Legumes and pulses",
@@ -146,7 +146,7 @@
   {
     "id": 16,
     "value": 17,
-    "label": "pigeonpea",
+    "label": "Pigeonpea",
     "color": "#93afc5",
     "parentId": 3,
     "parentLabel": "Legumes and pulses",
@@ -155,7 +155,7 @@
   {
     "id": 17,
     "value": 18,
-    "label": "lentil",
+    "label": "Lentil",
     "color": "#b3d0d8",
     "parentId": 3,
     "parentLabel": "Legumes and pulses",
@@ -164,7 +164,7 @@
   {
     "id": 18,
     "value": 19,
-    "label": "other pulses",
+    "label": "Other pulses",
     "color": "#d5eae9",
     "parentId": 3,
     "parentLabel": "Legumes and pulses",
@@ -173,7 +173,7 @@
   {
     "id": 19,
     "value": 20,
-    "label": "soybean",
+    "label": "Soybean",
     "color": "#1d9a6c",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -182,7 +182,7 @@
   {
     "id": 20,
     "value": 21,
-    "label": "groundnut",
+    "label": "Groundnut",
     "color": "#35a76b",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -191,7 +191,7 @@
   {
     "id": 21,
     "value": 22,
-    "label": "coconut",
+    "label": "Coconut",
     "color": "#4eb46e",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -200,7 +200,7 @@
   {
     "id": 22,
     "value": 23,
-    "label": "oilpalm",
+    "label": "Oilpalm",
     "color": "#67c075",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -209,7 +209,7 @@
   {
     "id": 23,
     "value": 24,
-    "label": "sunflower",
+    "label": "Sunflower",
     "color": "#81cc80",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -218,7 +218,7 @@
   {
     "id": 24,
     "value": 25,
-    "label": "rapeseed",
+    "label": "Rapeseed",
     "color": "#a5d89a",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -227,7 +227,7 @@
   {
     "id": 25,
     "value": 26,
-    "label": "sesameseed",
+    "label": "Sesameseed",
     "color": "#c4e3b5",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -236,7 +236,7 @@
   {
     "id": 26,
     "value": 27,
-    "label": "other oil crops",
+    "label": "Other oil crops",
     "color": "#deedcf",
     "parentId": 1,
     "parentLabel": "Cereals and oils",
@@ -245,7 +245,7 @@
   {
     "id": 27,
     "value": 28,
-    "label": "sugarcane",
+    "label": "Sugarcane",
     "color": "#5d1150",
     "parentId": 6,
     "parentLabel": "Other",
@@ -254,7 +254,7 @@
   {
     "id": 28,
     "value": 29,
-    "label": "sugarbeet",
+    "label": "Sugarbeet",
     "color": "#6c156b",
     "parentId": 6,
     "parentLabel": "Other",
@@ -263,7 +263,7 @@
   {
     "id": 29,
     "value": 30,
-    "label": "cotton",
+    "label": "Cotton",
     "color": "#651e88",
     "parentId": 6,
     "parentLabel": "Other",
@@ -272,7 +272,7 @@
   {
     "id": 30,
     "value": 31,
-    "label": "other fibre crops",
+    "label": "Other fibre crops",
     "color": "#5c2395",
     "parentId": 6,
     "parentLabel": "Other",
@@ -281,7 +281,7 @@
   {
     "id": 31,
     "value": 32,
-    "label": "arabica coffee",
+    "label": "Arabica coffee",
     "color": "#5e38a1",
     "parentId": 6,
     "parentLabel": "Other",
@@ -290,7 +290,7 @@
   {
     "id": 32,
     "value": 33,
-    "label": "robusta coffee",
+    "label": "Robusta coffee",
     "color": "#624dad",
     "parentId": 6,
     "parentLabel": "Other",
@@ -299,7 +299,7 @@
   {
     "id": 33,
     "value": 34,
-    "label": "cocoa",
+    "label": "Cocoa",
     "color": "#6962b8",
     "parentId": 6,
     "parentLabel": "Other",
@@ -308,7 +308,7 @@
   {
     "id": 34,
     "value": 35,
-    "label": "tea",
+    "label": "Tea",
     "color": "#787cc3",
     "parentId": 6,
     "parentLabel": "Other",
@@ -317,7 +317,7 @@
   {
     "id": 35,
     "value": 36,
-    "label": "tobacco",
+    "label": "Tobacco",
     "color": "#8d9ace",
     "parentId": 6,
     "parentLabel": "Other",
@@ -326,7 +326,7 @@
   {
     "id": 36,
     "value": 37,
-    "label": "banana",
+    "label": "Banana",
     "color": "#9a031e",
     "parentId": 4,
     "parentLabel": "Perennials",
@@ -335,7 +335,7 @@
   {
     "id": 37,
     "value": 38,
-    "label": "plantain",
+    "label": "Plantain",
     "color": "#b94484",
     "parentId": 4,
     "parentLabel": "Perennials",
@@ -344,7 +344,7 @@
   {
     "id": 38,
     "value": 39,
-    "label": "tropical fruit",
+    "label": "Tropical fruit",
     "color": "#d588ce",
     "parentId": 4,
     "parentLabel": "Perennials",
@@ -353,7 +353,7 @@
   {
     "id": 39,
     "value": 40,
-    "label": "temperate fruit",
+    "label": "Temperate fruit",
     "color": "#e3ccee",
     "parentId": 4,
     "parentLabel": "Perennials",
@@ -362,7 +362,7 @@
   {
     "id": 40,
     "value": 41,
-    "label": "vegetables",
+    "label": "Vegetables",
     "color": "#b7cc00",
     "parentId": 5,
     "parentLabel": "Vegetables",
@@ -371,7 +371,7 @@
   {
     "id": 41,
     "value": 42,
-    "label": "rest of crops",
+    "label": "Rest of crops",
     "color": "#acb8e7",
     "parentId": 6,
     "parentLabel": "Other",

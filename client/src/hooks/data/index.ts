@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { datasetteAdapter } from 'lib/adapters/datasette-adapter';
 import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { PointData } from 'types/data';
 import { LngLat } from 'types/map';
@@ -16,6 +16,17 @@ export const fetchData = (params: DatasetteParamsProps) => {
     method: 'GET',
     url: '/foodscapes.json',
     params: datasetteAdapter(params),
+  }).then((response) => response.data);
+};
+
+export const downloadData = (params: DatasetteParamsProps) => {
+  return API.request({
+    method: 'GET',
+    url: '/foodscapes.csv',
+    params: datasetteAdapter(params),
+    headers: {
+      'Content-Type': 'text/csv',
+    },
   }).then((response) => response.data);
 };
 
@@ -40,6 +51,16 @@ export function useData<T = unknown>(
   return query;
 }
 
+// Download data
+export function useDownloadData() {
+  const fetch = (params: DatasetteParamsProps = {}) => downloadData(params);
+
+  const mutation = useMutation<string, unknown, DatasetteParamsProps>(fetch);
+
+  return mutation;
+}
+
+// Point data
 export function usePointData(
   params: LngLat,
   queryOptions: UseQueryOptions<PointData, unknown> = {}

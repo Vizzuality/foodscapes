@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { foodscapesAtom, layersAtom } from 'store/explore-map';
+import { foodscapesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -10,19 +10,17 @@ import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
+import { WidgetHeader, WidgetTop } from 'containers/widget';
+
 import MultiSelect from 'components/ui/select/multi/component';
-import Switch from 'components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
+const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
-  const { id } = DATASET;
-
-  const layers = useRecoilValue(layersAtom);
-  const setLayers = useSetRecoilState(layersAtom);
 
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
@@ -41,20 +39,6 @@ const FoodscapesWidget = () => {
         .map((g) => g.value)
     );
   }, [foodscapesGroupData, foodscapes]);
-
-  const handleToggleLayer = useCallback(() => {
-    const lys = [...layers];
-
-    // push or slice layer in lys array base on index
-    const index = lys.findIndex((ly) => ly === id);
-    if (index === -1) {
-      lys.unshift(id);
-    } else {
-      lys.splice(index, 1);
-    }
-
-    setLayers(lys);
-  }, [id, layers, setLayers]);
 
   const handleBarClick = (key: number) => {
     setFoodscapes((prev) => {
@@ -132,11 +116,7 @@ const FoodscapesWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <header className="flex items-center justify-between space-x-5">
-        <h3 className="font-display text-2xl">Global Foodscapes</h3>
-
-        <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
-      </header>
+      <WidgetHeader title="Global Foodscapes" dataset={DATASET} />
 
       <div className="space-y-2">
         <p>
@@ -178,6 +158,10 @@ const FoodscapesWidget = () => {
                 interactive
               />
             </div>
+
+            <WidgetTop label="See top largest foodscapes">
+              <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+            </WidgetTop>
           </div>
         </TabsContent>
 
