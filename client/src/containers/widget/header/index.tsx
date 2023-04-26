@@ -69,10 +69,10 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
           <TooltipTrigger asChild>
             <button
               type="button"
-              className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-navy-500 transition-all hover:bg-navy-200"
+              className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-navy-500 transition-all hover:bg-navy-200"
               onClick={handleDownload}
             >
-              <Icon icon={DOWNLOAD_SVG} className="h-5 w-5" />
+              <Icon icon={DOWNLOAD_SVG} className="h-6 w-6" />
             </button>
           </TooltipTrigger>
           <TooltipPortal>
