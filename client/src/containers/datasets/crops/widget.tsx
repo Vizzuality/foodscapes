@@ -152,7 +152,7 @@ const CropsWidget = () => {
             </div>
 
             <WidgetTop label="See top largest crops">
-              <ChartTop dataset={DATASET} />
+              <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
             </WidgetTop>
           </div>
         </TabsContent>

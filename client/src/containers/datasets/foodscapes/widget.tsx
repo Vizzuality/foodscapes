@@ -160,7 +160,7 @@ const FoodscapesWidget = () => {
             </div>
 
             <WidgetTop label="See top largest foodscapes">
-              <ChartTop dataset={DATASET} />
+              <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
             </WidgetTop>
           </div>
         </TabsContent>

@@ -74,7 +74,7 @@ const FoodscapesIntensitiesWidget = () => {
         </div>
 
         <WidgetTop label="See top largest foodscapes intensities">
-          <ChartTop dataset={DATASET} />
+          <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
         </WidgetTop>
       </div>
     </section>

@@ -1,5 +1,8 @@
+import { useState } from 'react';
+
+import cn from 'lib/classnames';
+
 import { ScaleLinear, ScaleOrdinal } from 'd3-scale';
-import { motion } from 'framer-motion';
 
 type DataProps = {
   id: number;
@@ -21,6 +24,8 @@ const HorizontalBar = <D extends DataProps>({
   colorScale,
   onBarClick,
 }: HorizontalBarProps<D>) => {
+  const [hover, setHover] = useState<number | null>(null);
+
   const { format } = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
@@ -33,41 +38,37 @@ const HorizontalBar = <D extends DataProps>({
         {data.map((d, i) => {
           const { id, label, value } = d;
           return (
-            <li key={label + i}>
-              <motion.div
-                initial={{
-                  width: 0,
-                }}
-                animate={{
+            <li
+              key={label + i}
+              className="group cursor-pointer"
+              onMouseEnter={() => {
+                setHover(id);
+              }}
+              onMouseLeave={() => {
+                setHover(null);
+              }}
+              onClick={() => onBarClick(d)}
+            >
+              <div
+                style={{
                   width: `${xScale(value)}%`,
                 }}
-                transition={{ delay: 0.05 * i }}
                 className="flex items-center space-x-1 overflow-hidden"
               >
                 <div
-                  className="h-2 w-full border border-navy-500"
+                  className={cn({
+                    'h-2 w-full border border-navy-500': true,
+                    'group-hover:border-2': hover === id,
+                  })}
                   style={{ background: colorScale(id.toString()) }}
-                  onClick={() => onBarClick(d)}
                 />
 
-                <motion.div
-                  className="shrink whitespace-nowrap text-[8px] font-bold text-navy-500"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.05 * i + 0.25 }}
-                >
+                <div className="shrink whitespace-nowrap text-[8px] font-bold text-navy-500">
                   {format(value)}M Ha
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.05 * i }}
-                className="text-sm font-light text-navy-500"
-              >
-                {label}
-              </motion.div>
+              <div className="text-sm font-light text-navy-500">{label}</div>
             </li>
           );
         })}

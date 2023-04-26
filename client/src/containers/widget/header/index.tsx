@@ -88,8 +88,10 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
           </TooltipPortal>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger>
-            <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
+          <TooltipTrigger asChild>
+            <div>
+              <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
+            </div>
           </TooltipTrigger>
           <TooltipPortal>
             <TooltipContent
