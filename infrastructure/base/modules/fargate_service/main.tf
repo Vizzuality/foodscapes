@@ -32,8 +32,18 @@ resource "aws_ecs_service" "service" {
   task_definition = aws_ecs_task_definition.task.arn
 
   # load_balancer {
-  #   target_group_arn = aws_lb_target_group.foo.arn
+  #   target_group_arn = var.aws_lb_target_group_arn
   #   container_name   = var.name
   #   container_port   = 3000
   # }
+}
+
+resource "aws_lb_target_group" "service" {
+  name_prefix = "${substr(var.name, 0, 3)}-"
+  port        = 3000
+  protocol    = "HTTP"
+
+  health_check {
+    path = "/"
+  }
 }
