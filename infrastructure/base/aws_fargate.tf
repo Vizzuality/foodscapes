@@ -13,6 +13,7 @@ module "fargate_service_client" {
   ecs_tasks_security_group_id = module.vpc.ecs_tasks_security_group_id
   public_subnet_ids           = module.vpc.public_subnet_ids
   private_subnet_ids          = module.vpc.private_subnet_ids
+  aws_lb_target_group_arn     = module.load_balancer.aws_lb_target_group_arn
 }
 
 module "fargate_service_datasette" {
@@ -23,6 +24,7 @@ module "fargate_service_datasette" {
   ecs_tasks_security_group_id = module.vpc.ecs_tasks_security_group_id
   public_subnet_ids           = module.vpc.public_subnet_ids
   private_subnet_ids          = module.vpc.private_subnet_ids
+  aws_lb_target_group_arn     = module.load_balancer.aws_lb_target_group_arn
 }
 
 module "fargate_service_tiler" {
@@ -33,4 +35,5 @@ module "fargate_service_tiler" {
   ecs_tasks_security_group_id = module.vpc.ecs_tasks_security_group_id
   public_subnet_ids           = module.vpc.public_subnet_ids
   private_subnet_ids          = module.vpc.private_subnet_ids
+  aws_lb_target_group_arn     = module.load_balancer.aws_lb_target_group_arn
 }

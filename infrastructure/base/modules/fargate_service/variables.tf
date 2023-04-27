@@ -27,3 +27,8 @@ variable "ecs_tasks_security_group_id" {
   type        = string
   description = "IDs of the security group for ECS tasks"
 }
+
+variable "aws_lb_target_group_arn" {
+  type = string
+  description = "ARN for the load balancer's target group"
+}
