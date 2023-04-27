@@ -1,4 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
+
+import { useScrollDirection } from 'react-use-scroll-direction';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,6 +9,7 @@ import cn from 'lib/classnames';
 
 import { menuOpenAtom } from 'store/menu';
 
+import { motion, useScroll } from 'framer-motion';
 import { useSetRecoilState } from 'recoil';
 
 import { Theme } from 'types/header';
@@ -32,8 +35,33 @@ const Header = () => {
 
   const THEME = 'dark' as Theme;
 
+  const { scrollDirection } = useScrollDirection();
+  const prevDirection = useRef<string | number>(0);
+  const { scrollY } = useScroll();
+
+  const scrollYPixels = scrollY.get() > 80;
+  const directionY = useMemo(() => {
+    switch (scrollDirection) {
+      case 'UP':
+        prevDirection.current = 0;
+        return 0;
+      case 'DOWN':
+        if (scrollYPixels) {
+          prevDirection.current = '-100%';
+          return '-100%';
+        }
+        prevDirection.current = 0;
+        return 0;
+      default:
+        return prevDirection.current;
+    }
+  }, [scrollDirection, scrollYPixels]);
+
   return (
-    <header
+    <motion.header
+      initial={{ y: 0 }}
+      animate={{ y: directionY }}
+      transition={{ duration: 0.25, bounce: 0 }}
       className={cn({
         'fixed top-0 z-30 w-full bg-white py-4 lg:bg-transparent lg:py-6': true,
         'bg-white': pathname === '/stories/argentina-gran-chaco' && THEME === 'dark',
@@ -116,7 +144,7 @@ const Header = () => {
       </Wrapper>
 
       <Menu />
-    </header>
+    </motion.header>
   );
 };
 
