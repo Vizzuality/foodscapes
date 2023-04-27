@@ -60,9 +60,6 @@ CREATE TABLE countries (
   [bbox] text
 );
 
-SELECT AddGeometryColumn('countries', 'geometry_geom', 4326, 'MULTIPOLYGON');
-SELECT AddGeometryColumn('countries', 'bbox_geom', 4326, 'MULTIPOLYGON');
-
 CREATE TABLE provinces (
   [id] integer,
   [value] integer,
@@ -72,6 +69,3 @@ CREATE TABLE provinces (
   [geometry] text,
   [bbox] text
 );
-
-SELECT AddGeometryColumn('provinces', 'geometry_geom', 4326, 'MULTIPOLYGON');
-SELECT AddGeometryColumn('provinces', 'bbox_geom', 4326, 'MULTIPOLYGON');
