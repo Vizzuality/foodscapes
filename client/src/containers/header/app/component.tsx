@@ -39,7 +39,7 @@ const Header = () => {
   const prevDirection = useRef<string | number>(0);
   const { scrollY } = useScroll();
 
-  const scrollYPixels = scrollY.get() > 80;
+  const scrollYPixels = scrollY.get() > 60;
   const directionY = useMemo(() => {
     switch (scrollDirection) {
       case 'UP':
