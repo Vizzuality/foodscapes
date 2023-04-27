@@ -22,7 +22,7 @@ interface FoodscapesTopChartProps {
 }
 
 const FoodscapesTopChart = ({ dataset, onBarClick }: FoodscapesTopChartProps) => {
-  const filters = useRecoilValue(filtersSelector('foodscapes'));
+  const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
   const fQuery = useFoodscapes();
@@ -97,6 +97,7 @@ const FoodscapesTopChart = ({ dataset, onBarClick }: FoodscapesTopChartProps) =>
         data={DATA}
         xScale={xScale}
         colorScale={colorScale}
+        interactive={false}
         onBarClick={handleBarClick}
       />
     </>

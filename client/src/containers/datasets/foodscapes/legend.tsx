@@ -4,10 +4,15 @@ import dynamic from 'next/dynamic';
 
 import cn from 'lib/classnames';
 
-import { group } from 'd3-array';
+import { filtersSelector } from 'store/explore-map';
 
+import { group } from 'd3-array';
+import { useRecoilValue } from 'recoil';
+
+import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
+import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import LegendItem from 'components/map/legend/item';
@@ -25,33 +30,45 @@ export interface FoodscapesLegendProps extends LegendItemProps {
 const FoodscapesLegend = (props: FoodscapesLegendProps) => {
   const { settings, dataset } = props;
 
-  const legend = useLegend({ dataset, settings });
+  const filters = useRecoilValue(filtersSelector(null));
 
+  // DATA
+  const legend = useLegend({ dataset, settings });
   const { data: foodscapesData } = useFoodscapes();
+  const { data } = useData<FoodscapeData>({
+    sql: dataset.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
 
   const GROUPED_DATA = useMemo(() => {
     return (
       Array
         // group by parent
         .from(
-          group(foodscapesData, (d) => d.parentLabel),
+          group(
+            foodscapesData.filter((f) => {
+              return data.find((d) => f.value === d.id);
+            }),
+            (d) => d.parentLabel
+          ),
           ([key, value]) => ({ key, value })
         )
         // sort by key
         .sort((a, b) => a.key.localeCompare(b.key))
     );
-  }, [foodscapesData]);
+  }, [foodscapesData, data]);
 
   return (
     <LegendItem {...legend} {...props}>
       <div className="divide-y divide-navy-500/20">
         <div className="ml-0.5 px-4 pt-3 pb-5">
           <div className="h-3.5">
-            <Chart dataset={dataset} />
+            <Chart dataset={dataset} ignore={null} />
           </div>
         </div>
 
-        <ul className="divide-y divide-navy-500/20 py-4">
+        <ul className="divide-y divide-navy-500/20 pt-3 pb-4">
           {GROUPED_DATA.map((g) => (
             <li
               key={g.key}

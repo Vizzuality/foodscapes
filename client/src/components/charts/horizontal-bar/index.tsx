@@ -15,6 +15,7 @@ interface HorizontalBarProps<D extends DataProps> {
   xScale: ScaleLinear<number, number, never>;
   colorScale: ScaleOrdinal<string, string, never>;
   selected?: readonly number[];
+  interactive?: boolean;
   onBarClick?: (bar: D) => void;
 }
 
@@ -22,6 +23,7 @@ const HorizontalBar = <D extends DataProps>({
   data,
   xScale,
   colorScale,
+  interactive,
   onBarClick,
 }: HorizontalBarProps<D>) => {
   const [hover, setHover] = useState<number | null>(null);
@@ -40,20 +42,24 @@ const HorizontalBar = <D extends DataProps>({
           return (
             <li
               key={label + i}
-              className="group cursor-pointer"
-              onMouseEnter={() => {
-                setHover(id);
-              }}
-              onMouseLeave={() => {
-                setHover(null);
-              }}
-              onClick={() => onBarClick(d)}
+              className={cn({
+                'group cursor-pointer': interactive,
+              })}
+              {...(interactive && {
+                onMouseEnter: () => {
+                  setHover(id);
+                },
+                onMouseLeave: () => {
+                  setHover(null);
+                },
+                onClick: () => onBarClick(d),
+              })}
             >
               <div
                 style={{
                   width: `${xScale(value)}%`,
                 }}
-                className="flex items-center space-x-1 overflow-hidden"
+                className="flex items-center space-x-1"
               >
                 <div
                   className={cn({
@@ -63,7 +69,7 @@ const HorizontalBar = <D extends DataProps>({
                   style={{ background: colorScale(id.toString()) }}
                 />
 
-                <div className="shrink whitespace-nowrap text-[8px] font-bold text-navy-500">
+                <div className="shrink-0 whitespace-nowrap text-[8px] font-bold text-navy-500">
                   {format(value)}M Ha
                 </div>
               </div>

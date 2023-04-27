@@ -25,7 +25,7 @@ const FoodscapesIntensitiesTopChart = ({
   dataset,
   onBarClick,
 }: FoodscapesIntensitiesTopChartProps) => {
-  const filters = useRecoilValue(filtersSelector('intensities'));
+  const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
 
@@ -101,6 +101,7 @@ const FoodscapesIntensitiesTopChart = ({
         data={DATA}
         xScale={xScale}
         colorScale={colorScale}
+        interactive={false}
         onBarClick={handleBarClick}
       />
     </>
