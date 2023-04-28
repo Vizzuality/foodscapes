@@ -22,7 +22,7 @@ interface CropsTopChartProps {
 }
 
 const CropsTopChart = ({ dataset, onBarClick }: CropsTopChartProps) => {
-  const filters = useRecoilValue(filtersSelector('crops'));
+  const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
   const fQuery = useCrops();
@@ -96,6 +96,7 @@ const CropsTopChart = ({ dataset, onBarClick }: CropsTopChartProps) => {
       <HorizontalBar<CropData & { label: string }>
         data={DATA}
         xScale={xScale}
+        interactive={false}
         colorScale={colorScale}
         onBarClick={handleBarClick}
       />

@@ -4,11 +4,16 @@ import dynamic from 'next/dynamic';
 
 import cn from 'lib/classnames';
 
-import { group } from 'd3-array';
+import { filtersSelector } from 'store/explore-map';
 
+import { group } from 'd3-array';
+import { useRecoilValue } from 'recoil';
+
+import { CropData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useCrops } from 'hooks/crops';
+import { useData } from 'hooks/data';
 
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
@@ -25,29 +30,41 @@ export interface CropsLegendProps extends LegendItemProps {
 const CropsLegend = (props: CropsLegendProps) => {
   const { settings, dataset } = props;
 
-  const legend = useLegend({ dataset, settings });
+  const filters = useRecoilValue(filtersSelector(null));
 
+  // DATA
+  const legend = useLegend({ dataset, settings });
   const { data: cropsData } = useCrops();
+  const { data } = useData<CropData>({
+    sql: dataset.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
 
   const GROUPED_DATA = useMemo(() => {
     return (
       Array
         // group by parent
         .from(
-          group(cropsData, (d) => d.parentLabel),
+          group(
+            cropsData.filter((c) => {
+              return data.find((d) => c.value === d.id);
+            }),
+            (d) => d.parentLabel
+          ),
           ([key, value]) => ({ key, value })
         )
         // sort by key
         .sort((a, b) => a.key.localeCompare(b.key))
     );
-  }, [cropsData]);
+  }, [cropsData, data]);
 
   return (
     <LegendItem {...legend} {...props}>
       <div className="divide-y divide-navy-500/20">
         <div className="ml-0.5 px-4 pt-3 pb-5">
           <div className="h-3.5">
-            <Chart dataset={dataset} />
+            <Chart dataset={dataset} ignore={null} />
           </div>
         </div>
 

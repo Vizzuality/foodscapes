@@ -29,7 +29,7 @@ const FoodscapesSummaryWidget = () => {
         .field('COUNT(DISTINCT foodscapes)', 'total_foodscapes')
         .field('COUNT(DISTINCT country)', 'total_countries')
         .field('COUNT(pixel_count)', 'total_pixels')
-        .from('foodscapes')
+        .from('data')
         .where('foodscapes NOT IN ?', [1, 2, 3]),
       shape: 'array',
       ...filters,

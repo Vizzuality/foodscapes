@@ -8,7 +8,7 @@ import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { useRecoilValue } from 'recoil';
 
 import { CropChartData } from 'types/crops';
-import { CropData } from 'types/data';
+import { CropData, FiltersOmitProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useCrops } from 'hooks/crops';
@@ -22,6 +22,7 @@ interface CropsChartParentProps {
   dataset: Dataset;
   interactive?: boolean;
   selected?: readonly number[];
+  ignore?: FiltersOmitProps;
   onBarClick?: (key: number) => void;
 }
 interface CropsChartProps extends CropsChartParentProps {
@@ -35,9 +36,10 @@ const CropsChart = ({
   dataset,
   interactive,
   selected,
+  ignore = 'crops',
   onBarClick,
 }: CropsChartProps) => {
-  const filters = useRecoilValue(filtersSelector('crops'));
+  const filters = useRecoilValue(filtersSelector(ignore));
 
   // DATA
   const { data: cropsData } = useCrops();
