@@ -35,3 +35,5 @@ SELECT AddGeometryColumn('provinces', 'geometry_geom', 4326, 'MULTIPOLYGON', 'XY
 UPDATE provinces
   SET
     geometry_geom = GeomFromText(geometry, 4326);
+
+VACUUM;
