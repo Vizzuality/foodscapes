@@ -23,7 +23,7 @@ CREATE TABLE soil_groups (
   [color] text
 );
 
-CREATE TABLE meta_foodscapes (
+CREATE TABLE foodscapes (
   [id] integer,
   [value] integer,
   [label] text,
