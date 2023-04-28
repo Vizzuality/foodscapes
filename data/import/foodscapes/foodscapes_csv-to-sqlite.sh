@@ -15,7 +15,6 @@ cat source/label-data/crop_legend_20230421_00.csv | sqlite3 -csv dest/foodscapes
 cat source/label-data/soil_group_legend_20230421_00.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' soil_groups"
 cat source/label-data/foodscapes_legend_20230421_00.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' foodscapes"
 
-
 cat source/label-data/intensity_group_legend_20230421_00.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' intensity_groups"
 
 cat source/label-data/layers_20230421_00.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' layers"
