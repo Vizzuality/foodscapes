@@ -25,7 +25,7 @@ SELECT AddGeometryColumn('countries', 'geometry_geom', 4326, 'MULTIPOLYGON', 'XY
 
 UPDATE countries
   SET
-    geometry_geom = GeomFromText(geometry);
+    geometry_geom = GeomFromText(geometry, 4326);
 
 ALTER TABLE provinces
   DROP COLUMN id;
@@ -34,4 +34,4 @@ SELECT AddGeometryColumn('provinces', 'geometry_geom', 4326, 'MULTIPOLYGON', 'XY
 
 UPDATE provinces
   SET
-    geometry_geom = GeomFromText(geometry);
+    geometry_geom = GeomFromText(geometry, 4326);
