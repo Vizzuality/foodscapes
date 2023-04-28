@@ -2,11 +2,14 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { cropsAtom } from 'store/explore-map';
+import { cropsAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { CropData } from 'types/data';
+
 import { useCrops, useCropsGroups } from 'hooks/crops';
+import { useData } from 'hooks/data';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -22,11 +25,18 @@ const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 const CropsWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'crops');
 
+  const filters = useRecoilValue(filtersSelector('crops'));
+
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
 
   const { data: cropsData, isLoading: cropsIsLoading } = useCrops();
   const { data: cropsGroupData, isLoading: cropsGroupIsLoading } = useCropsGroups();
+  const { data } = useData<CropData>({
+    sql: DATASET.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     return (
@@ -39,6 +49,10 @@ const CropsWidget = () => {
         .map((g) => g.value)
     );
   }, [cropsGroupData, crops]);
+
+  const OPTIONS = useMemo(() => {
+    return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
+  }, [data, cropsData]);
 
   const handleBarClick = (key: number) => {
     setCrops((prev) => {
@@ -134,7 +148,7 @@ const CropsWidget = () => {
               size="s"
               theme="light"
               placeholder="Filter crops"
-              options={cropsData}
+              options={OPTIONS}
               values={crops as number[]}
               batchSelectionActive
               clearSelectionActive
