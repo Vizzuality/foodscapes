@@ -57,6 +57,7 @@
     "@recoiljs/refine": "0.1.1",
     "@rive-app/react-canvas": "3.0.35",
     "@storybook/react": "6.5.15",
+    "@t3-oss/env-nextjs": "0.2.2",
     "@tailwindcss/forms": "0.5.1",
     "@tailwindcss/line-clamp": "0.4.0",
     "@tailwindcss/typography": "0.5.9",
@@ -104,7 +105,8 @@
     "three-stdlib": "2.21.8",
     "use-debounce": "6.0.1",
     "usehooks-ts": "2.9.1",
-    "validate.js": "0.13.1"
+    "validate.js": "0.13.1",
+    "zod": "3.21.4"
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.2.7",
