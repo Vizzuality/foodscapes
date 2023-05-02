@@ -5,7 +5,7 @@ import cn from 'lib/classnames';
 import { LngLat } from 'types/map';
 
 import { noPointData, usePointData } from 'hooks/data';
-import { useProvinces } from 'hooks/provinces';
+import { useProvince } from 'hooks/provinces';
 import { useIsLoading } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
@@ -22,25 +22,26 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
   const DATASET = DATASETS.find((d) => d.id === 'provinces');
   const band = `b${DATASET.layer.band}`;
 
-  const f = useProvinces();
   const p = usePointData(latLng, {
     keepPreviousData: false,
   });
 
-  const { data: provincesData } = f;
   const { data: pointData } = p;
+
+  const f = useProvince(pointData[band], {
+    enabled: !!pointData[band],
+  });
+  const { data: provinceData } = f;
 
   const { isFetching, isFetched } = useIsLoading([f, p]);
 
   const DATA = useMemo(() => {
-    if (!provincesData || !pointData) return null;
+    if (!provinceData || !pointData) return null;
 
     if (noPointData(pointData)) return null;
 
-    const value = pointData[band];
-
-    return provincesData.find((d) => d.value === value);
-  }, [band, provincesData, pointData]);
+    return provinceData;
+  }, [provinceData, pointData]);
 
   return (
     <div>
@@ -56,7 +57,7 @@ const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
               <h3 className="text-sm font-light">
-                {DATA.label}, {DATA.parent}
+                {DATA.label}, {DATA.parentLabel}
               </h3>
             )}
           </div>

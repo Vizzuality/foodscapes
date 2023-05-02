@@ -2,5 +2,8 @@ export interface Province {
   id: number;
   value: number;
   label: string;
-  parent: string;
+  iso: string;
+  parentId: string;
+  parentLabel: string;
+  parentIso: string;
 }

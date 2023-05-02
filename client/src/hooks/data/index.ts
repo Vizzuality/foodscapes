@@ -74,7 +74,7 @@ export function usePointData(
   const { data } = query;
 
   const DATA = useMemo(() => {
-    if (!data) return null;
+    if (!data) return {};
     return data.band_names.reduce<Record<string, number>>((acc, band, index) => {
       return {
         ...acc,
