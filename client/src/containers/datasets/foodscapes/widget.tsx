@@ -2,10 +2,13 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { foodscapesAtom } from 'store/explore-map';
+import { filtersSelector, foodscapesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { FoodscapeData } from 'types/data';
+
+import { useData } from 'hooks/data';
 import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
@@ -22,11 +25,22 @@ const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 
+  const filters = useRecoilValue(filtersSelector('foodscapes'));
+
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
   const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
   const { data: foodscapesGroupData, isLoading: foodscapesGroupIsLoading } = useFoodscapesGroups();
+  const { data } = useData<FoodscapeData>({
+    sql: DATASET.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
+
+  const OPTIONS = useMemo(() => {
+    return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
+  }, [data, foodscapesData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     return (
@@ -142,7 +156,7 @@ const FoodscapesWidget = () => {
               size="s"
               theme="light"
               placeholder="Filter foodscapes"
-              options={foodscapesData}
+              options={OPTIONS}
               values={foodscapes as number[]}
               batchSelectionActive
               clearSelectionActive

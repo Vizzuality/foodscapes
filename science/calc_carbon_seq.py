@@ -48,8 +48,12 @@ def main(carbon_coefficient_dir: Path, areas_dir: Path, out_dir: Path, nodata: i
         intervention_name = area_file.stem.split("_")[2]  # expecting `area_suit_COVERCROPS_xxxx`
         for carbon_file in carbon_coefficient_dir.glob("*.tif"):
             if intervention_name.lower() == carbon_file.stem.split("_")[1].lower():
+                # special case for Silvopasture that is split by ecoregion :(
+                ecoregion_suffix = area_file.stem.split("_")[3]
+                if ecoregion_suffix.startswith("EcoRegion"):
+                    intervention_name = f"{intervention_name}_{ecoregion_suffix}"
                 out_name = f"Cseq_{intervention_name}.tif"
-                # print(f"{area_file.name} [yellow]*[/yellow] {carbon_file.name} [yellow]->[/yellow] {out_name}")
+                print(f"{out_name}")
                 out_dir.mkdir(exist_ok=True)
                 multiply_rasters(area_file, carbon_file, out_dir / out_name, nodata)
 
