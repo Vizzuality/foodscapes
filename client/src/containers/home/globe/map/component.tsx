@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
+import env from 'env.mjs';
 
 import LayerManager from './layer-manager';
 import Spin from './spin';
@@ -76,7 +77,7 @@ const MapContainer = ({ currentId }) => {
             maxZoom={maxZoom}
             viewState={initialViewState}
             projection="globe"
-            mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+            mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
             constrainedAxis="y"
             dragPan={true}
             dragRotate={false}

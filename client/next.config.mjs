@@ -1,4 +1,8 @@
-const withMDX = require('@next/mdx')({
+// @ts-check
+import NextMDX from '@next/mdx';
+import('./src/env.mjs');
+
+const withMDX = NextMDX({
   extension: /\.mdx?$/,
   options: {
     // If you use remark-gfm, you'll need to use next.config.mjs
@@ -57,4 +61,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withMDX(nextConfig);
+export default withMDX(nextConfig);

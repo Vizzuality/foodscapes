@@ -1,4 +1,6 @@
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID;
+import env from 'env.mjs';
+
+export const GA_TRACKING_ID = env.NEXT_PUBLIC_GA_TRACKING_ID;
 
 // log the pageview with their URL
 export const GAPage = (url: string): void => {
