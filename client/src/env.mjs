@@ -44,3 +44,5 @@ export const env = createEnv({
       process.env.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED,
   },
 });
+
+export default env;
