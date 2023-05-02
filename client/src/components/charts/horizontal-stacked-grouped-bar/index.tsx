@@ -122,11 +122,12 @@ const HorizontalStackedGroupedBar = <
           .filter((v) => selected.includes(v.value))
           .reduce((acc, curr) => {
             const d1 = data.find((d) => d.id === curr.value);
-            return acc + d1.value;
+            return acc + (d1?.value ?? 0);
           }, 0);
+
         const total = s.values.reduce((acc, curr) => {
           const d1 = data.find((d) => d.id === curr.value);
-          return acc + d1.value;
+          return acc + (d1?.value ?? 0);
         }, 0);
 
         return {
