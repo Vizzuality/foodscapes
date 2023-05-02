@@ -44,7 +44,7 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
 
   const handleDownload = useCallback(() => {
     downloadMutation.mutate(
-      { sql: dataset.widget.sql },
+      { sql: dataset.widget.download },
       {
         onSuccess: (data) => {
           const url = window.URL.createObjectURL(new Blob([data]));

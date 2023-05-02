@@ -11,5 +11,6 @@ export interface Dataset {
   widget: {
     enabled: boolean;
     sql?: Select;
+    download?: Select;
   };
 }
