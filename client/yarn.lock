@@ -3290,6 +3290,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-collapsible@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@radix-ui/react-collapsible@npm:1.0.2"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/primitive": 1.0.0
+    "@radix-ui/react-compose-refs": 1.0.0
+    "@radix-ui/react-context": 1.0.0
+    "@radix-ui/react-id": 1.0.0
+    "@radix-ui/react-presence": 1.0.0
+    "@radix-ui/react-primitive": 1.0.2
+    "@radix-ui/react-use-controllable-state": 1.0.0
+    "@radix-ui/react-use-layout-effect": 1.0.0
+  peerDependencies:
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  checksum: a0fcfd3aad5159e1fb6fc54fd09210d7de9c1ee1e19739a5a82af81d3f2233e4e5eb204da326f32e2f2a4740aa4c3b42530b61e36b7ced9f857801809d1d3527
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-collection@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-collection@npm:1.0.1"
@@ -6298,6 +6318,26 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 273fd3f3fc461a92f3790cc551ea054745c6d6959afbe1232e6d7aa1c722bbc114d308aab96bef5c78fc0303c85c7b472ef00e2253251cc89737f3b1af56e5a5
+  languageName: node
+  linkType: hard
+
+"@t3-oss/env-core@npm:0.2.2":
+  version: 0.2.2
+  resolution: "@t3-oss/env-core@npm:0.2.2"
+  peerDependencies:
+    zod: ^3.0.0
+  checksum: 92442f7f7d80a0d211e56a8cd52feb62400d3150ea60892214063117fefd78e5cf262de914267aa1560080450fbd478319b74fbbcddad6b0a0ec1bcdbfdf384f
+  languageName: node
+  linkType: hard
+
+"@t3-oss/env-nextjs@npm:0.2.2":
+  version: 0.2.2
+  resolution: "@t3-oss/env-nextjs@npm:0.2.2"
+  dependencies:
+    "@t3-oss/env-core": 0.2.2
+  peerDependencies:
+    zod: ^3.0.0
+  checksum: de786186cfcf5805c92ee341b71dad1bbcdb3da4de37dccdfdbd018f6b76c034aea4a0e16d5a9be3d4fbde47b81889573e36909cdbcfa11db21355457a9ab6d2
   languageName: node
   linkType: hard
 
@@ -11851,6 +11891,7 @@ __metadata:
     "@next/mdx": 13.2.4
     "@radix-ui/react-accordion": 1.1.0
     "@radix-ui/react-checkbox": 1.0.3
+    "@radix-ui/react-collapsible": 1.0.2
     "@radix-ui/react-dialog": ^1.0.2
     "@radix-ui/react-popover": 1.0.3
     "@radix-ui/react-slider": 1.1.0
@@ -11874,6 +11915,7 @@ __metadata:
     "@storybook/builder-webpack5": 6.5.10
     "@storybook/manager-webpack5": 6.5.10
     "@storybook/react": 6.5.15
+    "@t3-oss/env-nextjs": 0.2.2
     "@tailwindcss/forms": 0.5.1
     "@tailwindcss/line-clamp": 0.4.0
     "@tailwindcss/typography": 0.5.9
@@ -11930,6 +11972,7 @@ __metadata:
     react-final-form: 6.5.3
     react-map-gl: 7.0.21
     react-use-cookie: 1.4.0
+    react-use-scroll-direction: ^0.1.0
     recoil: 0.7.6
     recoil-sync: 0.2.0
     squel: 5.13.0
@@ -11947,6 +11990,7 @@ __metadata:
     use-debounce: 6.0.1
     usehooks-ts: 2.9.1
     validate.js: 0.13.1
+    zod: 3.21.4
   languageName: unknown
   linkType: soft
 
@@ -13103,6 +13147,15 @@ __metadata:
   version: 1.0.8
   resolution: "hey-listen@npm:1.0.8"
   checksum: 6bad60b367688f5348e25e7ca3276a74b59ac5a09b0455e6ff8ab7d4a9e38cd2116c708a7dcd8a954d27253ce1d8717ec891d175723ea739885b828cf44e4072
+  languageName: node
+  linkType: hard
+
+"history@npm:^5.0.0":
+  version: 5.3.0
+  resolution: "history@npm:5.3.0"
+  dependencies:
+    "@babel/runtime": ^7.7.6
+  checksum: d73c35df49d19ac172f9547d30a21a26793e83f16a78386d99583b5bf1429cc980799fcf1827eb215d31816a6600684fba9686ce78104e23bd89ec239e7c726f
   languageName: node
   linkType: hard
 
@@ -18278,6 +18331,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-use-scroll-direction@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "react-use-scroll-direction@npm:0.1.0"
+  dependencies:
+    history: ^5.0.0
+  peerDependencies:
+    react: ">=16"
+  checksum: 5d5d8a95381612023bb1a8d489a73e38658d04bb32f0df7d2dabb1200156a3c60af1151cd86f2feb80a7922dda676c649446b1979fb6f15ec8a9a3cc83c5423d
+  languageName: node
+  linkType: hard
+
 "react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -21943,6 +22007,13 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod@npm:3.21.4":
+  version: 3.21.4
+  resolution: "zod@npm:3.21.4"
+  checksum: f185ba87342ff16f7a06686767c2b2a7af41110c7edf7c1974095d8db7a73792696bcb4a00853de0d2edeb34a5b2ea6a55871bc864227dace682a0a28de33e1f
   languageName: node
   linkType: hard
 

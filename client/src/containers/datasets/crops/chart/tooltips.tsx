@@ -40,13 +40,14 @@ CropsChartTooltip.displayName = 'CropsChartTooltip';
 interface CropsChartTooltipGroupProps extends BarGroupBar<number> {
   id: number;
   total: number;
+  partialTotal?: number;
   label: string;
   color: string;
   bar: SeriesPoint<CropChartData>;
 }
 
 export const CropsChartTooltipGroup = forwardRef<HTMLDivElement, CropsChartTooltipGroupProps>(
-  ({ id, bar, label, total }, ref) => {
+  ({ id, bar, label, total, partialTotal }, ref) => {
     const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
       style: 'percent',
       minimumFractionDigits: 0,
@@ -60,8 +61,17 @@ export const CropsChartTooltipGroup = forwardRef<HTMLDivElement, CropsChartToolt
         ref={ref}
         className="relative max-w-[180px] space-y-1 border border-navy-500/25 bg-white p-1 text-navy-500 shadow-md"
       >
-        <h3 className="text-[8px] font-bold uppercase">{label}</h3>
-        <span>{percentage}</span>
+        <div>
+          <h3 className="text-[8px] font-bold uppercase">{label}</h3>
+          <span>{percentage}</span>
+        </div>
+
+        {!!partialTotal && (
+          <>
+            <h3 className="text-[8px] font-bold uppercase">Selected</h3>
+            <span>{formatPercentage(partialTotal)}</span>
+          </>
+        )}
       </div>
     );
   }

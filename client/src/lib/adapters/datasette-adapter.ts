@@ -7,10 +7,18 @@ export interface DatasetteParamsProps {
   country?: number;
   province?: number;
   shape?: 'arrays' | 'objects' | 'array' | 'object';
+  size?: number | 'max';
 }
 
 export function datasetteAdapter(params: DatasetteParamsProps = {}) {
-  const { sql, foodscapes = [], intensities = [], crops = [], shape = 'array' } = params;
+  const {
+    sql,
+    foodscapes = [],
+    intensities = [],
+    crops = [],
+    shape = 'array',
+    size = 'max',
+  } = params;
   const s = sql?.clone();
 
   // Foodscapes
@@ -33,5 +41,7 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     sql: s?.toString(),
     // Shape
     _shape: shape,
+    // Size
+    _size: size,
   };
 }

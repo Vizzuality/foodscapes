@@ -16,9 +16,7 @@ const ExploreMap = () => {
   return (
     <div className="relative h-screen w-full">
       <Map />
-      <Media greaterThanOrEqual="sm">
-        <Legend />
-      </Media>
+      <Legend />
       <Menu />
       <Media greaterThanOrEqual="sm">
         <Layers />

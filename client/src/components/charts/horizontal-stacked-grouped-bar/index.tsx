@@ -2,6 +2,7 @@ import { FC, useMemo, useState } from 'react';
 
 import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { Group } from '@visx/group';
+import { PatternLines } from '@visx/pattern';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { ScaleLinear, ScaleBand, ScaleOrdinal } from 'd3-scale';
@@ -111,16 +112,46 @@ const HorizontalStackedGroupedBar = <
   const PARTIAL_SELECTED = useMemo(() => {
     return groupedData
       .filter((g) => {
-        return g.values.some((v) => selected.includes(v.value));
+        return (
+          g.values.some((v) => selected.includes(v.value)) &&
+          !g.values.every((v) => selected.includes(v.value))
+        );
       })
-      .map((s) => s.key);
-  }, [selected, groupedData]);
+      .map((s) => {
+        const totalSelected = s.values
+          .filter((v) => selected.includes(v.value))
+          .reduce((acc, curr) => {
+            const d1 = data.find((d) => d.id === curr.value);
+            return acc + (d1?.value ?? 0);
+          }, 0);
+
+        const total = s.values.reduce((acc, curr) => {
+          const d1 = data.find((d) => d.id === curr.value);
+          return acc + (d1?.value ?? 0);
+        }, 0);
+
+        return {
+          key: s.key,
+          relativePercentage: totalSelected / total,
+          absolutePercentage: totalSelected / TOTAL,
+        };
+      });
+  }, [data, selected, groupedData, TOTAL]);
 
   if (width === 0 || height === 0) return null;
 
   return (
     <div className="relative">
       <svg width={width} height={height}>
+        <PatternLines
+          id="lines"
+          height={4}
+          width={4}
+          stroke="#1C274A"
+          strokeWidth={0.5}
+          orientation={['diagonal']}
+        />
+
         <Group top={2} left={2}>
           <TooltipProvider delayDuration={0} skipDelayDuration={500}>
             <BarStackHorizontal<any, number>
@@ -140,10 +171,18 @@ const HorizontalStackedGroupedBar = <
                     if (!!ALL_SELECTED.length && !ALL_SELECTED.includes(bar.key)) {
                       opacity = 0.5;
                     }
-                    if (!!PARTIAL_SELECTED.length && !PARTIAL_SELECTED.includes(bar.key)) {
+
+                    if (
+                      !!PARTIAL_SELECTED.length &&
+                      !ALL_SELECTED.includes(bar.key) &&
+                      !PARTIAL_SELECTED.map((p) => p.key).includes(bar.key)
+                    ) {
                       opacity = 0.5;
                     }
-                    if (!!PARTIAL_SELECTED.length && PARTIAL_SELECTED.includes(bar.key)) {
+                    if (
+                      !!PARTIAL_SELECTED.length &&
+                      PARTIAL_SELECTED.map((p) => p.key).includes(bar.key)
+                    ) {
                       opacity = 0.75;
                     }
 
@@ -178,7 +217,16 @@ const HorizontalStackedGroupedBar = <
 
                           <TooltipPortal>
                             <TooltipContent asChild sideOffset={2}>
-                              <TooltipComponent {...bar} {...g} id={bar.key} total={TOTAL} />
+                              <TooltipComponent
+                                {...bar}
+                                {...g}
+                                id={bar.key}
+                                total={TOTAL}
+                                partialTotal={
+                                  PARTIAL_SELECTED.find((p) => p.key === bar.key)
+                                    ?.absolutePercentage || 0
+                                }
+                              />
                             </TooltipContent>
                           </TooltipPortal>
                         </Tooltip>
@@ -216,24 +264,40 @@ const HorizontalStackedGroupedBar = <
                             />
                           )}
 
-                          {PARTIAL_SELECTED.includes(bar.key) && (
-                            <motion.rect
-                              key={`bar-stack-${barStack.index}-${bar.index}-partial-selected`}
-                              x={bar.x}
-                              y={bar.y}
-                              width={bar.width}
-                              height={bar.height}
-                              fill="transparent"
-                              stroke="#1C274A"
-                              strokeWidth={2}
-                              strokeDasharray="4"
-                              pointerEvents="none"
-                              shapeRendering="crispEdges"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                            />
-                          )}
+                          {PARTIAL_SELECTED.filter((p) => p.key === bar.key).map((p) => (
+                            <>
+                              <motion.rect
+                                key={`bar-stack-${barStack.index}-${bar.index}-partial-selected`}
+                                x={bar.x}
+                                y={bar.y}
+                                width={bar.width}
+                                height={bar.height}
+                                fill="transparent"
+                                stroke="#1C274A"
+                                strokeWidth={2}
+                                strokeDasharray="5 3"
+                                pointerEvents="none"
+                                shapeRendering="crispEdges"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                              />
+
+                              <motion.rect
+                                key={`bar-stack-${barStack.index}-${bar.index}-partial-percentage-selected`}
+                                x={bar.x}
+                                y={bar.y}
+                                width={bar.width * p.relativePercentage}
+                                height={bar.height}
+                                fill="url(#lines)"
+                                pointerEvents="none"
+                                shapeRendering="crispEdges"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                              />
+                            </>
+                          ))}
                         </AnimatePresence>
                       </g>
                     );

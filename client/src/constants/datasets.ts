@@ -20,7 +20,7 @@ export const DATASETS = [
         .field('soil_groups', 'parent_id')
         .field('COUNT(pixel_count)', 'value')
         .distinct()
-        .from('foodscapes')
+        .from('data')
         .where('foodscapes NOT IN (1,2,3)')
         .group('foodscapes'),
     },
@@ -41,7 +41,7 @@ export const DATASETS = [
         .field('intensity_groups', 'id')
         .field('COUNT(pixel_count)', 'value')
         .distinct()
-        .from('foodscapes')
+        .from('data')
         .where('intensity_groups NOT IN (0)')
         .group('intensity_groups'),
     },
@@ -63,7 +63,7 @@ export const DATASETS = [
         .field('crop_groups', 'parent_id')
         .field('COUNT(pixel_count)', 'value')
         .distinct()
-        .from('foodscapes')
+        .from('data')
         .where('crops NOT IN (-9999)')
         .group('crops'),
     },
@@ -151,7 +151,7 @@ export const DATASETS = [
     layer: {
       enabled: true,
       visible: false,
-      band: 34,
+      band: 35,
     },
     widget: {
       enabled: false,

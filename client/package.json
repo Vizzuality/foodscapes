@@ -39,6 +39,7 @@
     "@next/mdx": "13.2.4",
     "@radix-ui/react-accordion": "1.1.0",
     "@radix-ui/react-checkbox": "1.0.3",
+    "@radix-ui/react-collapsible": "1.0.2",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-popover": "1.0.3",
     "@radix-ui/react-slider": "1.1.0",
@@ -56,6 +57,7 @@
     "@recoiljs/refine": "0.1.1",
     "@rive-app/react-canvas": "3.0.35",
     "@storybook/react": "6.5.15",
+    "@t3-oss/env-nextjs": "0.2.2",
     "@tailwindcss/forms": "0.5.1",
     "@tailwindcss/line-clamp": "0.4.0",
     "@tailwindcss/typography": "0.5.9",
@@ -93,6 +95,7 @@
     "react-final-form": "6.5.3",
     "react-map-gl": "7.0.21",
     "react-use-cookie": "1.4.0",
+    "react-use-scroll-direction": "^0.1.0",
     "recoil": "0.7.6",
     "recoil-sync": "0.2.0",
     "squel": "5.13.0",
@@ -103,7 +106,8 @@
     "three-stdlib": "2.21.8",
     "use-debounce": "6.0.1",
     "usehooks-ts": "2.9.1",
-    "validate.js": "0.13.1"
+    "validate.js": "0.13.1",
+    "zod": "3.21.4"
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.2.7",

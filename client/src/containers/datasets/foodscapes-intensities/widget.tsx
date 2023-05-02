@@ -1,8 +1,6 @@
-import { useCallback } from 'react';
-
 import dynamic from 'next/dynamic';
 
-import { intensitiesAtom, layersAtom } from 'store/explore-map';
+import { intensitiesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -10,36 +8,20 @@ import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
 import { DATASETS } from 'constants/datasets';
 
+import { WidgetHeader, WidgetTop } from 'containers/widget';
+
 import MultiSelect from 'components/ui/select/multi/component';
-import Switch from 'components/ui/switch';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
+const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const FoodscapesIntensitiesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
-  const { id } = DATASET;
-
-  const layers = useRecoilValue(layersAtom);
-  const setLayers = useSetRecoilState(layersAtom);
 
   const intensities = useRecoilValue(intensitiesAtom);
   const setIntensities = useSetRecoilState(intensitiesAtom);
 
   const { data: intensitiesData, isLoading: intensitiesIsLoading } = useFoodscapesIntensities();
-
-  const handleToggleLayer = useCallback(() => {
-    const lys = [...layers];
-
-    // push or slice layer in lys array base on index
-    const index = lys.findIndex((ly) => ly === id);
-    if (index === -1) {
-      lys.unshift(id);
-    } else {
-      lys.splice(index, 1);
-    }
-
-    setLayers(lys);
-  }, [id, layers, setLayers]);
 
   const handleBarClick = (key: number) => {
     setIntensities((prev) => {
@@ -60,11 +42,7 @@ const FoodscapesIntensitiesWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <header className="flex items-center justify-between space-x-5">
-        <h3 className="font-display text-2xl">Foodscapes Intensity</h3>
-
-        <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
-      </header>
+      <WidgetHeader title="Foodscapes Intensity" dataset={DATASET} />
 
       <div className="space-y-2">
         <p className="font-light">
@@ -94,6 +72,10 @@ const FoodscapesIntensitiesWidget = () => {
             interactive
           />
         </div>
+
+        <WidgetTop label="See top largest foodscapes intensities">
+          <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+        </WidgetTop>
       </div>
     </section>
   );
