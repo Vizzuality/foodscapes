@@ -30,9 +30,10 @@ const FoodscapesWidget = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
-  const { data: foodscapesGroupData, isLoading: foodscapesGroupIsLoading } = useFoodscapesGroups();
-  const { data } = useData<FoodscapeData>({
+  const { data: foodscapesData, isFetching: foodscapesIsFetching } = useFoodscapes();
+  const { data: foodscapesGroupData, isFetching: foodscapesGroupIsFetching } =
+    useFoodscapesGroups();
+  const { data, isFetching } = useData<FoodscapeData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -47,12 +48,14 @@ const FoodscapesWidget = () => {
       foodscapesGroupData
         //
         .filter((g) => {
-          const ids = g.values.map((v) => v.value);
+          const ids = g.values
+            .filter((v) => data.map((d) => d.id).includes(v.value))
+            .map((v) => v.value);
           return ids.every((i) => foodscapes.includes(i));
         })
         .map((g) => g.value)
     );
-  }, [foodscapesGroupData, foodscapes]);
+  }, [data, foodscapesGroupData, foodscapes]);
 
   const handleBarClick = (key: number) => {
     setFoodscapes((prev) => {
@@ -72,7 +75,11 @@ const FoodscapesWidget = () => {
   };
 
   const handleBarGroupClick = (key: number) => {
-    const ids = foodscapesData.filter((d) => d.parentId === key).map((d) => d.value);
+    const ids = foodscapesData
+      .filter((d) => {
+        return d.parentId === key && data.map((d1) => d1.id).includes(d.value);
+      })
+      .map((d) => d.value);
 
     setFoodscapes((prev) => {
       const fs = [...prev];
@@ -103,7 +110,11 @@ const FoodscapesWidget = () => {
       const newFoodscapes = [...foodscapes];
 
       values.forEach((v) => {
-        const ids = foodscapesData.filter((d) => d.parentId === v).map((d) => d.value);
+        const ids = foodscapesData
+          .filter((v1) => data.map((d) => d.id).includes(v1.value))
+          .filter((d) => d.parentId === v)
+          .map((d) => d.value);
+
         ids.forEach((i) => {
           const index = newFoodscapes.findIndex((f) => f === i);
           if (index === -1) {
@@ -125,7 +136,7 @@ const FoodscapesWidget = () => {
 
       setFoodscapes(newFoodscapes);
     },
-    [foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
+    [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
 
   return (
@@ -160,7 +171,7 @@ const FoodscapesWidget = () => {
               values={foodscapes as number[]}
               batchSelectionActive
               clearSelectionActive
-              loading={foodscapesIsLoading}
+              loading={foodscapesIsFetching || isFetching}
               onChange={(values) => setFoodscapes(values as number[])}
             />
             <div className="h-8">
@@ -190,7 +201,7 @@ const FoodscapesWidget = () => {
               values={GROUPED_SELECTED}
               batchSelectionActive
               clearSelectionActive
-              loading={foodscapesGroupIsLoading}
+              loading={foodscapesGroupIsFetching || isFetching}
               onChange={handleSelectGroupOnChange}
             />
 

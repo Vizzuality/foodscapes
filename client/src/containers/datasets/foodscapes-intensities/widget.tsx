@@ -21,7 +21,7 @@ const FoodscapesIntensitiesWidget = () => {
   const intensities = useRecoilValue(intensitiesAtom);
   const setIntensities = useSetRecoilState(intensitiesAtom);
 
-  const { data: intensitiesData, isLoading: intensitiesIsLoading } = useFoodscapesIntensities();
+  const { data: intensitiesData, isFetching: intensitiesIsFetching } = useFoodscapesIntensities();
 
   const handleBarClick = (key: number) => {
     setIntensities((prev) => {
@@ -60,7 +60,7 @@ const FoodscapesIntensitiesWidget = () => {
           values={intensities as number[]}
           batchSelectionActive
           clearSelectionActive
-          loading={intensitiesIsLoading}
+          loading={intensitiesIsFetching}
           onChange={(values) => setIntensities(values as number[])}
         />
         <div className="h-8">

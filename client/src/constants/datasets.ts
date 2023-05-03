@@ -23,6 +23,30 @@ export const DATASETS = [
         .from('data')
         .where('foodscapes NOT IN (1,2,3)')
         .group('foodscapes'),
+
+      download: squel
+        .select()
+        .from(
+          squel
+            .select()
+            .field('foodscapes', 'id')
+            .field('soil_groups', 'parent_id')
+            .field('COUNT(pixel_count)', 'value')
+            .distinct()
+            .from('data')
+            .where('foodscapes NOT IN (1,2,3)')
+            .group('foodscapes'),
+          'd'
+        )
+        .left_join(squel.select().from('foodscapes'), 'f', 'd.id = f.value')
+        .left_join(squel.select().from('soil_groups'), 'g', 'd.parent_id = g.value')
+        .field('d.id')
+        .field('f.label')
+        .field('f.color')
+        .field('d.value')
+        .field('d.parent_id', 'parentId')
+        .field('g.label', 'parentLabel')
+        .field('g.color', 'parentColor'),
     },
   },
   {
@@ -44,6 +68,25 @@ export const DATASETS = [
         .from('data')
         .where('intensity_groups NOT IN (0)')
         .group('intensity_groups'),
+
+      download: squel
+        .select()
+        .from(
+          squel
+            .select()
+            .field('intensity_groups', 'id')
+            .field('COUNT(pixel_count)', 'value')
+            .distinct()
+            .from('data')
+            .where('intensity_groups NOT IN (0)')
+            .group('intensity_groups'),
+          'd'
+        )
+        .left_join(squel.select().from('intensity_groups'), 'f', 'd.id = f.value')
+        .field('d.id')
+        .field('f.label')
+        .field('f.color')
+        .field('d.value'),
     },
   },
   {
@@ -66,6 +109,30 @@ export const DATASETS = [
         .from('data')
         .where('crops NOT IN (-9999)')
         .group('crops'),
+
+      download: squel
+        .select()
+        .from(
+          squel
+            .select()
+            .field('crops', 'id')
+            .field('crop_groups', 'parent_id')
+            .field('COUNT(pixel_count)', 'value')
+            .distinct()
+            .from('data')
+            .where('crops NOT IN (-9999)')
+            .group('crops'),
+          'd'
+        )
+        .left_join(squel.select().from('crops'), 'f', 'd.id = f.value')
+        .left_join(squel.select().from('crop_groups'), 'g', 'd.parent_id = g.value')
+        .field('d.id')
+        .field('f.label')
+        .field('f.color')
+        .field('d.value')
+        .field('d.parent_id', 'parentId')
+        .field('g.label', 'parentLabel')
+        .field('g.color', 'parentColor'),
     },
   },
 

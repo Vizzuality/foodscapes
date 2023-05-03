@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,7 +7,7 @@ import cn from 'lib/classnames';
 
 import { menuOpenAtom } from 'store/menu';
 
-import { motion, useScroll } from 'framer-motion';
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useSetRecoilState } from 'recoil';
 
 import { Theme } from 'types/header';
@@ -36,23 +36,21 @@ const Header = () => {
 
   const { scrollY } = useScroll();
 
-  useEffect(() => {
-    scrollY.onChange((latest) => {
-      const previous = scrollY.getPrevious();
-      const currentScrolledPixels = scrollY.get();
-      // If we have yet to scroll 80 pixels
-      if (currentScrolledPixels < 80) {
-        setVariant('pinned');
-        return;
-      }
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const previous = scrollY.getPrevious();
+    const currentScrolledPixels = scrollY.get();
+    // If we have yet to scroll 80 pixels
+    if (currentScrolledPixels < 80) {
+      setVariant('pinned');
+      return;
+    }
 
-      if (latest > previous) {
-        setVariant('unpinned');
-      } else {
-        setVariant('pinned');
-      }
-    });
-  }, [scrollY]);
+    if (latest > previous) {
+      setVariant('unpinned');
+    } else {
+      setVariant('pinned');
+    }
+  });
 
   return (
     <>
@@ -66,7 +64,7 @@ const Header = () => {
         transition={{ duration: 0.25, bounce: 0 }}
         className={cn({
           'fixed top-0 z-30 w-full bg-white py-4 lg:bg-transparent lg:py-6': true,
-          'bg-white': pathname === '/stories/argentina-gran-chaco' && THEME === 'dark',
+          'bg-white lg:bg-white': pathname === '/stories/argentina-gran-chaco' && THEME === 'dark',
         })}
       >
         <Wrapper>
