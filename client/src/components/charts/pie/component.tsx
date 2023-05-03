@@ -2,7 +2,6 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { Group } from '@visx/group';
 import { Pie } from '@visx/shape';
-import { motion } from 'framer-motion';
 
 import type { PieChartProps } from './types';
 
@@ -29,7 +28,6 @@ export const PieChart = <T extends unknown>({
   const centerY = innerHeight / 2;
   const centerX = innerWidth / 2;
   const thickness = 40;
-  console.log({ colorScale });
 
   useMemo(() => {
     setHover(selected);
@@ -37,23 +35,12 @@ export const PieChart = <T extends unknown>({
 
   // Getters
   const getValue = useCallback((d: any) => d.value, []);
-  // const getColor = useCallback(
-  //   (d: any) => {
-  //     return colorScale(`${d}`) || colorScale.range()[0];
-  //   },
-  //   [colorScale]
-  // );
-
-  const getColor = (d) => {
-    switch (d.data.id) {
-      case 'a':
-        return '#ffc426';
-      case 'b':
-        return 'transparent';
-      default:
-        return 'transparent';
-    }
-  };
+  const getColor = useCallback(
+    (d: any) => {
+      return colorScale(`${d.data.id}`) || colorScale.range()[0];
+    },
+    [colorScale]
+  );
 
   const getInnerRadius = useCallback(
     (d: any) => {
@@ -84,34 +71,52 @@ export const PieChart = <T extends unknown>({
           pieValue={getValue}
           innerRadius={getInnerRadius}
           outerRadius={getOuterRadius}
-          padAngle={0.015}
           cornerRadius={0}
           startAngle={0}
           {...pieProps}
         >
           {(pie) => {
-            return pie.arcs.map((arc) => (
-              <motion.path
-                key={arc.data.id}
-                d={pie.path(arc)}
-                fill={getColor(arc)}
-                animate={{
-                  d: pie.path(arc),
-                }}
-                transition={{
-                  duration: 0.1,
-                }}
-                onClick={() => {
-                  if (onPathMouseClick) onPathMouseClick(arc.data);
-                }}
-                onMouseEnter={() => {
-                  if (onPathMouseEnter) onPathMouseEnter(arc.data);
-                }}
-                onMouseLeave={() => {
-                  if (onPathMouseLeave) onPathMouseLeave(arc.data);
-                }}
-              />
-            ));
+            return pie.arcs.map((arc) => {
+              const { path } = pie;
+              const [centroidX, centroidY] = path.centroid(arc);
+              const centroidAngle = (arc.endAngle + arc.startAngle) / 2 - Math.PI / 2;
+              const offsets = {
+                x: (thickness * 0.5 + 10) * Math.cos(centroidAngle),
+                y: (thickness * 0.5 + 10) * Math.sin(centroidAngle),
+              };
+
+              return (
+                <Group key={arc.data.id}>
+                  <path
+                    d={pie.path(arc)}
+                    fill={getColor(arc)}
+                    stroke-width="1"
+                    stroke="black"
+                    onClick={() => {
+                      if (onPathMouseClick) onPathMouseClick(arc.data);
+                    }}
+                    onMouseEnter={() => {
+                      if (onPathMouseEnter) onPathMouseEnter(arc.data);
+                    }}
+                    onMouseLeave={() => {
+                      if (onPathMouseLeave) onPathMouseLeave(arc.data);
+                    }}
+                  />
+
+                  <text
+                    fill="black"
+                    x={centroidX + offsets.x}
+                    y={centroidY + offsets.y}
+                    dy=".33em"
+                    fontSize={9}
+                    textAnchor={centroidAngle > Math.PI ? 'end' : 'start'}
+                    pointerEvents="none"
+                  >
+                    {getValue(arc)}
+                  </text>
+                </Group>
+              );
+            });
           }}
         </Pie>
       </Group>

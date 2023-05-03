@@ -12,12 +12,12 @@ const PIE_DATA = [
   {
     id: 'a',
     label: 'Amazing',
-    value: 70,
+    value: 700000,
   },
   {
     id: 'b',
     label: 'Elegant',
-    value: 30,
+    value: 3500000,
   },
 ];
 
