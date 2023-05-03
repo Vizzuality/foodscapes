@@ -104,17 +104,21 @@ const HorizontalStackedGroupedBar = <
   const ALL_SELECTED = useMemo(() => {
     return groupedData
       .filter((g) => {
-        return g.values.every((v) => selected.includes(v.value));
+        const values = g.values.filter((v) => data.map((d) => d.id).includes(v.value));
+        return values
+          .filter((v) => data.map((d) => d.id).includes(v.value))
+          .every((v) => selected.includes(v.value));
       })
       .map((s) => s.key);
-  }, [selected, groupedData]);
+  }, [data, selected, groupedData]);
 
   const PARTIAL_SELECTED = useMemo(() => {
     return groupedData
       .filter((g) => {
+        const values = g.values.filter((v) => data.map((d) => d.id).includes(v.value));
         return (
-          g.values.some((v) => selected.includes(v.value)) &&
-          !g.values.every((v) => selected.includes(v.value))
+          values.some((v) => selected.includes(v.value)) &&
+          !values.every((v) => selected.includes(v.value))
         );
       })
       .map((s) => {

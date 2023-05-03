@@ -47,12 +47,14 @@ const FoodscapesWidget = () => {
       foodscapesGroupData
         //
         .filter((g) => {
-          const ids = g.values.map((v) => v.value);
+          const ids = g.values
+            .filter((v) => data.map((d) => d.id).includes(v.value))
+            .map((v) => v.value);
           return ids.every((i) => foodscapes.includes(i));
         })
         .map((g) => g.value)
     );
-  }, [foodscapesGroupData, foodscapes]);
+  }, [data, foodscapesGroupData, foodscapes]);
 
   const handleBarClick = (key: number) => {
     setFoodscapes((prev) => {
@@ -72,7 +74,11 @@ const FoodscapesWidget = () => {
   };
 
   const handleBarGroupClick = (key: number) => {
-    const ids = foodscapesData.filter((d) => d.parentId === key).map((d) => d.value);
+    const ids = foodscapesData
+      .filter((d) => {
+        return d.parentId === key && data.map((d1) => d1.id).includes(d.value);
+      })
+      .map((d) => d.value);
 
     setFoodscapes((prev) => {
       const fs = [...prev];

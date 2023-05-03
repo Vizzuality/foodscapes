@@ -43,12 +43,15 @@ const CropsWidget = () => {
       cropsGroupData
         //
         .filter((g) => {
-          const ids = g.values.map((v) => v.value);
+          const ids = g.values
+            .filter((v) => data.map((d) => d.id).includes(v.value))
+
+            .map((v) => v.value);
           return ids.every((i) => crops.includes(i));
         })
         .map((g) => g.value)
     );
-  }, [cropsGroupData, crops]);
+  }, [data, cropsGroupData, crops]);
 
   const OPTIONS = useMemo(() => {
     return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
@@ -72,7 +75,11 @@ const CropsWidget = () => {
   };
 
   const handleBarGroupClick = (key: number) => {
-    const ids = cropsData.filter((d) => d.parentId === key).map((d) => d.value);
+    const ids = cropsData
+      .filter((d) => {
+        return d.parentId === key && data.map((d1) => d1.id).includes(d.value);
+      })
+      .map((d) => d.value);
 
     setCrops((prev) => {
       const fs = [...prev];
