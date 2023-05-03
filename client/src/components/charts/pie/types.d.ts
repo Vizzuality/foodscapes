@@ -8,7 +8,7 @@ type PieChartData = {
 
 export interface PieChartProps<T> {
   data: PieChartData[];
-  selected: PieChartData['id'];
+  selected?: PieChartData['id'];
   width?: number;
   height?: number;
   margin?: {
@@ -17,6 +17,7 @@ export interface PieChartProps<T> {
     bottom: number;
     left: number;
   };
+  colorScale: ScaleOrdinal<string, string, never>;
   pieProps?: PieProps<T>;
   onPathMouseClick?: (data: PieChartData) => void;
   onPathMouseEnter?: (data: PieChartData) => void;

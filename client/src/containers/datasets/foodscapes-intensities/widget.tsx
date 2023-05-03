@@ -10,39 +10,10 @@ import { DATASETS } from 'constants/datasets';
 
 import { WidgetHeader, WidgetTop } from 'containers/widget';
 
-import PieChart from 'components/charts/pie/component';
 import MultiSelect from 'components/ui/select/multi/component';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
-
-const PIE_DATA = [
-  {
-    id: 'a',
-    label: 'Amazing',
-    value: 10,
-  },
-  {
-    id: 'b',
-    label: 'Beautiful',
-    value: 20,
-  },
-  {
-    id: 'c',
-    label: 'Cool',
-    value: 30,
-  },
-  {
-    id: 'd',
-    label: 'Delightful',
-    value: 40,
-  },
-  {
-    id: 'e',
-    label: 'Elegant',
-    value: 50,
-  },
-];
 
 const FoodscapesIntensitiesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
@@ -77,10 +48,6 @@ const FoodscapesIntensitiesWidget = () => {
         <p className="font-light">
           Intensity groups are inclusive of the land management attributes of an area.
         </p>
-      </div>
-
-      <div>
-        <PieChart width={250} height={250} data={PIE_DATA} selected="e" />
       </div>
 
       <div className="space-y-5">

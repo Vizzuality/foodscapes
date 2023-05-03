@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import { Group } from '@visx/group';
-import { scaleOrdinal } from '@visx/scale';
 import { Pie } from '@visx/shape';
 import { motion } from 'framer-motion';
 
@@ -11,7 +10,7 @@ const defaultMargin = { top: 20, right: 20, bottom: 20, left: 20 };
 
 export const PieChart = <T extends unknown>({
   data,
-  // colorScale,
+  colorScale,
   selected,
   width,
   height,
@@ -30,11 +29,7 @@ export const PieChart = <T extends unknown>({
   const centerY = innerHeight / 2;
   const centerX = innerWidth / 2;
   const thickness = 40;
-
-  const COLOR_SCALE = scaleOrdinal({
-    domain: data.map((l) => l.id),
-    range: ['rgba(93,30,91,1)', 'rgba(93,30,91,0.8)', 'rgba(93,30,91,0.6)', 'rgba(93,30,91,0.4)'],
-  });
+  console.log({ colorScale });
 
   useMemo(() => {
     setHover(selected);
@@ -42,7 +37,24 @@ export const PieChart = <T extends unknown>({
 
   // Getters
   const getValue = useCallback((d: any) => d.value, []);
-  const getColor = useCallback((d: any) => COLOR_SCALE(d.id), [COLOR_SCALE]);
+  // const getColor = useCallback(
+  //   (d: any) => {
+  //     return colorScale(`${d}`) || colorScale.range()[0];
+  //   },
+  //   [colorScale]
+  // );
+
+  const getColor = (d) => {
+    switch (d.data.id) {
+      case 'a':
+        return '#ffc426';
+      case 'b':
+        return 'transparent';
+      default:
+        return 'transparent';
+    }
+  };
+
   const getInnerRadius = useCallback(
     (d: any) => {
       if (d.data.id === hover) {
