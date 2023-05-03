@@ -30,9 +30,10 @@ const FoodscapesWidget = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
-  const { data: foodscapesGroupData, isLoading: foodscapesGroupIsLoading } = useFoodscapesGroups();
-  const { data } = useData<FoodscapeData>({
+  const { data: foodscapesData, isFetching: foodscapesIsFetching } = useFoodscapes();
+  const { data: foodscapesGroupData, isFetching: foodscapesGroupIsFetching } =
+    useFoodscapesGroups();
+  const { data, isFetching } = useData<FoodscapeData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -170,7 +171,7 @@ const FoodscapesWidget = () => {
               values={foodscapes as number[]}
               batchSelectionActive
               clearSelectionActive
-              loading={foodscapesIsLoading}
+              loading={foodscapesIsFetching || isFetching}
               onChange={(values) => setFoodscapes(values as number[])}
             />
             <div className="h-8">
@@ -200,7 +201,7 @@ const FoodscapesWidget = () => {
               values={GROUPED_SELECTED}
               batchSelectionActive
               clearSelectionActive
-              loading={foodscapesGroupIsLoading}
+              loading={foodscapesGroupIsFetching || isFetching}
               onChange={handleSelectGroupOnChange}
             />
 

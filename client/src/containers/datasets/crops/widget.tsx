@@ -30,9 +30,9 @@ const CropsWidget = () => {
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
 
-  const { data: cropsData, isLoading: cropsIsLoading } = useCrops();
-  const { data: cropsGroupData, isLoading: cropsGroupIsLoading } = useCropsGroups();
-  const { data } = useData<CropData>({
+  const { data: cropsData, isFetching: cropsIsFetching } = useCrops();
+  const { data: cropsGroupData, isFetching: cropsGroupIsFetching } = useCropsGroups();
+  const { data, isFetching } = useData<CropData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -162,7 +162,7 @@ const CropsWidget = () => {
               values={crops as number[]}
               batchSelectionActive
               clearSelectionActive
-              loading={cropsIsLoading}
+              loading={cropsIsFetching || isFetching}
               onChange={(values) => setCrops(values as number[])}
             />
             <div className="h-8">
@@ -192,7 +192,7 @@ const CropsWidget = () => {
               values={GROUPED_SELECTED}
               batchSelectionActive
               clearSelectionActive
-              loading={cropsGroupIsLoading}
+              loading={cropsGroupIsFetching || isFetching}
               onChange={handleSelectGroupOnChange}
             />
             <div className="h-8">
