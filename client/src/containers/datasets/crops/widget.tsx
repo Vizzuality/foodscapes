@@ -30,9 +30,9 @@ const CropsWidget = () => {
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
 
-  const { data: cropsData, isLoading: cropsIsLoading } = useCrops();
-  const { data: cropsGroupData, isLoading: cropsGroupIsLoading } = useCropsGroups();
-  const { data } = useData<CropData>({
+  const { data: cropsData, isFetching: cropsIsFetching } = useCrops();
+  const { data: cropsGroupData, isFetching: cropsGroupIsFetching } = useCropsGroups();
+  const { data, isFetching } = useData<CropData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -43,12 +43,15 @@ const CropsWidget = () => {
       cropsGroupData
         //
         .filter((g) => {
-          const ids = g.values.map((v) => v.value);
+          const ids = g.values
+            .filter((v) => data.map((d) => d.id).includes(v.value))
+
+            .map((v) => v.value);
           return ids.every((i) => crops.includes(i));
         })
         .map((g) => g.value)
     );
-  }, [cropsGroupData, crops]);
+  }, [data, cropsGroupData, crops]);
 
   const OPTIONS = useMemo(() => {
     return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
@@ -72,7 +75,11 @@ const CropsWidget = () => {
   };
 
   const handleBarGroupClick = (key: number) => {
-    const ids = cropsData.filter((d) => d.parentId === key).map((d) => d.value);
+    const ids = cropsData
+      .filter((d) => {
+        return d.parentId === key && data.map((d1) => d1.id).includes(d.value);
+      })
+      .map((d) => d.value);
 
     setCrops((prev) => {
       const fs = [...prev];
@@ -103,7 +110,10 @@ const CropsWidget = () => {
       const newCrops = [...crops];
 
       values.forEach((v) => {
-        const ids = cropsData.filter((d) => d.parentId === v).map((d) => d.value);
+        const ids = cropsData
+          .filter((v1) => data.map((d) => d.id).includes(v1.value))
+          .filter((d) => d.parentId === v)
+          .map((d) => d.value);
         ids.forEach((i) => {
           const index = newCrops.findIndex((f) => f === i);
           if (index === -1) {
@@ -125,7 +135,7 @@ const CropsWidget = () => {
 
       setCrops(newCrops);
     },
-    [crops, cropsData, GROUPED_SELECTED, setCrops]
+    [data, crops, cropsData, GROUPED_SELECTED, setCrops]
   );
 
   return (
@@ -152,7 +162,7 @@ const CropsWidget = () => {
               values={crops as number[]}
               batchSelectionActive
               clearSelectionActive
-              loading={cropsIsLoading}
+              loading={cropsIsFetching || isFetching}
               onChange={(values) => setCrops(values as number[])}
             />
             <div className="h-8">
@@ -182,7 +192,7 @@ const CropsWidget = () => {
               values={GROUPED_SELECTED}
               batchSelectionActive
               clearSelectionActive
-              loading={cropsGroupIsLoading}
+              loading={cropsGroupIsFetching || isFetching}
               onChange={handleSelectGroupOnChange}
             />
             <div className="h-8">
