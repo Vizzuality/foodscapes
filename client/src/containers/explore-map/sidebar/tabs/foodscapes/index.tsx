@@ -23,11 +23,6 @@ const FoodscapesSidebar = forwardRef(() => {
             A foodscape is a specific area of food production, defined by the combination of
             biophysical characteristics and management attributes in that area.
           </p>
-          <p>
-            The need for food is a universal constant, but how it’s produced is different across the
-            globe.
-          </p>
-
           <FoodscapesSummaryWidget />
         </div>
       </header>
