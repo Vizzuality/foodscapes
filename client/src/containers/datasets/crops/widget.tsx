@@ -110,7 +110,10 @@ const CropsWidget = () => {
       const newCrops = [...crops];
 
       values.forEach((v) => {
-        const ids = cropsData.filter((d) => d.parentId === v).map((d) => d.value);
+        const ids = cropsData
+          .filter((v1) => data.map((d) => d.id).includes(v1.value))
+          .filter((d) => d.parentId === v)
+          .map((d) => d.value);
         ids.forEach((i) => {
           const index = newCrops.findIndex((f) => f === i);
           if (index === -1) {
@@ -132,7 +135,7 @@ const CropsWidget = () => {
 
       setCrops(newCrops);
     },
-    [crops, cropsData, GROUPED_SELECTED, setCrops]
+    [data, crops, cropsData, GROUPED_SELECTED, setCrops]
   );
 
   return (

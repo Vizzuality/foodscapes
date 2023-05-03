@@ -109,7 +109,11 @@ const FoodscapesWidget = () => {
       const newFoodscapes = [...foodscapes];
 
       values.forEach((v) => {
-        const ids = foodscapesData.filter((d) => d.parentId === v).map((d) => d.value);
+        const ids = foodscapesData
+          .filter((v1) => data.map((d) => d.id).includes(v1.value))
+          .filter((d) => d.parentId === v)
+          .map((d) => d.value);
+
         ids.forEach((i) => {
           const index = newFoodscapes.findIndex((f) => f === i);
           if (index === -1) {
@@ -131,7 +135,7 @@ const FoodscapesWidget = () => {
 
       setFoodscapes(newFoodscapes);
     },
-    [foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
+    [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
 
   return (
