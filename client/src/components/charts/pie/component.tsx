@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback } from 'react';
 
 import { Group } from '@visx/group';
 import { Pie } from '@visx/shape';
@@ -19,8 +19,6 @@ export const PieChart = <T extends unknown>({
   onPathMouseLeave,
   pieProps,
 }: PieChartProps<T>) => {
-  const [hover, setHover] = useState<string | null>(selected);
-
   // SIZES
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -28,10 +26,6 @@ export const PieChart = <T extends unknown>({
   const centerY = innerHeight / 2;
   const centerX = innerWidth / 2;
   const thickness = 40;
-
-  useMemo(() => {
-    setHover(selected);
-  }, [selected]);
 
   // Getters
   const getValue = useCallback((d: any) => d.value, []);
@@ -42,26 +36,13 @@ export const PieChart = <T extends unknown>({
     [colorScale]
   );
 
-  const getInnerRadius = useCallback(
-    (d: any) => {
-      if (d.data.id === hover) {
-        return radius - thickness - 5;
-      }
-      return radius - thickness;
-    },
-    [radius, thickness, hover]
-  );
+  const getInnerRadius = useCallback(() => {
+    return radius - thickness;
+  }, [radius, thickness]);
 
-  const getOuterRadius = useCallback(
-    (d: any) => {
-      if (d.data.id === hover) {
-        return radius + 5;
-      }
-
-      return radius;
-    },
-    [radius, hover]
-  );
+  const getOuterRadius = useCallback(() => {
+    return radius;
+  }, [radius]);
 
   return (
     <svg width={width} height={height}>
@@ -103,17 +84,20 @@ export const PieChart = <T extends unknown>({
                     }}
                   />
 
-                  <text
-                    fill="black"
-                    x={centroidX + offsets.x}
-                    y={centroidY + offsets.y}
-                    dy=".33em"
-                    fontSize={9}
-                    textAnchor={centroidAngle > Math.PI ? 'end' : 'start'}
-                    pointerEvents="none"
-                  >
-                    {getValue(arc)}
-                  </text>
+                  {selected?.includes(arc.data.id) && (
+                    <text
+                      fill="black"
+                      x={centroidX + offsets.x}
+                      y={centroidY + offsets.y}
+                      dy=".33em"
+                      fontSize={9}
+                      textAnchor={centroidAngle > Math.PI ? 'end' : 'start'}
+                      pointerEvents="none"
+                      className="text-xxs font-bold"
+                    >
+                      {`${getValue(arc)} %`}
+                    </text>
+                  )}
                 </Group>
               );
             });
