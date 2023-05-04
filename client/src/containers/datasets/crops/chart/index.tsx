@@ -44,7 +44,7 @@ const CropsChart = ({
   // DATA
   const { data: cropsData } = useCrops();
 
-  const { data } = useData<CropData>({
+  const { data = [] } = useData<CropData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,

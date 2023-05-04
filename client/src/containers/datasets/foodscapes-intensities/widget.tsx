@@ -31,18 +31,21 @@ const FoodscapesIntensitiesWidget = () => {
 
   const {
     data: intensitiesData,
+    isPlaceholderData: intensitiesIsPlaceholderData,
     isFetching: intensitiesIsFetching,
     isFetched: intensitiesIsFetched,
     isError: intensitiesIsError,
   } = useFoodscapesIntensities();
 
-  const { data, isFetching, isFetched, isError } = useData<FoodscapeIntensityData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, isPlaceholderData, isFetching, isFetched, isError } =
+    useData<FoodscapeIntensityData>({
+      sql: DATASET.widget.sql,
+      shape: 'array',
+      ...filters,
+    });
 
   const OPTIONS = useMemo(() => {
+    if (!data) return [];
     return intensitiesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, intensitiesData]);
 
@@ -68,14 +71,13 @@ const FoodscapesIntensitiesWidget = () => {
       <WidgetHeader title="Foodscapes Intensity" dataset={DATASET} />
 
       <div className="space-y-2">
-        <p className="font-light">
-          Intensity groups are inclusive of the land management attributes of an area.
-        </p>
+        <p>Intensity groups are inclusive of the land management attributes of an area.</p>
       </div>
 
       <WidgetContent
+        isPlaceholderData={isPlaceholderData || intensitiesIsPlaceholderData}
         isFetching={isFetching || intensitiesIsFetching}
-        isFetched={isFetched || intensitiesIsFetched}
+        isFetched={isFetched && intensitiesIsFetched}
         isError={isError || intensitiesIsError}
       >
         <div className="space-y-5">

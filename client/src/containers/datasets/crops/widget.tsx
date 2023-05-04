@@ -35,17 +35,19 @@ const CropsWidget = () => {
 
   const {
     data: cropsData,
+    isPlaceholderData: cropsIsPlaceholderData,
     isFetching: cropsIsFetching,
     isFetched: cropsIsFetched,
     isError: cropsIsError,
   } = useCrops();
   const {
     data: cropsGroupData,
+    isPlaceholderData: cropsGroupIsPlaceholderData,
     isFetching: cropsGroupIsFetching,
     isFetched: cropsGroupIsFetched,
     isError: cropsGroupIsError,
   } = useCropsGroups();
-  const { data, isFetching, isFetched, isError } = useData<CropData>({
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -160,8 +162,11 @@ const CropsWidget = () => {
       </div>
 
       <WidgetContent
+        isPlaceholderData={
+          isPlaceholderData || cropsIsPlaceholderData || cropsGroupIsPlaceholderData
+        }
         isFetching={isFetching || cropsIsFetching || cropsGroupIsFetching}
-        isFetched={isFetched || cropsIsFetched || cropsGroupIsFetched}
+        isFetched={isFetched && cropsIsFetched && cropsGroupIsFetched}
         isError={isError || cropsIsError || cropsGroupIsError}
       >
         <Tabs defaultValue="single">

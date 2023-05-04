@@ -58,8 +58,6 @@ const FoodscapesSummaryWidget = () => {
     );
   }, [data]);
 
-  if (!SUMMARY) return null;
-
   return (
     <section className="pt-5 text-navy-500">
       <dl className="flex justify-between divide-x divide-navy-500/30">

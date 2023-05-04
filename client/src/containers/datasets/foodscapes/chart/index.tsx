@@ -44,7 +44,7 @@ const FoodscapesChart = ({
   // DATA
   const { data: foodscapesData } = useFoodscapes();
 
-  const { data } = useData<FoodscapeData>({
+  const { data = [] } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,

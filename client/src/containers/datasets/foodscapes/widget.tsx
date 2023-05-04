@@ -35,17 +35,19 @@ const FoodscapesWidget = () => {
 
   const {
     data: foodscapesData,
+    isPlaceholderData: foodscapesIsPlaceholderData,
     isFetching: foodscapesIsFetching,
     isFetched: foodscapesIsFetched,
     isError: foodscapesIsError,
   } = useFoodscapes();
   const {
     data: foodscapesGroupData,
+    isPlaceholderData: foodscapesGroupIsPlaceholderData,
     isFetching: foodscapesGroupIsFetching,
     isFetched: foodscapesGroupIsFetched,
     isError: foodscapesGroupIsError,
   } = useFoodscapesGroups();
-  const { data, isFetching, isFetched, isError } = useData<FoodscapeData>({
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -162,12 +164,13 @@ const FoodscapesWidget = () => {
           determined by the interaction of parent material, climate, vegetation, terrain, time, and
           human activity.
         </p>
-        <p className="font-light">
-          Soil groups are inclusive of the biophysical attributes of an area.
-        </p>
+        <p>Soil groups are inclusive of the biophysical attributes of an area.</p>
       </div>
 
       <WidgetContent
+        isPlaceholderData={
+          isPlaceholderData || foodscapesIsPlaceholderData || foodscapesGroupIsPlaceholderData
+        }
         isFetching={isFetching || foodscapesIsFetching || foodscapesGroupIsFetching}
         isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
         isError={isError || foodscapesIsError || foodscapesGroupIsError}
