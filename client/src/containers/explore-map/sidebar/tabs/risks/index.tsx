@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import RisksWidget from 'containers/datasets/risks/widget';
+
 const RisksSidebar = forwardRef(() => {
   return (
     <section>
@@ -22,13 +24,8 @@ const RisksSidebar = forwardRef(() => {
       </header>
 
       <div className="w-full grow space-y-5 px-20 pt-10">
-        <p className="text-lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies
-          lacinia, nisl nisl condimentum nisl, nec lacinia nisl nisl sit amet nisl. Sed euismod,
-          nisl nec ultricies lacinia, nisl nisl condimentum nisl, nec lacinia nisl nisl sit amet
-          nisl. Sed euismod, nisl nec ultricies lacinia, nisl nisl condimentum nisl, nec lacinia
-          nisl nisl sit amet nisl. Sed euismod, nisl nec
-        </p>
+        <RisksWidget />
+
         <p className="text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies
           lacinia, nisl nisl condimentum nisl, nec lacinia nisl nisl sit amet nisl. Sed euismod,
