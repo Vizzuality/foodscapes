@@ -1,12 +1,15 @@
+import os
+import tempfile
 from pathlib import Path
 
 import click
 import numpy as np
 import pandas as pd
 import rasterio as rio
-from rasterio import MemoryFile
 from rasterio import shutil as rio_shutil
 from rich import print, status
+from rio_cogeo import cog_translate
+from rio_cogeo.cogeo import TemporaryRasterFile
 
 
 @click.command(help="Create a multiband COG or tif from multiple tif files")
@@ -15,7 +18,7 @@ from rich import print, status
 @click.option(
     "--nodata", type=int, help="set no data value. This will also replace the old no data values with the new one."
 )
-@click.option("--cog", is_flag=True, help="Make output a cog")
+@click.option("--use-cog-driver", "cog", is_flag=True, help="Make output a cog")
 @click.option(
     "--description-file",
     "description_file",
@@ -26,30 +29,51 @@ def main(files: tuple[Path], output: Path, nodata: int | None, cog: bool, descri
     description_table, files = filter_and_order_band_list(description_file, files)
     print_execution_description(cog, files, nodata, output)
     stacked_raster, dest_kwargs = stack_bands(files, nodata, description_table)
-    with stacked_raster.open() as src:
-        if cog:
-            indicator = status.Status("Converting to COG...", spinner="earth", refresh_per_second=5)
+    dest_kwargs.update(
+        {
+            "driver": "COG",
+            "TILING_SCHEME": "GoogleMapsCompatible",
+            "ZOOM_LEVEL_STRATEGY": "upper",
+            "overview_resampling": "nearest",
+            "warp_resampling": "nearest",
+            "blocksize": 512,
+            "interleave": "BAND",
+        }
+    )
+    if cog:
+        with rio.open(stacked_raster) as src:
+            indicator = status.Status("Converting to COG with gdal driver...", spinner="earth", refresh_per_second=5)
             indicator.start()
-            dest_kwargs.update(
-                {
-                    "driver": "COG",
-                    "TILING_SCHEME": "GoogleMapsCompatible",
-                    "ZOOM_LEVEL_STRATEGY": "upper",
-                    "overview_resampling": "nearest",
-                    "warp_resampling": "nearest",
-                    "blocksize": 512,
-                }
-            )
             rio_shutil.copy(src, output, **dest_kwargs)
             indicator.stop()
             print("Done")
+    else:
+        with rio.open(stacked_raster) as src:
+            indicator = status.Status("Converting to COG with rio cogeo...", spinner="earth", refresh_per_second=5)
+            indicator.start()
+            write_params = {
+                k: v
+                for k, v in dest_kwargs.items()
+                if k in ["blockxsize", "blockysize", "interleave", "tiled", "compress"]
+            }
+            cog_translate(
+                src,
+                output,
+                indexes=dest_kwargs["count"],
+                nodata=dest_kwargs["nodata"],
+                dtype=dest_kwargs["dtype"],
+                web_optimized=True,
+                zoom_level_strategy=dest_kwargs["ZOOM_LEVEL_STRATEGY"],
+                forward_band_tags=True,
+                forward_ns_tags=True,
+                dst_kwargs=write_params,
+            )
+            indicator.stop()
+            print("Done")
+        os.remove(stacked_raster)
 
-        else:
-            print(f"Writing file {output} ...")
-            rio_shutil.copy(src, output, **dest_kwargs)
 
-
-def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame | None) -> tuple[MemoryFile, dict]:
+def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame | None) -> tuple[str, dict]:
     """Join all files from list into a MemoryFile with multiple bands"""
     with rio.open(files[0]) as src:
         # read first file and use it as template for the metadata
@@ -58,7 +82,7 @@ def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame 
     dest_kwargs.update(
         {
             "driver": "GTiff",
-            "interleave": "pixel",
+            "interleave": "PIXEL",
             "tiled": True,
             "blockxsize": 512,
             "blockysize": 512,
@@ -68,8 +92,8 @@ def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame 
             "dtype": "float32",
         }
     )
-    mem_file = MemoryFile()
-    with mem_file.open(**dest_kwargs) as dest:
+    temp_file = "temp1.tif"
+    with rio.open(temp_file, "w", **dest_kwargs) as dest:
         indicator = status.Status("Collecting bands and writing nodata", spinner="moon")
         indicator.start()
         for i, file in enumerate(files):
@@ -94,7 +118,7 @@ def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame 
 
                 dest.write(band_data, band_idx)
         indicator.stop()
-    return mem_file, dest_kwargs
+    return temp_file, dest_kwargs
 
 
 def filter_and_order_band_list(description_file: Path | None, files: tuple[Path]) -> tuple[pd.DataFrame | None, [Path]]:
