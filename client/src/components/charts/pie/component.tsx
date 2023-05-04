@@ -71,7 +71,7 @@ export const PieChart = <T extends unknown>({
                   <path
                     d={pie.path(arc)}
                     fill={getColor(arc)}
-                    stroke-width="1"
+                    strokeWidth="1"
                     stroke="black"
                     onClick={() => {
                       if (onPathMouseClick) onPathMouseClick(arc.data);

@@ -1,11 +1,17 @@
 import { useMemo } from 'react';
 
+import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 
 import PieChart from 'components/charts/pie/component';
 
-interface RisksChartProps {
+interface RisksChartParentProps {
   selected?: boolean;
+}
+
+interface RisksChartProps extends RisksChartParentProps {
+  width: number;
+  height: number;
 }
 
 const PIE_DATA = [
@@ -21,19 +27,26 @@ const PIE_DATA = [
   },
 ];
 
-const RisksChart = ({}: RisksChartProps) => {
+const RisksChart = ({ width, height }: RisksChartProps) => {
   const colorScale = useMemo(() => {
     return scaleOrdinal<string, string>({
       domain: PIE_DATA.map((e) => e.id),
       range: ['#BF8370', 'transparent'],
     });
   }, []);
-
+  console.log({ width });
+  console.log({ height });
   return (
-    <div>
-      <PieChart width={250} height={250} data={PIE_DATA} colorScale={colorScale} selected="a" />
-    </div>
+    <PieChart width={width} height={height} data={PIE_DATA} colorScale={colorScale} selected="a" />
   );
 };
 
-export default RisksChart;
+const RisksChartParent = (props: RisksChartParentProps) => {
+  return (
+    <ParentSize>
+      {({ width, height }) => <RisksChart {...props} width={width} height={height} />}
+    </ParentSize>
+  );
+};
+
+export default RisksChartParent;
