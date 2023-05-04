@@ -11,7 +11,7 @@ const RisksWidget = () => {
         </p>
       </div>
 
-      <div>
+      <div className="h-64">
         <Chart selected />
       </div>
     </section>

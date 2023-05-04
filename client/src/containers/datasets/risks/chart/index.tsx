@@ -34,8 +34,6 @@ const RisksChart = ({ width, height }: RisksChartProps) => {
       range: ['#BF8370', 'transparent'],
     });
   }, []);
-  console.log({ width });
-  console.log({ height });
   return (
     <PieChart width={width} height={height} data={PIE_DATA} colorScale={colorScale} selected="a" />
   );
