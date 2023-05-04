@@ -22,7 +22,7 @@ const FoodscapesSummaryWidget = () => {
     maximumSignificantDigits: 3,
   });
 
-  const { data } = useData<SummaryProps>(
+  const { data = [] } = useData<SummaryProps>(
     {
       sql: squel
         .select()

@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
@@ -14,6 +16,7 @@ import { useData } from 'hooks/data';
 import { DATASETS } from 'constants/datasets';
 
 import { WidgetHeader, WidgetTop } from 'containers/widget';
+import WidgetContent from 'containers/widget/content';
 
 import MultiSelect from 'components/ui/select/multi/component';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
@@ -30,9 +33,19 @@ const CropsWidget = () => {
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
 
-  const { data: cropsData, isFetching: cropsIsFetching } = useCrops();
-  const { data: cropsGroupData, isFetching: cropsGroupIsFetching } = useCropsGroups();
-  const { data, isFetching } = useData<CropData>({
+  const {
+    data: cropsData,
+    isFetching: cropsIsFetching,
+    isFetched: cropsIsFetched,
+    isError: cropsIsError,
+  } = useCrops();
+  const {
+    data: cropsGroupData,
+    isFetching: cropsGroupIsFetching,
+    isFetched: cropsGroupIsFetched,
+    isError: cropsGroupIsError,
+  } = useCropsGroups();
+  const { data, isFetching, isFetched, isError } = useData<CropData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -146,66 +159,72 @@ const CropsWidget = () => {
         <p>Crop output in fresh weight of major crop groupings from each foodscape.</p>
       </div>
 
-      <Tabs defaultValue="single">
-        <TabsList>
-          <TabsTrigger value="single">Crops</TabsTrigger>
-          <TabsTrigger value="group">Crop Groups</TabsTrigger>
-        </TabsList>
-        <TabsContent value="single">
-          <div className="mt-5 space-y-5">
-            <MultiSelect
-              id="crops-multiselect"
-              size="s"
-              theme="light"
-              placeholder="Filter crops"
-              options={OPTIONS}
-              values={crops as number[]}
-              batchSelectionActive
-              clearSelectionActive
-              loading={cropsIsFetching || isFetching}
-              onChange={(values) => setCrops(values as number[])}
-            />
-            <div className="h-8">
-              <Chart
-                //
-                dataset={DATASET}
-                selected={crops}
-                onBarClick={handleBarClick}
-                interactive
+      <WidgetContent
+        isFetching={isFetching || cropsIsFetching || cropsGroupIsFetching}
+        isFetched={isFetched || cropsIsFetched || cropsGroupIsFetched}
+        isError={isError || cropsIsError || cropsGroupIsError}
+      >
+        <Tabs defaultValue="single">
+          <TabsList>
+            <TabsTrigger value="single">Crops</TabsTrigger>
+            <TabsTrigger value="group">Crop Groups</TabsTrigger>
+          </TabsList>
+          <TabsContent value="single">
+            <div className="mt-5 space-y-5">
+              <MultiSelect
+                id="crops-multiselect"
+                size="s"
+                theme="light"
+                placeholder="Filter crops"
+                options={OPTIONS}
+                values={crops as number[]}
+                batchSelectionActive
+                clearSelectionActive
+                loading={cropsIsFetching || isFetching}
+                onChange={(values) => setCrops(values as number[])}
               />
+              <div className="h-8">
+                <Chart
+                  //
+                  dataset={DATASET}
+                  selected={crops}
+                  onBarClick={handleBarClick}
+                  interactive
+                />
+              </div>
+
+              <WidgetTop label="See top largest crops">
+                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
+          </TabsContent>
 
-            <WidgetTop label="See top largest crops">
-              <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
-            </WidgetTop>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="group">
-          <div className="mt-5 space-y-5">
-            <MultiSelect
-              id="crops-groups-multiselect"
-              size="s"
-              theme="light"
-              placeholder="Filter crop groups"
-              options={cropsGroupData}
-              values={GROUPED_SELECTED}
-              batchSelectionActive
-              clearSelectionActive
-              loading={cropsGroupIsFetching || isFetching}
-              onChange={handleSelectGroupOnChange}
-            />
-            <div className="h-8">
-              <ChartGroup
-                dataset={DATASET}
-                selected={crops}
-                onBarClick={handleBarGroupClick}
-                interactive
+          <TabsContent value="group">
+            <div className="mt-5 space-y-5">
+              <MultiSelect
+                id="crops-groups-multiselect"
+                size="s"
+                theme="light"
+                placeholder="Filter crop groups"
+                options={cropsGroupData}
+                values={GROUPED_SELECTED}
+                batchSelectionActive
+                clearSelectionActive
+                loading={cropsGroupIsFetching || isFetching}
+                onChange={handleSelectGroupOnChange}
               />
+              <div className="h-8">
+                <ChartGroup
+                  dataset={DATASET}
+                  selected={crops}
+                  onBarClick={handleBarGroupClick}
+                  interactive
+                />
+              </div>
             </div>
-          </div>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+        </Tabs>
+      </WidgetContent>
     </section>
   );
 };

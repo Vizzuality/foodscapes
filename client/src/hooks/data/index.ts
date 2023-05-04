@@ -45,6 +45,7 @@ export function useData<T = unknown>(
 
   const query = useQuery(['data', JSON.stringify(params)], fetch, {
     placeholderData: [],
+    initialData: [],
     ...queryOptions,
   });
 
