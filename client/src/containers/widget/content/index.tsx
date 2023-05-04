@@ -22,13 +22,11 @@ const WidgetContent = ({
   return (
     <div className="relative">
       {isPlaceholderData && <Skeleton className="h-20 w-full" />}
-      {isFetching && !isPlaceholderData && (
-        <Loading
-          className="absolute z-10 flex h-full w-full items-center justify-center bg-white/50 py-2"
-          iconClassName="w-5 h-5"
-          visible
-        />
-      )}
+      <Loading
+        className="absolute z-10 flex h-full w-full items-center justify-center bg-white/50 py-2"
+        iconClassName="w-5 h-5"
+        visible={isFetching && !isPlaceholderData}
+      />
       {isError && isFetched && !isFetching && (
         <div className="flex w-full justify-center bg-gray-500/10 p-6">
           Oops!! Something went wrong
