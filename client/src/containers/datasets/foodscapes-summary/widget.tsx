@@ -28,7 +28,7 @@ const FoodscapesSummaryWidget = () => {
         .select()
         .field('COUNT(DISTINCT foodscapes)', 'total_foodscapes')
         .field('COUNT(DISTINCT country)', 'total_countries')
-        .field('COUNT(pixel_count)', 'total_pixels')
+        .field('SUM(pixel_count)', 'total_pixels')
         .from('data')
         .where('foodscapes NOT IN ?', [1, 2, 3]),
       shape: 'array',
@@ -69,7 +69,7 @@ const FoodscapesSummaryWidget = () => {
         </div>
         <div className="w-full text-center">
           <dd className="font-display text-3xl">{`~${format(
-            (SUMMARY.total_pixels * 3086.9136) / 1000000
+            (SUMMARY.total_pixels * 3086.9136) / 1000000 // TODO: extraact this magic number 3086.9136 to a constant
           )}`}</dd>
           <dt className="text-xs">Million Hectares</dt>
         </div>
