@@ -10,7 +10,7 @@ import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
-import { useIsLoading } from 'hooks/utils';
+import { convertPixelCountToHA, useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
@@ -56,7 +56,7 @@ const FoodscapesIntensitiesTopChart = ({
     // Loop through the data and add the label
     return data.map((d) => {
       const { label } = foodscapesIntensitiesData.find((f) => f.value === d.id) || {};
-      return { ...d, label };
+      return { ...d, label, value: convertPixelCountToHA(d.value, 1000000) };
     });
   }, [data, foodscapesIntensitiesData]);
 

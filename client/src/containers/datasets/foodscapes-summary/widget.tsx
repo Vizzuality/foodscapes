@@ -6,6 +6,9 @@ import { useRecoilValue } from 'recoil';
 import squel from 'squel';
 
 import { useData } from 'hooks/data';
+import { convertPixelCountToHA } from 'hooks/utils';
+
+import { Skeleton } from 'components/ui/skeleton';
 
 type SummaryProps = {
   total_foodscapes: number;
@@ -22,13 +25,17 @@ const FoodscapesSummaryWidget = () => {
     maximumSignificantDigits: 3,
   });
 
-  const { data = [] } = useData<SummaryProps>(
+  const {
+    data = [],
+    isError,
+    isPlaceholderData,
+  } = useData<SummaryProps>(
     {
       sql: squel
         .select()
         .field('COUNT(DISTINCT foodscapes)', 'total_foodscapes')
         .field('COUNT(DISTINCT country)', 'total_countries')
-        .field('COUNT(pixel_count)', 'total_pixels')
+        .field('SUM(pixel_count)', 'total_pixels')
         .from('data')
         .where('foodscapes NOT IN ?', [1, 2, 3]),
       shape: 'array',
@@ -40,8 +47,6 @@ const FoodscapesSummaryWidget = () => {
   );
 
   const SUMMARY = useMemo(() => {
-    if (!data.length) return null;
-
     return data.reduce(
       (acc, curr) => {
         return {
@@ -62,18 +67,45 @@ const FoodscapesSummaryWidget = () => {
     <section className="pt-5 text-navy-500">
       <dl className="flex justify-between divide-x divide-navy-500/30">
         <div className="w-full text-center">
-          <dd className="font-display text-3xl">{SUMMARY.total_foodscapes || '-'}</dd>
-          <dt className="text-xs">Foodscapes classes</dt>
+          {isPlaceholderData && (
+            <div className="px-4">
+              <Skeleton className="h-14 w-full p-1" />
+            </div>
+          )}
+          {!isPlaceholderData && !isError && (
+            <>
+              <dd className="font-display text-3xl">{SUMMARY.total_foodscapes}</dd>
+              <dt className="text-xs">Foodscapes classes</dt>
+            </>
+          )}
         </div>
         <div className="w-full text-center">
-          <dd className="font-display text-3xl">{`~${format(
-            (SUMMARY.total_pixels * 3086.9136) / 1000000
-          )}`}</dd>
-          <dt className="text-xs">Million Hectares</dt>
+          {isPlaceholderData && (
+            <div className="px-4">
+              <Skeleton className="h-14 w-full p-1" />
+            </div>
+          )}
+          {!isPlaceholderData && !isError && (
+            <>
+              <dd className="font-display text-3xl">{`~${format(
+                convertPixelCountToHA(SUMMARY.total_pixels, 1000000)
+              )}`}</dd>
+              <dt className="text-xs">Million Hectares</dt>
+            </>
+          )}
         </div>
         <div className="w-full text-center">
-          <dd className="font-display text-3xl">{SUMMARY.total_countries || '-'}</dd>
-          <dt className="text-xs">Countries</dt>
+          {isPlaceholderData && (
+            <div className="px-4">
+              <Skeleton className="h-14 w-full p-1" />
+            </div>
+          )}
+          {!isPlaceholderData && !isError && (
+            <>
+              <dd className="font-display text-3xl">{SUMMARY.total_countries}</dd>
+              <dt className="text-xs">Countries</dt>
+            </>
+          )}
         </div>
       </dl>
     </section>
