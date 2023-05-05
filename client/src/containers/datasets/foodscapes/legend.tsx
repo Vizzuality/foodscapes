@@ -15,6 +15,8 @@ import { Dataset } from 'types/datasets';
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 
+import { LegendContent } from 'containers/legend';
+
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
 import LegendTypeBasic from 'components/map/legend/types/basic/component';
@@ -34,14 +36,21 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
 
   // DATA
   const legend = useLegend({ dataset, settings });
-  const { data: foodscapesData } = useFoodscapes();
-  const { data } = useData<FoodscapeData>({
+  const {
+    data: foodscapesData,
+    isPlaceholderData: foodscapesIsPlaceholderData,
+    isFetching: foodscapesIsFetching,
+    isFetched: foodscapesIsFetched,
+    isError: foodscapesIsError,
+  } = useFoodscapes();
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,
   });
 
   const GROUPED_DATA = useMemo(() => {
+    if (!data || !foodscapesData) return [];
     return (
       Array
         // group by parent
@@ -61,34 +70,41 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
 
   return (
     <LegendItem {...legend} {...props}>
-      <div className="divide-y divide-navy-500/20">
-        <div className="ml-0.5 px-4 pt-3 pb-5">
-          <div className="h-3.5">
-            <Chart dataset={dataset} ignore={null} />
+      <LegendContent
+        isPlaceholderData={isPlaceholderData || foodscapesIsPlaceholderData}
+        isFetching={isFetching || foodscapesIsFetching}
+        isFetched={isFetched && foodscapesIsFetched}
+        isError={isError || foodscapesIsError}
+      >
+        <div className="divide-y divide-navy-500/20">
+          <div className="ml-0.5 px-4 pt-3 pb-5">
+            <div className="h-3.5">
+              <Chart dataset={dataset} ignore={null} />
+            </div>
           </div>
-        </div>
 
-        <ul className="divide-y divide-navy-500/20 pt-3 pb-4">
-          {GROUPED_DATA.map((g) => (
-            <li
-              key={g.key}
-              className={cn({
-                'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
-              })}
-            >
-              <h4 className="text-xs font-bold">{g.key}</h4>
-              <LegendTypeBasic
-                items={g.value.map((v) => {
-                  return {
-                    value: v.label,
-                    color: v.color,
-                  };
+          <ul className="divide-y divide-navy-500/20 pt-3 pb-4">
+            {GROUPED_DATA.map((g) => (
+              <li
+                key={g.key}
+                className={cn({
+                  'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
                 })}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+              >
+                <h4 className="text-xs font-bold">{g.key}</h4>
+                <LegendTypeBasic
+                  items={g.value.map((v) => {
+                    return {
+                      value: v.label,
+                      color: v.color,
+                    };
+                  })}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </LegendContent>
     </LegendItem>
   );
 };

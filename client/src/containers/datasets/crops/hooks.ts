@@ -115,14 +115,10 @@ export function useLegend({
   }, [cropsData]);
 
   const legend = useMemo(() => {
-    if (!cropsData || !cropsData.length) {
-      return null;
-    }
-
     return {
       id: dataset.id,
       name: dataset.label,
-      colormap,
+      ...((!cropsData || !cropsData.length) && { colormap }),
       settings: settings,
       settingsManager: {
         opacity: true,

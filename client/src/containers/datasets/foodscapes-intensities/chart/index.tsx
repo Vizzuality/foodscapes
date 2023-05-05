@@ -18,19 +18,19 @@ import HorizontalStackedBar from 'components/charts/horizontal-stacked-bar';
 
 import { FoodscapesIntensitiesChartTooltip } from './tooltips';
 
-interface FoodscapesChartParentProps {
+interface FoodscapesIntensitiesChartParentProps {
   dataset: Dataset;
   interactive?: boolean;
   selected?: readonly number[];
   ignore?: FiltersOmitProps;
   onBarClick?: (key: number) => void;
 }
-interface FoodscapesChartProps extends FoodscapesChartParentProps {
+interface FoodscapesIntensitiesChartProps extends FoodscapesIntensitiesChartParentProps {
   width: number;
   height: number;
 }
 
-const FoodscapesChart = ({
+const FoodscapesIntensitiesChart = ({
   width,
   height,
   dataset,
@@ -38,7 +38,7 @@ const FoodscapesChart = ({
   selected,
   ignore = 'intensities',
   onBarClick,
-}: FoodscapesChartProps) => {
+}: FoodscapesIntensitiesChartProps) => {
   const filters = useRecoilValue(filtersSelector(ignore));
 
   // DATA
@@ -111,12 +111,14 @@ const FoodscapesChart = ({
   );
 };
 
-const FoodscapesChartParent = (props: FoodscapesChartParentProps) => {
+const FoodscapesIntensitiesChartParent = (props: FoodscapesIntensitiesChartParentProps) => {
   return (
     <ParentSize>
-      {({ width, height }) => <FoodscapesChart {...props} width={width} height={height} />}
+      {({ width, height }) => (
+        <FoodscapesIntensitiesChart {...props} width={width} height={height} />
+      )}
     </ParentSize>
   );
 };
 
-export default FoodscapesChartParent;
+export default FoodscapesIntensitiesChartParent;
