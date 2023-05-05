@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
@@ -13,7 +15,7 @@ import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
-import { WidgetHeader, WidgetTop } from 'containers/widget';
+import { WidgetHeader, WidgetTop, WidgetContent } from 'containers/widget';
 
 import MultiSelect from 'components/ui/select/multi/component';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
@@ -30,20 +32,33 @@ const FoodscapesWidget = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData, isFetching: foodscapesIsFetching } = useFoodscapes();
-  const { data: foodscapesGroupData, isFetching: foodscapesGroupIsFetching } =
-    useFoodscapesGroups();
-  const { data, isFetching } = useData<FoodscapeData>({
+  const {
+    data: foodscapesData,
+    isPlaceholderData: foodscapesIsPlaceholderData,
+    isFetching: foodscapesIsFetching,
+    isFetched: foodscapesIsFetched,
+    isError: foodscapesIsError,
+  } = useFoodscapes();
+  const {
+    data: foodscapesGroupData,
+    isPlaceholderData: foodscapesGroupIsPlaceholderData,
+    isFetching: foodscapesGroupIsFetching,
+    isFetched: foodscapesGroupIsFetched,
+    isError: foodscapesGroupIsError,
+  } = useFoodscapesGroups();
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
   });
 
   const OPTIONS = useMemo(() => {
+    if (!data || !foodscapesData) return [];
     return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, foodscapesData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
+    if (!data || !foodscapesGroupData) return [];
     return (
       foodscapesGroupData
         //
@@ -150,72 +165,79 @@ const FoodscapesWidget = () => {
           determined by the interaction of parent material, climate, vegetation, terrain, time, and
           human activity.
         </p>
-        <p className="font-light">
-          Soil groups are inclusive of the biophysical attributes of an area.
-        </p>
+        <p>Soil groups are inclusive of the biophysical attributes of an area.</p>
       </div>
 
-      <Tabs defaultValue="single">
-        <TabsList>
-          <TabsTrigger value="single">Foodscapes</TabsTrigger>
-          <TabsTrigger value="group">Soil Groups</TabsTrigger>
-        </TabsList>
-        <TabsContent value="single">
-          <div className="mt-5 space-y-5">
-            <MultiSelect
-              id="foodscapes-multiselect"
-              size="s"
-              theme="light"
-              placeholder="Filter foodscapes"
-              options={OPTIONS}
-              values={foodscapes as number[]}
-              batchSelectionActive
-              clearSelectionActive
-              loading={foodscapesIsFetching || isFetching}
-              onChange={(values) => setFoodscapes(values as number[])}
-            />
-            <div className="h-8">
-              <Chart
-                //
-                dataset={DATASET}
-                selected={foodscapes}
-                onBarClick={handleBarClick}
-                interactive
+      <WidgetContent
+        isPlaceholderData={
+          isPlaceholderData || foodscapesIsPlaceholderData || foodscapesGroupIsPlaceholderData
+        }
+        isFetching={isFetching || foodscapesIsFetching || foodscapesGroupIsFetching}
+        isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
+        isError={isError || foodscapesIsError || foodscapesGroupIsError}
+      >
+        <Tabs defaultValue="single">
+          <TabsList>
+            <TabsTrigger value="single">Foodscapes</TabsTrigger>
+            <TabsTrigger value="group">Soil Groups</TabsTrigger>
+          </TabsList>
+          <TabsContent value="single">
+            <div className="mt-5 space-y-5">
+              <MultiSelect
+                id="foodscapes-multiselect"
+                size="s"
+                theme="light"
+                placeholder="Filter foodscapes"
+                options={OPTIONS}
+                values={foodscapes as number[]}
+                batchSelectionActive
+                clearSelectionActive
+                loading={foodscapesIsFetching || isFetching}
+                onChange={(values) => setFoodscapes(values as number[])}
               />
+              <div className="h-8">
+                <Chart
+                  //
+                  dataset={DATASET}
+                  selected={foodscapes}
+                  onBarClick={handleBarClick}
+                  interactive
+                />
+              </div>
+
+              <WidgetTop label="See top largest foodscapes">
+                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
+          </TabsContent>
 
-            <WidgetTop label="See top largest foodscapes">
-              <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
-            </WidgetTop>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="group">
-          <div className="mt-5 space-y-5">
-            <MultiSelect
-              id="foodscapes-groups-multiselect"
-              size="s"
-              theme="light"
-              placeholder="Filter soil groups"
-              options={foodscapesGroupData}
-              values={GROUPED_SELECTED}
-              batchSelectionActive
-              clearSelectionActive
-              loading={foodscapesGroupIsFetching || isFetching}
-              onChange={handleSelectGroupOnChange}
-            />
-
-            <div className="h-8">
-              <ChartGroup
-                dataset={DATASET}
-                selected={foodscapes}
-                onBarClick={handleBarGroupClick}
-                interactive
+          <TabsContent value="group">
+            <div className="mt-5 space-y-5">
+              <MultiSelect
+                id="foodscapes-groups-multiselect"
+                size="s"
+                theme="light"
+                placeholder="Filter soil groups"
+                options={foodscapesGroupData}
+                values={GROUPED_SELECTED}
+                batchSelectionActive
+                clearSelectionActive
+                loading={foodscapesGroupIsFetching || isFetching}
+                onChange={handleSelectGroupOnChange}
               />
+
+              <div className="h-8">
+                <ChartGroup
+                  dataset={DATASET}
+                  selected={foodscapes}
+                  onBarClick={handleBarGroupClick}
+                  interactive
+                />
+              </div>
             </div>
-          </div>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+        </Tabs>
+      </WidgetContent>
     </section>
   );
 };

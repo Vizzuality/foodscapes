@@ -113,14 +113,12 @@ export function useLegend({
   }, [foodscapesData]);
 
   const legend = useMemo(() => {
-    if (!foodscapesData || !foodscapesData.length) {
-      return null;
-    }
-
     return {
       id: dataset.id,
       name: dataset.label,
-      colormap,
+      ...((!foodscapesData || !foodscapesData.length) && {
+        colormap,
+      }),
       settings: settings,
       settingsManager: {
         opacity: true,
