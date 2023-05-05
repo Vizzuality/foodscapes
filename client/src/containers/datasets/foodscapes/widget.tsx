@@ -15,8 +15,7 @@ import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
-import { WidgetHeader, WidgetTop } from 'containers/widget';
-import WidgetContent from 'containers/widget/content';
+import { WidgetHeader, WidgetTop, WidgetContent } from 'containers/widget';
 
 import MultiSelect from 'components/ui/select/multi/component';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
@@ -54,10 +53,12 @@ const FoodscapesWidget = () => {
   });
 
   const OPTIONS = useMemo(() => {
+    if (!data || !foodscapesData) return [];
     return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, foodscapesData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
+    if (!data || !foodscapesGroupData) return [];
     return (
       foodscapesGroupData
         //

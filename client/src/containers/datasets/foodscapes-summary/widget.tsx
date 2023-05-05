@@ -25,11 +25,7 @@ const FoodscapesSummaryWidget = () => {
     maximumSignificantDigits: 3,
   });
 
-  const {
-    data = [],
-    isError,
-    isPlaceholderData,
-  } = useData<SummaryProps>(
+  const { data, isError, isPlaceholderData } = useData<SummaryProps>(
     {
       sql: squel
         .select()
@@ -47,6 +43,13 @@ const FoodscapesSummaryWidget = () => {
   );
 
   const SUMMARY = useMemo(() => {
+    if (!data)
+      return {
+        total_foodscapes: 0,
+        total_countries: 0,
+        total_pixels: 0,
+      };
+
     return data.reduce(
       (acc, curr) => {
         return {

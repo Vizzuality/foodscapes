@@ -13,8 +13,7 @@ import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
 import { DATASETS } from 'constants/datasets';
 
-import { WidgetHeader, WidgetTop } from 'containers/widget';
-import WidgetContent from 'containers/widget/content';
+import { WidgetHeader, WidgetTop, WidgetContent } from 'containers/widget';
 
 import MultiSelect from 'components/ui/select/multi/component';
 
