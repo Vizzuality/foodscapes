@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import cn from 'lib/classnames';
 
 import { sidebarOpenAtom, tabAtom } from 'store/explore-map';
@@ -85,6 +87,16 @@ const Sidebar = () => {
                 </div>
               </div>
             </Tabs>
+
+            <Link
+              href="/"
+              className={cn({
+                'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 transition-colors sm:block':
+                  true,
+              })}
+            >
+              Foodscapes
+            </Link>
 
             <DialogTrigger asChild>
               <button className="absolute bottom-16 left-full flex h-8 w-8 items-center justify-center bg-navy-500 hover:bg-navy-400">

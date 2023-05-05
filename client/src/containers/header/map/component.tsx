@@ -38,17 +38,15 @@ const Header = () => {
       <Wrapper>
         <div className="flex items-center justify-between sm:justify-center">
           {/* LOGO */}
-          {/* <Media lessThan="sm"> */}
           <Link
             href="/"
             className={cn({
-              'block py-1 font-display text-2xl text-navy-500 transition-colors': true,
+              'block py-1 font-display text-2xl text-navy-500 transition-colors sm:hidden': true,
               'text-white': THEME === 'light' || THEME === 'light-dark',
             })}
           >
             Foodscapes
           </Link>
-          {/* </Media> */}
 
           {/* NAV */}
           <Media lessThan="sm">
