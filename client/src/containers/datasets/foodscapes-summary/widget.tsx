@@ -8,6 +8,8 @@ import squel from 'squel';
 import { useData } from 'hooks/data';
 import { convertPixelCountToHA } from 'hooks/utils';
 
+import WidgetError from 'containers/widget/error';
+
 import { Skeleton } from 'components/ui/skeleton';
 
 type SummaryProps = {
@@ -25,7 +27,7 @@ const FoodscapesSummaryWidget = () => {
     maximumSignificantDigits: 3,
   });
 
-  const { data, isError, isPlaceholderData } = useData<SummaryProps>(
+  const { data, isError, isPlaceholderData, isFetching, isFetched } = useData<SummaryProps>(
     {
       sql: squel
         .select()
@@ -68,49 +70,52 @@ const FoodscapesSummaryWidget = () => {
 
   return (
     <section className="pt-5 text-navy-500">
-      <dl className="flex justify-between divide-x divide-navy-500/30">
-        <div className="w-full text-center">
-          {isPlaceholderData && (
-            <div className="px-4">
-              <Skeleton className="h-14 w-full p-1" />
-            </div>
-          )}
-          {!isPlaceholderData && !isError && (
-            <>
-              <dd className="font-display text-3xl">{SUMMARY.total_foodscapes}</dd>
-              <dt className="text-xs">Foodscapes classes</dt>
-            </>
-          )}
-        </div>
-        <div className="w-full text-center">
-          {isPlaceholderData && (
-            <div className="px-4">
-              <Skeleton className="h-14 w-full p-1" />
-            </div>
-          )}
-          {!isPlaceholderData && !isError && (
-            <>
-              <dd className="font-display text-3xl">{`~${format(
-                convertPixelCountToHA(SUMMARY.total_pixels, 1000000)
-              )}`}</dd>
-              <dt className="text-xs">Million Hectares</dt>
-            </>
-          )}
-        </div>
-        <div className="w-full text-center">
-          {isPlaceholderData && (
-            <div className="px-4">
-              <Skeleton className="h-14 w-full p-1" />
-            </div>
-          )}
-          {!isPlaceholderData && !isError && (
-            <>
-              <dd className="font-display text-3xl">{SUMMARY.total_countries}</dd>
-              <dt className="text-xs">Countries</dt>
-            </>
-          )}
-        </div>
-      </dl>
+      {isError && isFetched && !isFetching && <WidgetError className="p-4" />}
+      {!isError && (
+        <dl className="flex justify-between divide-x divide-navy-500/30">
+          <div className="w-full text-center">
+            {isPlaceholderData && (
+              <div className="px-4">
+                <Skeleton className="h-14 w-full p-1" />
+              </div>
+            )}
+            {!isPlaceholderData && !isError && (
+              <>
+                <dd className="font-display text-3xl">{SUMMARY.total_foodscapes}</dd>
+                <dt className="text-xs">Foodscapes classes</dt>
+              </>
+            )}
+          </div>
+          <div className="w-full text-center">
+            {isPlaceholderData && (
+              <div className="px-4">
+                <Skeleton className="h-14 w-full p-1" />
+              </div>
+            )}
+            {!isPlaceholderData && !isError && (
+              <>
+                <dd className="font-display text-3xl">{`~${format(
+                  convertPixelCountToHA(SUMMARY.total_pixels, 1000000)
+                )}`}</dd>
+                <dt className="text-xs">Million Hectares</dt>
+              </>
+            )}
+          </div>
+          <div className="w-full text-center">
+            {isPlaceholderData && (
+              <div className="px-4">
+                <Skeleton className="h-14 w-full p-1" />
+              </div>
+            )}
+            {!isPlaceholderData && !isError && (
+              <>
+                <dd className="font-display text-3xl">{SUMMARY.total_countries}</dd>
+                <dt className="text-xs">Countries</dt>
+              </>
+            )}
+          </div>
+        </dl>
+      )}
     </section>
   );
 };

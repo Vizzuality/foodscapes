@@ -3,6 +3,8 @@
 import { PropsWithChildren } from 'react';
 
 // import Loading from 'components/loading';
+import LegendError from 'containers/legend/error';
+
 import { Skeleton } from 'components/ui/skeleton';
 
 export interface LegendContentProps extends PropsWithChildren {
@@ -29,11 +31,7 @@ const LegendContent = ({
         visible={isFetching && !isPlaceholderData}
       /> */}
 
-      {isError && isFetched && !isFetching && (
-        <div className="flex w-full justify-center bg-gray-500/10 p-6">
-          Oops!! Something went wrong
-        </div>
-      )}
+      {isError && isFetched && !isFetching && <LegendError />}
 
       {!isPlaceholderData && !isError && children}
     </div>
