@@ -5,6 +5,11 @@ services:
   app:
     build:
       context: ./client
+      args:
+        - APP_NEXT_PUBLIC_API_URL=${APP_NEXT_PUBLIC_API_URL}
+        - APP_NEXT_PUBLIC_TITILER_API_URL=${APP_NEXT_PUBLIC_TITILER_API_URL}
+        - APP_NEXT_PUBLIC_MAPBOX_API_TOKEN=${APP_NEXT_PUBLIC_MAPBOX_API_TOKEN}
+    env_file: .env
     ports:
       - "${APP_SERVICE_PORT}:3000"
     restart: unless-stopped

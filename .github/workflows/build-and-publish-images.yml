@@ -92,6 +92,9 @@ jobs:
             TILER_FOODSCAPES_COG_FILENAME=foodscapes_stack_cog_lzw.tif
             TILER_ROOT_PATH=''
             TILER_CORS_ORIGINS_REGEX=${{ secrets.TILER_CORS_ORIGINS_REGEX }}
+            APP_NEXT_PUBLIC_API_URL=${{ secrets.APP_NEXT_PUBLIC_API_URL }}
+            APP_NEXT_PUBLIC_TITILER_API_URL=${{ secrets.APP_NEXT_PUBLIC_TITILER_API_URL }}
+            APP_NEXT_PUBLIC_MAPBOX_API_TOKEN=${{ secrets.APP_NEXT_PUBLIC_MAPBOX_API_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition

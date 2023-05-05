@@ -61,7 +61,7 @@ const Menu = () => {
           animate="animate"
           exit="exit"
           variants={overlayVariants}
-          className="bg-blur fixed top-0 left-0 z-10 h-full w-full bg-black/25"
+          className="bg-blur fixed top-0 left-0 z-30 h-full w-full bg-black/25"
           onClick={handleClose}
         />
       )}
@@ -72,7 +72,7 @@ const Menu = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="fixed top-0 right-0 z-20 h-full w-full max-w-[300px] bg-white shadow-lg"
+          className="fixed top-0 right-0 z-40 h-full w-full max-w-[300px] bg-white shadow-lg"
           variants={sidebarVariants}
         >
           <div className="flex h-full flex-col justify-between space-y-10">

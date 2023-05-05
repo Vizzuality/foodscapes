@@ -11,6 +11,7 @@ import { useCrops } from 'hooks/crops';
 import { DATASETS } from 'constants/datasets';
 
 import { Settings } from 'components/map/legend/types';
+import env from 'env.mjs';
 
 interface UseCropsSourceProps {
   filters: {
@@ -70,7 +71,7 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
     key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
-      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
+      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
     ],
   };
 }
@@ -114,14 +115,10 @@ export function useLegend({
   }, [cropsData]);
 
   const legend = useMemo(() => {
-    if (!cropsData || !cropsData.length) {
-      return null;
-    }
-
     return {
       id: dataset.id,
       name: dataset.label,
-      colormap,
+      ...((!cropsData || !cropsData.length) && { colormap }),
       settings: settings,
       settingsManager: {
         opacity: true,

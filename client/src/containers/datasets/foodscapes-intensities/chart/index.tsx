@@ -7,7 +7,7 @@ import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { useRecoilValue } from 'recoil';
 
-import { FoodscapeIntensityData } from 'types/data';
+import { FiltersOmitProps, FoodscapeIntensityData } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { FoodscapeIntensityChartData } from 'types/foodscapes-intensities';
 
@@ -18,26 +18,28 @@ import HorizontalStackedBar from 'components/charts/horizontal-stacked-bar';
 
 import { FoodscapesIntensitiesChartTooltip } from './tooltips';
 
-interface FoodscapesChartParentProps {
+interface FoodscapesIntensitiesChartParentProps {
   dataset: Dataset;
   interactive?: boolean;
   selected?: readonly number[];
+  ignore?: FiltersOmitProps;
   onBarClick?: (key: number) => void;
 }
-interface FoodscapesChartProps extends FoodscapesChartParentProps {
+interface FoodscapesIntensitiesChartProps extends FoodscapesIntensitiesChartParentProps {
   width: number;
   height: number;
 }
 
-const FoodscapesChart = ({
+const FoodscapesIntensitiesChart = ({
   width,
   height,
   dataset,
   interactive,
   selected,
+  ignore = 'intensities',
   onBarClick,
-}: FoodscapesChartProps) => {
-  const filters = useRecoilValue(filtersSelector('intensities'));
+}: FoodscapesIntensitiesChartProps) => {
+  const filters = useRecoilValue(filtersSelector(ignore));
 
   // DATA
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
@@ -109,12 +111,14 @@ const FoodscapesChart = ({
   );
 };
 
-const FoodscapesChartParent = (props: FoodscapesChartParentProps) => {
+const FoodscapesIntensitiesChartParent = (props: FoodscapesIntensitiesChartParentProps) => {
   return (
     <ParentSize>
-      {({ width, height }) => <FoodscapesChart {...props} width={width} height={height} />}
+      {({ width, height }) => (
+        <FoodscapesIntensitiesChart {...props} width={width} height={height} />
+      )}
     </ParentSize>
   );
 };
 
-export default FoodscapesChartParent;
+export default FoodscapesIntensitiesChartParent;

@@ -1,60 +1,76 @@
+'use client';
+
 import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { foodscapesAtom, layersAtom } from 'store/explore-map';
+import { filtersSelector, foodscapesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { FoodscapeData } from 'types/data';
+
+import { useData } from 'hooks/data';
 import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
+import { WidgetHeader, WidgetTop, WidgetContent } from 'containers/widget';
+
 import MultiSelect from 'components/ui/select/multi/component';
-import Switch from 'components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
+const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
-  const { id } = DATASET;
 
-  const layers = useRecoilValue(layersAtom);
-  const setLayers = useSetRecoilState(layersAtom);
+  const filters = useRecoilValue(filtersSelector('foodscapes'));
 
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData, isLoading: foodscapesIsLoading } = useFoodscapes();
-  const { data: foodscapesGroupData, isLoading: foodscapesGroupIsLoading } = useFoodscapesGroups();
+  const {
+    data: foodscapesData,
+    isPlaceholderData: foodscapesIsPlaceholderData,
+    isFetching: foodscapesIsFetching,
+    isFetched: foodscapesIsFetched,
+    isError: foodscapesIsError,
+  } = useFoodscapes();
+  const {
+    data: foodscapesGroupData,
+    isPlaceholderData: foodscapesGroupIsPlaceholderData,
+    isFetching: foodscapesGroupIsFetching,
+    isFetched: foodscapesGroupIsFetched,
+    isError: foodscapesGroupIsError,
+  } = useFoodscapesGroups();
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
+    sql: DATASET.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
+
+  const OPTIONS = useMemo(() => {
+    if (!data || !foodscapesData) return [];
+    return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
+  }, [data, foodscapesData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
+    if (!data || !foodscapesGroupData) return [];
     return (
       foodscapesGroupData
         //
         .filter((g) => {
-          const ids = g.values.map((v) => v.value);
+          const ids = g.values
+            .filter((v) => data.map((d) => d.id).includes(v.value))
+            .map((v) => v.value);
           return ids.every((i) => foodscapes.includes(i));
         })
         .map((g) => g.value)
     );
-  }, [foodscapesGroupData, foodscapes]);
-
-  const handleToggleLayer = useCallback(() => {
-    const lys = [...layers];
-
-    // push or slice layer in lys array base on index
-    const index = lys.findIndex((ly) => ly === id);
-    if (index === -1) {
-      lys.unshift(id);
-    } else {
-      lys.splice(index, 1);
-    }
-
-    setLayers(lys);
-  }, [id, layers, setLayers]);
+  }, [data, foodscapesGroupData, foodscapes]);
 
   const handleBarClick = (key: number) => {
     setFoodscapes((prev) => {
@@ -74,7 +90,11 @@ const FoodscapesWidget = () => {
   };
 
   const handleBarGroupClick = (key: number) => {
-    const ids = foodscapesData.filter((d) => d.parentId === key).map((d) => d.value);
+    const ids = foodscapesData
+      .filter((d) => {
+        return d.parentId === key && data.map((d1) => d1.id).includes(d.value);
+      })
+      .map((d) => d.value);
 
     setFoodscapes((prev) => {
       const fs = [...prev];
@@ -105,7 +125,11 @@ const FoodscapesWidget = () => {
       const newFoodscapes = [...foodscapes];
 
       values.forEach((v) => {
-        const ids = foodscapesData.filter((d) => d.parentId === v).map((d) => d.value);
+        const ids = foodscapesData
+          .filter((v1) => data.map((d) => d.id).includes(v1.value))
+          .filter((d) => d.parentId === v)
+          .map((d) => d.value);
+
         ids.forEach((i) => {
           const index = newFoodscapes.findIndex((f) => f === i);
           if (index === -1) {
@@ -127,16 +151,12 @@ const FoodscapesWidget = () => {
 
       setFoodscapes(newFoodscapes);
     },
-    [foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
+    [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
 
   return (
     <section className="space-y-4 py-10">
-      <header className="flex items-center justify-between space-x-5">
-        <h3 className="font-display text-2xl">Global Foodscapes</h3>
-
-        <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
-      </header>
+      <WidgetHeader title="Global Foodscapes" dataset={DATASET} />
 
       <div className="space-y-2">
         <p>
@@ -145,68 +165,79 @@ const FoodscapesWidget = () => {
           determined by the interaction of parent material, climate, vegetation, terrain, time, and
           human activity.
         </p>
-        <p className="font-light">
-          Soil groups are inclusive of the biophysical attributes of an area.
-        </p>
+        <p>Soil groups are inclusive of the biophysical attributes of an area.</p>
       </div>
 
-      <Tabs defaultValue="single">
-        <TabsList>
-          <TabsTrigger value="single">Foodscapes</TabsTrigger>
-          <TabsTrigger value="group">Soil Groups</TabsTrigger>
-        </TabsList>
-        <TabsContent value="single">
-          <div className="mt-5 space-y-5">
-            <MultiSelect
-              id="foodscapes-multiselect"
-              size="s"
-              theme="light"
-              placeholder="Filter foodscapes"
-              options={foodscapesData}
-              values={foodscapes as number[]}
-              batchSelectionActive
-              clearSelectionActive
-              loading={foodscapesIsLoading}
-              onChange={(values) => setFoodscapes(values as number[])}
-            />
-            <div className="h-8">
-              <Chart
-                //
-                dataset={DATASET}
-                selected={foodscapes}
-                onBarClick={handleBarClick}
-                interactive
+      <WidgetContent
+        isPlaceholderData={
+          isPlaceholderData || foodscapesIsPlaceholderData || foodscapesGroupIsPlaceholderData
+        }
+        isFetching={isFetching || foodscapesIsFetching || foodscapesGroupIsFetching}
+        isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
+        isError={isError || foodscapesIsError || foodscapesGroupIsError}
+      >
+        <Tabs defaultValue="single">
+          <TabsList>
+            <TabsTrigger value="single">Foodscapes</TabsTrigger>
+            <TabsTrigger value="group">Soil Groups</TabsTrigger>
+          </TabsList>
+          <TabsContent value="single">
+            <div className="mt-5 space-y-5">
+              <MultiSelect
+                id="foodscapes-multiselect"
+                size="s"
+                theme="light"
+                placeholder="Filter foodscapes"
+                options={OPTIONS}
+                values={foodscapes as number[]}
+                batchSelectionActive
+                clearSelectionActive
+                loading={foodscapesIsFetching || isFetching}
+                onChange={(values) => setFoodscapes(values as number[])}
               />
+              <div className="h-8">
+                <Chart
+                  //
+                  dataset={DATASET}
+                  selected={foodscapes}
+                  onBarClick={handleBarClick}
+                  interactive
+                />
+              </div>
+
+              <WidgetTop label="See top largest foodscapes">
+                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
-          </div>
-        </TabsContent>
+          </TabsContent>
 
-        <TabsContent value="group">
-          <div className="mt-5 space-y-5">
-            <MultiSelect
-              id="foodscapes-groups-multiselect"
-              size="s"
-              theme="light"
-              placeholder="Filter soil groups"
-              options={foodscapesGroupData}
-              values={GROUPED_SELECTED}
-              batchSelectionActive
-              clearSelectionActive
-              loading={foodscapesGroupIsLoading}
-              onChange={handleSelectGroupOnChange}
-            />
-
-            <div className="h-8">
-              <ChartGroup
-                dataset={DATASET}
-                selected={foodscapes}
-                onBarClick={handleBarGroupClick}
-                interactive
+          <TabsContent value="group">
+            <div className="mt-5 space-y-5">
+              <MultiSelect
+                id="foodscapes-groups-multiselect"
+                size="s"
+                theme="light"
+                placeholder="Filter soil groups"
+                options={foodscapesGroupData}
+                values={GROUPED_SELECTED}
+                batchSelectionActive
+                clearSelectionActive
+                loading={foodscapesGroupIsFetching || isFetching}
+                onChange={handleSelectGroupOnChange}
               />
+
+              <div className="h-8">
+                <ChartGroup
+                  dataset={DATASET}
+                  selected={foodscapes}
+                  onBarClick={handleBarGroupClick}
+                  interactive
+                />
+              </div>
             </div>
-          </div>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+        </Tabs>
+      </WidgetContent>
     </section>
   );
 };

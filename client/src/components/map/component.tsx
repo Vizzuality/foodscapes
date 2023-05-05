@@ -12,6 +12,8 @@ import { useDebouncedCallback } from 'use-debounce';
 // * 3) if you installed v2: provide the token to the map through the `mapboxAccessToken` property
 // * 4) remove `mapLib` property
 
+import env from 'env.mjs';
+
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { CustomMapProps } from './types';
 
@@ -144,7 +146,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         dragRotate={!isFlying && dragRotate}
         scrollZoom={!isFlying && scrollZoom}
         doubleClickZoom={!isFlying && doubleClickZoom}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+        mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
         {...mapboxProps}

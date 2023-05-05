@@ -1,17 +1,55 @@
 # Creating a SQLite db from Foodscapes CSV data
 
-This should be set up to run in a Docker container: as a first quick step,
-however, the following steps should be all that is needed. The only dependency
-is the `sqlite3` binary.
+The data import process can be run on any system with suitable dependencies
+available: these are the `sqlite3` binary and the `libsqlite3-mod-spatialite`
+SQLite module for Spatialite.
+
+First install the dependencies - for example, in Debian/Ubuntu:
 
 ```
-sudo apt install sqlite3 # or whatever appropriate to install sqlite3 on your OS
-# copy source CSV where the ingestion script expects it - please note that
-# the expected filename is hardcoded, so do make sure it matches what is shown
-# in the example command below
-cp /path/to/local/copy/of/foodscapes.csv ./source/foodscapes-filter-table.csv
-sh foodscapes_csv-to-sqlite.sh
+sudo apt install sqlite3 libsqlite3-mod-spatialite
 ```
+
+Copy the Foodscapes data source CSV file where the ingestion script expects to
+find it.
+
+Please note that the expected filename follows a template that includes a base
+name and a part that includes a YYYYMMDD timestamp and a XY revision, so do make
+sure that the filename matches what is shown in the example command below.
+
+```
+cp /path/to/local/copy/of/foodscapes.csv ./source/foodscapes-filter-table_YYYYMMDD_XY.csv
+```
+
+Place the Foodscapes metadata source CSV files where the ingestion script
+expects to find them.
+
+As for the core data CSV file, all these files are expected to have a specific
+base name followed by a `_YYYYMMDD_XY` part.
+
+The date and revision values _must_ be the same for the data file and for the
+metadata files, so please make sure these are all aligned.
+
+```
+cp /path/to/local/copy/of/metadata_files/*YYYYMMDD-XY*csv ./source/metadata
+```
+
+And finally, run the import script:
+
+```
+sh foodscapes_csv-to-sqlite.sh -d YYYYMMDD -r XY
+```
+
+Optionally, the `-f` flag may be used to force deleting a previous copy of the
+destination `foodscapes.db` SQLite file, if it exists in the `dest` folder:
+
+```
+sh foodscapes_csv-to-sqlite.sh -f -d YYYYMMDD -r XY
+```
+
+This is actually what users will likely want to do _every time_ when importing
+new data, but given that it is a destructive operation it is left behind an
+optional flag.
 
 The Foodscapes data will be available as `./dest/foodscapes.db`.
 

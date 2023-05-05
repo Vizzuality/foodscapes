@@ -36,8 +36,8 @@ const THEME = {
     menuHeader: 'bg-white',
     item: {
       base: 'text-xs',
-      active: 'bg-black/5 text-black',
-      selected: 'bg-black/10 text-black',
+      active: 'bg-gray-400/5 text-black',
+      selected: 'bg-gray-400/10 text-black',
       disabled: 'opacity-40 text-black',
     },
     loading: 'relative flex items-center w-full h-full',

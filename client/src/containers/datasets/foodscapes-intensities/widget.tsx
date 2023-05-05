@@ -1,45 +1,52 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { intensitiesAtom, layersAtom } from 'store/explore-map';
+import { filtersSelector, intensitiesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { FoodscapeIntensityData } from 'types/data';
+
+import { useData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
 import { DATASETS } from 'constants/datasets';
 
+import { WidgetHeader, WidgetTop, WidgetContent } from 'containers/widget';
+
 import MultiSelect from 'components/ui/select/multi/component';
-import Switch from 'components/ui/switch';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
+const ChartTop = dynamic(() => import('./chart/top'), { ssr: false });
 
 const FoodscapesIntensitiesWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
-  const { id } = DATASET;
+  const filters = useRecoilValue(filtersSelector('intensities'));
 
-  const layers = useRecoilValue(layersAtom);
-  const setLayers = useSetRecoilState(layersAtom);
+  const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
 
   const intensities = useRecoilValue(intensitiesAtom);
   const setIntensities = useSetRecoilState(intensitiesAtom);
 
-  const { data: intensitiesData, isLoading: intensitiesIsLoading } = useFoodscapesIntensities();
+  const {
+    data: intensitiesData,
+    isPlaceholderData: intensitiesIsPlaceholderData,
+    isFetching: intensitiesIsFetching,
+    isFetched: intensitiesIsFetched,
+    isError: intensitiesIsError,
+  } = useFoodscapesIntensities();
 
-  const handleToggleLayer = useCallback(() => {
-    const lys = [...layers];
+  const { data, isPlaceholderData, isFetching, isFetched, isError } =
+    useData<FoodscapeIntensityData>({
+      sql: DATASET.widget.sql,
+      shape: 'array',
+      ...filters,
+    });
 
-    // push or slice layer in lys array base on index
-    const index = lys.findIndex((ly) => ly === id);
-    if (index === -1) {
-      lys.unshift(id);
-    } else {
-      lys.splice(index, 1);
-    }
-
-    setLayers(lys);
-  }, [id, layers, setLayers]);
+  const OPTIONS = useMemo(() => {
+    if (!data) return [];
+    return intensitiesData.filter((c) => data.map((d) => d.id).includes(c.value));
+  }, [data, intensitiesData]);
 
   const handleBarClick = (key: number) => {
     setIntensities((prev) => {
@@ -60,41 +67,46 @@ const FoodscapesIntensitiesWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <header className="flex items-center justify-between space-x-5">
-        <h3 className="font-display text-2xl">Foodscapes Intensity</h3>
-
-        <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
-      </header>
+      <WidgetHeader title="Foodscapes Intensity" dataset={DATASET} />
 
       <div className="space-y-2">
-        <p className="font-light">
-          Intensity groups are inclusive of the land management attributes of an area.
-        </p>
+        <p>Intensity groups are inclusive of the land management attributes of an area.</p>
       </div>
 
-      <div className="space-y-5">
-        <MultiSelect
-          id="foodscapes-multiselect"
-          size="s"
-          theme="light"
-          placeholder="Filter intensities"
-          options={intensitiesData}
-          values={intensities as number[]}
-          batchSelectionActive
-          clearSelectionActive
-          loading={intensitiesIsLoading}
-          onChange={(values) => setIntensities(values as number[])}
-        />
-        <div className="h-8">
-          <Chart
-            //
-            dataset={DATASET}
-            selected={intensities}
-            onBarClick={handleBarClick}
-            interactive
+      <WidgetContent
+        isPlaceholderData={isPlaceholderData || intensitiesIsPlaceholderData}
+        isFetching={isFetching || intensitiesIsFetching}
+        isFetched={isFetched && intensitiesIsFetched}
+        isError={isError || intensitiesIsError}
+      >
+        <div className="space-y-5">
+          <MultiSelect
+            id="foodscapes-multiselect"
+            size="s"
+            theme="light"
+            placeholder="Filter intensities"
+            options={OPTIONS}
+            values={intensities as number[]}
+            batchSelectionActive
+            clearSelectionActive
+            loading={intensitiesIsFetching}
+            onChange={(values) => setIntensities(values as number[])}
           />
+          <div className="h-8">
+            <Chart
+              //
+              dataset={DATASET}
+              selected={intensities}
+              onBarClick={handleBarClick}
+              interactive
+            />
+          </div>
+
+          <WidgetTop label="See top largest foodscapes intensities">
+            <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+          </WidgetTop>
         </div>
-      </div>
+      </WidgetContent>
     </section>
   );
 };

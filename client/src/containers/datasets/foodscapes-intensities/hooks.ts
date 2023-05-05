@@ -11,6 +11,7 @@ import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 import { DATASETS } from 'constants/datasets';
 
 import { Settings } from 'components/map/legend/types';
+import env from 'env.mjs';
 
 interface UseFoodscapesIntensitiesSourceProps {
   filters: {
@@ -73,7 +74,7 @@ export function useSource({
     key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
-      `${process.env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
+      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
     ],
   };
 }
@@ -117,14 +118,10 @@ export function useLegend({
   }, [foodscapesIntensitiesData]);
 
   const legend = useMemo(() => {
-    if (!foodscapesIntensitiesData || !foodscapesIntensitiesData.length) {
-      return null;
-    }
-
     return {
       id: dataset.id,
       name: dataset.label,
-      colormap,
+      ...((!foodscapesIntensitiesData || !foodscapesIntensitiesData.length) && { colormap }),
       settings: settings,
       settingsManager: {
         opacity: true,

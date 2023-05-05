@@ -112,7 +112,7 @@ const Hero = () => {
       <div className="relative z-10 space-y-2 text-center">
         <h1 className="font-display text-5xl lg:text-9xl">Foodscapes</h1>
         <h2 className="text-base font-bold uppercase tracking-widest lg:text-xl">
-          Accelerating a global food system transfomation
+          Accelerating a global food system transformation
         </h2>
       </div>
 

@@ -4,11 +4,18 @@ import dynamic from 'next/dynamic';
 
 import cn from 'lib/classnames';
 
-import { group } from 'd3-array';
+import { filtersSelector } from 'store/explore-map';
 
+import { group } from 'd3-array';
+import { useRecoilValue } from 'recoil';
+
+import { FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
+import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
+
+import { LegendContent } from 'containers/legend';
 
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
@@ -25,53 +32,79 @@ export interface FoodscapesLegendProps extends LegendItemProps {
 const FoodscapesLegend = (props: FoodscapesLegendProps) => {
   const { settings, dataset } = props;
 
-  const legend = useLegend({ dataset, settings });
+  const filters = useRecoilValue(filtersSelector(null));
 
-  const { data: foodscapesData } = useFoodscapes();
+  // DATA
+  const legend = useLegend({ dataset, settings });
+  const {
+    data: foodscapesData,
+    isPlaceholderData: foodscapesIsPlaceholderData,
+    isFetching: foodscapesIsFetching,
+    isFetched: foodscapesIsFetched,
+    isError: foodscapesIsError,
+  } = useFoodscapes();
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
+    sql: dataset.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
 
   const GROUPED_DATA = useMemo(() => {
+    if (!data || !foodscapesData) return [];
     return (
       Array
         // group by parent
         .from(
-          group(foodscapesData, (d) => d.parentLabel),
+          group(
+            foodscapesData.filter((f) => {
+              return data.find((d) => f.value === d.id);
+            }),
+            (d) => d.parentLabel
+          ),
           ([key, value]) => ({ key, value })
         )
         // sort by key
         .sort((a, b) => a.key.localeCompare(b.key))
     );
-  }, [foodscapesData]);
+  }, [foodscapesData, data]);
 
   return (
     <LegendItem {...legend} {...props}>
-      <div className="divide-y divide-navy-500/20">
-        <div className="ml-0.5 px-4 pt-3 pb-5">
-          <div className="h-3.5">
-            <Chart dataset={dataset} />
+      <LegendContent
+        isPlaceholderData={isPlaceholderData || foodscapesIsPlaceholderData}
+        isFetching={isFetching || foodscapesIsFetching}
+        isFetched={isFetched && foodscapesIsFetched}
+        isError={isError || foodscapesIsError}
+      >
+        <div className="divide-y divide-navy-500/20">
+          <div className="ml-0.5 px-4 pt-3 pb-5">
+            <div className="h-3.5">
+              <Chart dataset={dataset} ignore={null} />
+            </div>
           </div>
-        </div>
 
-        <ul className="divide-y divide-navy-500/20 py-4">
-          {GROUPED_DATA.map((g) => (
-            <li
-              key={g.key}
-              className={cn({
-                'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
-              })}
-            >
-              <h4 className="text-xs font-bold">{g.key}</h4>
-              <LegendTypeBasic
-                items={g.value.map((v) => {
-                  return {
-                    value: v.label,
-                    color: v.color,
-                  };
+          <ul className="divide-y divide-navy-500/20 pt-3 pb-4">
+            {GROUPED_DATA.map((g) => (
+              <li
+                key={g.key}
+                className={cn({
+                  'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
                 })}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+              >
+                <h4 className="text-xs font-bold">{g.key}</h4>
+                <LegendTypeBasic
+                  items={g.value.map((v) => {
+                    return {
+                      value: v.label,
+                      color: v.color,
+                    };
+                  })}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </LegendContent>
     </LegendItem>
   );
 };

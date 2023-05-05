@@ -1,24 +1,41 @@
 import { useMemo } from 'react';
 
+import { datasetteAdapter } from 'lib/adapters/datasette-adapter';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { group } from 'd3-array';
+import squel from 'squel';
 
 import { Crop, CropGroup } from 'types/crops';
 
-import DATA_JSON from './data.json';
+import API from 'services/api';
 
-// import API from 'services/api';
+const crops = squel.select().from('crops');
+const cropsGroups = squel.select().from('crop_groups');
+
+const SQL = squel
+  .select()
+  .from(crops, 'f')
+  .left_join(cropsGroups, 's', 'f.parent_id = s.value')
+  .field('f.value', 'id')
+  .field('f.value')
+  .field('f.label')
+  .field('f.color')
+  .field('f.parent_id', 'parentId')
+  .field('s.label', 'parentLabel')
+  .field('s.color', 'parentColor');
 
 export function useCrops(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
-  const fetchCrops = () =>
-    new Promise((resolve) => {
-      resolve(DATA_JSON);
-    });
-
-  // API.request({
-  //   method: 'GET',
-  //   url: '/crops',
-  // }).then((response) => response.data);
+  const fetchCrops = () => {
+    return API.request({
+      method: 'GET',
+      url: '/foodscapes.json',
+      params: datasetteAdapter({
+        sql: SQL,
+        shape: 'array',
+      }),
+    }).then((response) => response.data);
+  };
 
   const query = useQuery(['crops'], fetchCrops, {
     placeholderData: [],
@@ -46,15 +63,16 @@ export function useCrops(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
 }
 
 export function useCropsGroups(queryOptions: UseQueryOptions<Crop[], unknown> = {}) {
-  const fetchCrops = () =>
-    new Promise((resolve) => {
-      resolve(DATA_JSON);
-    });
-
-  // API.request({
-  //   method: 'GET',
-  //   url: '/crops',
-  // }).then((response) => response.data);
+  const fetchCrops = () => {
+    return API.request({
+      method: 'GET',
+      url: '/foodscapes.json',
+      params: datasetteAdapter({
+        sql: SQL,
+        shape: 'array',
+      }),
+    }).then((response) => response.data);
+  };
 
   const query = useQuery(['crops'], fetchCrops, {
     placeholderData: [],

@@ -37,4 +37,4 @@ USER $USER
 
 # @todo Consider whether to use a shell script as entrypoint to allow for
 # different run modes (e.g. debug, dev, prod, etc.) via Docker commands
-CMD datasette --metadata metadata.json --host 0.0.0.0 --port 3000 --setting base_url /data/ data/${DATASETTE_SQLITE_DB_FILENAME}
+CMD datasette --load-extension=spatialite --metadata metadata.json --host 0.0.0.0 --port 3000 --setting base_url /data/ data/${DATASETTE_SQLITE_DB_FILENAME}

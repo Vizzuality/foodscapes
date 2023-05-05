@@ -1,5 +1,6 @@
 # Install dependencies only when needed
 FROM node:18.12.1-bullseye AS deps
+
 WORKDIR /app
 COPY .yarn ./.yarn
 COPY package.json yarn.lock .yarnrc.yml ./
@@ -11,6 +12,15 @@ RUN yarn install --immutable
 
 # Rebuild the source code only when needed
 FROM node:18.12.1-bullseye AS builder
+
+ARG APP_NEXT_PUBLIC_API_URL
+ARG APP_NEXT_PUBLIC_TITILER_API_URL
+ARG APP_NEXT_PUBLIC_MAPBOX_API_TOKEN
+
+ENV NEXT_PUBLIC_API_URL $APP_NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_TITILER_API_URL $APP_NEXT_PUBLIC_TITILER_API_URL
+ENV NEXT_PUBLIC_MAPBOX_API_TOKEN $APP_NEXT_PUBLIC_MAPBOX_API_TOKEN
+
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
@@ -33,8 +43,8 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# You only need to copy next.config.js if you are NOT using the default configuration
-COPY --from=builder /app/next.config.js ./
+# You only need to copy next.config.mjs if you are NOT using the default configuration
+COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 

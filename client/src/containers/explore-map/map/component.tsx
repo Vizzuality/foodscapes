@@ -10,6 +10,7 @@ import { BASEMAPS } from 'constants/basemaps';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
+import env from 'env.mjs';
 
 import Controls from './controls';
 import LayerManager from './layer-manager';
@@ -126,7 +127,7 @@ const MapContainer = () => {
         maxZoom={maxZoom}
         initialViewState={initialViewState}
         viewState={viewState}
-        mapboxAccessToken={process.env.STORYBOOK_MAPBOX_API_TOKEN}
+        mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMapViewStateChange={handleViewState}
         onClick={handleClick}
       >
