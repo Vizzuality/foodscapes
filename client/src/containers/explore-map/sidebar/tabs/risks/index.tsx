@@ -25,9 +25,7 @@ const RisksSidebar = forwardRef(() => {
       </header>
 
       <div className="w-full px-20">
-        <div className="border-t border-navy-500/30">
-          <RisksLandUseWidget />
-        </div>
+        <div className="border-t border-navy-500/30">{/* <RisksLandUseWidget /> */}</div>
         <div className="border-t border-navy-500/30">
           <RisksWidget />
         </div>

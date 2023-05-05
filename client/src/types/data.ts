@@ -15,6 +15,11 @@ export interface CropData {
   parent_id: number;
 }
 
+export interface RisksClimateData {
+  not_risked: number;
+  risked: number;
+}
+
 export type PointData = {
   band_names: string[];
   coordinates: [number, number];
