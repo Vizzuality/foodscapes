@@ -18,6 +18,7 @@ export const PieChart = <T extends unknown>({
   onPathMouseEnter,
   onPathMouseLeave,
   pieProps,
+  format,
 }: PieChartProps<T>) => {
   // SIZES
   const innerWidth = width - margin.left - margin.right;
@@ -84,7 +85,7 @@ export const PieChart = <T extends unknown>({
                     }}
                   />
 
-                  {selected?.includes(arc.data.id) && (
+                  {(selected?.includes(arc.data.id) || arc.data.id === 1) && (
                     <text
                       fill="black"
                       x={centroidX + offsets.x}
@@ -95,7 +96,7 @@ export const PieChart = <T extends unknown>({
                       pointerEvents="none"
                       className="text-xxs font-bold"
                     >
-                      {`${getValue(arc)} %`}
+                      {`${format(getValue(arc))}`}
                     </text>
                   )}
                 </Group>

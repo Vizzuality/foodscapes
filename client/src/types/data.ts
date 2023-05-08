@@ -16,8 +16,8 @@ export interface CropData {
 }
 
 export interface RisksClimateData {
-  not_risked: number;
   risked: number;
+  not_risked: number;
 }
 
 export type PointData = {
@@ -32,4 +32,4 @@ export type FiltersProps = {
   crops?: readonly number[];
 };
 
-export type FiltersOmitProps = 'foodscapes' | 'intensities' | 'crops' | null;
+export type FiltersOmitProps = 'foodscapes' | 'intensities' | 'crops' | 'climateRisk' | null;

@@ -176,6 +176,11 @@ export const DATASETS = [
         .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count ELSE 0 END)', 'risked')
         .field('SUM(CASE WHEN climate_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risked')
         .from('data'),
+      download: squel
+        .select()
+        .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count ELSE 0 END)', 'risked')
+        .field('SUM(CASE WHEN climate_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risked')
+        .from('data'),
     },
   },
   {

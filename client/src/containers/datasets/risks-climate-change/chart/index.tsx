@@ -1,18 +1,24 @@
 import { useMemo } from 'react';
 
+import { filtersSelector } from 'store/explore-map';
+
 import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
+import { useRecoilValue } from 'recoil';
 
 import { RisksClimateData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
+import { useClimateRisks } from 'hooks/risks-climate-change';
 
 import PieChart from 'components/charts/pie/component';
+import { PieChartData } from 'components/charts/pie/types';
 
 interface RisksChartParentProps {
   dataset: Dataset;
-  selected?: boolean;
+  selected?: readonly number[];
+  onPieClick?: (data: PieChartData) => void;
 }
 
 interface RisksChartProps extends RisksChartParentProps {
@@ -20,80 +26,68 @@ interface RisksChartProps extends RisksChartParentProps {
   height: number;
 }
 
-const RisksChart = ({ width, height, dataset }: RisksChartProps) => {
+const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
+  const { data: climateRiskData } = useClimateRisks();
+
+  const filters = useRecoilValue(filtersSelector('climateRisk'));
+
+  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
   // DATA
   const { data } = useData<RisksClimateData>({
     sql: dataset.widget.sql,
     shape: 'array',
-    // ...filters,
+    ...filters,
   });
 
-  const RISKS_FORMATING = useMemo(() => {
-    if (!data)
-      return {
-        risked: 0,
-        not_risked: 0,
-      };
+  const DATA = useMemo(() => {
+    if (!data) return [];
 
-    return data.reduce(
+    const d = data.reduce(
       (acc, curr) => {
         return {
-          risked: curr.risked + acc.risked,
-          not_risked: curr.not_risked + acc.not_risked,
+          '1': curr.risked + acc['1'],
+          '-1': curr.not_risked + acc['-1'],
         };
       },
       {
-        risked: 0,
-        not_risked: 0,
+        '1': 0,
+        '-1': 0,
       }
     );
-  }, [data]);
 
-  const CLIMATE_RISKS = useMemo(() => {
-    if (!RISKS_FORMATING)
-      return [
-        {
-          id: 'risked',
-          label: 'risked',
-          value: 0,
-        },
-        {
-          id: 'not-risked',
-          label: 'not-risked',
-          value: 0,
-        },
-      ];
+    const total = d[-1] + d[1];
 
-    return [
-      {
-        id: 'risked',
-        label: 'risked',
-        value: RISKS_FORMATING.risked,
-      },
-      {
-        id: 'not-risked',
-        label: 'not-risked',
-        value: RISKS_FORMATING.not_risked,
-      },
-    ];
-  }, [RISKS_FORMATING]);
-  console.log(data.find((d) => d.risked));
-  console.log({ CLIMATE_RISKS });
+    return climateRiskData.map((c) => {
+      return {
+        ...c,
+        id: c.id === 0 ? -1 : c.id,
+        value: d[c.value] / total,
+      };
+    });
+  }, [climateRiskData, data]);
 
   // SCALES
   const colorScale = useMemo(() => {
-    return scaleOrdinal<string, string>({
-      domain: CLIMATE_RISKS.map((e) => e.id),
-      range: ['#BF8370', 'transparent'],
+    return scaleOrdinal<string | number, string>({
+      domain: DATA.map((e) => e.id),
+      range: ['transparent', '#BF8370'],
     });
-  }, [CLIMATE_RISKS]);
+  }, [DATA]);
+
   return (
     <PieChart
       width={width}
       height={height}
-      data={CLIMATE_RISKS}
+      data={DATA}
       colorScale={colorScale}
-      selected="a"
+      format={formatPercentage}
+      selected={selected}
+      onPathMouseClick={onPieClick}
     />
   );
 };
