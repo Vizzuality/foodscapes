@@ -27,15 +27,9 @@ interface RisksChartProps extends RisksChartParentProps {
 }
 
 const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
-  const { data: climateRiskData } = useClimateRisks();
-
   const filters = useRecoilValue(filtersSelector('climateRisk'));
 
-  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
-    style: 'percent',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  });
+  const { data: climateRiskData } = useClimateRisks();
 
   // DATA
   const { data } = useData<RisksClimateData>({
@@ -71,6 +65,12 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
     });
   }, [climateRiskData, data]);
 
+  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+
   // SCALES
   const colorScale = useMemo(() => {
     return scaleOrdinal<string | number, string>({
@@ -79,6 +79,11 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
     });
   }, [DATA]);
 
+  const SELECCTION = useMemo(() => {
+    if (!selected) return [1];
+    return selected;
+  }, [selected]);
+
   return (
     <PieChart
       width={width}
@@ -86,7 +91,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
       data={DATA}
       colorScale={colorScale}
       format={formatPercentage}
-      selected={selected}
+      selected={SELECCTION}
       onPathMouseClick={onPieClick}
     />
   );

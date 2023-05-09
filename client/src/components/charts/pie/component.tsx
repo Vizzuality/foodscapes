@@ -85,7 +85,7 @@ export const PieChart = <T extends unknown>({
                     }}
                   />
 
-                  {(selected?.includes(arc.data.id) || arc.data.id === 1) && (
+                  {selected?.includes(arc.data.id) && (
                     <text
                       fill="black"
                       x={centroidX + offsets.x}
