@@ -29,15 +29,9 @@ interface RisksChartProps extends RisksChartParentProps {
 }
 
 const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
-  const { data: climateRiskData } = useClimateRisks();
-
   const filters = useRecoilValue(filtersSelector('climateRisk'));
 
-  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
-    style: 'percent',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  });
+  const { data: climateRiskData } = useClimateRisks();
 
   // DATA
   const { data } = useData<RisksClimateData>({
@@ -72,6 +66,12 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
       };
     });
   }, [climateRiskData, data]);
+
+  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
 
   // SCALES
   const colorScale = useMemo(() => {
