@@ -6,8 +6,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { RisksClimateData } from 'types/data';
 
+import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
-import { useClimateRisks } from 'hooks/risks-climate-change';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -19,7 +19,7 @@ const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const ClimateRiskWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'climate-change-climate-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
 
   const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 

@@ -1,13 +1,6 @@
-export interface TitilerParamsProps {
-  foodscapes?: number[];
-  intensities?: number[];
-  crops?: number[];
-  climateRisk?: number[];
-  country?: number;
-  province?: number;
-}
+import { FiltersProps } from 'types/data';
 
-export function titilerAdapter(params: TitilerParamsProps = {}) {
+export function titilerAdapter(params: FiltersProps = {}) {
   const {
     foodscapes = [],
     intensities = [],
