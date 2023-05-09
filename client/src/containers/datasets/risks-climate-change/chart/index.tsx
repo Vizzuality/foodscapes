@@ -12,6 +12,8 @@ import { Dataset } from 'types/datasets';
 import { useData } from 'hooks/data';
 import { useClimateRisks } from 'hooks/risks-climate-change';
 
+import { ClimateRiskChartTooltip } from 'containers/datasets/risks-climate-change/chart/tooltips';
+
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
 
@@ -87,6 +89,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
       colorScale={colorScale}
       format={formatPercentage}
       selected={selected}
+      TooltipComponent={ClimateRiskChartTooltip}
       onPathMouseClick={onPieClick}
     />
   );

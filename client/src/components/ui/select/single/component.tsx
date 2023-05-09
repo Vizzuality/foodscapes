@@ -122,7 +122,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                 >
                   <div className="flex px-5 text-sm">
                     {clearable && (
-                      <Listbox.Option key={'empty'} value={''}>
+                      <Listbox.Option key={null} value={null}>
                         <button type="button" className="py-2 text-left underline">
                           {clearSelectionLabel}
                         </button>

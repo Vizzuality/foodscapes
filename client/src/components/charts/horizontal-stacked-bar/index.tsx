@@ -14,6 +14,7 @@ type DataProps = {
   value: number;
 };
 type ChartDataProps = Record<string, number>;
+
 export type TooltipProps<T> = {
   id: number;
   total: number;

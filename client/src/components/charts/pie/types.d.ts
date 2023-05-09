@@ -6,7 +6,10 @@ type PieChartData = {
   value: number;
 };
 
-export interface PieChartProps<T> {
+export type TooltipProps<T> = {
+  position: { x: number; y: number } | null;
+} & T;
+export interface PieChartProps<T, C> {
   data: PieChartData[];
   selected?: readonly PieChartData['id'][];
   width?: number;
@@ -20,6 +23,7 @@ export interface PieChartProps<T> {
   colorScale: ScaleOrdinal<string, string, never>;
   pieProps?: PieProps<T>;
   format: Intl.NumberFormat.format;
+  TooltipComponent: FC<TooltipProps<C>>;
   onPathMouseClick?: (data: PieChartData) => void;
   onPathMouseEnter?: (data: PieChartData) => void;
   onPathMouseLeave?: (data: PieChartData) => void;

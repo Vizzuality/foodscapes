@@ -43,8 +43,11 @@ const RisksClimateChangeWidget = () => {
   });
 
   const handleChartClick = (data) => {
-    const id = data.id === 0 ? -1 : data.id;
-    setClimateChange([id]);
+    if (climateChange.includes(data.id)) {
+      return setClimateChange([]);
+    }
+
+    setClimateChange([data.id]);
   };
 
   return (
@@ -56,37 +59,36 @@ const RisksClimateChangeWidget = () => {
         isFetched={isFetched && climateIsFetched}
         isError={isError || climateIsError}
       >
-        <div className="space-y-6 py-10">
+        <div className="space-y-5">
           <div className="space-y-2">
             <p className="font-light">
               Intensity groups are inclusive of the land management attributes of an area.
             </p>
           </div>
 
-          <div>
-            <SingleSelect
-              id="riks-climate-change-select"
-              size="s"
-              theme="light"
-              placeholder="Filter risk"
-              options={climateData}
-              onChange={(value) => setClimateChange([value] as number[])}
-              clearable
-            />
-          </div>
+          <SingleSelect
+            id="riks-climate-change-select"
+            size="s"
+            theme="light"
+            placeholder="Filter risk"
+            options={climateData}
+            value={climateChange[0] ?? null}
+            onChange={(value) => {
+              if (value === null) {
+                setClimateChange([]);
+              } else {
+                setClimateChange([value as number]);
+              }
+            }}
+            clearable
+          />
 
-          <div className="flex h-64 flex-col items-center text-xs">
+          <div className="space flex flex-col items-center space-y-2.5 py-2.5 text-xs">
             <p className="font-bold">Climate Risk</p>
 
-            <Chart dataset={DATASET} selected={climateChange} onPieClick={handleChartClick} />
-
-            <p>
-              <em>Showing </em>
-              <b>
-                <u>PROPORTION(%)</u>
-              </b>
-              / AREA (Mha)
-            </p>
+            <div className="h-64 w-full">
+              <Chart dataset={DATASET} selected={climateChange} onPieClick={handleChartClick} />
+            </div>
           </div>
 
           <WidgetTop label="See top affected foodscapes by climate risk">
