@@ -21,7 +21,7 @@ const ClimateRiskLegend = (props: ClimateRiskLegendProps) => {
 
   return (
     <LegendItem {...legend} {...props}>
-      <div className="divide-y divide-navy-500/20 px-4 pt-3 pb-5">
+      <div className="divide-y divide-navy-500/20 px-4 pt-0 pb-1">
         <LegendTypeBasic
           items={climateRisksData
             .filter((c) => c.value !== -1)
