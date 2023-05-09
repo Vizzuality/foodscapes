@@ -33,7 +33,9 @@ export const PieChart = <T extends unknown, C extends unknown>({
   const centerX = innerWidth / 2;
   const thickness = 40;
 
-  const [tPos, setTPos] = useState<{ x: number; y: number } | null>(null);
+  const [tPos, setTPos] = useState<{ x: number; y: number; value: number; label: string } | null>(
+    null
+  );
 
   // Getters
   const getValue = useCallback((d: any) => d.value, []);
@@ -74,7 +76,6 @@ export const PieChart = <T extends unknown, C extends unknown>({
                   x: (thickness * 0.5 + 10) * Math.cos(centroidAngle),
                   y: (thickness * 0.5 + 10) * Math.sin(centroidAngle),
                 };
-
                 return (
                   <Group key={arc.data.id}>
                     <path
@@ -85,11 +86,21 @@ export const PieChart = <T extends unknown, C extends unknown>({
                         if (onPathMouseClick) onPathMouseClick(arc.data);
                       }}
                       onMouseEnter={(e) => {
-                        setTPos({ x: e.clientX, y: e.clientY });
+                        setTPos({
+                          x: e.clientX,
+                          y: e.clientY,
+                          value: arc.data.value,
+                          label: arc.data.label,
+                        });
                         if (onPathMouseEnter) onPathMouseEnter(arc.data);
                       }}
                       onMouseMove={(e) => {
-                        setTPos({ x: e.clientX, y: e.clientY });
+                        setTPos({
+                          x: e.clientX,
+                          y: e.clientY,
+                          value: arc.data.value,
+                          label: arc.data.label,
+                        });
                       }}
                       onMouseLeave={() => {
                         setTPos(null);
@@ -134,7 +145,7 @@ export const PieChart = <T extends unknown, C extends unknown>({
           </TooltipTrigger>
 
           <TooltipContent asChild sideOffset={2} key={tPos?.x + tPos?.y}>
-            <TooltipComponent />
+            <TooltipComponent value={tPos?.value} label={tPos?.label} />
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

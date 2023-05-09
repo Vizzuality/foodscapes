@@ -8,6 +8,8 @@ type PieChartData = {
 
 export type TooltipProps<T> = {
   position: { x: number; y: number } | null;
+  value: number;
+  label: string;
 } & T;
 export interface PieChartProps<T, C> {
   data: PieChartData[];
