@@ -12,7 +12,7 @@ import { Dataset } from 'types/datasets';
 import { useData } from 'hooks/data';
 import { useClimateRisks } from 'hooks/risks-climate-change';
 
-import { ClimateRiskChartTooltip } from 'containers/datasets/risks-climate-change/chart/tooltips';
+import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risks/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';

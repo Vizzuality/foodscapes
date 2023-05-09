@@ -18,7 +18,7 @@ import SingleSelect from 'components/ui/select/single/component';
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
-const RisksClimateChangeWidget = () => {
+const ClimateRiskWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'climate-change-climate-risk');
 
   const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
@@ -100,4 +100,4 @@ const RisksClimateChangeWidget = () => {
   );
 };
 
-export default RisksClimateChangeWidget;
+export default ClimateRiskWidget;
