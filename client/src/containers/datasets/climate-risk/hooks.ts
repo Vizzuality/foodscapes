@@ -7,43 +7,45 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 
-import { useCrops } from 'hooks/crops';
+import { useClimateRisks } from 'hooks/climate-risks';
 
 import { DATASETS } from 'constants/datasets';
 
 import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
-interface UseCropsSourceProps {
+interface UseClimateRiskSourceProps {
   filters: FiltersProps;
 }
 
-interface UseCropsLayerProps {
+interface UseClimateRiskLayerProps {
   settings?: Partial<Settings>;
 }
 
-interface UseCropsLegendProps {
+interface UseClimateRiskLegendProps {
   dataset: Dataset;
   settings?: Settings;
 }
 
-export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {
-  const { data: cropsData } = useCrops();
-
-  const DATASET = DATASETS.find((d) => d.id === 'crops');
+export function useSource({ filters }: UseClimateRiskSourceProps): AnySourceData & { key: string } {
+  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
+  const { data: climateRisksData } = useClimateRisks();
 
   const band = DATASET.layer.band;
   const colormap = useMemo(() => {
-    const c = cropsData.reduce((acc, v) => {
-      return {
-        ...acc,
-        [v.value]: v.color,
-      };
-    }, {});
+    const c = climateRisksData
+      .filter((v) => v.value !== -1)
+      .reduce((acc, v) => {
+        return {
+          ...acc,
+          [v.value]: v.color,
+        };
+      }, {});
+
     c[-1] = '#00000000';
 
     return JSON.stringify(c);
-  }, [cropsData]);
+  }, [climateRisksData]);
 
   const expression = useMemo(() => {
     const where = titilerAdapter(filters);
@@ -64,7 +66,7 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
   }, [band, colormap, expression]);
 
   return {
-    id: 'crops-source',
+    id: 'climate-risk-source',
     key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
@@ -73,11 +75,11 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
   };
 }
 
-export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer {
+export function useLayer({ settings = {} }: UseClimateRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'crops-layer',
+      id: 'climate-risk-layer',
       type: 'raster',
       paint: {
         'raster-opacity': settings.opacity ?? 1,
@@ -98,24 +100,11 @@ export function useLegend({
     visibility: true,
     expand: true,
   },
-}: UseCropsLegendProps) {
-  const { data: cropsData } = useCrops();
-
-  const colormap = useMemo(() => {
-    const c = cropsData.reduce((acc, v) => {
-      return {
-        ...acc,
-        [v.value]: v.color,
-      };
-    }, {});
-    return encodeURIComponent(JSON.stringify(c));
-  }, [cropsData]);
-
+}: UseClimateRiskLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,
       name: dataset.label,
-      ...((!cropsData || !cropsData.length) && { colormap }),
       settings: settings,
       settingsManager: {
         opacity: true,
@@ -124,7 +113,7 @@ export function useLegend({
         info: true,
       },
     };
-  }, [dataset, colormap, settings, cropsData]);
+  }, [dataset, settings]);
 
   return legend;
 }
