@@ -15,12 +15,12 @@ export interface CropData {
   parent_id: number;
 }
 
-export interface RisksClimateData {
+export interface ClimateRiskData {
   risked: number;
   not_risked: number;
 }
 
-export interface RisksPollutionData {
+export interface PollutionRiskData {
   risked: number;
   not_risked: number;
 }

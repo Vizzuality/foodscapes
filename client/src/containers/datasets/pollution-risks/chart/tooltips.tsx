@@ -1,12 +1,12 @@
 import { forwardRef } from 'react';
 
-import { RisksPollutionData } from 'types/data';
+import { PollutionRiskData } from 'types/data';
 
 import { TooltipProps } from 'components/charts/pie/types';
 
 export const PollutionRiskChartTooltip = forwardRef<
   HTMLDivElement,
-  TooltipProps<RisksPollutionData>
+  TooltipProps<PollutionRiskData>
 >(({ value, label }, ref) => {
   const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
     style: 'percent',

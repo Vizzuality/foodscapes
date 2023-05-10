@@ -4,7 +4,7 @@ import { pollutionRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { RisksPollutionData } from 'types/data';
+import { PollutionRiskData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { usePollutionRisks } from 'hooks/pollution-risks';
@@ -36,7 +36,7 @@ const PollutionRiskWidget = () => {
     isError: pollutionIsError,
   } = usePollutionRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<RisksPollutionData>({
+  const { isPlaceholderData, isFetching, isFetched, isError } = useData<PollutionRiskData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,

@@ -6,7 +6,7 @@ import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { RisksPollutionData } from 'types/data';
+import { PollutionRiskData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
@@ -34,7 +34,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
   const { data: pollutionRiskData } = usePollutionRisks();
 
   // DATA
-  const { data } = useData<RisksPollutionData>({
+  const { data } = useData<PollutionRiskData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,
