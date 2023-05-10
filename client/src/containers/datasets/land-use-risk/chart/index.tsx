@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { filtersSelector } from 'store/explore-map';
 
 import { ParentSize } from '@visx/responsive';
-import { scaleOrdinal } from '@visx/scale';
+import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { LandUseRiskData } from 'types/data';
@@ -12,15 +12,11 @@ import { Dataset } from 'types/datasets';
 import { useData } from 'hooks/data';
 import { useLandUseRisks } from 'hooks/land-use-risks';
 
-import { LandUseRiskChartTooltip } from 'containers/datasets/land-use-risk/chart/tooltips';
-
-import PieChart from 'components/charts/pie/component';
-import { PieChartData } from 'components/charts/pie/types';
+import HorizontalBar from 'components/charts/horizontal-bar';
 
 interface LandUseRiskChartParentProps {
   dataset: Dataset;
   selected?: readonly number[];
-  onPieClick?: (data: PieChartData) => void;
 }
 
 interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
@@ -28,13 +24,7 @@ interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
   height: number;
 }
 
-const LandUseRiskChart = ({
-  width,
-  height,
-  dataset,
-  selected,
-  onPieClick,
-}: LandUseRiskChartProps) => {
+const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
   const filters = useRecoilValue(filtersSelector('climateRisk'));
 
   const { data: climateRiskData } = useLandUseRisks();
@@ -46,58 +36,74 @@ const LandUseRiskChart = ({
     ...filters,
   });
 
-  const DATA = useMemo(() => {
-    if (!data) return [];
+  const d1 = useMemo(() => {
+    if (!data) return null;
 
-    const d = data.reduce(
-      (acc, curr) => {
-        return {
-          '1': curr.risked + acc['1'],
-          '-1': curr.not_risked + acc['-1'],
-        };
-      },
-      {
-        '1': 0,
-        '-1': 0,
-      }
-    );
-
-    const total = d[-1] + d[1];
-
-    return climateRiskData.map((c) => {
+    return data.reduce((acc, d) => {
       return {
-        ...c,
-        id: c.value,
-        value: d[c.value] / total,
-        color: c.color,
+        ...acc,
+        ...d,
       };
-    });
-  }, [climateRiskData, data]);
+    }, {});
+  }, [data]);
 
-  const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
-    style: 'percent',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  });
+  const KEYS = useMemo(() => {
+    return Object.keys(d1).map((k) => k);
+  }, [d1]);
+
+  const DATA = useMemo(() => {
+    if (!d1) return [];
+
+    return climateRiskData
+      .map((c) => {
+        return {
+          ...c,
+          id: c.value,
+          value: d1[c.column],
+          color: c.color,
+        };
+      })
+      .sort((a, b) => b.value - a.value);
+  }, [climateRiskData, d1]);
+
+  const MAX = Math.max(...DATA.map((d) => d.value));
+
+  // const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
+  //   style: 'percent',
+  //   minimumFractionDigits: 0,
+  //   maximumFractionDigits: 2,
+  // });
 
   // SCALES
-  const colorScale = useMemo(() => {
-    return scaleOrdinal<string | number, string>({
-      domain: DATA.map((e) => e.id),
-      range: ['transparent', '#F0A38B'],
+  const xScale = useMemo(() => {
+    return scaleLinear<number>({
+      domain: [0, MAX],
+      range: [0, 100],
+      round: true,
     });
-  }, [DATA]);
+  }, [MAX]);
+
+  const colorScale = useMemo(() => {
+    return scaleOrdinal<string, string>({
+      domain: KEYS.map((key) => key.toString()),
+      range: KEYS.map((key) => {
+        const { color } = climateRiskData.find((d) => d.column === key) || {};
+        return color;
+      }),
+    });
+  }, [climateRiskData, KEYS]);
+
+  const handleBarClick = useCallback(() => {
+    // TODO
+  }, []);
 
   return (
-    <PieChart
-      width={width}
-      height={height}
+    <HorizontalBar
       data={DATA}
+      xScale={xScale}
       colorScale={colorScale}
-      format={formatPercentage}
-      selected={selected}
-      TooltipComponent={LandUseRiskChartTooltip}
-      onPathMouseClick={onPieClick}
+      interactive={false}
+      onBarClick={handleBarClick}
     />
   );
 };

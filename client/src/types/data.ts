@@ -21,8 +21,11 @@ export interface ClimateRiskData {
 }
 
 export interface LandUseRiskData {
-  risked: number;
-  not_risked: number;
+  agricultural_frontier_zones: number;
+  area_with_high_conservation_value: number;
+  critically_endangered_ecosystems: number;
+  soil_erosion: number;
+  water_scarcity: number;
 }
 export interface PollutionRiskData {
   risked: number;

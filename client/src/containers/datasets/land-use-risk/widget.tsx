@@ -42,14 +42,6 @@ const LandUseRiskWidget = () => {
     ...filters,
   });
 
-  const handleChartClick = (data) => {
-    if (landUseRisk.includes(data.id)) {
-      return setLandUseRisk([]);
-    }
-
-    setLandUseRisk([data.id]);
-  };
-
   return (
     <section className="space-y-4 py-10">
       <WidgetHeader title="LandUse Change" dataset={DATASET} />
@@ -85,10 +77,8 @@ const LandUseRiskWidget = () => {
           />
 
           <div className="space flex flex-col items-center space-y-2.5 py-2.5 text-xs">
-            <p className="font-bold">Land Use Risk</p>
-
-            <div className="h-64 w-full">
-              <Chart dataset={DATASET} selected={landUseRisk} onPieClick={handleChartClick} />
+            <div className="w-full">
+              <Chart dataset={DATASET} selected={landUseRisk} />
             </div>
           </div>
 

@@ -13,6 +13,9 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     foodscapes = [],
     intensities = [],
     crops = [],
+    landUseRisk = [],
+    climateRisk = [],
+    pollutionRisk = [],
     shape = 'array',
     size = 'max',
   } = params;
@@ -33,9 +36,19 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     s.where('crops IN ?', crops);
   }
 
-  // if (!!landUseRisk?.length) {
+  if (!!landUseRisk?.length) {
+    landUseRisk.forEach((v) => {
+      s.where(`${v} == ?`, 1);
+    });
+  }
 
-  // }
+  if (!!climateRisk?.length) {
+    s.where('climate_risk == ?', climateRisk[0]);
+  }
+
+  if (!!pollutionRisk?.length) {
+    s.where('pesticide_risk == ?', pollutionRisk[0]);
+  }
 
   return {
     // SQL
