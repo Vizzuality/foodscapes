@@ -23,6 +23,11 @@ import LandUseInfo from './land-use-risk/info.mdx';
 import LandUseLayer from './land-use-risk/layer';
 import LandUseLegend from './land-use-risk/legend';
 import LandUsePopup from './land-use-risk/popup';
+// Pollution risk
+import PollutionRiskInfo from './pollution-risk/info.mdx';
+import PollutionRiskLayer from './pollution-risk/layer';
+import PollutionRiskLegend from './pollution-risk/legend';
+import PollutionRiskPopup from './pollution-risk/popup';
 
 export const LAYERS = {
   foodscapes: FoodscapesLayer,
@@ -30,6 +35,7 @@ export const LAYERS = {
   crops: CropsLayer,
   'climate-risk': ClimateRiskLayer,
   'land-use-risk': LandUseLayer,
+  'pollution-risk': PollutionRiskLayer,
 };
 
 export const LEGENDS = {
@@ -38,6 +44,7 @@ export const LEGENDS = {
   crops: CropsLegend,
   'climate-risk': ClimateRiskLegend,
   'land-use-risk': LandUseLegend,
+  'pollution-risk': PollutionRiskLegend,
 };
 
 export const POPUPS = {
@@ -46,6 +53,7 @@ export const POPUPS = {
   crops: CropsPopup,
   'climate-risk': ClimateRiskPopup,
   'land-use-risk': LandUsePopup,
+  'pollution-risk': PollutionRiskPopup,
 };
 
 export const INFO = {
@@ -54,4 +62,5 @@ export const INFO = {
   crops: CropsInfo,
   'climate-risk': ClimateRiskInfo,
   'land-use-risk': LandUseInfo,
+  'pollution-risk': PollutionRiskInfo,
 };

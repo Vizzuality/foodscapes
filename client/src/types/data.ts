@@ -24,6 +24,10 @@ export interface LandUseRiskData {
   risked: number;
   not_risked: number;
 }
+export interface PollutionRiskData {
+  risked: number;
+  not_risked: number;
+}
 
 export type PointData = {
   band_names: string[];
@@ -37,6 +41,7 @@ export type FiltersProps = {
   crops?: readonly number[];
   climateRisk?: readonly number[];
   landUseRisk?: readonly number[];
+  pollutionRisk?: readonly number[];
   country?: number;
   province?: number;
 };
@@ -47,4 +52,5 @@ export type FiltersOmitProps =
   | 'crops'
   | 'climateRisk'
   | 'landUseRisk'
+  | 'pollutionRisk'
   | null;
