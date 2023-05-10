@@ -162,12 +162,13 @@ export const DATASETS = [
     },
   },
   {
-    id: 'climate-change-climate-risk',
-    label: 'Climate change (climate risk)',
+    id: 'climate-risk',
+    label: 'Climate change',
     group: 'risks',
     layer: {
-      enabled: false,
+      enabled: true,
       visible: true,
+      band: 11,
     },
     widget: {
       enabled: false,
@@ -188,7 +189,7 @@ export const DATASETS = [
     label: 'Pollution (pesticide risk)',
     group: 'risks',
     layer: {
-      enabled: false,
+      enabled: true,
       visible: true,
     },
     widget: {

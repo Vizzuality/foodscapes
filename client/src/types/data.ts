@@ -35,6 +35,10 @@ export type FiltersProps = {
   foodscapes?: readonly number[];
   intensities?: readonly number[];
   crops?: readonly number[];
+  climateRisk?: readonly number[];
+  pollutionRisk?: readonly number[];
+  country?: number;
+  province?: number;
 };
 
 export type FiltersOmitProps =

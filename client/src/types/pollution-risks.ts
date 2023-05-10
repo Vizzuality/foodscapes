@@ -1,4 +1,4 @@
-export interface ClimateRisk {
+export interface PollutionRisk {
   id: number;
   label: string;
   color: string;

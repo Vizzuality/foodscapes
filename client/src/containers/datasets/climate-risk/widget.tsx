@@ -19,7 +19,7 @@ const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const ClimateRiskWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'climate-change-climate-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
 
   const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 

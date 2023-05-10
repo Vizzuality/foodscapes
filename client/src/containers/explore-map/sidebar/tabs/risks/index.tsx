@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import ClimateRiskWidget from 'containers/datasets/climate-risks/widget';
+import ClimateRiskWidget from 'containers/datasets/climate-risk/widget';
 import PollutionRiskWidget from 'containers/datasets/pollution-risks/widget';
 
 const RisksSidebar = forwardRef(() => {

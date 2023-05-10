@@ -12,7 +12,7 @@ import { Dataset } from 'types/datasets';
 import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
 
-import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risks/chart/tooltips';
+import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risk/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
@@ -61,8 +61,9 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
     return climateRiskData.map((c) => {
       return {
         ...c,
-        id: c.id === 0 ? -1 : c.id,
+        id: c.value,
         value: d[c.value] / total,
+        color: c.color,
       };
     });
   }, [climateRiskData, data]);
@@ -77,7 +78,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
   const colorScale = useMemo(() => {
     return scaleOrdinal<string | number, string>({
       domain: DATA.map((e) => e.id),
-      range: ['transparent', '#BF8370'],
+      range: ['transparent', '#F0A38B'],
     });
   }, [DATA]);
 
