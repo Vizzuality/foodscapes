@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { LandUseRisk } from 'types/land-use-risks';
 
-const DATA_JSON = [
+export const DATA_JSON = [
   {
     id: 6,
     label: 'Critically Endangered Ecosystems',

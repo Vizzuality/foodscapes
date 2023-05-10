@@ -25,9 +25,9 @@ interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
 }
 
 const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
-  const filters = useRecoilValue(filtersSelector('climateRisk'));
+  const filters = useRecoilValue(filtersSelector('landUseRisk'));
 
-  const { data: climateRiskData } = useLandUseRisks();
+  const { data: landUseRisksData } = useLandUseRisks();
 
   // DATA
   const { data } = useData<LandUseRiskData>({
@@ -54,7 +54,7 @@ const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
   const DATA = useMemo(() => {
     if (!d1) return [];
 
-    return climateRiskData
+    return landUseRisksData
       .map((c) => {
         return {
           ...c,
@@ -64,7 +64,7 @@ const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
         };
       })
       .sort((a, b) => b.value - a.value);
-  }, [climateRiskData, d1]);
+  }, [landUseRisksData, d1]);
 
   const MAX = Math.max(...DATA.map((d) => d.value));
 
@@ -87,11 +87,11 @@ const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
     return scaleOrdinal<string, string>({
       domain: KEYS.map((key) => key.toString()),
       range: KEYS.map((key) => {
-        const { color } = climateRiskData.find((d) => d.column === key) || {};
+        const { color } = landUseRisksData.find((d) => d.column === key) || {};
         return color;
       }),
     });
-  }, [climateRiskData, KEYS]);
+  }, [landUseRisksData, KEYS]);
 
   const handleBarClick = useCallback(() => {
     // TODO

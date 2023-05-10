@@ -17,21 +17,21 @@ import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risk/chart/
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
 
-interface RisksChartParentProps {
+interface ClimateRiskParentProps {
   dataset: Dataset;
   selected?: readonly number[];
   onPieClick?: (data: PieChartData) => void;
 }
 
-interface RisksChartProps extends RisksChartParentProps {
+interface ClimateRiskProps extends ClimateRiskParentProps {
   width: number;
   height: number;
 }
 
-const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
+const ClimateRisk = ({ width, height, dataset, selected, onPieClick }: ClimateRiskProps) => {
   const filters = useRecoilValue(filtersSelector('climateRisk'));
 
-  const { data: climateRiskData } = useClimateRisks();
+  const { data: climateRisksData } = useClimateRisks();
 
   // DATA
   const { data } = useData<ClimateRiskData>({
@@ -58,7 +58,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
 
     const total = d[-1] + d[1];
 
-    return climateRiskData.map((c) => {
+    return climateRisksData.map((c) => {
       return {
         ...c,
         id: c.value,
@@ -66,7 +66,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
         color: c.color,
       };
     });
-  }, [climateRiskData, data]);
+  }, [climateRisksData, data]);
 
   const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
     style: 'percent',
@@ -96,12 +96,12 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
   );
 };
 
-const RisksChartParent = (props: RisksChartParentProps) => {
+const ClimateRiskParent = (props: ClimateRiskParentProps) => {
   return (
     <ParentSize>
-      {({ width, height }) => <RisksChart {...props} width={width} height={height} />}
+      {({ width, height }) => <ClimateRisk {...props} width={width} height={height} />}
     </ParentSize>
   );
 };
 
-export default RisksChartParent;
+export default ClimateRiskParent;

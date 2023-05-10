@@ -1,6 +1,9 @@
 import { Select } from 'squel';
 
 import { FiltersProps } from 'types/data';
+
+import { DATA_JSON as LAND_USER_RISKS_DATA } from 'hooks/land-use-risks';
+
 export interface DatasetteParamsProps extends FiltersProps {
   sql?: Select;
   shape?: 'arrays' | 'objects' | 'array' | 'object';
@@ -37,9 +40,13 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   }
 
   if (!!landUseRisk?.length) {
-    landUseRisk.forEach((v) => {
-      s.where(`${v} == ?`, 1);
-    });
+    const where = LAND_USER_RISKS_DATA
+      // Filter the land use risks by the selected ones
+      .filter((d) => landUseRisk.includes(d.value))
+      .map((d) => `${d.column} = 1`)
+      .join(' OR ');
+
+    s.where(where);
   }
 
   if (!!climateRisk?.length) {

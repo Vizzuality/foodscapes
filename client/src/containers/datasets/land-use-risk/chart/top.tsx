@@ -10,6 +10,7 @@ import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
+import { useLandUseRisks } from 'hooks/land-use-risks';
 import { convertPixelCountToHA, useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
@@ -25,12 +26,12 @@ const RisksClimateChangeTopChart = ({ dataset, onBarClick }: RisksClimateChangeT
   const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
+  const cQuery = useLandUseRisks();
   const fQuery = useFoodscapes();
 
   const sql = dataset.widget.sql
     //
     .clone()
-    .where('climate_risk = ?', [1])
     .order('value', false)
     .limit(5);
 
@@ -40,7 +41,7 @@ const RisksClimateChangeTopChart = ({ dataset, onBarClick }: RisksClimateChangeT
     ...filters,
   });
 
-  const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
+  const { isFetching, isFetched } = useIsLoading([fQuery, dQuery, cQuery]);
   const { data: foodscapesData } = fQuery;
   const { data } = dQuery;
 
