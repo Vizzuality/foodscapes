@@ -4,7 +4,7 @@ import { useLandUseRisks } from 'hooks/land-use-risks';
 
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
-import LegendTypeBasic from 'components/map/legend/types/basic/component';
+import LegendTypeChoropleth from 'components/map/legend/types/choropleth/component';
 
 import { useLegend } from './hooks';
 
@@ -22,10 +22,10 @@ const LandUseRiskLegend = (props: LandUseRiskLegendProps) => {
   return (
     <LegendItem {...legend} {...props}>
       <div className="divide-y divide-navy-500/20 px-4 pt-0 pb-1">
-        <LegendTypeBasic
-          items={landUseRisksData.map((c) => ({
+        <LegendTypeChoropleth
+          items={landUseRisksData.map((c, i) => ({
             color: c.color,
-            value: c.label,
+            value: (i + 1).toString(),
           }))}
         />
       </div>

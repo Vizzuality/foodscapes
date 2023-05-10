@@ -78,7 +78,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
   const colorScale = useMemo(() => {
     return scaleOrdinal<string | number, string>({
       domain: DATA.map((e) => e.id),
-      range: ['transparent', '#F0A38B'],
+      range: DATA.map((e) => e.color),
     });
   }, [DATA]);
 

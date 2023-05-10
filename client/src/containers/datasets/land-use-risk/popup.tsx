@@ -8,8 +8,6 @@ import { noPointData, usePointData } from 'hooks/data';
 import { useLandUseRisks } from 'hooks/land-use-risks';
 import { useIsLoading } from 'hooks/utils';
 
-import { DATASETS } from 'constants/datasets';
-
 import { Skeleton } from 'components/ui/skeleton';
 
 interface LandUseRiskPopupProps {
@@ -17,9 +15,6 @@ interface LandUseRiskPopupProps {
 }
 
 const LandUseRiskPopup = ({ latLng }: LandUseRiskPopupProps) => {
-  const DATASET = DATASETS.find((d) => d.id === 'land-use-risk');
-  const band = `b${DATASET.layer.band}`;
-
   const f = useLandUseRisks();
 
   const p = usePointData(latLng, {
@@ -35,21 +30,17 @@ const LandUseRiskPopup = ({ latLng }: LandUseRiskPopupProps) => {
     if (!pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const value = pointData[band];
+    const d = landUseRisksData.filter((c) => pointData[`b${c.value}`] > 0);
 
-    return value;
-  }, [band, pointData]);
+    if (!d.length) return null;
+
+    return d;
+  }, [pointData, landUseRisksData]);
 
   return (
     <div>
       <header className="flex items-center space-x-2">
-        <div
-          className="h-4 w-4 border"
-          style={{
-            background: landUseRisksData.find((c) => c.value === DATA)?.color,
-            borderColor: 'var(--color-navy-500)',
-          }}
-        />
+        <div className={cn({ 'h-4 w-4 border border-navy-500': true, 'bg-red-500': !!DATA })} />
         <h2 className="text-base font-semibold">Land Use risk</h2>
       </header>
 
@@ -59,10 +50,13 @@ const LandUseRiskPopup = ({ latLng }: LandUseRiskPopupProps) => {
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
-              <h3 className="text-sm font-light">
-                {DATA === -1 && 'Not risked'}
-                {DATA === 1 && 'Risked'}
-              </h3>
+              <ul className="list-outside list-disc pl-4">
+                {DATA.map((d) => (
+                  <li key={d.id} className="text-sm font-light">
+                    {d.label}
+                  </li>
+                ))}
+              </ul>
             )}
           </>
         )}

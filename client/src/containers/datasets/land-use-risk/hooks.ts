@@ -35,12 +35,26 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
         [0, 1],
         [0, 0, 0, 0],
       ],
-      ...Array.from(Array(5).keys()).map((i) => {
-        return [
-          [i + 1, i + 2],
-          [255 * ((i + 1) / 5), 0, 0, 255],
-        ];
-      }),
+      [
+        [1, 2],
+        [254, 229, 217, 255],
+      ],
+      [
+        [2, 3],
+        [252, 174, 145, 255],
+      ],
+      [
+        [3, 4],
+        [251, 106, 74, 255],
+      ],
+      [
+        [4, 5],
+        [222, 45, 38, 255],
+      ],
+      [
+        [5, 6],
+        [165, 15, 21, 255],
+      ],
     ];
 
     return JSON.stringify(c);
