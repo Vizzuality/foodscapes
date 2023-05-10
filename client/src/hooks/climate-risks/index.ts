@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { ClimateChangerisks } from 'types/risks-climate-change';
+import { ClimateChangerisks } from 'types/climate-risks';
 
 const DATA_JSON = [
   {

@@ -20,6 +20,11 @@ export interface RisksClimateData {
   not_risked: number;
 }
 
+export interface RisksPollutionData {
+  risked: number;
+  not_risked: number;
+}
+
 export type PointData = {
   band_names: string[];
   coordinates: [number, number];
@@ -32,4 +37,10 @@ export type FiltersProps = {
   crops?: readonly number[];
 };
 
-export type FiltersOmitProps = 'foodscapes' | 'intensities' | 'crops' | 'climateRisk' | null;
+export type FiltersOmitProps =
+  | 'foodscapes'
+  | 'intensities'
+  | 'crops'
+  | 'climateRisk'
+  | 'pollutionRisk'
+  | null;

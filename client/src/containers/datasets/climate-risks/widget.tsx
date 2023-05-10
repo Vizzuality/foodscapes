@@ -6,8 +6,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { RisksClimateData } from 'types/data';
 
+import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
-import { useClimateRisks } from 'hooks/risks-climate-change';
 
 import { DATASETS } from 'constants/datasets';
 

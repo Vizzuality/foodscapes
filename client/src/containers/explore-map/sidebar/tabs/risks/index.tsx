@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
 import ClimateRiskWidget from 'containers/datasets/climate-risks/widget';
+import PollutionRiskWidget from 'containers/datasets/pollution-risks/widget';
 
 const RisksSidebar = forwardRef(() => {
   return (
@@ -26,6 +27,10 @@ const RisksSidebar = forwardRef(() => {
       <div className="w-full px-20">
         <div className="border-t border-navy-500/30">
           <ClimateRiskWidget />
+        </div>
+
+        <div className="border-t border-navy-500/30">
+          <PollutionRiskWidget />
         </div>
       </div>
     </section>

@@ -6,13 +6,13 @@ import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { RisksClimateData } from 'types/data';
+import { RisksPollutionData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
-import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
+import { usePollutionRisks } from 'hooks/pollution-risks';
 
-import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risks/chart/tooltips';
+import { PollutionRiskChartTooltip } from 'containers/datasets/pollution-risks/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
@@ -29,12 +29,12 @@ interface RisksChartProps extends RisksChartParentProps {
 }
 
 const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
-  const filters = useRecoilValue(filtersSelector('climateRisk'));
+  const filters = useRecoilValue(filtersSelector('pollutionRisk'));
 
-  const { data: climateRiskData } = useClimateRisks();
+  const { data: pollutionRiskData } = usePollutionRisks();
 
   // DATA
-  const { data } = useData<RisksClimateData>({
+  const { data } = useData<RisksPollutionData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,
@@ -58,14 +58,14 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
 
     const total = d[-1] + d[1];
 
-    return climateRiskData.map((c) => {
+    return pollutionRiskData.map((c) => {
       return {
         ...c,
         id: c.id === 0 ? -1 : c.id,
         value: d[c.value] / total,
       };
     });
-  }, [climateRiskData, data]);
+  }, [pollutionRiskData, data]);
 
   const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
     style: 'percent',
@@ -77,7 +77,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
   const colorScale = useMemo(() => {
     return scaleOrdinal<string | number, string>({
       domain: DATA.map((e) => e.id),
-      range: ['transparent', '#BF8370'],
+      range: ['transparent', '#7B5447'],
     });
   }, [DATA]);
 
@@ -89,7 +89,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
       colorScale={colorScale}
       format={formatPercentage}
       selected={selected}
-      TooltipComponent={ClimateRiskChartTooltip}
+      TooltipComponent={PollutionRiskChartTooltip}
       onPathMouseClick={onPieClick}
     />
   );
