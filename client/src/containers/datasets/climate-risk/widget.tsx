@@ -4,7 +4,7 @@ import { climateRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { RisksClimateData } from 'types/data';
+import { ClimateRiskData } from 'types/data';
 
 import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
@@ -36,7 +36,7 @@ const ClimateRiskWidget = () => {
     isError: climateIsError,
   } = useClimateRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<RisksClimateData>({
+  const { isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,
@@ -62,7 +62,8 @@ const ClimateRiskWidget = () => {
         <div className="space-y-5">
           <div className="space-y-2">
             <p className="font-light">
-              Intensity groups are inclusive of the land management attributes of an area.
+              This analysis explores the relationship between foodscapes and climate risk using a
+              new global dataset of current and future climate risks to food production.
             </p>
           </div>
 

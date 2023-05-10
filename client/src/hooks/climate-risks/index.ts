@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { ClimateChangerisks } from 'types/risks-climate-change';
+import { ClimateRisk } from 'types/climate-risks';
 
 const DATA_JSON = [
   {
@@ -17,7 +17,7 @@ const DATA_JSON = [
   },
 ];
 
-export function useClimateRisks(queryOptions: UseQueryOptions<ClimateChangerisks[], unknown> = {}) {
+export function useClimateRisks(queryOptions: UseQueryOptions<ClimateRisk[], unknown> = {}) {
   const fetchRisksClimateChange = () => {
     return new Promise((resolve) => {
       resolve(DATA_JSON);

@@ -15,7 +15,12 @@ export interface CropData {
   parent_id: number;
 }
 
-export interface RisksClimateData {
+export interface ClimateRiskData {
+  risked: number;
+  not_risked: number;
+}
+
+export interface LandUseRiskData {
   risked: number;
   not_risked: number;
 }
@@ -31,8 +36,15 @@ export type FiltersProps = {
   intensities?: readonly number[];
   crops?: readonly number[];
   climateRisk?: readonly number[];
+  landUseRisk?: readonly number[];
   country?: number;
   province?: number;
 };
 
-export type FiltersOmitProps = 'foodscapes' | 'intensities' | 'crops' | 'climateRisk' | null;
+export type FiltersOmitProps =
+  | 'foodscapes'
+  | 'intensities'
+  | 'crops'
+  | 'climateRisk'
+  | 'landUseRisk'
+  | null;

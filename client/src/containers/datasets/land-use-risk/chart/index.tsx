@@ -6,35 +6,41 @@ import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { ClimateRiskData } from 'types/data';
+import { LandUseRiskData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
-import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
+import { useLandUseRisks } from 'hooks/land-use-risks';
 
-import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risk/chart/tooltips';
+import { LandUseRiskChartTooltip } from 'containers/datasets/land-use-risk/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
 
-interface RisksChartParentProps {
+interface LandUseRiskChartParentProps {
   dataset: Dataset;
   selected?: readonly number[];
   onPieClick?: (data: PieChartData) => void;
 }
 
-interface RisksChartProps extends RisksChartParentProps {
+interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
   width: number;
   height: number;
 }
 
-const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
+const LandUseRiskChart = ({
+  width,
+  height,
+  dataset,
+  selected,
+  onPieClick,
+}: LandUseRiskChartProps) => {
   const filters = useRecoilValue(filtersSelector('climateRisk'));
 
-  const { data: climateRiskData } = useClimateRisks();
+  const { data: climateRiskData } = useLandUseRisks();
 
   // DATA
-  const { data } = useData<ClimateRiskData>({
+  const { data } = useData<LandUseRiskData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,
@@ -90,18 +96,18 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
       colorScale={colorScale}
       format={formatPercentage}
       selected={selected}
-      TooltipComponent={ClimateRiskChartTooltip}
+      TooltipComponent={LandUseRiskChartTooltip}
       onPathMouseClick={onPieClick}
     />
   );
 };
 
-const RisksChartParent = (props: RisksChartParentProps) => {
+const LandUseRiskChartParent = (props: LandUseRiskChartParentProps) => {
   return (
     <ParentSize>
-      {({ width, height }) => <RisksChart {...props} width={width} height={height} />}
+      {({ width, height }) => <LandUseRiskChart {...props} width={width} height={height} />}
     </ParentSize>
   );
 };
 
-export default RisksChartParent;
+export default LandUseRiskChartParent;

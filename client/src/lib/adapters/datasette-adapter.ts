@@ -1,11 +1,8 @@
 import { Select } from 'squel';
-export interface DatasetteParamsProps {
+
+import { FiltersProps } from 'types/data';
+export interface DatasetteParamsProps extends FiltersProps {
   sql?: Select;
-  foodscapes?: readonly number[];
-  intensities?: readonly number[];
-  crops?: readonly number[];
-  country?: number;
-  province?: number;
   shape?: 'arrays' | 'objects' | 'array' | 'object';
   size?: number | 'max';
 }
@@ -35,6 +32,10 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   if (!!crops?.length) {
     s.where('crops IN ?', crops);
   }
+
+  // if (!!landUseRisk?.length) {
+
+  // }
 
   return {
     // SQL

@@ -1,6 +1,6 @@
 import { FiltersProps } from 'types/data';
 
-export function titilerAdapter(params: FiltersProps = {}) {
+export function titilerAdapter(params: FiltersProps = {}, initial = null) {
   const {
     foodscapes = [],
     intensities = [],
@@ -11,6 +11,7 @@ export function titilerAdapter(params: FiltersProps = {}) {
   } = params;
 
   return [
+    ...(initial ? [initial] : []),
     ...(foodscapes.length ? [foodscapes.map((v) => `(b1==${v})`).join('|')] : []),
     ...(intensities.length ? [intensities.map((v) => `(b3==${v})`).join('|')] : []),
     ...(crops.length ? [crops.map((v) => `(b4==${v})`).join('|')] : []),
