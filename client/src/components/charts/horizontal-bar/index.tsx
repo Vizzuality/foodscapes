@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { ScaleLinear, ScaleOrdinal } from 'd3-scale';
 
-type DataProps = {
+export type DataProps = {
   id: number;
   value: number;
   label: string;
@@ -23,6 +23,7 @@ const HorizontalBar = <D extends DataProps>({
   data,
   xScale,
   colorScale,
+  selected,
   interactive,
   onBarClick,
 }: HorizontalBarProps<D>) => {
@@ -64,7 +65,9 @@ const HorizontalBar = <D extends DataProps>({
                 <div
                   className={cn({
                     'h-2 w-full border border-navy-500': true,
-                    'group-hover:border-2': hover === id,
+                    'group-hover:border-2': hover === id || selected?.includes(id),
+                    'border-2': selected?.includes(id),
+                    'opacity-50': hover !== id && !!selected?.length && !selected?.includes(id),
                   })}
                   style={{ background: colorScale(id.toString()) }}
                 />

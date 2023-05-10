@@ -24,7 +24,7 @@ export function usePollutionRisks(queryOptions: UseQueryOptions<PollutionRisk[],
     });
   };
 
-  const query = useQuery(['pollution-pesticide-risk'], fetchPollutionRisks, {
+  const query = useQuery(['pollution-risk'], fetchPollutionRisks, {
     placeholderData: [],
     ...queryOptions,
   });

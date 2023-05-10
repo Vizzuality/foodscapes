@@ -19,7 +19,7 @@ const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const PollutionRiskWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'pollution-pesticide-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'pollution-risk');
 
   const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 
@@ -68,7 +68,7 @@ const PollutionRiskWidget = () => {
           </div>
 
           <SingleSelect
-            id="pollution-pesticide-risk"
+            id="pollution-risk"
             size="s"
             theme="light"
             placeholder="Filter risk"
