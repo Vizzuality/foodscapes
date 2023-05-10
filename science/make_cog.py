@@ -15,7 +15,7 @@ from rio_cogeo import cog_translate, cog_profiles
 @click.option(
     "--nodata", type=int, help="set no data value. This will also replace the old no data values with the new one."
 )
-@click.option("--use-cog-driver", "cog", is_flag=True, help="Make output a cog")
+@click.option("--use-cog-driver", "cog", is_flag=True, help="Make output a cog using the gdal driver")
 @click.option(
     "--description-file",
     "description_file",
