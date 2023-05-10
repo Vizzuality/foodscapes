@@ -66,6 +66,8 @@ const HorizontalBar = <D extends DataProps>({
                   className={cn({
                     'h-2 w-full border border-navy-500': true,
                     'group-hover:border-2': hover === id || selected?.includes(id),
+                    'border-2': selected?.includes(id),
+                    'opacity-50': hover !== id && !!selected?.length && !selected?.includes(id),
                   })}
                   style={{ background: colorScale(id.toString()) }}
                 />

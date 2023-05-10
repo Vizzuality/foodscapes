@@ -40,6 +40,8 @@ export const DATA_JSON = [
   },
 ];
 
+export const COLORS = ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'];
+
 export function useLandUseRisks(queryOptions: UseQueryOptions<LandUseRisk[], unknown> = {}) {
   const fetchLandUseRisks = () => {
     return new Promise((resolve) => {

@@ -46,9 +46,13 @@ const LandUseRiskWidget = () => {
 
   const handleBarClick = useCallback(
     (v) => {
-      setLandUseRisk([v.id]);
+      if (landUseRisk.includes(v.id)) {
+        return setLandUseRisk([]);
+      }
+
+      return setLandUseRisk([v.id]);
     },
-    [setLandUseRisk]
+    [landUseRisk, setLandUseRisk]
   );
 
   return (

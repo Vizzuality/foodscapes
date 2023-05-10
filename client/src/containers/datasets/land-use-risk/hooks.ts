@@ -27,9 +27,19 @@ interface UseLandUseRiskLegendProps {
 
 export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData & { key: string } {
   const DATASET = DATASETS.find((d) => d.id === 'land-use-risk');
+  const { landUseRisk } = filters;
 
   const bands = DATASET.layer.bands;
   const colormap = useMemo(() => {
+    if (!!landUseRisk.length) {
+      const c = {
+        '1': '#F0A38B',
+        '-1': '#F0A38B00',
+      };
+
+      return JSON.stringify(c);
+    }
+
     const c = [
       [
         [0, 1],
@@ -58,7 +68,7 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
     ];
 
     return JSON.stringify(c);
-  }, []);
+  }, [landUseRisk]);
 
   const expression = useMemo(() => {
     const where = bands.map((b) => {
