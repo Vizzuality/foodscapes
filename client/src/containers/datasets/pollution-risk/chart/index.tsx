@@ -12,7 +12,7 @@ import { Dataset } from 'types/datasets';
 import { useData } from 'hooks/data';
 import { usePollutionRisks } from 'hooks/pollution-risks';
 
-import { PollutionRiskChartTooltip } from 'containers/datasets/pollution-risks/chart/tooltips';
+import { PollutionRiskChartTooltip } from 'containers/datasets/pollution-risk/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';

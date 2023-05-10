@@ -20,9 +20,9 @@ import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
 // Pollution risk
 import PollutionRiskInfo from './pollution-risk/info.mdx';
-import PollutionRiskLayer from './pollution-risks/layer';
-import PollutionRiskLegend from './pollution-risks/legend';
-import PollutionRiskPopup from './pollution-risks/popup';
+import PollutionRiskLayer from './pollution-risk/layer';
+import PollutionRiskLegend from './pollution-risk/legend';
+import PollutionRiskPopup from './pollution-risk/popup';
 
 export const LAYERS = {
   foodscapes: FoodscapesLayer,
