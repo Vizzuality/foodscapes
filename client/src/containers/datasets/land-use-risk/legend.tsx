@@ -40,7 +40,7 @@ const LandUseRiskLegend = (props: LandUseRiskLegendProps) => {
           <LegendTypeChoropleth
             items={landUseRisksData.map((c, i) => ({
               color: COLORS[i],
-              value: (i + 1).toString(),
+              value: null,
             }))}
           />
         )}
