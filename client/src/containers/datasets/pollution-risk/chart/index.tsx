@@ -61,8 +61,9 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
     return pollutionRiskData.map((c) => {
       return {
         ...c,
-        id: c.id === 0 ? -1 : c.id,
+        id: c.value,
         value: d[c.value] / total,
+        color: c.color,
       };
     });
   }, [pollutionRiskData, data]);
@@ -77,7 +78,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
   const colorScale = useMemo(() => {
     return scaleOrdinal<string | number, string>({
       domain: DATA.map((e) => e.id),
-      range: ['transparent', '#7B5447'],
+      range: DATA.map((e) => e.color),
     });
   }, [DATA]);
 

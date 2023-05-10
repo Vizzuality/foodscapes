@@ -7,11 +7,13 @@ const DATA_JSON = [
     id: 0,
     label: 'Not risked',
     value: -1,
+    color: '#7B544700',
   },
   {
     id: 1,
     label: 'Risked',
     value: 1,
+    color: '#7B5447',
   },
 ];
 
