@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import dynamic from 'next/dynamic';
 
 import { landUseRiskAtom, filtersSelector } from 'store/explore-map';
@@ -42,6 +44,13 @@ const LandUseRiskWidget = () => {
     ...filters,
   });
 
+  const handleBarClick = useCallback(
+    (v) => {
+      setLandUseRisk([v.id]);
+    },
+    [setLandUseRisk]
+  );
+
   return (
     <section className="space-y-4 py-10">
       <WidgetHeader title="LandUse Change" dataset={DATASET} />
@@ -78,7 +87,7 @@ const LandUseRiskWidget = () => {
 
           <div className="space flex flex-col items-center space-y-2.5 py-2.5 text-xs">
             <div className="w-full">
-              <Chart dataset={DATASET} selected={landUseRisk} />
+              <Chart dataset={DATASET} selected={landUseRisk} onBarClick={handleBarClick} />
             </div>
           </div>
 

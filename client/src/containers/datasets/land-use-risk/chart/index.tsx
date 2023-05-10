@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { filtersSelector } from 'store/explore-map';
 
@@ -17,6 +17,7 @@ import HorizontalBar from 'components/charts/horizontal-bar';
 interface LandUseRiskChartParentProps {
   dataset: Dataset;
   selected?: readonly number[];
+  onBarClick?: (bar) => void;
 }
 
 interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
@@ -24,7 +25,7 @@ interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
   height: number;
 }
 
-const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
+const LandUseRiskChart = ({ dataset, selected, onBarClick }: LandUseRiskChartProps) => {
   const filters = useRecoilValue(filtersSelector('landUseRisk'));
 
   const { data: landUseRisksData } = useLandUseRisks();
@@ -93,17 +94,14 @@ const LandUseRiskChart = ({ dataset }: LandUseRiskChartProps) => {
     });
   }, [landUseRisksData, KEYS]);
 
-  const handleBarClick = useCallback(() => {
-    // TODO
-  }, []);
-
   return (
     <HorizontalBar
       data={DATA}
       xScale={xScale}
       colorScale={colorScale}
-      interactive={false}
-      onBarClick={handleBarClick}
+      interactive
+      selected={selected}
+      onBarClick={onBarClick}
     />
   );
 };
