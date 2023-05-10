@@ -1,4 +1,4 @@
-export interface ClimateChangerisks {
+export interface ClimateRisk {
   id: number;
   label: string;
   color: string;

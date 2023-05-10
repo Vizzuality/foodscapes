@@ -6,13 +6,13 @@ import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { ClimateRiskData } from 'types/data';
+import { PollutionRiskData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
-import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
+import { usePollutionRisks } from 'hooks/pollution-risks';
 
-import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risk/chart/tooltips';
+import { PollutionRiskChartTooltip } from 'containers/datasets/pollution-risk/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
@@ -29,12 +29,12 @@ interface RisksChartProps extends RisksChartParentProps {
 }
 
 const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
-  const filters = useRecoilValue(filtersSelector('climateRisk'));
+  const filters = useRecoilValue(filtersSelector('pollutionRisk'));
 
-  const { data: climateRiskData } = useClimateRisks();
+  const { data: pollutionRiskData } = usePollutionRisks();
 
   // DATA
-  const { data } = useData<ClimateRiskData>({
+  const { data } = useData<PollutionRiskData>({
     sql: dataset.widget.sql,
     shape: 'array',
     ...filters,
@@ -58,7 +58,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
 
     const total = d[-1] + d[1];
 
-    return climateRiskData.map((c) => {
+    return pollutionRiskData.map((c) => {
       return {
         ...c,
         id: c.value,
@@ -66,7 +66,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
         color: c.color,
       };
     });
-  }, [climateRiskData, data]);
+  }, [pollutionRiskData, data]);
 
   const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
     style: 'percent',
@@ -90,7 +90,7 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
       colorScale={colorScale}
       format={formatPercentage}
       selected={selected}
-      TooltipComponent={ClimateRiskChartTooltip}
+      TooltipComponent={PollutionRiskChartTooltip}
       onPathMouseClick={onPieClick}
     />
   );

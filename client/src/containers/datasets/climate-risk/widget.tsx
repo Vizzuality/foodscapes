@@ -4,7 +4,7 @@ import { climateRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { RisksClimateData } from 'types/data';
+import { ClimateRiskData } from 'types/data';
 
 import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
@@ -36,7 +36,7 @@ const ClimateRiskWidget = () => {
     isError: climateIsError,
   } = useClimateRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<RisksClimateData>({
+  const { isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>({
     sql: DATASET.widget.sql,
     shape: 'array',
     ...filters,

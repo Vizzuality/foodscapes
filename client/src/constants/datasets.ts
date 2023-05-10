@@ -191,10 +191,16 @@ export const DATASETS = [
     layer: {
       enabled: true,
       visible: true,
+      band: 12,
     },
     widget: {
       enabled: false,
       sql: squel
+        .select()
+        .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count ELSE 0 END)', 'risked')
+        .field('SUM(CASE WHEN pesticide_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risked')
+        .from('data'),
+      download: squel
         .select()
         .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count ELSE 0 END)', 'risked')
         .field('SUM(CASE WHEN pesticide_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risked')

@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
 
-import { RisksClimateData } from 'types/data';
+import { ClimateRiskData } from 'types/data';
 
 import { TooltipProps } from 'components/charts/pie/types';
 
-export const ClimateRiskChartTooltip = forwardRef<HTMLDivElement, TooltipProps<RisksClimateData>>(
+export const ClimateRiskChartTooltip = forwardRef<HTMLDivElement, TooltipProps<ClimateRiskData>>(
   ({ value, label }, ref) => {
     const { format: formatPercentage } = new Intl.NumberFormat('en-US', {
       style: 'percent',
