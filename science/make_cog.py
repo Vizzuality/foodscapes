@@ -15,16 +15,16 @@ from rio_cogeo import cog_translate, cog_profiles
 @click.option(
     "--nodata", type=int, help="set no data value. This will also replace the old no data values with the new one."
 )
-@click.option("--use-cog-driver", "cog", is_flag=True, help="Make output a cog using the gdal driver")
+@click.option("--use-cog-driver", is_flag=True, help="Make output a cog using the gdal driver")
 @click.option(
     "--description-file",
     "description_file",
     type=click.Path(exists=True, path_type=Path),
     help="Use the band description csv to set the band metadata and order",
 )
-def main(files: tuple[Path], output: Path, nodata: int | None, cog: bool, description_file: Path | None):
+def main(files: tuple[Path], output: Path, nodata: int | None, use_cog_driver: bool, description_file: Path | None):
     description_table, files = filter_and_order_band_list(description_file, files)
-    print_execution_description(cog, files, nodata, output)
+    print_execution_description(use_cog_driver, files, nodata, output)
     stacked_raster, dest_kwargs = stack_bands(files, nodata, description_table)
     dest_kwargs.update(
         {
@@ -34,7 +34,7 @@ def main(files: tuple[Path], output: Path, nodata: int | None, cog: bool, descri
             "blocksize": 512,
         }
     )
-    if cog:
+    if use_cog_driver:
         indicator = status.Status("Converting to COG using gdal driver...", spinner="earth", refresh_per_second=5)
         indicator.start()
         dest_kwargs.update({"driver": "COG", "TILING_SCHEME": "GoogleMapsCompatible"})
