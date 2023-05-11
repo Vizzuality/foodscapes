@@ -18,6 +18,8 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     crops = [],
     shape = 'array',
     size = 'max',
+    country,
+    province,
   } = params;
   const s = sql?.clone();
 
@@ -34,6 +36,16 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   // Intensities
   if (!!crops?.length) {
     s.where('crops IN ?', crops);
+  }
+
+  // Country
+  if (!!country) {
+    s.where('country = ?', country);
+  }
+
+  // Province
+  if (!!province) {
+    s.where('province = ?', province);
   }
 
   return {

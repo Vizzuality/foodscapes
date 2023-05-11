@@ -47,4 +47,6 @@ export type FiltersOmitProps =
   | 'crops'
   | 'climateRisk'
   | 'pollutionRisk'
+  | 'country'
+  | 'province'
   | null;

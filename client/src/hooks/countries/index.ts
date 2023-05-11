@@ -15,7 +15,8 @@ const SQL = squel
   .field('f.value', 'id')
   .field('f.value')
   .field('f.label')
-  .field('f.iso');
+  .field('f.iso')
+  .field('json_extract(f.bbox,"$") as bbox');
 
 export function useCountries(queryOptions: UseQueryOptions<Country[], unknown> = {}) {
   const fetchCountries = () => {
@@ -42,6 +43,43 @@ export function useCountries(queryOptions: UseQueryOptions<Country[], unknown> =
     }
 
     return data;
+  }, [data]);
+
+  return useMemo(() => {
+    return {
+      ...query,
+      data: DATA,
+    } as typeof query;
+  }, [query, DATA]);
+}
+
+export function useCountry(id, queryOptions: UseQueryOptions<Country, unknown> = {}) {
+  const fetchCountry = () => {
+    return API.request({
+      method: 'GET',
+      url: '/foodscapes.json',
+      params: datasetteAdapter({
+        sql: SQL.clone().where('f.value = ?', id),
+        shape: 'array',
+        size: 'max',
+      }),
+    }).then((response) => response.data);
+  };
+
+  const query = useQuery(['country', id], fetchCountry, {
+    placeholderData: {},
+    enabled: !!id,
+    ...queryOptions,
+  });
+
+  const { data } = query;
+
+  const DATA = useMemo(() => {
+    if (!data) {
+      return {};
+    }
+
+    return data[0];
   }, [data]);
 
   return useMemo(() => {

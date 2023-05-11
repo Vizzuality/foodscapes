@@ -2,9 +2,19 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useMap, ViewState } from 'react-map-gl';
 
-import { basemapAtom, layersAtom, popupAtom, sidebarOpenAtom } from 'store/explore-map';
+import {
+  basemapAtom,
+  countryAtom,
+  layersAtom,
+  popupAtom,
+  provinceAtom,
+  sidebarOpenAtom,
+} from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { useCountry } from 'hooks/countries';
+import { useProvince } from 'hooks/provinces';
 
 import { BASEMAPS } from 'constants/basemaps';
 
@@ -71,6 +81,39 @@ const MapContainer = () => {
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
   const sidebarOpen = useRecoilValue(sidebarOpenAtom);
+
+  //leer estado si hay pais y provincia SINGULAR
+  const country = useRecoilValue(countryAtom);
+  const province = useRecoilValue(provinceAtom);
+  // Hook useCountry y useProvince a los que le paso el id.
+  const {
+    data: countryData,
+    isPlaceholderData: countryIsPlaceholderData,
+    isFetching: countryIsFetching,
+    isFetched: countryIsFetched,
+    isError: countryIsError,
+  } = useCountry(country);
+
+  const {
+    data: provinceData,
+    isPlaceholderData: provinceIsPlaceholderData,
+    isFetching: provinceIsFetching,
+    isFetched: provinceIsFetched,
+    isError: provinceIsError,
+  } = useProvince(province);
+
+  // UseMemo con los datos de los hooks para sacar el bbox correspondiente.
+
+  const bbox = useMemo(() => {
+    if (countryData || provinceData) {
+      console.log('countryData', countryData);
+      console.log('provinceData', provinceData);
+      //return countryData?.bbox || provinceData?.bbox;
+    }
+    return null;
+  }, [countryData, provinceData]);
+  console.log({ bbox });
+  // el mapa tiene una prop bounds.
 
   const setPopup = useSetRecoilState(popupAtom);
 

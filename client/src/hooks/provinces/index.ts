@@ -20,25 +20,27 @@ const SQL = squel
   .field('f.value')
   .field('f.label')
   .field('f.iso')
+  .field('json_extract(f.bbox,"$") as bbox')
   .field('f.parent_id', 'parentId')
   .field('s.label', 'parentLabel')
   .field('s.iso', 'parentIso');
 
-export function useProvinces(queryOptions: UseQueryOptions<Province[], unknown> = {}) {
+export function useProvinces(id, queryOptions: UseQueryOptions<Province[], unknown> = {}) {
   const fetchProvinces = () => {
     return API.request({
       method: 'GET',
       url: '/foodscapes.json',
       params: datasetteAdapter({
-        sql: SQL,
+        sql: SQL.clone().where('s.value = ?', id),
         shape: 'array',
         size: 'max',
       }),
     }).then((response) => response.data);
   };
 
-  const query = useQuery(['provinces'], fetchProvinces, {
+  const query = useQuery(['provinces', id], fetchProvinces, {
     placeholderData: [],
+    enabled: !!id,
     ...queryOptions,
   });
 
@@ -75,6 +77,7 @@ export function useProvince(id, queryOptions: UseQueryOptions<Province, unknown>
 
   const query = useQuery(['province', id], fetchProvince, {
     placeholderData: {},
+    enabled: !!id,
     ...queryOptions,
   });
 

@@ -244,13 +244,27 @@ export const DATASETS = [
       enabled: false,
     },
   },
+  // LOCATIONS
+  {
+    id: 'countries',
+    label: 'Countries',
+    group: 'locations',
+    layer: {
+      enabled: true,
+      visible: true,
+      band: 34,
+    },
+    widget: {
+      enabled: false,
+    },
+  },
   {
     id: 'provinces',
     label: 'Provinces',
     group: 'other',
     layer: {
       enabled: true,
-      visible: false,
+      visible: true,
       band: 35,
     },
     widget: {
