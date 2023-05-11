@@ -58,13 +58,18 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
   }, [landUseRisk]);
 
   const expression = useMemo(() => {
+    if (!!landUseRisk.length) {
+      const w = titilerAdapter(filters);
+      return `where(${w},b${landUseRisk[0]},0)`;
+    }
+
     const where = bands.map((b) => {
       const w = titilerAdapter(filters, `(b${b} > 0)`);
       return `where(${w},b${b},0)`;
     });
 
     return where.join('+');
-  }, [bands, filters]);
+  }, [bands, landUseRisk, filters]);
 
   const searchParams = useMemo(() => {
     const params = new URLSearchParams();
