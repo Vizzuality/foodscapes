@@ -11,6 +11,7 @@ import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useLandUseRisks } from 'hooks/land-use-risks';
+import { convertPixelCountToHA } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -60,7 +61,7 @@ const LandUseRiskChart = ({ dataset, selected, onBarClick }: LandUseRiskChartPro
         return {
           ...c,
           id: c.value,
-          value: d1[c.column],
+          value: convertPixelCountToHA(d1[c.column], 1000000),
           color: c.color,
         };
       })
