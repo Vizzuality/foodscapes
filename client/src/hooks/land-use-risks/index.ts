@@ -42,7 +42,7 @@ export const DATA_JSON = [
   },
 ];
 
-export const COLORS = ['#f0a38b', '#d67e6e', '#ba5a51', '#9f362f', '#a50f15'] satisfies ColorHex[];
+export const COLORS = ['#f0a38b', '#dd675c', '#ca2c2d', '#b40000', '#720101'] satisfies ColorHex[];
 
 export function useLandUseRisks(queryOptions: UseQueryOptions<LandUseRisk[], unknown> = {}) {
   const fetchLandUseRisks = () => {
