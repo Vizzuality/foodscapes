@@ -60,8 +60,8 @@ const ClimateRiskPopup = ({ latLng }: ClimateRiskPopupProps) => {
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
               <h3 className="text-sm font-light">
-                {DATA === -1 && 'Not risked'}
-                {DATA === 1 && 'Risked'}
+                {DATA === -1 && 'Not risk'}
+                {DATA === 1 && 'Risk'}
               </h3>
             )}
           </>

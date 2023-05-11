@@ -5,13 +5,13 @@ import { ClimateRisk } from 'types/climate-risks';
 const DATA_JSON = [
   {
     id: 0,
-    label: 'Not risked',
+    label: 'Not risk',
     value: -1,
     color: '#BF837000',
   },
   {
     id: 1,
-    label: 'Risked',
+    label: 'Risk',
     value: 1,
     color: '#BF8370',
   },

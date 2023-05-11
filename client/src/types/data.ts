@@ -16,8 +16,8 @@ export interface CropData {
 }
 
 export interface ClimateRiskData {
-  risked: number;
-  not_risked: number;
+  risk: number;
+  not_risk: number;
 }
 
 export interface LandUseRiskData {
@@ -28,8 +28,8 @@ export interface LandUseRiskData {
   water_scarcity: number;
 }
 export interface PollutionRiskData {
-  risked: number;
-  not_risked: number;
+  risk: number;
+  not_risk: number;
 }
 
 export type PointData = {
