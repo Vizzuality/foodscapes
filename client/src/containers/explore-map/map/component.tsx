@@ -112,7 +112,6 @@ const MapContainer = () => {
     }
     return null;
   }, [countryData, provinceData]);
-  console.log({ bbox });
   // el mapa tiene una prop bounds.
 
   const setPopup = useSetRecoilState(popupAtom);

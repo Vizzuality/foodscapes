@@ -16,7 +16,7 @@ const SQL = squel
   .field('f.value')
   .field('f.label')
   .field('f.iso')
-  .field('json_extract(f.bbox,"$") as bbox');
+  .field('f.bbox');
 
 export function useCountries(queryOptions: UseQueryOptions<Country[], unknown> = {}) {
   const fetchCountries = () => {
@@ -26,6 +26,7 @@ export function useCountries(queryOptions: UseQueryOptions<Country[], unknown> =
       params: datasetteAdapter({
         sql: SQL,
         shape: 'array',
+        json: 'bbox',
       }),
     }).then((response) => response.data);
   };
@@ -62,6 +63,7 @@ export function useCountry(id, queryOptions: UseQueryOptions<Country, unknown> =
         sql: SQL.clone().where('f.value = ?', id),
         shape: 'array',
         size: 'max',
+        json: 'bbox',
       }),
     }).then((response) => response.data);
   };

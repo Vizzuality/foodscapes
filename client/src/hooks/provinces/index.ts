@@ -34,6 +34,7 @@ export function useProvinces(id, queryOptions: UseQueryOptions<Province[], unkno
         sql: SQL.clone().where('s.value = ?', id),
         shape: 'array',
         size: 'max',
+        json: 'bbox',
       }),
     }).then((response) => response.data);
   };
@@ -71,6 +72,7 @@ export function useProvince(id, queryOptions: UseQueryOptions<Province, unknown>
         sql: SQL.clone().where('f.value = ?', id),
         shape: 'array',
         size: 'max',
+        json: 'bbox',
       }),
     }).then((response) => response.data);
   };
