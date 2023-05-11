@@ -2,6 +2,8 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { LandUseRisk } from 'types/land-use-risks';
 
+import { ColorHex } from 'types';
+
 export const DATA_JSON = [
   {
     id: 6,
@@ -40,7 +42,7 @@ export const DATA_JSON = [
   },
 ];
 
-export const COLORS = ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'];
+export const COLORS = ['#f0a38b', '#d67e6e', '#ba5a51', '#9f362f', '#a50f15'] satisfies ColorHex[];
 
 export function useLandUseRisks(queryOptions: UseQueryOptions<LandUseRisk[], unknown> = {}) {
   const fetchLandUseRisks = () => {

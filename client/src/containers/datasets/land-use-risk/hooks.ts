@@ -7,6 +7,9 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 
+import { COLORS } from 'hooks/land-use-risks';
+import { convertHexToRgbaArray } from 'hooks/utils';
+
 import { DATASETS } from 'constants/datasets';
 
 import { Settings } from 'components/map/legend/types';
@@ -40,31 +43,15 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
       return JSON.stringify(c);
     }
 
+    // https://cogeotiff.github.io/rio-tiler/colormap/#intervals-colormaps
     const c = [
       [
         [0, 1],
         [0, 0, 0, 0],
       ],
-      [
-        [1, 2],
-        [254, 229, 217, 255],
-      ],
-      [
-        [2, 3],
-        [252, 174, 145, 255],
-      ],
-      [
-        [3, 4],
-        [251, 106, 74, 255],
-      ],
-      [
-        [4, 5],
-        [222, 45, 38, 255],
-      ],
-      [
-        [5, 6],
-        [165, 15, 21, 255],
-      ],
+      ...COLORS.map((color, index) => {
+        return [[index + 1, index + 2], convertHexToRgbaArray(color, 1)];
+      }),
     ];
 
     return JSON.stringify(c);
