@@ -205,7 +205,7 @@ export const DATASETS = [
   },
   {
     id: 'pollution-risk',
-    label: 'Pollution (pesticide risk)',
+    label: 'Pollution',
     group: 'risks',
     layer: {
       enabled: true,

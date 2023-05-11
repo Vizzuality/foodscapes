@@ -50,11 +50,11 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   }
 
   if (!!climateRisk?.length) {
-    s.where('climate_risk == ?', climateRisk[0]);
+    s.where('climate_risk == ?', climateRisk[0] === -1 ? 0 : climateRisk[0]);
   }
 
   if (!!pollutionRisk?.length) {
-    s.where('pesticide_risk == ?', pollutionRisk[0]);
+    s.where('pesticide_risk == ?', pollutionRisk[0] === -1 ? 0 : pollutionRisk[0]);
   }
 
   return {

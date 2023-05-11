@@ -50,7 +50,7 @@ const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
             borderColor: 'var(--color-navy-500)',
           }}
         />
-        <h2 className="text-base font-semibold">Climate risk</h2>
+        <h2 className="text-base font-semibold">Pollution risk</h2>
       </header>
 
       <div className={cn({ 'mt-2 pl-6': true })}>
