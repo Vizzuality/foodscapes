@@ -85,34 +85,27 @@ const MapContainer = () => {
   //leer estado si hay pais y provincia SINGULAR
   const country = useRecoilValue(countryAtom);
   const province = useRecoilValue(provinceAtom);
-  // Hook useCountry y useProvince a los que le paso el id.
-  const {
-    data: countryData,
-    isPlaceholderData: countryIsPlaceholderData,
-    isFetching: countryIsFetching,
-    isFetched: countryIsFetched,
-    isError: countryIsError,
-  } = useCountry(country);
 
-  const {
-    data: provinceData,
-    isPlaceholderData: provinceIsPlaceholderData,
-    isFetching: provinceIsFetching,
-    isFetched: provinceIsFetched,
-    isError: provinceIsError,
-  } = useProvince(province);
+  const { data: countryData } = useCountry(country);
 
-  // UseMemo con los datos de los hooks para sacar el bbox correspondiente.
+  const { data: provinceData } = useProvince(province);
 
-  const bbox = useMemo(() => {
+  const bounds: CustomMapProps['bounds'] | null = useMemo(() => {
     if (countryData || provinceData) {
-      console.log('countryData', countryData);
-      console.log('provinceData', provinceData);
-      //return countryData?.bbox || provinceData?.bbox;
+      return {
+        bbox: provinceData?.bbox || countryData?.bbox,
+        options: {
+          padding: {
+            top: 50,
+            bottom: 50,
+            left: sidebarOpen ? 640 + 50 : 50,
+            right: 50,
+          },
+        },
+      };
     }
     return null;
-  }, [countryData, provinceData]);
-  // el mapa tiene una prop bounds.
+  }, [countryData, provinceData, sidebarOpen]);
 
   const setPopup = useSetRecoilState(popupAtom);
 
@@ -167,6 +160,7 @@ const MapContainer = () => {
         mapStyle={MAP_STYLE}
         minZoom={minZoom}
         maxZoom={maxZoom}
+        bounds={bounds}
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}

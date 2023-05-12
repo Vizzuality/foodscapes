@@ -20,7 +20,7 @@ const SQL = squel
   .field('f.value')
   .field('f.label')
   .field('f.iso')
-  .field('json_extract(f.bbox,"$") as bbox')
+  .field('f.bbox')
   .field('f.parent_id', 'parentId')
   .field('s.label', 'parentLabel')
   .field('s.iso', 'parentIso');
@@ -80,6 +80,7 @@ export function useProvince(id, queryOptions: UseQueryOptions<Province, unknown>
   const query = useQuery(['province', id], fetchProvince, {
     placeholderData: {},
     enabled: !!id,
+    keepPreviousData: false,
     ...queryOptions,
   });
 

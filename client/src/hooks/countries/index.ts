@@ -71,6 +71,7 @@ export function useCountry(id, queryOptions: UseQueryOptions<Country, unknown> =
   const query = useQuery(['country', id], fetchCountry, {
     placeholderData: {},
     enabled: !!id,
+    keepPreviousData: false,
     ...queryOptions,
   });
 
