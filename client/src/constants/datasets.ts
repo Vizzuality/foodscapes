@@ -251,7 +251,7 @@ export const DATASETS = [
     group: 'locations',
     layer: {
       enabled: true,
-      visible: true,
+      visible: false,
       band: 34,
     },
     widget: {
@@ -264,7 +264,7 @@ export const DATASETS = [
     group: 'other',
     layer: {
       enabled: true,
-      visible: true,
+      visible: false,
       band: 35,
     },
     widget: {

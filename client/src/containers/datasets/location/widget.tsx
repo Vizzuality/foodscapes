@@ -15,10 +15,8 @@ import { WidgetContent, WidgetHeader } from 'containers/widget';
 import SingleSelect from 'components/ui/select/single/component';
 
 const LocationRankingWidget = () => {
-  // ARREGLALO
   const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
 
-  // ARREGLALO
   const filters = useRecoilValue(filtersSelector('climateRisk'));
 
   const country = useRecoilValue(countryAtom);
