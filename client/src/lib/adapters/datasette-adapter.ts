@@ -69,7 +69,6 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
 
   if (!!pollutionRisk?.length) {
     s.where('pesticide_risk == ?', pollutionRisk[0] === -1 ? 0 : pollutionRisk[0]);
-
   }
 
   return {
