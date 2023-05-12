@@ -27,7 +27,7 @@ const ClimateRiskLegend = (props: ClimateRiskLegendProps) => {
             .filter((c) => c.value !== -1)
             .map((c) => ({
               color: c.color,
-              value: c.label,
+              value: 'Climate risk',
             }))}
         />
       </div>

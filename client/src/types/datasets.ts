@@ -7,6 +7,7 @@ export interface Dataset {
     enabled: boolean;
     visible: boolean;
     band?: number;
+    bands?: number[];
   };
   widget: {
     enabled: boolean;

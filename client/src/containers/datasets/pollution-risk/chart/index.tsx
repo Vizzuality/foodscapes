@@ -46,8 +46,8 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
     const d = data.reduce(
       (acc, curr) => {
         return {
-          '1': curr.risked + acc['1'],
-          '-1': curr.not_risked + acc['-1'],
+          '1': curr.risk + acc['1'],
+          '-1': curr.not_risk + acc['-1'],
         };
       },
       {

@@ -56,6 +56,7 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
           <div className="space-y-1.5">
             <Skeleton className="h-4 w-[175px]" />
             <Skeleton className="h-4 w-[175px]" />
+            <Skeleton className="h-4 w-[100px]" />
           </div>
         )}
         {isFetched && (

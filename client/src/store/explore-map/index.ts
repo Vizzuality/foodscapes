@@ -100,6 +100,16 @@ export const cropsAtom = atom({
   ],
 });
 
+export const landUseRiskAtom = atom({
+  key: 'landUseRisk',
+  default: [],
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
 export const climateRiskAtom = atom({
   key: 'climateRisk',
   default: [],
@@ -149,6 +159,7 @@ export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
       ...(omit !== 'intensities' && { intensities: get(intensitiesAtom) }),
       ...(omit !== 'crops' && { crops: get(cropsAtom) }),
       ...(omit !== 'climateRisk' && { climateRisk: get(climateRiskAtom) }),
+      ...(omit !== 'landUseRisk' && { landUseRisk: get(landUseRiskAtom) }),
       ...(omit !== 'pollutionRisk' && { pollutionRisk: get(pollutionRiskAtom) }),
       ...(omit !== 'country' && { country: get(countryAtom) }),
       ...(omit !== 'province' && { province: get(provinceAtom) }),
