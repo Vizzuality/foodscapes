@@ -27,7 +27,7 @@ const PollutionRiskLegend = (props: PollutionRiskLegendProps) => {
             .filter((c) => c.value !== -1)
             .map((c) => ({
               color: c.color,
-              value: c.label,
+              value: 'Pesticide risk',
             }))}
         />
       </div>

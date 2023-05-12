@@ -3,6 +3,8 @@ import { PropsWithChildren } from 'react';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
+import { FiltersProps } from 'types/data';
+
 import { IconProps } from 'components/icon/types';
 
 type Components = {
@@ -51,6 +53,9 @@ export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   id: string;
   name: string;
   className?: string;
+  // filters
+  filters: FiltersProps;
+
   // components
   Components: Components;
 

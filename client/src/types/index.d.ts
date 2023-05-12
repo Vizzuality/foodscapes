@@ -5,4 +5,6 @@ declare global {
   }
 }
 
+export type ColorHex = `#${string}`;
+
 export {};

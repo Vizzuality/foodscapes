@@ -5,28 +5,23 @@ import cn from 'lib/classnames';
 import { LngLat } from 'types/map';
 
 import { noPointData, usePointData } from 'hooks/data';
-import { usePollutionRisks } from 'hooks/pollution-risks';
+import { useLandUseRisks } from 'hooks/land-use-risks';
 import { useIsLoading } from 'hooks/utils';
-
-import { DATASETS } from 'constants/datasets';
 
 import { Skeleton } from 'components/ui/skeleton';
 
-interface PollutionRiskPopupProps {
+interface LandUseRiskPopupProps {
   latLng: LngLat;
 }
 
-const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
-  const DATASET = DATASETS.find((d) => d.id === 'pollution-risk');
-  const band = `b${DATASET.layer.band}`;
-
-  const f = usePollutionRisks();
+const LandUseRiskPopup = ({ latLng }: LandUseRiskPopupProps) => {
+  const f = useLandUseRisks();
 
   const p = usePointData(latLng, {
     keepPreviousData: false,
   });
 
-  const { data: pollutionRisksData } = f;
+  const { data: landUseRisksData } = f;
   const { data: pointData } = p;
 
   const { isFetching, isFetched } = useIsLoading([p]);
@@ -35,22 +30,18 @@ const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
     if (!pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const value = pointData[band];
+    const d = landUseRisksData.filter((c) => pointData[`b${c.value}`] > 0);
 
-    return value;
-  }, [band, pointData]);
+    if (!d.length) return null;
+
+    return d;
+  }, [pointData, landUseRisksData]);
 
   return (
     <div>
       <header className="flex items-center space-x-2">
-        <div
-          className="h-4 w-4 border"
-          style={{
-            background: pollutionRisksData.find((c) => c.value === DATA)?.color,
-            borderColor: 'var(--color-navy-500)',
-          }}
-        />
-        <h2 className="text-base font-semibold">Pollution risk</h2>
+        <div className={cn({ 'h-4 w-4 border border-navy-500': true, 'bg-red-500': !!DATA })} />
+        <h2 className="text-base font-semibold">Land Use risk</h2>
       </header>
 
       <div className={cn({ 'mt-2 pl-6': true })}>
@@ -59,10 +50,13 @@ const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
-              <h3 className="text-sm font-light">
-                {DATA === -1 && 'Not risk'}
-                {DATA === 1 && 'Risk'}
-              </h3>
+              <ul className="list-outside list-disc pl-4">
+                {DATA.map((d) => (
+                  <li key={d.id} className="text-sm font-light">
+                    {d.label}
+                  </li>
+                ))}
+              </ul>
             )}
           </>
         )}
@@ -71,4 +65,4 @@ const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
   );
 };
 
-export default PollutionRiskPopup;
+export default LandUseRiskPopup;
