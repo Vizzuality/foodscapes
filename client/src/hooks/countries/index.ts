@@ -26,7 +26,7 @@ export function useCountries(queryOptions: UseQueryOptions<Country[], unknown> =
       params: datasetteAdapter({
         sql: SQL,
         shape: 'array',
-        json: 'bbox',
+        json: ['bbox'],
       }),
     }).then((response) => response.data);
   };
@@ -60,10 +60,14 @@ export function useCountry(id, queryOptions: UseQueryOptions<Country, unknown> =
       method: 'GET',
       url: '/foodscapes.json',
       params: datasetteAdapter({
-        sql: SQL.clone().where('f.value = ?', id),
+        sql: SQL
+          //
+          .clone()
+          .field('f.geometry_geojson', 'geojson')
+          .where('f.value = ?', id),
         shape: 'array',
         size: 'max',
-        json: 'bbox',
+        json: ['bbox', 'geojson'],
       }),
     }).then((response) => response.data);
   };

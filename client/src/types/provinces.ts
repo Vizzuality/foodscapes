@@ -4,6 +4,7 @@ export interface Province {
   label: string;
   iso: string;
   bbox: [number, number, number, number];
+  geojson: GeoJSON.FeatureCollection;
   parentId: string;
   parentLabel: string;
   parentIso: string;

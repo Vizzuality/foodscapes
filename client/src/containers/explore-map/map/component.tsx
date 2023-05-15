@@ -57,7 +57,6 @@ const MapContainer = () => {
   const province = useRecoilValue(provinceAtom);
 
   const { data: countryData } = useCountry(country);
-
   const { data: provinceData } = useProvince(province);
 
   const bounds: CustomMapProps['bounds'] | null = useMemo(() => {

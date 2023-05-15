@@ -8,7 +8,7 @@ export interface DatasetteParamsProps extends FiltersProps {
   sql?: Select;
   shape?: 'arrays' | 'objects' | 'array' | 'object';
   size?: number | 'max';
-  json?: string;
+  json?: string[];
 }
 
 export function datasetteAdapter(params: DatasetteParamsProps = {}) {

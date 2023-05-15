@@ -34,7 +34,7 @@ export function useProvinces(id, queryOptions: UseQueryOptions<Province[], unkno
         sql: SQL.clone().where('s.value = ?', id),
         shape: 'array',
         size: 'max',
-        json: 'bbox',
+        json: ['bbox'],
       }),
     }).then((response) => response.data);
   };
@@ -69,10 +69,14 @@ export function useProvince(id, queryOptions: UseQueryOptions<Province, unknown>
       method: 'GET',
       url: '/foodscapes.json',
       params: datasetteAdapter({
-        sql: SQL.clone().where('f.value = ?', id),
+        sql: SQL
+          //
+          .clone()
+          .field('f.geometry_geojson', 'geojson')
+          .where('f.value = ?', id),
         shape: 'array',
         size: 'max',
-        json: 'bbox',
+        json: ['bbox', 'geojson'],
       }),
     }).then((response) => response.data);
   };
