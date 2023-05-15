@@ -34,40 +34,10 @@ const DEFAULT_PROPS: CustomMapProps = {
     zoom: 2,
     pitch: 0,
     bearing: 0,
-
-    // longitude: -122.4,
-    // latitude: 37.74,
-    // zoom: 11,
-    // pitch: 30,
-    // bearing: 0,
   },
   minZoom: 2,
   maxZoom: 20,
   mapStyle: 'mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6',
-  // mapStyle: 'mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz',
-  // mapStyle: {
-  //   version: 8,
-  //   name: 'Custom',
-  //   sources: {},
-  //   layers: [
-  //     {
-  //       id: 'background',
-  //       type: 'background',
-  //       paint: {
-  //         'background-color': '#000',
-  //         'background-opacity': 0,
-  //       },
-  //     },
-  //     {
-  //       id: 'custom-layers',
-  //       type: 'background',
-  //       paint: {
-  //         'background-color': '#000',
-  //         'background-opacity': 0,
-  //       },
-  //     },
-  //   ],
-  // },
 };
 
 const MapContainer = () => {
@@ -105,7 +75,7 @@ const MapContainer = () => {
       };
     }
     return null;
-  }, [countryData, provinceData, sidebarOpen]);
+  }, [countryData, provinceData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setPopup = useSetRecoilState(popupAtom);
 
@@ -139,24 +109,10 @@ const MapContainer = () => {
     [layers, setPopup]
   );
 
-  useMemo(() => {
-    map?.easeTo({
-      padding: {
-        left: sidebarOpen ? 640 : 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      },
-      duration: 500,
-    });
-  }, [map, sidebarOpen]);
-
   return (
     <div className="absolute right-0 h-screen w-full">
       <Map
         id={id}
-        // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
-        // mapStyle="mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz"
         mapStyle={MAP_STYLE}
         minZoom={minZoom}
         maxZoom={maxZoom}
