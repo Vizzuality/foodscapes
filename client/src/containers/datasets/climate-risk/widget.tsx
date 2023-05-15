@@ -52,7 +52,7 @@ const ClimateRiskWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Climate Change" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
       <WidgetContent
         isPlaceholderData={isPlaceholderData || climateIsPlaceholderData}
         isFetching={isFetching || climateIsFetching}

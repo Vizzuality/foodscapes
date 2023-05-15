@@ -67,7 +67,7 @@ const FoodscapesIntensitiesWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Foodscapes Intensity" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
 
       <div className="space-y-2">
         <p>Intensity groups are inclusive of the land management attributes of an area.</p>

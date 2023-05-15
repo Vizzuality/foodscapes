@@ -52,7 +52,7 @@ const PollutionRiskWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Pollution" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
       <WidgetContent
         isPlaceholderData={isPlaceholderData || pollutionIsPlaceholderData}
         isFetching={isFetching || pollutionIsFetching}

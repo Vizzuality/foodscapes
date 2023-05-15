@@ -70,7 +70,7 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
     <header className="flex items-center justify-between space-x-5">
       <h3 className="font-display text-2xl">{title}</h3>
 
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center">
         {widget.toolbar.info && (
           <Dialog>
             <Tooltip>
@@ -111,7 +111,7 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
                 className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-navy-500 transition-all hover:bg-navy-200"
                 onClick={handleDownload}
               >
-                <Icon icon={DOWNLOAD_SVG} className="h-6 w-6" />
+                <Icon icon={DOWNLOAD_SVG} className="h-5 w-5" />
               </button>
             </TooltipTrigger>
             <TooltipPortal>
@@ -131,7 +131,7 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
         {widget.toolbar.layer && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="flex h-7 w-7 items-center justify-center pl-1.5">
+              <div className="ml-1 flex h-7 items-center justify-center">
                 <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
               </div>
             </TooltipTrigger>

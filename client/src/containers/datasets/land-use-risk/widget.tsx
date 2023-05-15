@@ -57,7 +57,7 @@ const LandUseRiskWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Land Use Change" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
       <WidgetContent
         isPlaceholderData={isPlaceholderData || landUseIsPlaceholderData}
         isFetching={isFetching || landUseIsFetching}

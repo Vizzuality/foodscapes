@@ -156,7 +156,7 @@ const FoodscapesWidget = () => {
 
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Global Foodscapes" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
 
       <div className="space-y-2">
         <p>
