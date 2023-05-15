@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
+import { LayerSettings } from 'store/explore-map';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
@@ -11,7 +13,6 @@ import { useCrops } from 'hooks/crops';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseCropsSourceProps {
@@ -19,12 +20,12 @@ interface UseCropsSourceProps {
 }
 
 interface UseCropsLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings>;
 }
 
 interface UseCropsLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings;
 }
 
 export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {

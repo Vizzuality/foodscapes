@@ -4,7 +4,11 @@ import { array, bool, dict, nullable, number, object, string } from '@recoiljs/r
 import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
+import { CropsSettings } from 'types/crops';
 import { FiltersOmitProps, FiltersProps } from 'types/data';
+import { FoodscapesSettings } from 'types/foodscapes';
+
+import { Settings } from 'components/map/legend/types';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -38,7 +42,9 @@ export const layersAtom = atom({
   ],
 });
 
-export const layersSettingsAtom = atom({
+export type LayerSettings = FoodscapesSettings | CropsSettings | Settings;
+
+export const layersSettingsAtom = atom<Record<string, LayerSettings>>({
   key: 'layers-settings',
   default: {},
   effects: [

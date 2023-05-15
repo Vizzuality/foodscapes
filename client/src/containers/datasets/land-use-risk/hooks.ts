@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
+import { LayerSettings } from 'store/explore-map';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
@@ -12,7 +14,6 @@ import { convertHexToRgbaArray } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseLandUseRiskSourceProps {
@@ -20,12 +21,12 @@ interface UseLandUseRiskSourceProps {
 }
 
 interface UseLandUseRiskLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings>;
 }
 
 interface UseLandUseRiskLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings;
 }
 
 export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData & { key: string } {

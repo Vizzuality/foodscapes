@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
+import { LayerSettings } from 'store/explore-map';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
@@ -11,7 +13,6 @@ import { useFoodscapes } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseFoodscapesSourceProps {
@@ -19,12 +20,12 @@ interface UseFoodscapesSourceProps {
 }
 
 interface UseFoodscapesLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings>;
 }
 
 interface UseFoodscapesLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings;
 }
 
 export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
@@ -92,6 +93,8 @@ export function useLayer({ settings = {} }: UseFoodscapesLayerProps): AnyLayer {
 export function useLegend({
   dataset,
   settings = {
+    id: 'foodscapes',
+    group: false,
     opacity: 1,
     visibility: true,
     expand: true,

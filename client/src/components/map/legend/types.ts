@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
 
+import { LayerSettings } from 'store/explore-map';
+
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
@@ -65,7 +67,7 @@ export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   attributes?: DraggableAttributes;
 
   // settings
-  settings?: Settings;
+  settings?: LayerSettings;
   settingsManager?: SettingsManager;
 }
 

@@ -31,6 +31,8 @@ const LayerManagerContainer = () => {
             filters={filters}
             settings={
               layersSettings[layer] ?? {
+                id: layer,
+                group: false,
                 opacity: 1,
                 visibility: true,
                 expand: false,

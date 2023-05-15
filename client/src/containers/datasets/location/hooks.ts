@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { LayerSettings } from 'store/explore-map';
+
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
@@ -7,15 +9,13 @@ import { FiltersProps } from 'types/data';
 import { useCountry } from 'hooks/countries';
 import { useProvince } from 'hooks/provinces';
 
-import { Settings } from 'components/map/legend/types';
-
 interface UseFoodscapesSourceProps {
   filters: FiltersProps;
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings>;
 }
 
 interface UseFoodscapesLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings>;
 }
 
 export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData {
