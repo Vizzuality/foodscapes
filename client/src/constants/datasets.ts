@@ -13,6 +13,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('foodscapes', 'id')
@@ -30,6 +35,7 @@ export const DATASETS = [
             .field('foodscapes', 'id')
             .field('soil_groups', 'parent_id')
             .field('SUM(pixel_count)', 'value')
+            .field('SUM(pixel_count * 3086.9136)', 'ha')
             .distinct()
             .from('data')
             .where('foodscapes NOT IN (1,2,3)')
@@ -42,6 +48,11 @@ export const DATASETS = [
         .field('f.label')
         .field('f.color')
         .field('d.value')
+        .field('d.ha')
+        .field(
+          'ROUND((d.ha / (SELECT SUM(pixel_count * 3086.9136) FROM data WHERE foodscapes NOT IN (1,2,3))) * 100, 2)',
+          'percentage'
+        )
         .field('d.parent_id', 'parentId')
         .field('g.label', 'parentLabel')
         .field('g.color', 'parentColor'),
@@ -58,6 +69,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('intensity_groups', 'id')
@@ -73,6 +89,7 @@ export const DATASETS = [
             .select()
             .field('intensity_groups', 'id')
             .field('SUM(pixel_count)', 'value')
+            .field('SUM(pixel_count * 3086.9136)', 'ha')
             .distinct()
             .from('data')
             .where('intensity_groups NOT IN (0)')
@@ -83,7 +100,12 @@ export const DATASETS = [
         .field('d.id')
         .field('f.label')
         .field('f.color')
-        .field('d.value'),
+        .field('d.value')
+        .field('d.ha')
+        .field(
+          'ROUND((d.ha / (SELECT SUM(pixel_count * 3086.9136) FROM data WHERE intensity_groups NOT IN (0))) * 100, 2)',
+          'percentage'
+        ),
     },
   },
   {
@@ -97,6 +119,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('crops', 'id')
@@ -114,6 +141,7 @@ export const DATASETS = [
             .field('crops', 'id')
             .field('crop_groups', 'parent_id')
             .field('SUM(pixel_count)', 'value')
+            .field('SUM(pixel_count * 3086.9136)', 'ha')
             .distinct()
             .from('data')
             .where('crops NOT IN (-9999)')
@@ -126,6 +154,11 @@ export const DATASETS = [
         .field('f.label')
         .field('f.color')
         .field('d.value')
+        .field('d.ha')
+        .field(
+          'ROUND((d.ha / (SELECT SUM(pixel_count * 3086.9136) FROM data WHERE crops NOT IN (-9999))) * 100, 2)',
+          'percentage'
+        )
         .field('d.parent_id', 'parentId')
         .field('g.label', 'parentLabel')
         .field('g.color', 'parentColor'),
@@ -143,6 +176,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field(
@@ -164,19 +202,25 @@ export const DATASETS = [
       download: squel
         .select()
         .field(
-          'SUM(CASE WHEN critically_endangered_ecosystems = 1 THEN pixel_count ELSE 0 END)',
+          'SUM(CASE WHEN critically_endangered_ecosystems = 1 THEN pixel_count * 3086.9136  ELSE 0 END)',
           'critically_endangered_ecosystems'
         )
         .field(
-          'SUM(CASE WHEN area_with_high_conservation_value = 1 THEN pixel_count ELSE 0 END)',
+          'SUM(CASE WHEN area_with_high_conservation_value = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
           'area_with_high_conservation_value'
         )
         .field(
-          'SUM(CASE WHEN agricultural_frontier_zones = 1 THEN pixel_count ELSE 0 END)',
+          'SUM(CASE WHEN agricultural_frontier_zones = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
           'agricultural_frontier_zones'
         )
-        .field('SUM(CASE WHEN soil_erosion = 1 THEN pixel_count ELSE 0 END)', 'soil_erosion')
-        .field('SUM(CASE WHEN water_scarcity = 1 THEN pixel_count ELSE 0 END)', 'water_scarcity')
+        .field(
+          'SUM(CASE WHEN soil_erosion = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
+          'soil_erosion'
+        )
+        .field(
+          'SUM(CASE WHEN water_scarcity = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
+          'water_scarcity'
+        )
         .from('data'),
     },
   },
@@ -191,6 +235,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
@@ -198,8 +247,11 @@ export const DATASETS = [
         .from('data'),
       download: squel
         .select()
-        .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
-        .field('SUM(CASE WHEN climate_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risk')
+        .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count * 3086.9136 ELSE 0 END)', 'risk')
+        .field(
+          'SUM(CASE WHEN climate_risk = 0 THEN pixel_count * 3086.9136 ELSE 0 END)',
+          'not_risk'
+        )
         .from('data'),
     },
   },
@@ -214,6 +266,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
@@ -221,8 +278,11 @@ export const DATASETS = [
         .from('data'),
       download: squel
         .select()
-        .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
-        .field('SUM(CASE WHEN pesticide_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risk')
+        .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count * 3086.9136 ELSE 0 END)', 'risk')
+        .field(
+          'SUM(CASE WHEN pesticide_risk = 0 THEN pixel_count * 3086.9136 ELSE 0 END)',
+          'not_risk'
+        )
         .from('data'),
     },
   },
@@ -237,6 +297,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   {
@@ -249,6 +314,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   {
@@ -261,6 +331,48 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
+    },
+  },
+  // LOCATIONS
+  {
+    id: 'locations',
+    label: 'Locations',
+    group: 'other',
+    layer: {
+      enabled: false,
+      visible: false,
+      band: 34,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
+    id: 'countries',
+    label: 'Countries',
+    group: 'other',
+    layer: {
+      enabled: true,
+      visible: false,
+      band: 34,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   {
@@ -274,6 +386,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
-] as Dataset[];
+] satisfies Dataset[];

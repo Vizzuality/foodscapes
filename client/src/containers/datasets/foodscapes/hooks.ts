@@ -4,6 +4,7 @@ import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
+import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -14,11 +15,7 @@ import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseFoodscapesSourceProps {
-  filters: {
-    crops: number[];
-    foodscapes: number[];
-    intensities: number[];
-  };
+  filters: FiltersProps;
 }
 
 interface UseFoodscapesLayerProps {

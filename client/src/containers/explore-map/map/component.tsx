@@ -2,9 +2,19 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useMap, ViewState } from 'react-map-gl';
 
-import { basemapAtom, layersAtom, popupAtom, sidebarOpenAtom } from 'store/explore-map';
+import {
+  basemapAtom,
+  countryAtom,
+  layersAtom,
+  popupAtom,
+  provinceAtom,
+  sidebarOpenAtom,
+} from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { useCountry } from 'hooks/countries';
+import { useProvince } from 'hooks/provinces';
 
 import { BASEMAPS } from 'constants/basemaps';
 
@@ -24,40 +34,10 @@ const DEFAULT_PROPS: CustomMapProps = {
     zoom: 2,
     pitch: 0,
     bearing: 0,
-
-    // longitude: -122.4,
-    // latitude: 37.74,
-    // zoom: 11,
-    // pitch: 30,
-    // bearing: 0,
   },
   minZoom: 2,
   maxZoom: 20,
   mapStyle: 'mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6',
-  // mapStyle: 'mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz',
-  // mapStyle: {
-  //   version: 8,
-  //   name: 'Custom',
-  //   sources: {},
-  //   layers: [
-  //     {
-  //       id: 'background',
-  //       type: 'background',
-  //       paint: {
-  //         'background-color': '#000',
-  //         'background-opacity': 0,
-  //       },
-  //     },
-  //     {
-  //       id: 'custom-layers',
-  //       type: 'background',
-  //       paint: {
-  //         'background-color': '#000',
-  //         'background-opacity': 0,
-  //       },
-  //     },
-  //   ],
-  // },
 };
 
 const MapContainer = () => {
@@ -71,6 +51,30 @@ const MapContainer = () => {
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
   const sidebarOpen = useRecoilValue(sidebarOpenAtom);
+
+  //leer estado si hay pais y provincia SINGULAR
+  const country = useRecoilValue(countryAtom);
+  const province = useRecoilValue(provinceAtom);
+
+  const { data: countryData } = useCountry(country);
+  const { data: provinceData } = useProvince(province);
+
+  const bounds: CustomMapProps['bounds'] | null = useMemo(() => {
+    if (countryData || provinceData) {
+      return {
+        bbox: provinceData?.bbox || countryData?.bbox,
+        options: {
+          padding: {
+            top: 50,
+            bottom: 50,
+            left: sidebarOpen ? 640 + 50 : 50,
+            right: 50,
+          },
+        },
+      };
+    }
+    return null;
+  }, [countryData, provinceData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setPopup = useSetRecoilState(popupAtom);
 
@@ -104,27 +108,14 @@ const MapContainer = () => {
     [layers, setPopup]
   );
 
-  useMemo(() => {
-    map?.easeTo({
-      padding: {
-        left: sidebarOpen ? 640 : 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      },
-      duration: 500,
-    });
-  }, [map, sidebarOpen]);
-
   return (
     <div className="absolute right-0 h-screen w-full">
       <Map
         id={id}
-        // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
-        // mapStyle="mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz"
         mapStyle={MAP_STYLE}
         minZoom={minZoom}
         maxZoom={maxZoom}
+        bounds={bounds}
         initialViewState={initialViewState}
         viewState={viewState}
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}

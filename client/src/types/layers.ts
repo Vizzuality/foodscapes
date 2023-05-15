@@ -1,15 +1,13 @@
 import { Layer } from '@deck.gl/core/typed';
 
+import { FiltersProps } from 'types/data';
+
 export type LayerProps<S> = {
   id?: string;
   beforeId?: string;
   zIndex?: number;
   settings?: Partial<S>;
-  filters?: {
-    foodscapes: number[];
-    intensities: number[];
-    crops: number[];
-  };
+  filters?: FiltersProps;
 };
 
 export type MapboxLayerProps<T> = Partial<Omit<T, 'id'>> & {

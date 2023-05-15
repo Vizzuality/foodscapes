@@ -20,8 +20,8 @@ export function titilerAdapter(params: FiltersProps = {}, initial = null) {
     ...(landUseRisk.length ? [landUseRisk.map((v) => `(b${v}==1)`).join('|')] : []),
     ...(climateRisk.length ? [climateRisk.map((v) => `(b11==${v})`).join('|')] : []),
     ...(pollutionRisk.length ? [pollutionRisk.map((v) => `(b12==${v})`).join('|')] : []),
-    ...(country ? [`(b31==${location})`] : []),
-    ...(province ? [`(b32==${location})`] : []),
+    ...(country ? [`(b34==${country})`] : []),
+    ...(province ? [`(b35==${province})`] : []),
   ]
     .map((v) => `(${v})`)
     .join('&');

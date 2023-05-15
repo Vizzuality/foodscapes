@@ -1,4 +1,11 @@
 import { Select } from 'squel';
+
+type Toolbar = {
+  download: boolean;
+  info: boolean;
+  layer: boolean;
+};
+
 export interface Dataset {
   id: string;
   label: string;
@@ -11,6 +18,7 @@ export interface Dataset {
   };
   widget: {
     enabled: boolean;
+    toolbar: Toolbar;
     sql?: Select;
     download?: Select;
   };

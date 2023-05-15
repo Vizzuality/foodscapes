@@ -8,6 +8,7 @@ export interface DatasetteParamsProps extends FiltersProps {
   sql?: Select;
   shape?: 'arrays' | 'objects' | 'array' | 'object';
   size?: number | 'max';
+  json?: string[];
 }
 
 export function datasetteAdapter(params: DatasetteParamsProps = {}) {
@@ -19,8 +20,11 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     landUseRisk = [],
     climateRisk = [],
     pollutionRisk = [],
+    country,
+    province,
     shape = 'array',
     size = 'max',
+    json,
   } = params;
   const s = sql?.clone();
 
@@ -37,6 +41,16 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
   // Intensities
   if (!!crops?.length) {
     s.where('crops IN ?', crops);
+  }
+
+  // Country
+  if (!!country) {
+    s.where('country = ?', country);
+  }
+
+  // Province
+  if (!!province) {
+    s.where('province = ?', province);
   }
 
   if (!!landUseRisk?.length) {
@@ -64,5 +78,7 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     _shape: shape,
     // Size
     _size: size,
+    // JSON
+    ...(json && { _json: json }),
   };
 }

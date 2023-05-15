@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { array, bool, dict, number, object, string } from '@recoiljs/refine';
+import { array, bool, dict, nullable, number, object, string } from '@recoiljs/refine';
 import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
@@ -130,6 +130,26 @@ export const pollutionRiskAtom = atom({
   ],
 });
 
+export const countryAtom = atom({
+  key: 'country',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: nullable(number()),
+    }),
+  ],
+});
+
+export const provinceAtom = atom({
+  key: 'province',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: nullable(number()),
+    }),
+  ],
+});
+
 export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
   key: 'filters',
   get:
@@ -141,6 +161,8 @@ export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
       ...(omit !== 'climateRisk' && { climateRisk: get(climateRiskAtom) }),
       ...(omit !== 'landUseRisk' && { landUseRisk: get(landUseRiskAtom) }),
       ...(omit !== 'pollutionRisk' && { pollutionRisk: get(pollutionRiskAtom) }),
+      ...(omit !== 'country' && { country: get(countryAtom) }),
+      ...(omit !== 'province' && { province: get(provinceAtom) }),
     }),
 });
 
