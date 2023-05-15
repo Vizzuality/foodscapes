@@ -1,11 +1,8 @@
-import { provinceAtom, filtersSelector, countryAtom } from 'store/explore-map';
+import { provinceAtom, countryAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { ClimateRiskData } from 'types/data';
-
 import { useCountries } from 'hooks/countries';
-import { useData } from 'hooks/data';
 import { useProvinces } from 'hooks/provinces';
 
 import { DATASETS } from 'constants/datasets';
@@ -15,9 +12,7 @@ import { WidgetContent, WidgetHeader } from 'containers/widget';
 import SingleSelect from 'components/ui/select/single/component';
 
 const LocationRankingWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
-
-  const filters = useRecoilValue(filtersSelector('climateRisk'));
+  const DATASET = DATASETS.find((d) => d.id === 'locations');
 
   const country = useRecoilValue(countryAtom);
   const setCountry = useSetRecoilState(countryAtom);
@@ -41,22 +36,14 @@ const LocationRankingWidget = () => {
     isError: countriesIsError,
   } = useCountries();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
-
   return (
     <section className="space-y-4 py-10">
       <WidgetHeader title="Location ranking" dataset={DATASET} />
       <WidgetContent
-        isPlaceholderData={
-          isPlaceholderData || countriesIsPlaceholderData || (country && provincesIsPlaceholderData)
-        }
-        isFetching={isFetching || countriesIsFetching || (country && provincesIsFetching)}
-        isFetched={isFetched && countriesIsFetched && (!country || (country && provincesIsFetched))}
-        isError={isError || countriesIsError || (country && provincesIsError)}
+        isPlaceholderData={countriesIsPlaceholderData || (country && provincesIsPlaceholderData)}
+        isFetching={countriesIsFetching || (country && provincesIsFetching)}
+        isFetched={countriesIsFetched && (!country || (country && provincesIsFetched))}
+        isError={countriesIsError || (country && provincesIsError)}
       >
         <div className="space-y-5">
           <SingleSelect

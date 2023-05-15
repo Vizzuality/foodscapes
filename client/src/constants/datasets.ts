@@ -13,6 +13,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('foodscapes', 'id')
@@ -58,6 +63,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('intensity_groups', 'id')
@@ -97,6 +107,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('crops', 'id')
@@ -143,6 +158,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field(
@@ -191,6 +211,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
@@ -214,6 +239,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
       sql: squel
         .select()
         .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
@@ -237,6 +267,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   {
@@ -249,6 +284,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   {
@@ -261,13 +301,36 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   // LOCATIONS
   {
+    id: 'locations',
+    label: 'Locations',
+    group: 'other',
+    layer: {
+      enabled: false,
+      visible: false,
+      band: 34,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
     id: 'countries',
     label: 'Countries',
-    group: 'locations',
+    group: 'other',
     layer: {
       enabled: true,
       visible: false,
@@ -275,6 +338,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
   {
@@ -288,6 +356,11 @@ export const DATASETS = [
     },
     widget: {
       enabled: false,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
     },
   },
-] as Dataset[];
+] satisfies Dataset[];
