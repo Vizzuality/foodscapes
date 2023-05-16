@@ -9,7 +9,7 @@ const FoodscapesLayer = ({
   filters,
   beforeId,
 }: LayerProps<LayerSettings<'foodscapes'>>) => {
-  const SOURCE = useSource({ filters });
+  const SOURCE = useSource({ filters, settings });
   const LAYER = useLayer({ settings });
 
   if (!SOURCE || !LAYER) return null;

@@ -16,6 +16,7 @@ import env from 'env.mjs';
 
 interface UseFoodscapesSourceProps {
   filters: FiltersProps;
+  settings?: Partial<LayerSettings<'foodscapes'>>;
 }
 
 interface UseFoodscapesLayerProps {
@@ -27,7 +28,10 @@ interface UseFoodscapesLegendProps {
   settings?: LayerSettings<'foodscapes'>;
 }
 
-export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
+export function useSource({
+  filters,
+  settings,
+}: UseFoodscapesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
 
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
@@ -37,11 +41,11 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
     const c = foodscapesData.reduce((acc, v) => {
       return {
         ...acc,
-        [v.value]: v.color,
+        [v.value]: settings.group ? v.parentColor : v.color,
       };
     }, {});
     return JSON.stringify(c);
-  }, [foodscapesData]);
+  }, [foodscapesData, settings.group]);
 
   const expression = useMemo(() => {
     const where = titilerAdapter(filters);

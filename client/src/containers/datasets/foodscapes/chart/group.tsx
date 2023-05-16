@@ -7,7 +7,7 @@ import { scaleBand, scaleLinear, scaleOrdinal } from '@visx/scale';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { useRecoilValue } from 'recoil';
 
-import { FoodscapeData } from 'types/data';
+import { FiltersOmitProps, FoodscapeData } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { FoodscapeChartData, FoodscapeGroup } from 'types/foodscapes';
 
@@ -22,6 +22,7 @@ interface FoodscapesChartParentProps {
   dataset: Dataset;
   interactive?: boolean;
   selected?: readonly number[];
+  ignore?: FiltersOmitProps;
   onBarClick?: (key: number) => void;
 }
 interface FoodscapesChartProps extends FoodscapesChartParentProps {
@@ -35,9 +36,10 @@ const FoodscapesChart = ({
   dataset,
   interactive,
   selected,
+  ignore = 'foodscapes',
   onBarClick,
 }: FoodscapesChartProps) => {
-  const filters = useRecoilValue(filtersSelector('foodscapes'));
+  const filters = useRecoilValue(filtersSelector(ignore));
 
   // DATA
   const { data: foodscapesData } = useFoodscapes();
