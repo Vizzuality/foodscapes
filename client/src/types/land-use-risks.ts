@@ -1,3 +1,5 @@
+import { Settings } from 'components/map/legend/types';
+
 export interface LandUseRisk {
   id: number;
   label: string;
@@ -10,3 +12,5 @@ export interface LandUseRisk {
     | 'agricultural_frontier_zones';
   value: 6 | 7 | 8 | 9 | 10;
 }
+
+export type LandUseChangeSettings = {} & Settings;

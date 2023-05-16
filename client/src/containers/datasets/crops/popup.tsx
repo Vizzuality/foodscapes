@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
+import { LayerSettings } from 'types/layers';
 import { LngLat } from 'types/map';
 
 import { useCrops } from 'hooks/crops';
@@ -13,10 +14,11 @@ import { DATASETS } from 'constants/datasets';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface CropsPopupProps {
+  settings: LayerSettings<'crops'>;
   latLng: LngLat;
 }
 
-const CropsPopup = ({ latLng }: CropsPopupProps) => {
+const CropsPopup = ({ latLng, settings }: CropsPopupProps) => {
   const DATASET = DATASETS.find((d) => d.id === 'crops');
   const band = `b${DATASET.layer.band}`;
 
@@ -45,11 +47,15 @@ const CropsPopup = ({ latLng }: CropsPopupProps) => {
         <div
           className="h-4 w-4 border"
           style={{
-            background: DATA?.color,
-            borderColor: DATA?.color ?? 'var(--color-navy-500)',
+            background: settings.group ? DATA?.parentColor : DATA?.color,
+            borderColor: settings.group
+              ? DATA?.parentColor ?? 'var(--color-navy-500)'
+              : DATA?.color ?? 'var(--color-navy-500)',
           }}
         />
-        <h2 className="text-base font-semibold">Crop</h2>
+        <h2 className="text-base font-semibold">
+          {settings.group ? DATASET.labelGroup : DATASET?.label}
+        </h2>
       </header>
 
       <div className={cn({ 'mt-2 pl-6': true })}>
@@ -57,7 +63,11 @@ const CropsPopup = ({ latLng }: CropsPopupProps) => {
         {isFetched && (
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
-            {!!DATA && <h3 className="text-sm font-light">{DATA.label}</h3>}
+            {!!DATA && (
+              <h3 className="text-sm font-light">
+                {settings.group ? DATA.parentLabel : DATA.label}
+              </h3>
+            )}
           </>
         )}
       </div>

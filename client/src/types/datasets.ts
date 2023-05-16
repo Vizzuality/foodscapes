@@ -7,8 +7,18 @@ type Toolbar = {
 };
 
 export interface Dataset {
-  id: string;
+  id:
+    | 'foodscapes'
+    | 'foodscapes-intensities'
+    | 'crops'
+    | 'land-use-risk'
+    | 'climate-risk'
+    | 'pollution-risk'
+    | 'locations'
+    | 'countries'
+    | 'provinces';
   label: string;
+  labelGroup?: string;
   group: string;
   layer: {
     enabled: boolean;

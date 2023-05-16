@@ -1,12 +1,15 @@
 import { Source, Layer } from 'react-map-gl';
 
+import { LayerSettings } from 'types/layers';
 import { LayerProps } from 'types/layers';
-
-import { Settings } from 'components/map/legend/types';
 
 import { useLayer, useSource } from './hooks';
 
-const PollutionRiskLayer = ({ settings, filters, beforeId }: LayerProps<Settings>) => {
+const PollutionRiskLayer = ({
+  settings,
+  filters,
+  beforeId,
+}: LayerProps<LayerSettings<'pollution-risk'>>) => {
   const SOURCE = useSource({ filters });
   const LAYER = useLayer({ settings });
 

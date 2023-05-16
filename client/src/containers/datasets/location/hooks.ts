@@ -3,19 +3,18 @@ import { useMemo } from 'react';
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
+import { LayerSettings } from 'types/layers';
 
 import { useCountry } from 'hooks/countries';
 import { useProvince } from 'hooks/provinces';
 
-import { Settings } from 'components/map/legend/types';
-
 interface UseFoodscapesSourceProps {
   filters: FiltersProps;
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'locations'>>;
 }
 
 interface UseFoodscapesLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'locations'>>;
 }
 
 export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData {
@@ -32,15 +31,15 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
   };
 }
 
-export function useLayer({ settings = {} }: UseFoodscapesLayerProps): AnyLayer {
-  const visibility = settings.visibility ?? true;
+export function useLayer({ settings }: UseFoodscapesLayerProps): AnyLayer {
+  const visibility = settings?.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
       id: 'location-layer',
       type: 'line',
       paint: {
         'line-color': '#000000',
-        'line-opacity': settings.opacity ?? 1,
+        'line-opacity': settings?.opacity ?? 1,
       },
       layout: {
         visibility: visibility ? 'visible' : 'none',

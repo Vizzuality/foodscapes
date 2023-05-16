@@ -22,7 +22,8 @@ import { useLegend } from './hooks';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 
-export interface FoodscapesIntensitiesLegendProps extends LegendItemProps {
+export interface FoodscapesIntensitiesLegendProps
+  extends LegendItemProps<'foodscapes-intensities'> {
   dataset: Dataset;
 }
 

@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-
-import { array, bool, dict, nullable, number, object, string } from '@recoiljs/refine';
-import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
+import { array, bool, dict, nullable, number, object, optional, string } from '@recoiljs/refine';
+import { atom, selectorFamily } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 import { FiltersOmitProps, FiltersProps } from 'types/data';
+import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -28,7 +28,7 @@ export const basemapAtom = atom({
   ],
 });
 
-export const layersAtom = atom({
+export const layersAtom = atom<Dataset['id'][]>({
   key: 'layers',
   default: ['foodscapes'],
   effects: [
@@ -38,9 +38,25 @@ export const layersAtom = atom({
   ],
 });
 
-export const layersSettingsAtom = atom({
+const DEFAULT_SETTINGS = {
+  opacity: 1,
+  visibility: true,
+  expand: true,
+};
+
+export const layersSettingsAtom = atom<Record<Dataset['id'], LayerSettings<Dataset['id']>>>({
   key: 'layers-settings',
-  default: {},
+  default: {
+    foodscapes: { group: false, ...DEFAULT_SETTINGS },
+    'foodscapes-intensities': { ...DEFAULT_SETTINGS },
+    crops: { group: false, ...DEFAULT_SETTINGS },
+    'land-use-risk': { ...DEFAULT_SETTINGS },
+    'climate-risk': { ...DEFAULT_SETTINGS },
+    'pollution-risk': { ...DEFAULT_SETTINGS },
+    locations: { ...DEFAULT_SETTINGS },
+    countries: { ...DEFAULT_SETTINGS },
+    provinces: { ...DEFAULT_SETTINGS },
+  } satisfies Record<Dataset['id'], LayerSettings<Dataset['id']>>,
   effects: [
     urlSyncEffect({
       refine: dict(
@@ -48,6 +64,7 @@ export const layersSettingsAtom = atom({
           opacity: number(),
           visibility: bool(),
           expand: bool(),
+          group: optional(bool()),
         })
       ),
     }),
@@ -166,37 +183,37 @@ export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
     }),
 });
 
-export function useSyncExploreMap() {
-  const layers = useRecoilValue(layersAtom);
+// export function useSyncExploreMap() {
+//   const layers = useRecoilValue(layersAtom);
 
-  const syncAtoms = useRecoilCallback(
-    ({ snapshot, set, reset }) =>
-      async () => {
-        const lys = await snapshot.getPromise(layersAtom);
-        const lysSettings = await snapshot.getPromise(layersSettingsAtom);
+//   const syncAtoms = useRecoilCallback(
+//     ({ snapshot, set, reset }) =>
+//       async () => {
+//         const lys = await snapshot.getPromise(layersAtom);
+//         const lysSettings = await snapshot.getPromise(layersSettingsAtom);
 
-        // Remove layersettings that are not in layers
-        Object.keys(lysSettings).forEach((ly) => {
-          if (!lys.includes(ly)) {
-            set(layersSettingsAtom, (prev) => {
-              const { [ly]: l, ...rest } = prev;
-              return rest;
-            });
-          }
-        });
+//         // Remove layersettings that are not in layers
+//         (Object.keys(lysSettings) as Array<Dataset['id']>).forEach((ly) => {
+//           if (!lys.includes(ly)) {
+//             set(layersSettingsAtom, (prev) => {
+//               const { [ly]: l, ...rest } = prev;
+//               return rest as Record<Dataset['id'], LayerSettings<Dataset['id']>>;
+//             });
+//           }
+//         });
 
-        if (lys.length === 0) {
-          reset(layersSettingsAtom);
-          reset(popupAtom);
-        }
-      },
-    []
-  );
+//         if (lys.length === 0) {
+//           reset(layersSettingsAtom);
+//           reset(popupAtom);
+//         }
+//       },
+//     []
+//   );
 
-  // Sync layersettings when layers change
-  useEffect(() => {
-    syncAtoms();
-  }, [layers]); // eslint-disable-line react-hooks/exhaustive-deps
+//   // Sync layersettings when layers change
+//   useEffect(() => {
+//     syncAtoms();
+//   }, [layers]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return null;
-}
+//   return null;
+// }

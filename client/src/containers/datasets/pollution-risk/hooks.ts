@@ -6,12 +6,12 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { usePollutionRisks } from 'hooks/pollution-risks';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UsePollutionRiskSourceProps {
@@ -19,12 +19,12 @@ interface UsePollutionRiskSourceProps {
 }
 
 interface UsePollutionRiskLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'pollution-risk'>>;
 }
 
 interface UsePollutionRiskLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings<'pollution-risk'>;
 }
 
 export function useSource({
@@ -77,7 +77,7 @@ export function useSource({
   };
 }
 
-export function useLayer({ settings = {} }: UsePollutionRiskLayerProps): AnyLayer {
+export function useLayer({ settings }: UsePollutionRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -95,14 +95,7 @@ export function useLayer({ settings = {} }: UsePollutionRiskLayerProps): AnyLaye
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UsePollutionRiskLegendProps) {
+export function useLegend({ dataset, settings }: UsePollutionRiskLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,

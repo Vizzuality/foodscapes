@@ -6,28 +6,32 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { useCrops } from 'hooks/crops';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseCropsSourceProps {
   filters: FiltersProps;
+  settings?: Partial<LayerSettings<'crops'>>;
 }
 
 interface UseCropsLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'crops'>>;
 }
 
 interface UseCropsLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings<'crops'>;
 }
 
-export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {
+export function useSource({
+  filters,
+  settings,
+}: UseCropsSourceProps): AnySourceData & { key: string } {
   const { data: cropsData } = useCrops();
 
   const DATASET = DATASETS.find((d) => d.id === 'crops');
@@ -37,13 +41,13 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
     const c = cropsData.reduce((acc, v) => {
       return {
         ...acc,
-        [v.value]: v.color,
+        [v.value]: settings.group ? v.parentColor : v.color,
       };
     }, {});
     c[-1] = '#00000000';
 
     return JSON.stringify(c);
-  }, [cropsData]);
+  }, [cropsData, settings.group]);
 
   const expression = useMemo(() => {
     const where = titilerAdapter(filters);
@@ -73,7 +77,7 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
   };
 }
 
-export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer {
+export function useLayer({ settings }: UseCropsLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -91,14 +95,7 @@ export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer {
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseCropsLegendProps) {
+export function useLegend({ dataset, settings }: UseCropsLegendProps) {
   const { data: cropsData } = useCrops();
 
   const colormap = useMemo(() => {
@@ -114,7 +111,7 @@ export function useLegend({
   const legend = useMemo(() => {
     return {
       id: dataset.id,
-      name: dataset.label,
+      name: settings.group ? dataset.labelGroup : dataset.label,
       ...((!cropsData || !cropsData.length) && { colormap }),
       settings: settings,
       settingsManager: {

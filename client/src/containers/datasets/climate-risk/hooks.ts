@@ -6,12 +6,12 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { useClimateRisks } from 'hooks/climate-risks';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseClimateRiskSourceProps {
@@ -19,12 +19,12 @@ interface UseClimateRiskSourceProps {
 }
 
 interface UseClimateRiskLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'climate-risk'>>;
 }
 
 interface UseClimateRiskLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings<'climate-risk'>;
 }
 
 export function useSource({ filters }: UseClimateRiskSourceProps): AnySourceData & { key: string } {
@@ -75,7 +75,7 @@ export function useSource({ filters }: UseClimateRiskSourceProps): AnySourceData
   };
 }
 
-export function useLayer({ settings = {} }: UseClimateRiskLayerProps): AnyLayer {
+export function useLayer({ settings }: UseClimateRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -93,14 +93,7 @@ export function useLayer({ settings = {} }: UseClimateRiskLayerProps): AnyLayer 
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseClimateRiskLegendProps) {
+export function useLegend({ dataset, settings }: UseClimateRiskLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,

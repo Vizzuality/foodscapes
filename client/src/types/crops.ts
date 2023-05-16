@@ -1,3 +1,5 @@
+import { Settings } from 'components/map/legend/types';
+
 export interface Crop {
   id: number;
   label: string;
@@ -15,6 +17,10 @@ export interface CropGroup {
   label: string;
   color: string;
 }
+
+export type CropsSettings = {
+  group: boolean;
+} & Settings;
 
 export type CropChartData = {
   '101': number;

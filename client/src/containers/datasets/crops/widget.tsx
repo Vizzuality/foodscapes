@@ -4,11 +4,12 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { cropsAtom, filtersSelector } from 'store/explore-map';
+import { cropsAtom, filtersSelector, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { CropData } from 'types/data';
+import { LayerSettings } from 'types/layers';
 
 import { useCrops, useCropsGroups } from 'hooks/crops';
 import { useData } from 'hooks/data';
@@ -28,9 +29,13 @@ const CropsWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'crops');
 
   const filters = useRecoilValue(filtersSelector('crops'));
+  const layersSettings = useRecoilValue(layersSettingsAtom);
+  const setLayerSettings = useSetRecoilState(layersSettingsAtom);
 
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
+
+  const settings = layersSettings[DATASET.id] as LayerSettings<'foodscapes'>;
 
   const {
     data: cropsData,
@@ -152,12 +157,28 @@ const CropsWidget = () => {
     [data, crops, cropsData, GROUPED_SELECTED, setCrops]
   );
 
+  const handleTabChange = useCallback(
+    (value: string) => {
+      setLayerSettings({
+        ...layersSettings,
+        [DATASET.id]: {
+          ...layersSettings[DATASET.id],
+          group: value === 'group',
+        },
+      });
+    },
+    [DATASET.id, layersSettings, setLayerSettings]
+  );
+
   return (
     <section className="space-y-4 py-10">
       <WidgetHeader title={DATASET.label} dataset={DATASET} />
 
       <div className="space-y-2">
-        <p>Crop output in fresh weight of major crop groupings from each foodscape.</p>
+        <p>
+          Dominant crops are the primary agricultural product grown within a specific area. They
+          represent the crops with the highest production level among all the crops at each pixel.
+        </p>
       </div>
 
       <WidgetContent
@@ -168,7 +189,7 @@ const CropsWidget = () => {
         isFetched={isFetched && cropsIsFetched && cropsGroupIsFetched}
         isError={isError || cropsIsError || cropsGroupIsError}
       >
-        <Tabs defaultValue="single">
+        <Tabs value={settings.group ? 'group' : 'single'} onValueChange={handleTabChange}>
           <TabsList>
             <TabsTrigger value="single">Crops</TabsTrigger>
             <TabsTrigger value="group">Crop Groups</TabsTrigger>

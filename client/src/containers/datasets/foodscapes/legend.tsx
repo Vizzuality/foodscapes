@@ -24,8 +24,9 @@ import LegendTypeBasic from 'components/map/legend/types/basic/component';
 import { useLegend } from './hooks';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
+const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
 
-export interface FoodscapesLegendProps extends LegendItemProps {
+export interface FoodscapesLegendProps extends LegendItemProps<'foodscapes'> {
   dataset: Dataset;
 }
 
@@ -43,6 +44,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
     isFetched: foodscapesIsFetched,
     isError: foodscapesIsError,
   } = useFoodscapes();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
     sql: dataset.widget.sql,
     shape: 'array',
@@ -61,7 +63,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
             }),
             (d) => d.parentLabel
           ),
-          ([key, value]) => ({ key, value })
+          ([key, value]) => ({ key, color: value.reduce((acc, v) => v.parentColor, ''), value })
         )
         // sort by key
         .sort((a, b) => a.key.localeCompare(b.key))
@@ -79,29 +81,62 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
         <div className="divide-y divide-navy-500/20">
           <div className="ml-0.5 px-4 pt-3 pb-5">
             <div className="h-3.5">
-              <Chart dataset={dataset} ignore={null} />
+              {!settings.group && (
+                <Chart
+                  //
+                  dataset={dataset}
+                  ignore={null}
+                />
+              )}
+
+              {settings.group && (
+                <ChartGroup
+                  //
+                  dataset={dataset}
+                  selected={filters.foodscapes}
+                  ignore={null}
+                />
+              )}
             </div>
           </div>
 
           <ul className="divide-y divide-navy-500/20 pt-3 pb-4">
-            {GROUPED_DATA.map((g) => (
+            {!settings.group &&
+              GROUPED_DATA.map((g) => (
+                <li
+                  key={g.key}
+                  className={cn({
+                    'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
+                  })}
+                >
+                  <h4 className="text-xs font-bold">{g.key}</h4>
+                  <LegendTypeBasic
+                    items={g.value.map((v) => {
+                      return {
+                        value: v.label,
+                        color: v.color,
+                      };
+                    })}
+                  />
+                </li>
+              ))}
+
+            {settings.group && (
               <li
-                key={g.key}
                 className={cn({
                   'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
                 })}
               >
-                <h4 className="text-xs font-bold">{g.key}</h4>
                 <LegendTypeBasic
-                  items={g.value.map((v) => {
+                  items={GROUPED_DATA.map((v) => {
                     return {
-                      value: v.label,
+                      value: v.key,
                       color: v.color,
                     };
                   })}
                 />
               </li>
-            ))}
+            )}
           </ul>
         </div>
       </LegendContent>

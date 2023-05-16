@@ -6,13 +6,13 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { COLORS } from 'hooks/land-use-risks';
 import { convertHexToRgbaArray } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseLandUseRiskSourceProps {
@@ -20,12 +20,12 @@ interface UseLandUseRiskSourceProps {
 }
 
 interface UseLandUseRiskLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'land-use-risk'>>;
 }
 
 interface UseLandUseRiskLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings<'land-use-risk'>;
 }
 
 export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData & { key: string } {
@@ -90,7 +90,7 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
   };
 }
 
-export function useLayer({ settings = {} }: UseLandUseRiskLayerProps): AnyLayer {
+export function useLayer({ settings }: UseLandUseRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -108,14 +108,7 @@ export function useLayer({ settings = {} }: UseLandUseRiskLayerProps): AnyLayer 
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseLandUseRiskLegendProps) {
+export function useLegend({ dataset, settings }: UseLandUseRiskLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,

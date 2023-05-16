@@ -4,11 +4,12 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { filtersSelector, foodscapesAtom } from 'store/explore-map';
+import { filtersSelector, foodscapesAtom, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { FoodscapeData } from 'types/data';
+import { LayerSettings } from 'types/layers';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
@@ -28,9 +29,13 @@ const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 
   const filters = useRecoilValue(filtersSelector('foodscapes'));
+  const layersSettings = useRecoilValue(layersSettingsAtom);
+  const setLayerSettings = useSetRecoilState(layersSettingsAtom);
 
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
+
+  const settings = layersSettings[DATASET.id] as LayerSettings<'foodscapes'>;
 
   const {
     data: foodscapesData,
@@ -39,6 +44,7 @@ const FoodscapesWidget = () => {
     isFetched: foodscapesIsFetched,
     isError: foodscapesIsError,
   } = useFoodscapes();
+
   const {
     data: foodscapesGroupData,
     isPlaceholderData: foodscapesGroupIsPlaceholderData,
@@ -46,6 +52,7 @@ const FoodscapesWidget = () => {
     isFetched: foodscapesGroupIsFetched,
     isError: foodscapesGroupIsError,
   } = useFoodscapesGroups();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
     sql: DATASET.widget.sql,
     shape: 'array',
@@ -154,6 +161,19 @@ const FoodscapesWidget = () => {
     [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
 
+  const handleTabChange = useCallback(
+    (value: string) => {
+      setLayerSettings({
+        ...layersSettings,
+        [DATASET.id]: {
+          ...layersSettings[DATASET.id],
+          group: value === 'group',
+        },
+      });
+    },
+    [DATASET.id, layersSettings, setLayerSettings]
+  );
+
   return (
     <section className="space-y-4 py-10">
       <WidgetHeader title={DATASET.label} dataset={DATASET} />
@@ -176,7 +196,7 @@ const FoodscapesWidget = () => {
         isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
         isError={isError || foodscapesIsError || foodscapesGroupIsError}
       >
-        <Tabs defaultValue="single">
+        <Tabs value={settings.group ? 'group' : 'single'} onValueChange={handleTabChange}>
           <TabsList>
             <TabsTrigger value="single">Foodscapes</TabsTrigger>
             <TabsTrigger value="group">Soil Groups</TabsTrigger>
