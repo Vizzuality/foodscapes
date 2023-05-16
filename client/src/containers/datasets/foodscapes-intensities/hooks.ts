@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
-import { LayerSettings } from 'store/explore-map';
-
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 
@@ -20,12 +19,12 @@ interface UseFoodscapesIntensitiesSourceProps {
 }
 
 interface UseFoodscapesIntensitiesLayerProps {
-  settings?: Partial<LayerSettings>;
+  settings?: Partial<LayerSettings<'foodscapes-intensities'>>;
 }
 
 interface UseFoodscapesIntensitiesLegendProps {
   dataset: Dataset;
-  settings?: LayerSettings;
+  settings?: LayerSettings<'foodscapes-intensities'>;
 }
 
 export function useSource({
@@ -77,7 +76,7 @@ export function useSource({
   };
 }
 
-export function useLayer({ settings = {} }: UseFoodscapesIntensitiesLayerProps): AnyLayer {
+export function useLayer({ settings }: UseFoodscapesIntensitiesLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -95,14 +94,7 @@ export function useLayer({ settings = {} }: UseFoodscapesIntensitiesLayerProps):
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseFoodscapesIntensitiesLegendProps) {
+export function useLegend({ dataset, settings }: UseFoodscapesIntensitiesLegendProps) {
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 
   const colormap = useMemo(() => {

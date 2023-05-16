@@ -6,6 +6,8 @@ import cn from 'lib/classnames';
 
 import { Accordion, AccordionContent, AccordionItem } from '@radix-ui/react-accordion';
 
+import { Dataset } from 'types/datasets';
+
 import Icon from 'components/icon';
 import { LegendItemProps } from 'components/map/legend/types';
 
@@ -13,7 +15,7 @@ import DRAG_SVG from 'svgs/legend/drag.svg?sprite';
 
 import LegendItemToolbar from './toolbar/component';
 
-export const LegendItem: React.FC<LegendItemProps> = ({
+export const LegendItem: React.FC<LegendItemProps<Dataset['id']>> = ({
   id,
   name,
   children,
@@ -31,7 +33,7 @@ export const LegendItem: React.FC<LegendItemProps> = ({
   onChangeOpacity,
   onChangeVisibility,
   onChangeExpand,
-}: LegendItemProps) => {
+}: LegendItemProps<Dataset['id']>) => {
   const { expand } = settings || {};
 
   const validChildren = useMemo(() => {

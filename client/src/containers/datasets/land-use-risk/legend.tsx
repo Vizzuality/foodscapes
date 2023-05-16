@@ -10,7 +10,7 @@ import LegendTypeChoropleth from 'components/map/legend/types/choropleth/compone
 
 import { useLegend } from './hooks';
 
-export interface LandUseRiskLegendProps extends LegendItemProps {
+export interface LandUseRiskLegendProps extends LegendItemProps<'land-use-risk'> {
   dataset: Dataset;
 }
 

@@ -25,7 +25,7 @@ import { useLegend } from './hooks';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
 
-export interface CropsLegendProps extends LegendItemProps {
+export interface CropsLegendProps extends LegendItemProps<'crops'> {
   dataset: Dataset;
 }
 

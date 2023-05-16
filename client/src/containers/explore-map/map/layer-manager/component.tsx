@@ -16,7 +16,7 @@ const LayerManagerContainer = () => {
 
   return (
     <MapboxOverlayProvider>
-      <LocationLayer filters={filters} />
+      <LocationLayer settings={layersSettings.locations} filters={filters} />
 
       {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer];

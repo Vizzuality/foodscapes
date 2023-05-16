@@ -18,10 +18,9 @@ export interface FoodscapeGroup {
   color: string;
 }
 
-export type FoodscapesSettings = Settings & {
-  id: 'foodscapes';
+export type FoodscapesSettings = {
   group: boolean;
-};
+} & Settings;
 
 export type FoodscapeChartData = {
   '101': number;

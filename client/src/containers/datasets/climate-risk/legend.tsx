@@ -8,7 +8,7 @@ import LegendTypeBasic from 'components/map/legend/types/basic/component';
 
 import { useLegend } from './hooks';
 
-export interface ClimateRiskLegendProps extends LegendItemProps {
+export interface ClimateRiskLegendProps extends LegendItemProps<'climate-risk'> {
   dataset: Dataset;
 }
 

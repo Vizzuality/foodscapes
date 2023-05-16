@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
-import { LayerSettings } from 'store/explore-map';
-
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { COLORS } from 'hooks/land-use-risks';
 import { convertHexToRgbaArray } from 'hooks/utils';
@@ -21,12 +20,12 @@ interface UseLandUseRiskSourceProps {
 }
 
 interface UseLandUseRiskLayerProps {
-  settings?: Partial<LayerSettings>;
+  settings?: Partial<LayerSettings<'land-use-risk'>>;
 }
 
 interface UseLandUseRiskLegendProps {
   dataset: Dataset;
-  settings?: LayerSettings;
+  settings?: LayerSettings<'land-use-risk'>;
 }
 
 export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData & { key: string } {
@@ -91,7 +90,7 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
   };
 }
 
-export function useLayer({ settings = {} }: UseLandUseRiskLayerProps): AnyLayer {
+export function useLayer({ settings }: UseLandUseRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -109,14 +108,7 @@ export function useLayer({ settings = {} }: UseLandUseRiskLayerProps): AnyLayer 
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseLandUseRiskLegendProps) {
+export function useLegend({ dataset, settings }: UseLandUseRiskLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,

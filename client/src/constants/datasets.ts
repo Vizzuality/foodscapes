@@ -287,57 +287,57 @@ export const DATASETS = [
     },
   },
   // OPPORTUNITIES
-  {
-    id: 'restoration',
-    label: 'Restoration',
-    group: 'opportunities',
-    layer: {
-      enabled: false,
-      visible: true,
-    },
-    widget: {
-      enabled: false,
-      toolbar: {
-        download: true,
-        info: true,
-        layer: true,
-      },
-    },
-  },
-  {
-    id: 'agroforestry',
-    label: 'Agroforestry',
-    group: 'opportunities',
-    layer: {
-      enabled: false,
-      visible: true,
-    },
-    widget: {
-      enabled: false,
-      toolbar: {
-        download: true,
-        info: true,
-        layer: true,
-      },
-    },
-  },
-  {
-    id: 'soil-health-management-cover-crops-area',
-    label: 'Soil Health Management (cover crops area)',
-    group: 'opportunities',
-    layer: {
-      enabled: false,
-      visible: true,
-    },
-    widget: {
-      enabled: false,
-      toolbar: {
-        download: true,
-        info: true,
-        layer: true,
-      },
-    },
-  },
+  // {
+  //   id: 'restoration',
+  //   label: 'Restoration',
+  //   group: 'opportunities',
+  //   layer: {
+  //     enabled: false,
+  //     visible: true,
+  //   },
+  //   widget: {
+  //     enabled: false,
+  //     toolbar: {
+  //       download: true,
+  //       info: true,
+  //       layer: true,
+  //     },
+  //   },
+  // },
+  // {
+  //   id: 'agroforestry',
+  //   label: 'Agroforestry',
+  //   group: 'opportunities',
+  //   layer: {
+  //     enabled: false,
+  //     visible: true,
+  //   },
+  //   widget: {
+  //     enabled: false,
+  //     toolbar: {
+  //       download: true,
+  //       info: true,
+  //       layer: true,
+  //     },
+  //   },
+  // },
+  // {
+  //   id: 'soil-health-management-cover-crops-area',
+  //   label: 'Soil Health Management (cover crops area)',
+  //   group: 'opportunities',
+  //   layer: {
+  //     enabled: false,
+  //     visible: true,
+  //   },
+  //   widget: {
+  //     enabled: false,
+  //     toolbar: {
+  //       download: true,
+  //       info: true,
+  //       layer: true,
+  //     },
+  //   },
+  // },
   // LOCATIONS
   {
     id: 'locations',
@@ -393,4 +393,4 @@ export const DATASETS = [
       },
     },
   },
-] satisfies Dataset[];
+] satisfies Dataset[] as Dataset[];

@@ -1,11 +1,14 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { FoodscapesSettings } from 'types/foodscapes';
-import { LayerProps } from 'types/layers';
+import { LayerProps, LayerSettings } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-const FoodscapesLayer = ({ settings, filters, beforeId }: LayerProps<FoodscapesSettings>) => {
+const FoodscapesLayer = ({
+  settings,
+  filters,
+  beforeId,
+}: LayerProps<LayerSettings<'foodscapes'>>) => {
   const SOURCE = useSource({ filters });
   const LAYER = useLayer({ settings });
 

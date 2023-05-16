@@ -18,10 +18,9 @@ export interface CropGroup {
   color: string;
 }
 
-export type CropsSettings = Settings & {
-  id: 'crops';
+export type CropsSettings = {
   group: boolean;
-};
+} & Settings;
 
 export type CropChartData = {
   '101': number;

@@ -1,12 +1,10 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { LayerSettings } from 'store/explore-map';
-
-import { LayerProps } from 'types/layers';
+import { LayerProps, LayerSettings } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-const LocationLayer = ({ settings, filters, beforeId }: LayerProps<LayerSettings>) => {
+const LocationLayer = ({ settings, filters, beforeId }: LayerProps<LayerSettings<'locations'>>) => {
   const SOURCE = useSource({ settings, filters });
   const LAYER = useLayer({ settings });
 

@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
-import { LayerSettings } from 'store/explore-map';
-
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { useCrops } from 'hooks/crops';
 
@@ -20,12 +19,12 @@ interface UseCropsSourceProps {
 }
 
 interface UseCropsLayerProps {
-  settings?: Partial<LayerSettings>;
+  settings?: Partial<LayerSettings<'crops'>>;
 }
 
 interface UseCropsLegendProps {
   dataset: Dataset;
-  settings?: LayerSettings;
+  settings?: LayerSettings<'crops'>;
 }
 
 export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {
@@ -74,7 +73,7 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
   };
 }
 
-export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer {
+export function useLayer({ settings }: UseCropsLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -92,14 +91,7 @@ export function useLayer({ settings = {} }: UseCropsLayerProps): AnyLayer {
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseCropsLegendProps) {
+export function useLegend({ dataset, settings }: UseCropsLegendProps) {
   const { data: cropsData } = useCrops();
 
   const colormap = useMemo(() => {
