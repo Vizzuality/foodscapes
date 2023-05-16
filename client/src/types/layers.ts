@@ -14,8 +14,8 @@ import { Settings } from 'components/map/legend/types';
 export type LayerProps<S> = {
   id?: string;
   beforeId?: string;
+  settings: Partial<S>;
   zIndex?: number;
-  settings?: Partial<S>;
   filters?: FiltersProps;
 };
 

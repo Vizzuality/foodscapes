@@ -109,7 +109,7 @@ export function useLegend({ dataset, settings }: UseFoodscapesLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,
-      name: dataset.label,
+      name: settings.group ? dataset.labelGroup : dataset.label,
       ...((!foodscapesData || !foodscapesData.length) && {
         colormap,
       }),

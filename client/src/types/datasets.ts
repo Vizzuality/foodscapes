@@ -18,6 +18,7 @@ export interface Dataset {
     | 'countries'
     | 'provinces';
   label: string;
+  labelGroup?: string;
   group: string;
   layer: {
     enabled: boolean;

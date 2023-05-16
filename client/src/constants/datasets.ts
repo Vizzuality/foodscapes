@@ -5,6 +5,7 @@ export const DATASETS = [
   {
     id: 'foodscapes',
     label: 'Foodscapes',
+    labelGroup: 'Soil Groups',
     group: 'foodscapes',
     layer: {
       enabled: true,
@@ -111,6 +112,7 @@ export const DATASETS = [
   {
     id: 'crops',
     label: 'Crops',
+    labelGroup: 'Crop Groups',
     group: 'foodscapes',
     layer: {
       enabled: true,
