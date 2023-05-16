@@ -16,6 +16,7 @@ import env from 'env.mjs';
 
 interface UseCropsSourceProps {
   filters: FiltersProps;
+  settings?: Partial<LayerSettings<'crops'>>;
 }
 
 interface UseCropsLayerProps {
@@ -27,7 +28,10 @@ interface UseCropsLegendProps {
   settings?: LayerSettings<'crops'>;
 }
 
-export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { key: string } {
+export function useSource({
+  filters,
+  settings,
+}: UseCropsSourceProps): AnySourceData & { key: string } {
   const { data: cropsData } = useCrops();
 
   const DATASET = DATASETS.find((d) => d.id === 'crops');
@@ -37,13 +41,13 @@ export function useSource({ filters }: UseCropsSourceProps): AnySourceData & { k
     const c = cropsData.reduce((acc, v) => {
       return {
         ...acc,
-        [v.value]: v.color,
+        [v.value]: settings.group ? v.parentColor : v.color,
       };
     }, {});
     c[-1] = '#00000000';
 
     return JSON.stringify(c);
-  }, [cropsData]);
+  }, [cropsData, settings.group]);
 
   const expression = useMemo(() => {
     const where = titilerAdapter(filters);
@@ -107,7 +111,7 @@ export function useLegend({ dataset, settings }: UseCropsLegendProps) {
   const legend = useMemo(() => {
     return {
       id: dataset.id,
-      name: dataset.label,
+      name: settings.group ? dataset.labelGroup : dataset.label,
       ...((!cropsData || !cropsData.length) && { colormap }),
       settings: settings,
       settingsManager: {

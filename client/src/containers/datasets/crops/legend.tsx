@@ -24,6 +24,7 @@ import LegendTypeBasic from 'components/map/legend/types/basic/component';
 import { useLegend } from './hooks';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
+const ChartGroup = dynamic(() => import('./chart/group'), { ssr: false });
 
 export interface CropsLegendProps extends LegendItemProps<'crops'> {
   dataset: Dataset;
@@ -43,6 +44,7 @@ const CropsLegend = (props: CropsLegendProps) => {
     isFetched: cropsIsFetched,
     isError: cropsIsError,
   } = useCrops();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>({
     sql: dataset.widget.sql,
     shape: 'array',
@@ -57,12 +59,12 @@ const CropsLegend = (props: CropsLegendProps) => {
         // group by parent
         .from(
           group(
-            cropsData.filter((c) => {
-              return data.find((d) => c.value === d.id);
+            cropsData.filter((f) => {
+              return data.find((d) => f.value === d.id);
             }),
             (d) => d.parentLabel
           ),
-          ([key, value]) => ({ key, value })
+          ([key, value]) => ({ key, color: value.reduce((acc, v) => v.parentColor, ''), value })
         )
         // sort by key
         .sort((a, b) => a.key.localeCompare(b.key))
@@ -80,29 +82,62 @@ const CropsLegend = (props: CropsLegendProps) => {
         <div className="divide-y divide-navy-500/20">
           <div className="ml-0.5 px-4 pt-3 pb-5">
             <div className="h-3.5">
-              <Chart dataset={dataset} ignore={null} />
+              {!settings.group && (
+                <Chart
+                  //
+                  dataset={dataset}
+                  ignore={null}
+                />
+              )}
+
+              {settings.group && (
+                <ChartGroup
+                  //
+                  dataset={dataset}
+                  selected={filters.crops}
+                  ignore={null}
+                />
+              )}
             </div>
           </div>
 
           <ul className="divide-y divide-navy-500/20 py-4">
-            {GROUPED_DATA.map((g) => (
+            {!settings.group &&
+              GROUPED_DATA.map((g) => (
+                <li
+                  key={g.key}
+                  className={cn({
+                    'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
+                  })}
+                >
+                  <h4 className="text-xs font-bold">{g.key}</h4>
+                  <LegendTypeBasic
+                    items={g.value.map((v) => {
+                      return {
+                        value: v.label,
+                        color: v.color,
+                      };
+                    })}
+                  />
+                </li>
+              ))}
+
+            {settings.group && (
               <li
-                key={g.key}
                 className={cn({
                   'ml-0.5 space-y-2 py-4 px-4 first:pt-0 last:pb-0': true,
                 })}
               >
-                <h4 className="text-xs font-bold">{g.key}</h4>
                 <LegendTypeBasic
-                  items={g.value.map((v) => {
+                  items={GROUPED_DATA.map((v) => {
                     return {
-                      value: v.label,
+                      value: v.key,
                       color: v.color,
                     };
                   })}
                 />
               </li>
-            ))}
+            )}
           </ul>
         </div>
       </LegendContent>
