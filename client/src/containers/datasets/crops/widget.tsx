@@ -175,7 +175,10 @@ const CropsWidget = () => {
       <WidgetHeader title={DATASET.label} dataset={DATASET} />
 
       <div className="space-y-2">
-        <p>Crop output in fresh weight of major crop groupings from each foodscape.</p>
+        <p>
+          Dominant crops are the primary agricultural product grown within a specific area. They
+          represent the crops with the highest production level among all the crops at each pixel.
+        </p>
       </div>
 
       <WidgetContent
