@@ -1,7 +1,8 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import cx from 'classnames';
 
+import { Float } from '@headlessui-float/react';
 import { Listbox, Transition } from '@headlessui/react';
 
 import Icon from 'components/icon';
@@ -30,7 +31,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     values,
     onChange,
   } = props;
-  const ref = useRef(null);
+
   const initialValues = values || [];
   const [selected, setSelected] = useState(initialValues);
 
@@ -102,36 +103,34 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       >
         {({ open }) => (
           <>
-            <div className="relative" ref={ref}>
-              <span className="inline-block w-full">
-                <Listbox.Button
-                  className={cx({
-                    [THEME[theme].button.base]: true,
-                    [THEME[theme].button.states.disabled]: disabled,
-                    [THEME[theme].button.states.valid]: state === 'valid',
-                    [THEME[theme].button.states.error]: state === 'error',
-                    [THEME.sizes[size]]: true,
-                  })}
-                >
-                  <span className="block truncate">{SELECTED}</span>
-                  <span className="pointer-events-none absolute inset-y-px right-0 flex items-center pr-3">
-                    <Loading
-                      visible={loading}
-                      className={THEME[theme].loading}
-                      iconClassName="w-3 h-3"
-                    />
+            <Float placement="bottom-start">
+              <Listbox.Button
+                className={cx({
+                  [THEME[theme].button.base]: true,
+                  [THEME[theme].button.states.disabled]: disabled,
+                  [THEME[theme].button.states.valid]: state === 'valid',
+                  [THEME[theme].button.states.error]: state === 'error',
+                  [THEME.sizes[size]]: true,
+                })}
+              >
+                <span className="block truncate">{SELECTED}</span>
+                <span className="pointer-events-none inset-y-px flex items-center">
+                  <Loading
+                    visible={loading}
+                    className={THEME[theme].loading}
+                    iconClassName="w-3 h-3"
+                  />
 
-                    {!loading && (
-                      <Icon
-                        icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                        className={cx({
-                          'h-3 w-3': true,
-                        })}
-                      />
-                    )}
-                  </span>
-                </Listbox.Button>
-              </span>
+                  {!loading && (
+                    <Icon
+                      icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
+                      className={cx({
+                        'h-3 w-3': true,
+                      })}
+                    />
+                  )}
+                </span>
+              </Listbox.Button>
 
               <Transition
                 unmount={false}
@@ -140,7 +139,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
                 className={cx({
-                  'absolute bottom-full z-10 w-full min-w-[250px] overflow-y-auto shadow-lg': true,
+                  'z-10 w-full min-w-[250px] overflow-y-auto shadow-lg': true,
                 })}
               >
                 <Listbox.Options
@@ -188,7 +187,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                         {({ active: a, selected: s, disabled: d }) => (
                           <div
                             className={cx({
-                              'relative flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
+                              'flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
                                 true,
                               [THEME[theme].item.base]: true,
                               [THEME[theme].item.active]: a,
@@ -215,7 +214,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   })}
                 </Listbox.Options>
               </Transition>
-            </div>
+            </Float>
           </>
         )}
       </Listbox>

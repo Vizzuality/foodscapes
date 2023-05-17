@@ -2,7 +2,7 @@ const THEME = {
   dark: {
     container: 'text-white text-sm',
     button: {
-      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
+      base: 'w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
       states: {
         none: 'border-white',
         error: 'border-red-500',
@@ -24,7 +24,7 @@ const THEME = {
   light: {
     container: 'text-gray-600 text-sm',
     button: {
-      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-white',
+      base: 'flex justify-between items-center w-full text-left transition duration-150 ease-in-out cursor-pointer border-b border-dashed bg-white',
       states: {
         none: 'border-gray-800',
         error: 'border-red-500',
@@ -66,8 +66,8 @@ const THEME = {
   },
 
   sizes: {
-    base: 'pl-4 pr-10 py-3 text-sm',
-    s: 'pl-4 pr-10 py-1.5 text-sm',
+    base: 'pl-1 pr-1 py-3 text-sm',
+    s: 'pl-1 pr-1 py-1.5 text-sm',
     none: 'pr-10',
   },
 };
