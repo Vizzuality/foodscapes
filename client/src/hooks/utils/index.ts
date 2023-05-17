@@ -22,3 +22,24 @@ export function convertHexToRgbaArray(hex: ColorHex, opacity: number = 1): numbe
   const alpha = opacity * 255;
   return [red, green, blue, alpha];
 }
+
+export function getArrayValue(prev: readonly number[], key: number) {
+  const fs = [...prev];
+
+  if (fs.length === 1) {
+    return [];
+  } else {
+    return [key];
+  }
+}
+
+export function getArrayGroupValue(prev: readonly number[], key: number, ids: readonly number[]) {
+  const fs = [...prev];
+
+  // if all ids are in fs, remove all
+  if (fs.length === ids.length) {
+    return [];
+  } else {
+    return ids;
+  }
+}
