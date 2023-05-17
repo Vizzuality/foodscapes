@@ -67,7 +67,7 @@ const CropsWidget = () => {
             .filter((v) => data.map((d) => d.id).includes(v.value))
 
             .map((v) => v.value);
-          return ids.every((i) => crops.includes(i));
+          return ids.length && ids.some((i) => crops.includes(i));
         })
         .map((g) => g.value)
     );
@@ -76,6 +76,11 @@ const CropsWidget = () => {
   const OPTIONS = useMemo(() => {
     return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, cropsData]);
+
+  const GROUPED_OPTIONS = useMemo(() => {
+    if (!data || !cropsGroupData) return [];
+    return cropsGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, cropsGroupData]);
 
   const handleBarClick = (key: number) => {
     setCrops((prev) => getArrayValue(prev, key));
@@ -199,7 +204,7 @@ const CropsWidget = () => {
                 size="s"
                 theme="light"
                 placeholder="Filter crop groups"
-                options={cropsGroupData}
+                options={GROUPED_OPTIONS}
                 values={GROUPED_SELECTED}
                 batchSelectionActive
                 clearSelectionActive

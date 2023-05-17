@@ -65,6 +65,11 @@ const FoodscapesWidget = () => {
     return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, foodscapesData]);
 
+  const GROUPED_OPTIONS = useMemo(() => {
+    if (!data || !foodscapesGroupData) return [];
+    return foodscapesGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, foodscapesGroupData]);
+
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     if (!data || !foodscapesGroupData) return [];
     return (
@@ -74,7 +79,8 @@ const FoodscapesWidget = () => {
           const ids = g.values
             .filter((v) => data.map((d) => d.id).includes(v.value))
             .map((v) => v.value);
-          return ids.every((i) => foodscapes.includes(i));
+
+          return ids.length && ids.some((i) => foodscapes.includes(i));
         })
         .map((g) => g.value)
     );
@@ -206,7 +212,7 @@ const FoodscapesWidget = () => {
                 size="s"
                 theme="light"
                 placeholder="Filter soil groups"
-                options={foodscapesGroupData}
+                options={GROUPED_OPTIONS}
                 values={GROUPED_SELECTED}
                 batchSelectionActive
                 clearSelectionActive
