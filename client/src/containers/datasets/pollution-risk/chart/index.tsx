@@ -6,7 +6,7 @@ import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { PollutionRiskData } from 'types/data';
+import { FiltersOmitProps, PollutionRiskData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
@@ -20,6 +20,7 @@ import { PieChartData } from 'components/charts/pie/types';
 interface RisksChartParentProps {
   dataset: Dataset;
   selected?: readonly number[];
+  ignore: FiltersOmitProps;
   onPieClick?: (data: PieChartData) => void;
 }
 
@@ -28,8 +29,15 @@ interface RisksChartProps extends RisksChartParentProps {
   height: number;
 }
 
-const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChartProps) => {
-  const filters = useRecoilValue(filtersSelector('pollutionRisk'));
+const RisksChart = ({
+  width,
+  height,
+  dataset,
+  selected,
+  ignore = 'pollutionRisk',
+  onPieClick,
+}: RisksChartProps) => {
+  const filters = useRecoilValue(filtersSelector(ignore));
 
   const { data: pollutionRiskData } = usePollutionRisks();
 
@@ -58,14 +66,16 @@ const RisksChart = ({ width, height, dataset, selected, onPieClick }: RisksChart
 
     const total = d[-1] + d[1];
 
-    return pollutionRiskData.map((c) => {
-      return {
-        ...c,
-        id: c.value,
-        value: d[c.value] / total,
-        color: c.color,
-      };
-    });
+    return pollutionRiskData
+      .map((c) => {
+        return {
+          ...c,
+          id: c.value,
+          value: d[c.value] / total,
+          color: c.color,
+        };
+      })
+      .filter((c) => c.value > 0);
   }, [pollutionRiskData, data]);
 
   const { format: formatPercentage } = new Intl.NumberFormat('en-US', {

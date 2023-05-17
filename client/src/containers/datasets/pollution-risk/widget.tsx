@@ -88,7 +88,12 @@ const PollutionRiskWidget = () => {
             <p className="font-bold">Pesticide Risk</p>
 
             <div className="h-64 w-full">
-              <Chart dataset={DATASET} selected={pollution} onPieClick={handleChartClick} />
+              <Chart
+                dataset={DATASET}
+                selected={pollution}
+                ignore={null}
+                onPieClick={handleChartClick}
+              />
             </div>
           </div>
 

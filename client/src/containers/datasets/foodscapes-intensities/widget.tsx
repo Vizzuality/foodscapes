@@ -10,6 +10,7 @@ import { FoodscapeIntensityData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
+import { getArrayValue } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -49,20 +50,7 @@ const FoodscapesIntensitiesWidget = () => {
   }, [data, intensitiesData]);
 
   const handleBarClick = (key: number) => {
-    setIntensities((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const index = fs.findIndex((f) => f === key);
-
-      if (index === -1) {
-        fs.push(key);
-      } else {
-        fs.splice(index, 1);
-      }
-
-      return fs;
-    });
+    setIntensities((prev) => getArrayValue(prev, key));
   };
 
   return (
@@ -97,6 +85,7 @@ const FoodscapesIntensitiesWidget = () => {
               //
               dataset={DATASET}
               selected={intensities}
+              ignore={null}
               onBarClick={handleBarClick}
               interactive
             />

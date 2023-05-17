@@ -32,6 +32,12 @@ export interface PollutionRiskData {
   not_risk: number;
 }
 
+export interface LocationData {
+  id: number;
+  name: string;
+  parent_id: number;
+}
+
 export type PointData = {
   band_names: string[];
   coordinates: [number, number];

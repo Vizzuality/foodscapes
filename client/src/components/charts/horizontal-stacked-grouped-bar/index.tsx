@@ -6,7 +6,7 @@ import { PatternLines } from '@visx/pattern';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { ScaleLinear, ScaleBand, ScaleOrdinal } from 'd3-scale';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
 
@@ -249,7 +249,7 @@ const HorizontalStackedGroupedBar = <
                           />
                         )}
 
-                        <AnimatePresence>
+                        {/* <AnimatePresence>
                           {ALL_SELECTED.includes(bar.key) && interactive && (
                             <motion.rect
                               key={`bar-stack-${barStack.index}-${bar.index}-selected`}
@@ -279,7 +279,7 @@ const HorizontalStackedGroupedBar = <
                                   height={bar.height}
                                   fill="transparent"
                                   stroke="#1C274A"
-                                  strokeWidth={2}
+                                  strokeWidth={1}
                                   strokeDasharray="5 3"
                                   pointerEvents="none"
                                   shapeRendering="crispEdges"
@@ -304,7 +304,7 @@ const HorizontalStackedGroupedBar = <
                               </>
                             )
                           )}
-                        </AnimatePresence>
+                        </AnimatePresence> */}
                       </g>
                     );
                   })
@@ -313,7 +313,19 @@ const HorizontalStackedGroupedBar = <
             </BarStackHorizontal>
           </TooltipProvider>
 
-          {((!ALL_SELECTED.length && !PARTIAL_SELECTED.length) || !interactive) && !hover && (
+          {/* {((!ALL_SELECTED.length && !PARTIAL_SELECTED.length) || !interactive) && !hover && (
+            <rect
+              width={Math.max(width - 4, 0)}
+              height={Math.max(height - 4, 0)}
+              fill="transparent"
+              stroke="#1C274A"
+              strokeWidth={1}
+              pointerEvents="none"
+              shapeRendering="crispEdges"
+            />
+          )} */}
+
+          {!hover && (
             <rect
               width={Math.max(width - 4, 0)}
               height={Math.max(height - 4, 0)}

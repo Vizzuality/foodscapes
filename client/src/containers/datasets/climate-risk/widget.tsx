@@ -88,7 +88,12 @@ const ClimateRiskWidget = () => {
             <p className="font-bold">Climate Risk</p>
 
             <div className="h-64 w-full">
-              <Chart dataset={DATASET} selected={climateChange} onPieClick={handleChartClick} />
+              <Chart
+                ignore={null}
+                dataset={DATASET}
+                selected={climateChange}
+                onPieClick={handleChartClick}
+              />
             </div>
           </div>
 

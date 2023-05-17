@@ -13,6 +13,7 @@ import { LayerSettings } from 'types/layers';
 
 import { useCrops, useCropsGroups } from 'hooks/crops';
 import { useData } from 'hooks/data';
+import { getArrayGroupValue, getArrayValue } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -66,7 +67,7 @@ const CropsWidget = () => {
             .filter((v) => data.map((d) => d.id).includes(v.value))
 
             .map((v) => v.value);
-          return ids.every((i) => crops.includes(i));
+          return ids.length && ids.some((i) => crops.includes(i));
         })
         .map((g) => g.value)
     );
@@ -76,21 +77,13 @@ const CropsWidget = () => {
     return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, cropsData]);
 
+  const GROUPED_OPTIONS = useMemo(() => {
+    if (!data || !cropsGroupData) return [];
+    return cropsGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, cropsGroupData]);
+
   const handleBarClick = (key: number) => {
-    setCrops((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const index = fs.findIndex((f) => f === key);
-
-      if (index === -1) {
-        fs.push(key);
-      } else {
-        fs.splice(index, 1);
-      }
-
-      return fs;
-    });
+    setCrops((prev) => getArrayValue(prev, key));
   };
 
   const handleBarGroupClick = (key: number) => {
@@ -100,28 +93,7 @@ const CropsWidget = () => {
       })
       .map((d) => d.value);
 
-    setCrops((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const every = ids.every((i) => fs.includes(i));
-
-      // if all ids are in fs, remove all
-      if (every) {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          fs.splice(index, 1);
-        });
-      } else {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          if (index === -1) {
-            fs.push(i);
-          }
-        });
-      }
-      return fs;
-    });
+    setCrops((prev) => getArrayGroupValue(prev, key, ids));
   };
 
   const handleSelectGroupOnChange = useCallback(
@@ -213,6 +185,7 @@ const CropsWidget = () => {
                   //
                   dataset={DATASET}
                   selected={crops}
+                  ignore={null}
                   onBarClick={handleBarClick}
                   interactive
                 />
@@ -231,7 +204,7 @@ const CropsWidget = () => {
                 size="s"
                 theme="light"
                 placeholder="Filter crop groups"
-                options={cropsGroupData}
+                options={GROUPED_OPTIONS}
                 values={GROUPED_SELECTED}
                 batchSelectionActive
                 clearSelectionActive
@@ -242,6 +215,7 @@ const CropsWidget = () => {
                 <ChartGroup
                   dataset={DATASET}
                   selected={crops}
+                  ignore={null}
                   onBarClick={handleBarGroupClick}
                   interactive
                 />

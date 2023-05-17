@@ -13,6 +13,7 @@ import { LayerSettings } from 'types/layers';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
+import { getArrayGroupValue, getArrayValue } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -64,6 +65,11 @@ const FoodscapesWidget = () => {
     return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, foodscapesData]);
 
+  const GROUPED_OPTIONS = useMemo(() => {
+    if (!data || !foodscapesGroupData) return [];
+    return foodscapesGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, foodscapesGroupData]);
+
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     if (!data || !foodscapesGroupData) return [];
     return (
@@ -73,27 +79,15 @@ const FoodscapesWidget = () => {
           const ids = g.values
             .filter((v) => data.map((d) => d.id).includes(v.value))
             .map((v) => v.value);
-          return ids.every((i) => foodscapes.includes(i));
+
+          return ids.length && ids.some((i) => foodscapes.includes(i));
         })
         .map((g) => g.value)
     );
   }, [data, foodscapesGroupData, foodscapes]);
 
   const handleBarClick = (key: number) => {
-    setFoodscapes((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const index = fs.findIndex((f) => f === key);
-
-      if (index === -1) {
-        fs.push(key);
-      } else {
-        fs.splice(index, 1);
-      }
-
-      return fs;
-    });
+    setFoodscapes((prev) => getArrayValue(prev, key));
   };
 
   const handleBarGroupClick = (key: number) => {
@@ -103,28 +97,7 @@ const FoodscapesWidget = () => {
       })
       .map((d) => d.value);
 
-    setFoodscapes((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const every = ids.every((i) => fs.includes(i));
-
-      // if all ids are in fs, remove all
-      if (every) {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          fs.splice(index, 1);
-        });
-      } else {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          if (index === -1) {
-            fs.push(i);
-          }
-        });
-      }
-      return fs;
-    });
+    setFoodscapes((prev) => getArrayGroupValue(prev, key, ids));
   };
 
   const handleSelectGroupOnChange = useCallback(
@@ -220,6 +193,7 @@ const FoodscapesWidget = () => {
                   //
                   dataset={DATASET}
                   selected={foodscapes}
+                  ignore={null}
                   onBarClick={handleBarClick}
                   interactive
                 />
@@ -238,7 +212,7 @@ const FoodscapesWidget = () => {
                 size="s"
                 theme="light"
                 placeholder="Filter soil groups"
-                options={foodscapesGroupData}
+                options={GROUPED_OPTIONS}
                 values={GROUPED_SELECTED}
                 batchSelectionActive
                 clearSelectionActive
@@ -250,10 +224,15 @@ const FoodscapesWidget = () => {
                 <ChartGroup
                   dataset={DATASET}
                   selected={foodscapes}
+                  ignore={null}
                   onBarClick={handleBarGroupClick}
                   interactive
                 />
               </div>
+
+              <WidgetTop label="See top largest foodscapes">
+                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
           </TabsContent>
         </Tabs>

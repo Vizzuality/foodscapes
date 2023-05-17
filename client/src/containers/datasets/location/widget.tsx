@@ -1,24 +1,31 @@
-import { provinceAtom, countryAtom } from 'store/explore-map';
+import { useMemo } from 'react';
+
+import { provinceAtom, countryAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { LocationData } from 'types/data';
+
 import { useCountries } from 'hooks/countries';
+import { useData } from 'hooks/data';
 import { useProvinces } from 'hooks/provinces';
 
 import { DATASETS } from 'constants/datasets';
 
-import { WidgetContent, WidgetHeader } from 'containers/widget';
+import { WidgetContent } from 'containers/widget';
 
 import SingleSelect from 'components/ui/select/single/component';
 
 const LocationRankingWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'locations');
-
   const country = useRecoilValue(countryAtom);
   const setCountry = useSetRecoilState(countryAtom);
 
   const province = useRecoilValue(provinceAtom);
   const setProvince = useSetRecoilState(provinceAtom);
+
+  const DATASET = DATASETS.find((d) => d.id === 'locations');
+
+  const filters = useRecoilValue(filtersSelector(['country', 'province']));
 
   const {
     data: provincesData,
@@ -36,14 +43,32 @@ const LocationRankingWidget = () => {
     isError: countriesIsError,
   } = useCountries();
 
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<LocationData>({
+    sql: DATASET.widget.sql,
+    shape: 'array',
+    ...filters,
+  });
+
+  const COUNTRY_OPTIONS = useMemo(() => {
+    if (!data || !countriesData) return [];
+    return countriesData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, countriesData]);
+
+  const PROVINCE_OPTIONS = useMemo(() => {
+    if (!data || !provincesData) return [];
+    return provincesData.filter((c) => data.map((d) => d.id).includes(c.value));
+  }, [data, provincesData]);
+
   return (
-    <section className="space-y-4 py-10">
-      <WidgetHeader title="Location ranking" dataset={DATASET} />
+    <section className="space-y-4 pb-10">
+      {/* <WidgetHeader title="Location ranking" dataset={DATASET} /> */}
       <WidgetContent
-        isPlaceholderData={countriesIsPlaceholderData || (country && provincesIsPlaceholderData)}
-        isFetching={countriesIsFetching || (country && provincesIsFetching)}
-        isFetched={countriesIsFetched && (!country || (country && provincesIsFetched))}
-        isError={countriesIsError || (country && provincesIsError)}
+        isPlaceholderData={
+          isPlaceholderData || countriesIsPlaceholderData || (country && provincesIsPlaceholderData)
+        }
+        isFetching={isFetching || countriesIsFetching || (country && provincesIsFetching)}
+        isFetched={isFetched && countriesIsFetched && (!country || (country && provincesIsFetched))}
+        isError={isError || countriesIsError || (country && provincesIsError)}
       >
         <div className="space-y-5">
           <SingleSelect
@@ -51,7 +76,7 @@ const LocationRankingWidget = () => {
             size="s"
             theme="light"
             placeholder="Select a country"
-            options={countriesData}
+            options={COUNTRY_OPTIONS}
             value={country ?? null}
             onChange={(value) => {
               if (value === null) {
@@ -69,7 +94,7 @@ const LocationRankingWidget = () => {
             size="s"
             theme="light"
             placeholder="Select a region"
-            options={provincesData}
+            options={PROVINCE_OPTIONS}
             value={province ?? null}
             onChange={(value) => {
               if (value === null) {
