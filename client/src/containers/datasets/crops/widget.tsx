@@ -213,6 +213,7 @@ const CropsWidget = () => {
                   //
                   dataset={DATASET}
                   selected={crops}
+                  ignore={null}
                   onBarClick={handleBarClick}
                   interactive
                 />
@@ -242,6 +243,7 @@ const CropsWidget = () => {
                 <ChartGroup
                   dataset={DATASET}
                   selected={crops}
+                  ignore={null}
                   onBarClick={handleBarGroupClick}
                   interactive
                 />

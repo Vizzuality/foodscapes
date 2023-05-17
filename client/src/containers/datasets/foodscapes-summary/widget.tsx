@@ -95,7 +95,7 @@ const FoodscapesSummaryWidget = () => {
             {!isPlaceholderData && !isError && (
               <>
                 <dd className="font-display text-3xl">{`~${format(
-                  convertPixelCountToHA(SUMMARY.total_pixels, 1000000) // TODO: extraact this magic number 3086.9136 to a constant
+                  convertPixelCountToHA(SUMMARY.total_pixels, 1000000)
                 )}`}</dd>
                 <dt className="text-xs">Million Hectares</dt>
               </>

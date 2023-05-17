@@ -13,7 +13,7 @@ export const DATASETS = [
       band: 1,
     },
     widget: {
-      enabled: false,
+      enabled: true,
       toolbar: {
         download: true,
         info: true,
@@ -69,7 +69,7 @@ export const DATASETS = [
       band: 3,
     },
     widget: {
-      enabled: false,
+      enabled: true,
       toolbar: {
         download: true,
         info: true,
@@ -120,7 +120,7 @@ export const DATASETS = [
       band: 4,
     },
     widget: {
-      enabled: false,
+      enabled: true,
       toolbar: {
         download: true,
         info: true,
@@ -177,7 +177,7 @@ export const DATASETS = [
       bands: [6, 7, 8, 9, 10],
     },
     widget: {
-      enabled: false,
+      enabled: true,
       toolbar: {
         download: true,
         info: true,
@@ -236,7 +236,7 @@ export const DATASETS = [
       band: 11,
     },
     widget: {
-      enabled: false,
+      enabled: true,
       toolbar: {
         download: true,
         info: true,
@@ -267,7 +267,7 @@ export const DATASETS = [
       band: 12,
     },
     widget: {
-      enabled: false,
+      enabled: true,
       toolbar: {
         download: true,
         info: true,
@@ -357,6 +357,14 @@ export const DATASETS = [
         info: false,
         layer: false,
       },
+      sql: squel
+        .select()
+        .field('province', 'id')
+        .field('country', 'parent_id')
+        .distinct()
+        .from('data')
+        .where('country NOT IN (-9999)')
+        .group('province'),
     },
   },
   {

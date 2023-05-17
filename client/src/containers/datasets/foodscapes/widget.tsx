@@ -220,6 +220,7 @@ const FoodscapesWidget = () => {
                   //
                   dataset={DATASET}
                   selected={foodscapes}
+                  ignore={null}
                   onBarClick={handleBarClick}
                   interactive
                 />
@@ -250,10 +251,15 @@ const FoodscapesWidget = () => {
                 <ChartGroup
                   dataset={DATASET}
                   selected={foodscapes}
+                  ignore={null}
                   onBarClick={handleBarGroupClick}
                   interactive
                 />
               </div>
+
+              <WidgetTop label="See top largest foodscapes">
+                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
           </TabsContent>
         </Tabs>

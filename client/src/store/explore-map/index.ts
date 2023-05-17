@@ -167,20 +167,23 @@ export const provinceAtom = atom({
   ],
 });
 
-export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps>({
+export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps | FiltersOmitProps[]>({
   key: 'filters',
   get:
     (omit) =>
-    ({ get }) => ({
-      ...(omit !== 'foodscapes' && { foodscapes: get(foodscapesAtom) }),
-      ...(omit !== 'intensities' && { intensities: get(intensitiesAtom) }),
-      ...(omit !== 'crops' && { crops: get(cropsAtom) }),
-      ...(omit !== 'climateRisk' && { climateRisk: get(climateRiskAtom) }),
-      ...(omit !== 'landUseRisk' && { landUseRisk: get(landUseRiskAtom) }),
-      ...(omit !== 'pollutionRisk' && { pollutionRisk: get(pollutionRiskAtom) }),
-      ...(omit !== 'country' && { country: get(countryAtom) }),
-      ...(omit !== 'province' && { province: get(provinceAtom) }),
-    }),
+    ({ get }) => {
+      const o = Array.isArray(omit) ? omit : [omit];
+      return {
+        ...(!o.includes('foodscapes') && { foodscapes: get(foodscapesAtom) }),
+        ...(!o.includes('intensities') && { intensities: get(intensitiesAtom) }),
+        ...(!o.includes('crops') && { crops: get(cropsAtom) }),
+        ...(!o.includes('climateRisk') && { climateRisk: get(climateRiskAtom) }),
+        ...(!o.includes('landUseRisk') && { landUseRisk: get(landUseRiskAtom) }),
+        ...(!o.includes('pollutionRisk') && { pollutionRisk: get(pollutionRiskAtom) }),
+        ...(!o.includes('country') && { country: get(countryAtom) }),
+        ...(!o.includes('province') && { province: get(provinceAtom) }),
+      };
+    },
 });
 
 // export function useSyncExploreMap() {

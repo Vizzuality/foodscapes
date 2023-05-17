@@ -97,6 +97,7 @@ const FoodscapesIntensitiesWidget = () => {
               //
               dataset={DATASET}
               selected={intensities}
+              ignore={null}
               onBarClick={handleBarClick}
               interactive
             />

@@ -91,7 +91,12 @@ const LandUseRiskWidget = () => {
 
           <div className="space flex flex-col items-center space-y-2.5 py-2.5 text-xs">
             <div className="w-full">
-              <Chart dataset={DATASET} selected={landUseRisk} onBarClick={handleBarClick} />
+              <Chart
+                dataset={DATASET}
+                selected={landUseRisk}
+                ignore={null}
+                onBarClick={handleBarClick}
+              />
             </div>
           </div>
 

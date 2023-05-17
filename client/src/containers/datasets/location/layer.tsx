@@ -6,7 +6,7 @@ import { useLayer, useSource } from './hooks';
 
 const LocationLayer = ({ settings, filters, beforeId }: LayerProps<LayerSettings<'locations'>>) => {
   const SOURCE = useSource({ settings, filters });
-  const LAYER = useLayer({ settings });
+  const LAYER = useLayer({ settings, filters });
 
   if (!SOURCE || !LAYER) return null;
 

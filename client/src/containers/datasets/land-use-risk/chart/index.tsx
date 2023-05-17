@@ -6,7 +6,7 @@ import { ParentSize } from '@visx/responsive';
 import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { LandUseRiskData } from 'types/data';
+import { FiltersOmitProps, LandUseRiskData } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
@@ -18,6 +18,7 @@ import HorizontalBar from 'components/charts/horizontal-bar';
 interface LandUseRiskChartParentProps {
   dataset: Dataset;
   selected?: readonly number[];
+  ignore: FiltersOmitProps;
   onBarClick?: (bar) => void;
 }
 
@@ -26,8 +27,13 @@ interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
   height: number;
 }
 
-const LandUseRiskChart = ({ dataset, selected, onBarClick }: LandUseRiskChartProps) => {
-  const filters = useRecoilValue(filtersSelector('landUseRisk'));
+const LandUseRiskChart = ({
+  dataset,
+  selected,
+  ignore = 'landUseRisk',
+  onBarClick,
+}: LandUseRiskChartProps) => {
+  const filters = useRecoilValue(filtersSelector(ignore));
 
   const { data: landUseRisksData } = useLandUseRisks();
 

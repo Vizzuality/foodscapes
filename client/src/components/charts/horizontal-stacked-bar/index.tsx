@@ -5,7 +5,7 @@ import { Group } from '@visx/group';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { ScaleLinear, ScaleBand, ScaleOrdinal } from 'd3-scale';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
 
@@ -148,7 +148,7 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
                           />
                         )}
 
-                        <AnimatePresence>
+                        {/* <AnimatePresence>
                           {selected?.includes(bar.key) && (
                             <motion.rect
                               key={`bar-stack-${barStack.index}-${bar.index}-selected`}
@@ -166,7 +166,7 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
                               exit={{ opacity: 0 }}
                             />
                           )}
-                        </AnimatePresence>
+                        </AnimatePresence> */}
                       </g>
                     );
                   })
@@ -175,7 +175,7 @@ const HorizontalStackedBar = <D extends DataProps, C extends ChartDataProps>({
             </BarStackHorizontal>
           </TooltipProvider>
 
-          {!selected?.length && !hover && (
+          {!hover && (
             <rect
               width={Math.max(width - 4, 0)}
               height={Math.max(height - 4, 0)}

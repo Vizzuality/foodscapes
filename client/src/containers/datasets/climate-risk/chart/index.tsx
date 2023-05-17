@@ -6,7 +6,7 @@ import { ParentSize } from '@visx/responsive';
 import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
-import { ClimateRiskData } from 'types/data';
+import { ClimateRiskData, FiltersOmitProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 
 import { useClimateRisks } from 'hooks/climate-risks';
@@ -20,6 +20,7 @@ import { PieChartData } from 'components/charts/pie/types';
 interface ClimateRiskParentProps {
   dataset: Dataset;
   selected?: readonly number[];
+  ignore: FiltersOmitProps;
   onPieClick?: (data: PieChartData) => void;
 }
 
@@ -28,8 +29,15 @@ interface ClimateRiskProps extends ClimateRiskParentProps {
   height: number;
 }
 
-const ClimateRisk = ({ width, height, dataset, selected, onPieClick }: ClimateRiskProps) => {
-  const filters = useRecoilValue(filtersSelector('climateRisk'));
+const ClimateRisk = ({
+  width,
+  height,
+  dataset,
+  selected,
+  ignore = 'climateRisk',
+  onPieClick,
+}: ClimateRiskProps) => {
+  const filters = useRecoilValue(filtersSelector(ignore));
 
   const { data: climateRisksData } = useClimateRisks();
 
@@ -58,14 +66,16 @@ const ClimateRisk = ({ width, height, dataset, selected, onPieClick }: ClimateRi
 
     const total = d[-1] + d[1];
 
-    return climateRisksData.map((c) => {
-      return {
-        ...c,
-        id: c.value,
-        value: d[c.value] / total,
-        color: c.color,
-      };
-    });
+    return climateRisksData
+      .map((c) => {
+        return {
+          ...c,
+          id: c.value,
+          value: d[c.value] / total,
+          color: c.color,
+        };
+      })
+      .filter((c) => c.value > 0);
   }, [climateRisksData, data]);
 
   const { format: formatPercentage } = new Intl.NumberFormat('en-US', {

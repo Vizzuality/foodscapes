@@ -14,6 +14,7 @@ interface UseFoodscapesSourceProps {
 }
 
 interface UseFoodscapesLayerProps {
+  filters: FiltersProps;
   settings?: Partial<LayerSettings<'locations'>>;
 }
 
@@ -31,11 +32,11 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
   };
 }
 
-export function useLayer({ settings }: UseFoodscapesLayerProps): AnyLayer {
+export function useLayer({ settings, filters }: UseFoodscapesLayerProps): AnyLayer {
   const visibility = settings?.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'location-layer',
+      id: `locations-${filters.country}-${filters.province}`,
       type: 'line',
       paint: {
         'line-color': '#000000',
@@ -45,7 +46,7 @@ export function useLayer({ settings }: UseFoodscapesLayerProps): AnyLayer {
         visibility: visibility ? 'visible' : 'none',
       },
     };
-  }, [settings, visibility]);
+  }, [settings, filters, visibility]);
 
   return layer;
 }

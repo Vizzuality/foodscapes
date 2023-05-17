@@ -19,16 +19,16 @@ const LocationsSidebar = forwardRef(() => {
             nature-based solutions that would work in one spefic area and extrapolate these to
             similar foodscapes worldwide.
           </p>
-          <p>
+          {/* <p>
             This section gives the opportunity to discover the state of foodscapes around the globe.
-          </p>
+          </p> */}
         </div>
       </header>
 
       <div className="w-full px-20">
-        <div className="border-t border-navy-500/30">
-          <LocationRankingWidget />
-        </div>
+        {/* <div className="border-t border-navy-500/30"> */}
+        <LocationRankingWidget />
+        {/* </div> */}
       </div>
     </section>
   );

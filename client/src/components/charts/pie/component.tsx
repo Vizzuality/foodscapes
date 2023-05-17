@@ -76,6 +76,12 @@ export const PieChart = <T extends unknown, C extends unknown>({
                   x: (thickness * 0.5 + 10) * Math.cos(centroidAngle),
                   y: (thickness * 0.5 + 10) * Math.sin(centroidAngle),
                 };
+
+                const textAnchor = () => {
+                  if (data.length === 1) return 'middle';
+                  return centroidAngle > Math.PI ? 'end' : 'start';
+                };
+
                 return (
                   <Group key={arc.data.id}>
                     <path
@@ -118,7 +124,8 @@ export const PieChart = <T extends unknown, C extends unknown>({
                       y={centroidY + offsets.y}
                       dy=".33em"
                       fontSize={9}
-                      textAnchor={centroidAngle > Math.PI ? 'end' : 'start'}
+                      textAnchor={textAnchor()}
+                      // textAnchor="middle"
                       pointerEvents="none"
                       className="text-xxs font-bold"
                     >
