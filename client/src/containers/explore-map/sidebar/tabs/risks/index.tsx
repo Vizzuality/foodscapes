@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import Image from 'next/image';
+
 import ClimateRiskWidget from 'containers/datasets/climate-risk/widget';
 import LandUseWidget from 'containers/datasets/land-use-risk/widget';
 import PollutionRiskWidget from 'containers/datasets/pollution-risk/widget';
@@ -37,6 +39,10 @@ const RisksSidebar = forwardRef(() => {
         <div className="border-t border-navy-500/30">
           <PollutionRiskWidget />
         </div>
+      </div>
+
+      <div>
+        <Image src="/images/sidebar/risks-tab.png" alt="Risks tab" width={640} height={256} />
       </div>
     </section>
   );

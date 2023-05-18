@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import Image from 'next/image';
+
 const OpportunitiesSidebar = forwardRef(() => {
   return (
     <section>
@@ -99,6 +101,15 @@ const OpportunitiesSidebar = forwardRef(() => {
           nisl. Sed euismod, nisl nec ultricies lacinia, nisl nisl condimentum nisl, nec lacinia
           nisl nisl sit amet nisl. Sed euismod, nisl nec
         </p>
+      </div>
+
+      <div>
+        <Image
+          src="/images/sidebar/opportunities-tab.png"
+          alt="Risks tab"
+          width={640}
+          height={256}
+        />
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import Image from 'next/image';
+
 import LocationRankingWidget from 'containers/datasets/location/widget';
 
 const LocationsSidebar = forwardRef(() => {
@@ -29,6 +31,10 @@ const LocationsSidebar = forwardRef(() => {
         {/* <div className="border-t border-navy-500/30"> */}
         <LocationRankingWidget />
         {/* </div> */}
+      </div>
+
+      <div>
+        <Image src="/images/sidebar/locations-tab.png" alt="Risks tab" width={640} height={256} />
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import Image from 'next/image';
+
 import CropsWidget from 'containers/datasets/crops/widget';
 import FoodscapesIntensitiesWidget from 'containers/datasets/foodscapes-intensities/widget';
 import FoodscapesSummaryWidget from 'containers/datasets/foodscapes-summary/widget';
@@ -36,6 +38,10 @@ const FoodscapesSidebar = forwardRef(() => {
         <div className="border-t border-navy-500/30">
           <CropsWidget />
         </div>
+      </div>
+
+      <div>
+        <Image src="/images/sidebar/foodscapes-tab.png" alt="Risks tab" width={640} height={256} />
       </div>
     </section>
   );
