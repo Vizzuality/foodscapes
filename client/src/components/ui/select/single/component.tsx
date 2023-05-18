@@ -3,7 +3,7 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import cx from 'classnames';
 
 import { Float } from '@headlessui-float/react';
-import { Listbox, Transition } from '@headlessui/react';
+import { Listbox } from '@headlessui/react';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -72,18 +72,29 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
       >
         {({ open }) => (
           <>
-            <Float adaptiveWidth placement="bottom-start" portal flip>
+            <Float
+              adaptiveWidth
+              placement="bottom-start"
+              portal
+              flip
+              enter="transition duration-200 ease-out"
+              enterFrom="scale-95 opacity-0"
+              enterTo="scale-100 opacity-100"
+              leave="transition duration-150 ease-in"
+              leaveFrom="scale-100 opacity-100"
+              leaveTo="scale-95 opacity-0"
+            >
               <Listbox.Button
                 className={cx({
+                  [THEME.sizes[size]]: true,
                   [THEME[theme].button.base]: true,
                   [THEME[theme].button.states.disabled]: disabled,
                   [THEME[theme].button.states.valid]: state === 'valid',
                   [THEME[theme].button.states.error]: state === 'error',
-                  [THEME.sizes[size]]: true,
                 })}
               >
                 <span className="block truncate">{SELECTED}</span>
-                <span className="pointer-events-none flex items-center">
+                <span className="pointer-events-none relative inset-y-0.5 flex items-center">
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}
@@ -101,60 +112,49 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                 </span>
               </Listbox.Button>
 
-              <Transition
-                unmount={false}
-                show={open}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+              <Listbox.Options
+                static
                 className={cx({
-                  'z-10 w-full min-w-[250px] overflow-y-auto shadow-lg': true,
+                  'max-h-60 overflow-y-auto text-base leading-6 focus:outline-none': true,
+                  [THEME[theme].menu]: true,
                 })}
               >
-                <Listbox.Options
-                  static
-                  className={cx({
-                    'max-h-60 overflow-y-auto text-base leading-6 focus:outline-none': true,
-                    [THEME[theme].menu]: true,
-                  })}
-                >
-                  <div className="flex px-5 text-sm">
-                    {clearable && (
-                      <Listbox.Option key={null} value={null}>
-                        <button type="button" className="py-2 text-left underline">
-                          {clearSelectionLabel}
-                        </button>
-                      </Listbox.Option>
-                    )}
-                  </div>
+                <div className="flex px-5 text-sm">
+                  {clearable && (
+                    <Listbox.Option key={null} value={null}>
+                      <button type="button" className="py-2 text-left underline">
+                        {clearSelectionLabel}
+                      </button>
+                    </Listbox.Option>
+                  )}
+                </div>
 
-                  {options.map((opt) => {
-                    return (
-                      <Listbox.Option key={opt.value} value={opt.value}>
-                        {({ active: a, selected: s, disabled: d }) => (
-                          <div
+                {options.map((opt) => {
+                  return (
+                    <Listbox.Option key={opt.value} value={opt.value}>
+                      {({ active: a, selected: s, disabled: d }) => (
+                        <div
+                          className={cx({
+                            'flex cursor-pointer select-none space-x-2 py-2 pl-5 pr-4': true,
+                            [THEME[theme].item.base]: true,
+                            [THEME[theme].item.active]: a,
+                            [THEME[theme].item.selected]: s,
+                            [THEME[theme].item.disabled]: d,
+                          })}
+                        >
+                          <span
                             className={cx({
-                              'flex cursor-pointer select-none space-x-2 py-2 pl-5 pr-4': true,
-                              [THEME[theme].item.base]: true,
-                              [THEME[theme].item.active]: a,
-                              [THEME[theme].item.selected]: s,
-                              [THEME[theme].item.disabled]: d,
+                              'block font-semibold line-clamp-2': true,
                             })}
                           >
-                            <span
-                              className={cx({
-                                'block font-semibold line-clamp-2': true,
-                              })}
-                            >
-                              {opt.label}
-                            </span>
-                          </div>
-                        )}
-                      </Listbox.Option>
-                    );
-                  })}
-                </Listbox.Options>
-              </Transition>
+                            {opt.label}
+                          </span>
+                        </div>
+                      )}
+                    </Listbox.Option>
+                  );
+                })}
+              </Listbox.Options>
             </Float>
           </>
         )}

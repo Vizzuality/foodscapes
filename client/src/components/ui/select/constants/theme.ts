@@ -2,7 +2,7 @@ const THEME = {
   dark: {
     container: 'text-white text-sm',
     button: {
-      base: 'flex justify-between items-center italic w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
+      base: 'flex justify-between items-center italic w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700 px-4',
       states: {
         none: 'border-white',
         error: 'border-red-500',
@@ -66,8 +66,8 @@ const THEME = {
   },
 
   sizes: {
-    base: 'pl-1 pr-1 py-3 text-sm',
-    s: 'pl-1 pr-1 py-1.5 text-sm',
+    base: 'px-1 py-3 text-sm',
+    s: 'px-1 py-1.5 text-sm',
     none: 'pr-10',
   },
 };
