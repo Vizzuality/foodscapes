@@ -1,5 +1,5 @@
 import { array, bool, dict, nullable, number, object, optional, string } from '@recoiljs/refine';
-import { atom, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 import { FiltersOmitProps, FiltersProps } from 'types/data';
@@ -16,6 +16,31 @@ export const sidebarOpenAtom = atom({
 export const layersOpenAtom = atom({
   key: 'layers-open',
   default: false,
+});
+
+// Content
+export const contentAtom = atom({
+  key: 'content',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: object({
+        id: number(),
+        type: string(),
+      }),
+    }),
+  ],
+});
+
+export const contentOpenAtom = atom({
+  key: 'content-open',
+  default: selector({
+    key: 'content-open-default',
+    get: ({ get }) => {
+      const content = get(contentAtom);
+      return !!content?.type;
+    },
+  }),
 });
 
 // Map

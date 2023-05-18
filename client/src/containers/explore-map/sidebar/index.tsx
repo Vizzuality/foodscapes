@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import cn from 'lib/classnames';
 
-import { sidebarOpenAtom, tabAtom } from 'store/explore-map';
+import { sidebarOpenAtom, tabAtom, contentOpenAtom } from 'store/explore-map';
 
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { motion } from 'framer-motion';
@@ -26,6 +26,14 @@ const Sidebar = () => {
   const tab = useRecoilValue(tabAtom);
   const setTab = useSetRecoilState(tabAtom);
 
+  const contentOpen = useRecoilValue(contentOpenAtom);
+
+  let motionVariant = open ? 'open' : 'exit';
+
+  if (contentOpen) {
+    motionVariant = 'reduced';
+  }
+
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -39,13 +47,15 @@ const Sidebar = () => {
         <>
           <motion.div
             key="sidebar"
-            initial="initial"
-            animate={open ? 'animate' : 'exit'}
+            initial={motionVariant}
+            animate={motionVariant}
             exit="exit"
             variants={{
-              initial: { x: '0%' },
-              animate: {
+              open: {
                 x: '0%',
+              },
+              reduced: {
+                x: '-5%',
               },
               exit: {
                 x: '-100%',
@@ -91,8 +101,11 @@ const Sidebar = () => {
             <Link
               href="/"
               className={cn({
-                'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 transition-colors sm:block':
+                'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 sm:block':
                   true,
+                'transition-[colors,transform_0.5s] ease-in-out': true,
+                'translate-x-8': motionVariant !== 'reduced',
+                'translate-x-16': motionVariant === 'reduced',
               })}
             >
               Foodscapes
