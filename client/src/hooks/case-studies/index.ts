@@ -57,7 +57,7 @@ const MOCKED_DATA_JSON = [
     geojson: { type: 'FeatureCollection', features: [] },
     bbox: [19.28714942900018, 39.657288000000165, 21.049087524000015, 42.65844345100004],
   },
-];
+] satisfies CaseStudy[];
 
 export function useCaseStudies(queryOptions: UseQueryOptions<CaseStudy[], unknown> = {}) {
   const fetchCaseStudies = () => {
