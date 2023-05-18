@@ -33,12 +33,17 @@ export function getArrayValue(prev: readonly number[], key: number) {
   }
 }
 
-export function getArrayGroupValue(prev: readonly number[], key: number, ids: readonly number[]) {
-  const fs = [...prev];
+export function getArrayGroupValue(prev: readonly number[], ids: readonly number[]) {
+  const prevIds = [...prev];
 
-  // if all ids are in fs, remove all
-  if (fs.length === ids.length) {
-    return [];
+  // if all ids are in prevIds, remove all
+  if (!!prevIds.length) {
+    if (prevIds.every((id) => ids.includes(id))) {
+      return [];
+    }
+
+    // just remove ids that are not in prevIds to preseve current selection
+    return ids.filter((id) => prevIds.includes(id));
   } else {
     return ids;
   }

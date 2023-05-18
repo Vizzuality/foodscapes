@@ -93,7 +93,7 @@ const CropsWidget = () => {
       })
       .map((d) => d.value);
 
-    setCrops((prev) => getArrayGroupValue(prev, key, ids));
+    setCrops((prev) => getArrayGroupValue(prev, ids));
   };
 
   const handleSelectGroupOnChange = useCallback(

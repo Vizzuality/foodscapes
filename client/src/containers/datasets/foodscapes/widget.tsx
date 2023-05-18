@@ -97,7 +97,7 @@ const FoodscapesWidget = () => {
       })
       .map((d) => d.value);
 
-    setFoodscapes((prev) => getArrayGroupValue(prev, key, ids));
+    setFoodscapes((prev) => getArrayGroupValue(prev, ids));
   };
 
   const handleSelectGroupOnChange = useCallback(
