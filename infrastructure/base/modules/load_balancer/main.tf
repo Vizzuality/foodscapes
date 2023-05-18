@@ -1,6 +1,7 @@
 resource "aws_security_group" "lb" {
   name        = "lb-sg"
   description = "Security group for the Application Load Balancer (ALB)"
+  vpc_id      = var.vpc_id
 
   ingress {
     protocol    = "tcp"
@@ -20,6 +21,7 @@ resource "aws_security_group" "lb" {
 resource "aws_security_group" "ecs_tasks" {
   name        = "ecs-tasks-sg"
   description = "Allow TCP connections to apps from load balancer only"
+  vpc_id      = var.vpc_id
 
   ingress {
     protocol        = "tcp"
@@ -86,23 +88,5 @@ resource "aws_lb_listener_rule" "datasette" {
     path_pattern {
       values = ["/data*"]
     }
-  }
-}
-
-resource "aws_lb_target_group" "foodscapes" {
-  name        = "foodscapes-alb-tg"
-  port        = 80
-  protocol    = "HTTP"
-  vpc_id      = var.vpc_id
-  target_type = "ip"
-
-  health_check {
-    healthy_threshold   = "3"
-    interval            = "90"
-    protocol            = "HTTP"
-    matcher             = "200-299"
-    timeout             = "20"
-    path                = "/"
-    unhealthy_threshold = "2"
   }
 }

@@ -1,4 +1,4 @@
-output "aws_lb_target_group_arn" {
-  value = aws_lb_target_group.foodscapes.arn
-  description = "ARN of the Foodscapes load balancer target group"
+output "ecs_tasks_security_group_id" {
+  value       = aws_security_group.ecs_tasks.id
+  description = "Security group for apps on ECS."
 }
