@@ -13,7 +13,14 @@ resource "aws_ecs_task_definition" "task" {
       cpu       = 1024
       memory    = 2048
       essential = true
-      command   = ["sh"]
+      command   = ["sh"],
+      portMappings = [
+        {
+          containerPort = 3000,
+          hostPort      = 3000,
+          protocol      = "tcp"
+        }
+      ]
     },
   ])
 }
@@ -31,17 +38,19 @@ resource "aws_ecs_service" "service" {
 
   task_definition = aws_ecs_task_definition.task.arn
 
-  # load_balancer {
-  #   target_group_arn = var.aws_lb_target_group_arn
-  #   container_name   = var.name
-  #   container_port   = 3000
-  # }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.service.arn
+    container_name   = var.name
+    container_port   = 3000
+  }
 }
 
 resource "aws_lb_target_group" "service" {
   name_prefix = "${substr(var.name, 0, 3)}-"
+  target_type = "ip"
   port        = 3000
   protocol    = "HTTP"
+  vpc_id      = var.vpc_id
 
   health_check {
     path = "/"

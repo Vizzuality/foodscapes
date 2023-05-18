@@ -152,24 +152,3 @@ resource "aws_nat_gateway" "default" {
     var.tags
   )
 }
-
-# @todo Remove once enabling load balancer
-resource "aws_security_group" "ecs_tasks" {
-  name        = "ecs-tasks-sg"
-  description = "Allow TCP connections to apps"
-  vpc_id      = aws_vpc.default.id
-
-  ingress {
-    protocol        = "tcp"
-    from_port       = 3000
-    to_port         = 3000
-    cidr_blocks     = ["0.0.0.0/0"]
-  }
-
-  egress {
-    protocol    = "-1"
-    from_port   = 0
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
