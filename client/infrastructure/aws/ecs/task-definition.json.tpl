@@ -16,7 +16,14 @@
                 "awslogs-stream-prefix": "client",
                 "awslogs-create-group": "true"
                 }
-            }
+            },
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ]
         }
     ],
     "networkMode": "awsvpc",
