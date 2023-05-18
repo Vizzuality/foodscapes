@@ -5,17 +5,22 @@ import { Skeleton } from 'components/ui/skeleton';
 import CaseStudiesListItem from '../list-item/component';
 
 const CaseStudiesList = () => {
-  const { data: caseStudies, isFetching, isFetched, isError, isPlaceholderData } = useCaseStudies();
-
+  const {
+    data: caseStudiesData,
+    isFetching: caseStudiesIsFetching,
+    isFetched: caseStudiesIsFetched,
+    isError: caseStudiesIsError,
+    isPlaceholderData: caseStudiesIsPlaceholderData,
+  } = useCaseStudies();
   return (
     <section className="space-y-4 py-10">
-      {isPlaceholderData && <Skeleton className="h-20 w-full" />}
-      {isError && isFetched && !isFetching && (
+      {caseStudiesIsPlaceholderData && <Skeleton className="h-20 w-full" />}
+      {caseStudiesIsError && caseStudiesIsFetched && !caseStudiesIsFetching && (
         <div className="text-center">Oops!! Something went wrong</div>
       )}
-      {!isPlaceholderData && !isError && (
+      {!caseStudiesIsPlaceholderData && !caseStudiesIsError && (
         <div className="grid grid-cols-2 gap-x-4 gap-y-10">
-          {caseStudies.map((caseStudy) => (
+          {caseStudiesData.map((caseStudy) => (
             <CaseStudiesListItem key={caseStudy.id} caseStudy={caseStudy} />
           ))}
         </div>
