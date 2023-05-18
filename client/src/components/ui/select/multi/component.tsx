@@ -103,7 +103,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       >
         {({ open }) => (
           <>
-            <Float placement="bottom-start" portal flip>
+            <Float adaptiveWidth placement="bottom-start" portal flip>
               <Listbox.Button
                 className={cx({
                   [THEME[theme].button.base]: true,

@@ -2,7 +2,7 @@ const THEME = {
   dark: {
     container: 'text-white text-sm',
     button: {
-      base: 'w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
+      base: 'flex justify-between items-center italic w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
       states: {
         none: 'border-white',
         error: 'border-red-500',
@@ -10,13 +10,13 @@ const THEME = {
         disabled: 'opacity-50',
       },
     },
-    menu: 'bg-gray-500',
-    menuHeader: 'bg-gray-500',
+    menu: 'bg-white border border-navy-400/50',
+    menuHeader: 'bg-white',
     item: {
-      base: 'text-xs text-white',
-      active: 'bg-black text-white',
-      selected: 'bg-gray-700 text-white',
-      disabled: 'opacity-40 text-white',
+      base: 'text-xs text-navy-500 uppercase',
+      active: 'bg-white font-bold',
+      selected: 'bg-white font-semibold',
+      disabled: 'font-normal',
     },
     loading: 'relative flex items-center w-full h-full',
   },
