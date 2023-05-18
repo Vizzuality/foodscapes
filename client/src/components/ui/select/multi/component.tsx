@@ -1,8 +1,9 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import cx from 'classnames';
 
-import { Listbox, Transition } from '@headlessui/react';
+import { Float } from '@headlessui-float/react';
+import { Listbox } from '@headlessui/react';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -30,7 +31,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     values,
     onChange,
   } = props;
-  const ref = useRef(null);
+
   const initialValues = values || [];
   const [selected, setSelected] = useState(initialValues);
 
@@ -102,120 +103,118 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       >
         {({ open }) => (
           <>
-            <div className="relative" ref={ref}>
-              <span className="inline-block w-full">
-                <Listbox.Button
-                  className={cx({
-                    [THEME[theme].button.base]: true,
-                    [THEME[theme].button.states.disabled]: disabled,
-                    [THEME[theme].button.states.valid]: state === 'valid',
-                    [THEME[theme].button.states.error]: state === 'error',
-                    [THEME.sizes[size]]: true,
-                  })}
-                >
-                  <span className="block truncate">{SELECTED}</span>
-                  <span className="pointer-events-none absolute inset-y-px right-0 flex items-center pr-3">
-                    <Loading
-                      visible={loading}
-                      className={THEME[theme].loading}
-                      iconClassName="w-3 h-3"
-                    />
-
-                    {!loading && (
-                      <Icon
-                        icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                        className={cx({
-                          'h-3 w-3': true,
-                        })}
-                      />
-                    )}
-                  </span>
-                </Listbox.Button>
-              </span>
-
-              <Transition
-                unmount={false}
-                show={open}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+            <Float
+              adaptiveWidth
+              placement="bottom-start"
+              portal
+              flip
+              enter="transition duration-200 ease-out"
+              enterFrom="scale-95 opacity-0"
+              enterTo="scale-100 opacity-100"
+              leave="transition duration-150 ease-in"
+              leaveFrom="scale-100 opacity-100"
+              leaveTo="scale-95 opacity-0"
+            >
+              <Listbox.Button
                 className={cx({
-                  'absolute bottom-full z-10 w-full min-w-[250px] overflow-y-auto shadow-lg': true,
+                  [THEME.sizes[size]]: true,
+                  [THEME[theme].button.base]: true,
+                  [THEME[theme].button.states.disabled]: disabled,
+                  [THEME[theme].button.states.valid]: state === 'valid',
+                  [THEME[theme].button.states.error]: state === 'error',
                 })}
               >
-                <Listbox.Options
-                  static
+                <span className="block truncate">{SELECTED}</span>
+                <span className="pointer-events-none relative inset-y-0.5 flex items-center">
+                  <Loading
+                    visible={loading}
+                    className={THEME[theme].loading}
+                    iconClassName="w-3 h-3"
+                  />
+
+                  {!loading && (
+                    <Icon
+                      icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
+                      className={cx({
+                        'h-3 w-3': true,
+                      })}
+                    />
+                  )}
+                </span>
+              </Listbox.Button>
+
+              <Listbox.Options
+                static
+                className={cx({
+                  'max-h-60 overflow-y-auto text-base leading-6 focus:outline-none': true,
+                  [THEME[theme].menu]: true,
+                })}
+              >
+                <div
                   className={cx({
-                    'max-h-60 overflow-y-auto text-base leading-6 focus:outline-none': true,
-                    [THEME[theme].menu]: true,
+                    'sticky top-0 z-10 flex space-x-5 px-5 text-sm': true,
+                    [THEME[theme].menuHeader]: true,
                   })}
                 >
-                  <div
-                    className={cx({
-                      'sticky top-0 z-10 flex space-x-5 px-5 text-sm': true,
-                      [THEME[theme].menuHeader]: true,
-                    })}
-                  >
-                    {batchSelectionActive && (
-                      <button
-                        className="text-grey-20 whitespace-nowrap py-2 text-left underline"
-                        type="button"
-                        onClick={handleSelectAll}
-                      >
-                        {batchSelectionLabel}
-                      </button>
-                    )}
+                  {batchSelectionActive && (
+                    <button
+                      className="text-grey-20 whitespace-nowrap py-2 text-left underline"
+                      type="button"
+                      onClick={handleSelectAll}
+                    >
+                      {batchSelectionLabel}
+                    </button>
+                  )}
 
-                    {clearSelectionActive && (
-                      <button
-                        className="whitespace-nowrap py-2 text-left underline"
-                        type="button"
-                        onClick={handleClearAll}
-                      >
-                        {selected.length < 1 && clearSelectionLabel}
-                        {selected.length >= 1 &&
-                          selected.length !== options.length &&
-                          `${clearSelectionLabel} (${selected.length} Selected)`}
-                        {selected.length === options.length &&
-                          `${clearSelectionLabel} (All selected)`}
-                      </button>
-                    )}
-                  </div>
+                  {clearSelectionActive && (
+                    <button
+                      className="whitespace-nowrap py-2 text-left underline"
+                      type="button"
+                      onClick={handleClearAll}
+                    >
+                      {selected.length < 1 && clearSelectionLabel}
+                      {selected.length >= 1 &&
+                        selected.length !== options.length &&
+                        `${clearSelectionLabel} (${selected.length} Selected)`}
+                      {selected.length === options.length &&
+                        `${clearSelectionLabel} (All selected)`}
+                    </button>
+                  )}
+                </div>
 
-                  {options.map((opt) => {
-                    return (
-                      <Listbox.Option key={opt.value} value={opt.value}>
-                        {({ active: a, selected: s, disabled: d }) => (
-                          <div
+                {options.map((opt) => {
+                  return (
+                    <Listbox.Option key={opt.value} value={opt.value}>
+                      {({ active: a, selected: s, disabled: d }) => (
+                        <div
+                          className={cx({
+                            'flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
+                              true,
+                            [THEME[theme].item.base]: true,
+                            [THEME[theme].item.active]: a,
+                            [THEME[theme].item.selected]: s,
+                            [THEME[theme].item.disabled]: d,
+                          })}
+                        >
+                          <Checkbox
+                            className="cursor-pointer checked:bg-black focus:text-black focus:ring-black"
+                            checked={s}
+                          />
+
+                          <span
                             className={cx({
-                              'relative flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
-                                true,
-                              [THEME[theme].item.base]: true,
-                              [THEME[theme].item.active]: a,
-                              [THEME[theme].item.selected]: s,
-                              [THEME[theme].item.disabled]: d,
+                              'block line-clamp-2': true,
                             })}
                           >
-                            <Checkbox
-                              className="cursor-pointer checked:bg-black focus:text-black focus:ring-black"
-                              checked={s}
-                            />
-
-                            <span
-                              className={cx({
-                                'block line-clamp-2': true,
-                              })}
-                            >
-                              {opt.label}
-                            </span>
-                          </div>
-                        )}
-                      </Listbox.Option>
-                    );
-                  })}
-                </Listbox.Options>
-              </Transition>
-            </div>
+                            {opt.label}
+                          </span>
+                        </div>
+                      )}
+                    </Listbox.Option>
+                  );
+                })}
+              </Listbox.Options>
+            </Float>
           </>
         )}
       </Listbox>
