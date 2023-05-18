@@ -69,10 +69,7 @@ export function useCountry(id, queryOptions: UseQueryOptions<Country, unknown> =
         size: 'max',
         json: ['bbox', 'geojson'],
       }),
-    }).then((response) => {
-      console.log(response.data);
-      return response.data;
-    });
+    }).then((response) => response.data);
   };
 
   const query = useQuery(['country', id], fetchCountry, {
