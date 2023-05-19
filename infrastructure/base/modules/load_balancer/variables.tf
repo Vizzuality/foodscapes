@@ -9,7 +9,7 @@ variable "vpc_id" {
   description = "The ID of the VPC."
 }
 
-variable "vpc_subnet_ids" {
+variable "vpc_public_subnet_ids" {
   type = list(string)
   description = "A list of VPC subnet IDs."
 }
