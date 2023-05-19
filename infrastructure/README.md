@@ -24,3 +24,26 @@ apply` again.
 Terraform will ask whether the state should be migrated to the new AWS backend:
 confirm to let Terraform switch to managing the state through the shared S3
 bucket.
+
+## Deploying via GitHub Actions
+
+Once the infrastructure is fully terraformed, deployment of the Foodscapes
+services (client app, tiler and datasette) via GitHub actions can be configured.
+
+- Manually generate AWS credentials (_access key id_ + _secret access key_) for
+  the `foodscapes_ci_bot` IAM user created via Terraform.
+
+- Configure the following GitHub Actions _secrets_ with the values from the
+  generated credentials:
+  - `AWS_ACCESS_KEY_ID`
+  - `AWS_SECRET_ACCESS_KEY`
+
+- Set the following GitHub Actions _variables_ too:
+  - `AWS_ECR_REPOSITORY`
+  - `AWS_ECS_CLUSTER`
+  - `AWS_ECS_EXECUTION_ROLE_ARN`
+  - `AWS_REGION`
+
+- Set the environment variables documented in the [main documentation of
+  environment variables](../ENV_VARS.md) and the [client application's
+  README](../client/README.md).
