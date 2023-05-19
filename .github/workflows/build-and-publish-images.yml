@@ -91,7 +91,7 @@ jobs:
             DATA_CORE_COG_CHECKSUM=${{ vars.DATA_CORE_COG_CHECKSUM }}
             DATASETTE_CORS_ORIGINS=${{ vars.DATASETTE_CORS_ORIGINS }}
             TILER_FOODSCAPES_COG_FILENAME=foodscapes_stack_cog_lzw.tif
-            TILER_ROOT_PATH=''
+            TILER_ROOT_PATH=${{ vars.TILER_ROOT_PATH || '' }}
             TILER_CORS_ORIGINS_REGEX=${{ vars.TILER_CORS_ORIGINS_REGEX }}
             APP_NEXT_PUBLIC_API_URL=${{ vars.APP_NEXT_PUBLIC_API_URL }}
             APP_NEXT_PUBLIC_TITILER_API_URL=${{ vars.APP_NEXT_PUBLIC_TITILER_API_URL }}
