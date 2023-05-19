@@ -9,7 +9,7 @@ const TITLE_TEXT = 'Foodscapes | Regenerative Food Systems for People and Nature
 const DESCRIPTION_TEXT =
   'Explore regenerative food systems and their impact on nature and people. Discover Foodscapes, a system that maps the diversity of food production around the world to inform food system transformation and nature-based solutions. Join The Nature Conservancy and its partners in accelerating a global food system transformation through foodscape mapping and research.';
 
-const IMAGE_URL = `${process.env.NEXT_PUBLIC_BASE_PATH}images/meta/home.jpg`;
+const IMAGE_URL = 'images/meta/home.jpg';
 
 const HomePage = () => {
   return (
