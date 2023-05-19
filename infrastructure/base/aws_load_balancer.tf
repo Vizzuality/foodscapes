@@ -5,4 +5,5 @@ module "load_balancer" {
   client_lb_target_group_arn = module.fargate_service_client.aws_lb_target_group_arn
   tiler_lb_target_group_arn = module.fargate_service_tiler.aws_lb_target_group_arn
   datasette_lb_target_group_arn = module.fargate_service_datasette.aws_lb_target_group_arn
+  https_certificate_arn = module.https_certificate.aws_acm_certificate_arn
 }
