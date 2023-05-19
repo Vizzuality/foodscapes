@@ -26,6 +26,7 @@ jobs:
     name: Build image, push to ECR and deploy on ECS
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         service-name:
           - client
