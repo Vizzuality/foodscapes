@@ -28,3 +28,8 @@ variable "datasette_lb_target_group_arn" {
   type = string
   description = "ARN for the load balancer's target group for the datasette service"
 }
+
+variable "https_certificate_arn" {
+  type = string
+  description = "ARN for the HTTPS certificate"
+}
