@@ -1,13 +1,14 @@
 import { Select } from 'squel';
-export interface DatasetteParamsProps {
+
+import { FiltersProps } from 'types/data';
+
+import { DATA_JSON as LAND_USER_RISKS_DATA } from 'hooks/land-use-risks';
+
+export interface DatasetteParamsProps extends FiltersProps {
   sql?: Select;
-  foodscapes?: readonly number[];
-  intensities?: readonly number[];
-  crops?: readonly number[];
-  country?: number;
-  province?: number;
   shape?: 'arrays' | 'objects' | 'array' | 'object';
   size?: number | 'max';
+  json?: string[];
 }
 
 export function datasetteAdapter(params: DatasetteParamsProps = {}) {
@@ -16,8 +17,14 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     foodscapes = [],
     intensities = [],
     crops = [],
+    landUseRisk = [],
+    climateRisk = [],
+    pollutionRisk = [],
+    country,
+    province,
     shape = 'array',
     size = 'max',
+    json,
   } = params;
   const s = sql?.clone();
 
@@ -36,6 +43,34 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     s.where('crops IN ?', crops);
   }
 
+  // Country
+  if (!!country) {
+    s.where('country = ?', country);
+  }
+
+  // Province
+  if (!!province) {
+    s.where('province = ?', province);
+  }
+
+  if (!!landUseRisk?.length) {
+    const where = LAND_USER_RISKS_DATA
+      // Filter the land use risks by the selected ones
+      .filter((d) => landUseRisk.includes(d.value))
+      .map((d) => `${d.column} = 1`)
+      .join(' OR ');
+
+    s.where(where);
+  }
+
+  if (!!climateRisk?.length) {
+    s.where('climate_risk == ?', climateRisk[0] === -1 ? 0 : climateRisk[0]);
+  }
+
+  if (!!pollutionRisk?.length) {
+    s.where('pesticide_risk == ?', pollutionRisk[0] === -1 ? 0 : pollutionRisk[0]);
+  }
+
   return {
     // SQL
     sql: s?.toString(),
@@ -43,5 +78,7 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     _shape: shape,
     // Size
     _size: size,
+    // JSON
+    ...(json && { _json: json }),
   };
 }

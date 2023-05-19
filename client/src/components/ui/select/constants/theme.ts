@@ -2,7 +2,7 @@ const THEME = {
   dark: {
     container: 'text-white text-sm',
     button: {
-      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700',
+      base: 'flex justify-between items-center italic w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700 px-4',
       states: {
         none: 'border-white',
         error: 'border-red-500',
@@ -10,13 +10,13 @@ const THEME = {
         disabled: 'opacity-50',
       },
     },
-    menu: 'bg-gray-500',
-    menuHeader: 'bg-gray-500',
+    menu: 'bg-white border border-navy-400/50',
+    menuHeader: 'bg-white',
     item: {
-      base: 'text-xs text-white',
-      active: 'bg-black text-white',
-      selected: 'bg-gray-700 text-white',
-      disabled: 'opacity-40 text-white',
+      base: 'text-xs text-navy-500 uppercase',
+      active: 'bg-white font-bold',
+      selected: 'bg-white font-semibold',
+      disabled: 'font-normal',
     },
     loading: 'relative flex items-center w-full h-full',
   },
@@ -24,7 +24,7 @@ const THEME = {
   light: {
     container: 'text-gray-600 text-sm',
     button: {
-      base: 'relative w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-white',
+      base: 'flex justify-between items-center w-full text-left transition duration-150 ease-in-out cursor-pointer border-b border-dashed bg-white',
       states: {
         none: 'border-gray-800',
         error: 'border-red-500',
@@ -66,8 +66,8 @@ const THEME = {
   },
 
   sizes: {
-    base: 'pl-4 pr-10 py-3 text-sm',
-    s: 'pl-4 pr-10 py-1.5 text-sm',
+    base: 'px-1 py-3 text-sm',
+    s: 'px-1 py-1.5 text-sm',
     none: 'pr-10',
   },
 };

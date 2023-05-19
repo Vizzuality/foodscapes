@@ -1,20 +1,27 @@
-export interface TitilerParamsProps {
-  foodscapes?: number[];
-  intensities?: number[];
-  crops?: number[];
-  country?: number;
-  province?: number;
-}
+import { FiltersProps } from 'types/data';
 
-export function titilerAdapter(params: TitilerParamsProps = {}) {
-  const { foodscapes = [], intensities = [], crops = [], country, province } = params;
+export function titilerAdapter(params: FiltersProps = {}, initial = null) {
+  const {
+    foodscapes = [],
+    intensities = [],
+    crops = [],
+    landUseRisk = [],
+    climateRisk = [],
+    pollutionRisk = [],
+    country,
+    province,
+  } = params;
 
   return [
+    ...(initial ? [initial] : []),
     ...(foodscapes.length ? [foodscapes.map((v) => `(b1==${v})`).join('|')] : []),
     ...(intensities.length ? [intensities.map((v) => `(b3==${v})`).join('|')] : []),
     ...(crops.length ? [crops.map((v) => `(b4==${v})`).join('|')] : []),
-    ...(country ? [`(b31==${location})`] : []),
-    ...(province ? [`(b32==${location})`] : []),
+    ...(landUseRisk.length ? [landUseRisk.map((v) => `(b${v}==1)`).join('|')] : []),
+    ...(climateRisk.length ? [climateRisk.map((v) => `(b11==${v})`).join('|')] : []),
+    ...(pollutionRisk.length ? [pollutionRisk.map((v) => `(b12==${v})`).join('|')] : []),
+    ...(country ? [`(b34==${country})`] : []),
+    ...(province ? [`(b35==${province})`] : []),
   ]
     .map((v) => `(${v})`)
     .join('&');

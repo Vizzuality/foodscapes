@@ -35,7 +35,7 @@ const PopupContainer = () => {
           })
           .map((layer) => {
             const PopupComponent = POPUPS[layer];
-            return <PopupComponent key={layer} latLng={popup} />;
+            return <PopupComponent key={layer} latLng={popup} settings={layersSettings[layer]} />;
           })}
 
         <ProvincesPopup key="provinces-popup" latLng={popup} />

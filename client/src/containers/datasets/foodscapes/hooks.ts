@@ -4,33 +4,34 @@ import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
+import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { useFoodscapes } from 'hooks/foodscapes';
 
 import { DATASETS } from 'constants/datasets';
 
-import { Settings } from 'components/map/legend/types';
 import env from 'env.mjs';
 
 interface UseFoodscapesSourceProps {
-  filters: {
-    crops: number[];
-    foodscapes: number[];
-    intensities: number[];
-  };
+  filters: FiltersProps;
+  settings?: Partial<LayerSettings<'foodscapes'>>;
 }
 
 interface UseFoodscapesLayerProps {
-  settings?: Partial<Settings>;
+  settings?: Partial<LayerSettings<'foodscapes'>>;
 }
 
 interface UseFoodscapesLegendProps {
   dataset: Dataset;
-  settings?: Settings;
+  settings?: LayerSettings<'foodscapes'>;
 }
 
-export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData & { key: string } {
+export function useSource({
+  filters,
+  settings,
+}: UseFoodscapesSourceProps): AnySourceData & { key: string } {
   const { data: foodscapesData } = useFoodscapes();
 
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
@@ -40,11 +41,11 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
     const c = foodscapesData.reduce((acc, v) => {
       return {
         ...acc,
-        [v.value]: v.color,
+        [v.value]: settings.group ? v.parentColor : v.color,
       };
     }, {});
     return JSON.stringify(c);
-  }, [foodscapesData]);
+  }, [foodscapesData, settings.group]);
 
   const expression = useMemo(() => {
     const where = titilerAdapter(filters);
@@ -74,7 +75,7 @@ export function useSource({ filters }: UseFoodscapesSourceProps): AnySourceData 
   };
 }
 
-export function useLayer({ settings = {} }: UseFoodscapesLayerProps): AnyLayer {
+export function useLayer({ settings }: UseFoodscapesLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
@@ -92,14 +93,7 @@ export function useLayer({ settings = {} }: UseFoodscapesLayerProps): AnyLayer {
   return layer;
 }
 
-export function useLegend({
-  dataset,
-  settings = {
-    opacity: 1,
-    visibility: true,
-    expand: true,
-  },
-}: UseFoodscapesLegendProps) {
+export function useLegend({ dataset, settings }: UseFoodscapesLegendProps) {
   const { data: foodscapesData } = useFoodscapes();
 
   const colormap = useMemo(() => {
@@ -115,7 +109,7 @@ export function useLegend({
   const legend = useMemo(() => {
     return {
       id: dataset.id,
-      name: dataset.label,
+      name: settings.group ? dataset.labelGroup : dataset.label,
       ...((!foodscapesData || !foodscapesData.length) && {
         colormap,
       }),

@@ -1,3 +1,5 @@
+import { Settings } from 'components/map/legend/types';
+
 export interface Foodscape {
   id: number;
   label: string;
@@ -15,6 +17,10 @@ export interface FoodscapeGroup {
   label: string;
   color: string;
 }
+
+export type FoodscapesSettings = {
+  group: boolean;
+} & Settings;
 
 export type FoodscapeChartData = {
   '101': number;

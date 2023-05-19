@@ -10,5 +10,5 @@ export interface SingleSelectProps extends SelectStatusProps, SelectDataProps, S
   size: 'base' | 's' | 'none';
   theme: 'dark' | 'light' | 'none';
   state?: 'none' | 'error' | 'valid';
-  onChange?: (selection: string) => void;
+  onChange?: (selection: string | number) => void;
 }

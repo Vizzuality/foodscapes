@@ -122,7 +122,7 @@ const TabsContent = React.forwardRef<
     >
       <div
         className={cn({
-          'relative z-10 grow overflow-y-auto overflow-x-hidden transition-all animate-in duration-300 group-data-[state=active]:slide-in-from-top-4':
+          'relative z-10 flex grow flex-col overflow-y-auto overflow-x-hidden transition-all animate-in duration-300 group-data-[state=active]:slide-in-from-top-4':
             true,
         })}
       >

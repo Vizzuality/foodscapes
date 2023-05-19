@@ -1,11 +1,14 @@
 import { useCallback, useMemo } from 'react';
 
-import { layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { filtersSelector, layersAtom, layersSettingsAtom } from 'store/explore-map';
 import { menuOpenAtom } from 'store/menu';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
+
+import { Dataset } from 'types/datasets';
+import { LayerSettings } from 'types/layers';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -19,6 +22,7 @@ const LegendContainer = () => {
   const setLayers = useSetRecoilState(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
   const setLayerSettings = useSetRecoilState(layersSettingsAtom);
+  const filters = useRecoilValue(filtersSelector(null));
 
   const onChangeOrder = useCallback(
     (order) => {
@@ -76,12 +80,15 @@ const LegendContainer = () => {
         const InfoComponent = INFO[layer];
         const DATASET = DATASETS.find((d) => d.id === layer);
 
+        const settings: LayerSettings<Dataset['id']> = layersSettings[layer];
+
         return (
           <LegendComponent
             id={layer}
             key={layer}
             dataset={DATASET}
-            settings={layersSettings[layer] || { opacity: 1, visibility: true, expand: true }}
+            settings={settings}
+            filters={filters}
             Components={{
               Info: InfoComponent ? <InfoComponent {...DATASET} /> : null,
             }}
@@ -97,7 +104,7 @@ const LegendContainer = () => {
           />
         );
       });
-  }, [layers, onChangeOpacity, onChangeVisibility, onChangeExpand, layersSettings]);
+  }, [layers, filters, onChangeOpacity, onChangeVisibility, onChangeExpand, layersSettings]);
 
   return (
     <AnimatePresence>

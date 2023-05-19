@@ -15,6 +15,29 @@ export interface CropData {
   parent_id: number;
 }
 
+export interface ClimateRiskData {
+  risk: number;
+  not_risk: number;
+}
+
+export interface LandUseRiskData {
+  agricultural_frontier_zones: number;
+  area_with_high_conservation_value: number;
+  critically_endangered_ecosystems: number;
+  soil_erosion: number;
+  water_scarcity: number;
+}
+export interface PollutionRiskData {
+  risk: number;
+  not_risk: number;
+}
+
+export interface LocationData {
+  id: number;
+  name: string;
+  parent_id: number;
+}
+
 export type PointData = {
   band_names: string[];
   coordinates: [number, number];
@@ -25,6 +48,20 @@ export type FiltersProps = {
   foodscapes?: readonly number[];
   intensities?: readonly number[];
   crops?: readonly number[];
+  climateRisk?: readonly number[];
+  landUseRisk?: readonly number[];
+  pollutionRisk?: readonly number[];
+  country?: number;
+  province?: number;
 };
 
-export type FiltersOmitProps = 'foodscapes' | 'intensities' | 'crops' | null;
+export type FiltersOmitProps =
+  | 'foodscapes'
+  | 'intensities'
+  | 'crops'
+  | 'climateRisk'
+  | 'landUseRisk'
+  | 'pollutionRisk'
+  | 'country'
+  | 'province'
+  | null;

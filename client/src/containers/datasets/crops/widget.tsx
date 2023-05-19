@@ -4,14 +4,16 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { cropsAtom, filtersSelector } from 'store/explore-map';
+import { cropsAtom, filtersSelector, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { CropData } from 'types/data';
+import { LayerSettings } from 'types/layers';
 
 import { useCrops, useCropsGroups } from 'hooks/crops';
 import { useData } from 'hooks/data';
+import { getArrayGroupValue, getArrayValue } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -28,9 +30,13 @@ const CropsWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'crops');
 
   const filters = useRecoilValue(filtersSelector('crops'));
+  const layersSettings = useRecoilValue(layersSettingsAtom);
+  const setLayerSettings = useSetRecoilState(layersSettingsAtom);
 
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
+
+  const settings = layersSettings[DATASET.id] as LayerSettings<'foodscapes'>;
 
   const {
     data: cropsData,
@@ -61,7 +67,7 @@ const CropsWidget = () => {
             .filter((v) => data.map((d) => d.id).includes(v.value))
 
             .map((v) => v.value);
-          return ids.every((i) => crops.includes(i));
+          return ids.length && ids.some((i) => crops.includes(i));
         })
         .map((g) => g.value)
     );
@@ -71,21 +77,13 @@ const CropsWidget = () => {
     return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, cropsData]);
 
+  const GROUPED_OPTIONS = useMemo(() => {
+    if (!data || !cropsGroupData) return [];
+    return cropsGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, cropsGroupData]);
+
   const handleBarClick = (key: number) => {
-    setCrops((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const index = fs.findIndex((f) => f === key);
-
-      if (index === -1) {
-        fs.push(key);
-      } else {
-        fs.splice(index, 1);
-      }
-
-      return fs;
-    });
+    setCrops((prev) => getArrayValue(prev, key));
   };
 
   const handleBarGroupClick = (key: number) => {
@@ -95,28 +93,7 @@ const CropsWidget = () => {
       })
       .map((d) => d.value);
 
-    setCrops((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const every = ids.every((i) => fs.includes(i));
-
-      // if all ids are in fs, remove all
-      if (every) {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          fs.splice(index, 1);
-        });
-      } else {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          if (index === -1) {
-            fs.push(i);
-          }
-        });
-      }
-      return fs;
-    });
+    setCrops((prev) => getArrayGroupValue(prev, ids));
   };
 
   const handleSelectGroupOnChange = useCallback(
@@ -152,12 +129,28 @@ const CropsWidget = () => {
     [data, crops, cropsData, GROUPED_SELECTED, setCrops]
   );
 
+  const handleTabChange = useCallback(
+    (value: string) => {
+      setLayerSettings({
+        ...layersSettings,
+        [DATASET.id]: {
+          ...layersSettings[DATASET.id],
+          group: value === 'group',
+        },
+      });
+    },
+    [DATASET.id, layersSettings, setLayerSettings]
+  );
+
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Crop production" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
 
       <div className="space-y-2">
-        <p>Crop output in fresh weight of major crop groupings from each foodscape.</p>
+        <p>
+          Dominant crops are the primary agricultural product grown within a specific area. They
+          represent the crops with the highest production level among all the crops at each pixel.
+        </p>
       </div>
 
       <WidgetContent
@@ -168,7 +161,7 @@ const CropsWidget = () => {
         isFetched={isFetched && cropsIsFetched && cropsGroupIsFetched}
         isError={isError || cropsIsError || cropsGroupIsError}
       >
-        <Tabs defaultValue="single">
+        <Tabs value={settings.group ? 'group' : 'single'} onValueChange={handleTabChange}>
           <TabsList>
             <TabsTrigger value="single">Crops</TabsTrigger>
             <TabsTrigger value="group">Crop Groups</TabsTrigger>
@@ -192,6 +185,7 @@ const CropsWidget = () => {
                   //
                   dataset={DATASET}
                   selected={crops}
+                  ignore={null}
                   onBarClick={handleBarClick}
                   interactive
                 />
@@ -210,7 +204,7 @@ const CropsWidget = () => {
                 size="s"
                 theme="light"
                 placeholder="Filter crop groups"
-                options={cropsGroupData}
+                options={GROUPED_OPTIONS}
                 values={GROUPED_SELECTED}
                 batchSelectionActive
                 clearSelectionActive
@@ -221,6 +215,7 @@ const CropsWidget = () => {
                 <ChartGroup
                   dataset={DATASET}
                   selected={crops}
+                  ignore={null}
                   onBarClick={handleBarGroupClick}
                   interactive
                 />

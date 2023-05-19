@@ -6,7 +6,7 @@ import { PatternLines } from '@visx/pattern';
 import { BarStackHorizontal } from '@visx/shape';
 import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { ScaleLinear, ScaleBand, ScaleOrdinal } from 'd3-scale';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from 'components/ui/tooltip';
 
@@ -249,8 +249,8 @@ const HorizontalStackedGroupedBar = <
                           />
                         )}
 
-                        <AnimatePresence>
-                          {ALL_SELECTED.includes(bar.key) && (
+                        {/* <AnimatePresence>
+                          {ALL_SELECTED.includes(bar.key) && interactive && (
                             <motion.rect
                               key={`bar-stack-${barStack.index}-${bar.index}-selected`}
                               x={bar.x}
@@ -268,41 +268,43 @@ const HorizontalStackedGroupedBar = <
                             />
                           )}
 
-                          {PARTIAL_SELECTED.filter((p) => p.key === bar.key).map((p) => (
-                            <>
-                              <motion.rect
-                                key={`bar-stack-${barStack.index}-${bar.index}-partial-selected`}
-                                x={bar.x}
-                                y={bar.y}
-                                width={bar.width}
-                                height={bar.height}
-                                fill="transparent"
-                                stroke="#1C274A"
-                                strokeWidth={2}
-                                strokeDasharray="5 3"
-                                pointerEvents="none"
-                                shapeRendering="crispEdges"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                              />
+                          {PARTIAL_SELECTED.filter((p) => p.key === bar.key && interactive).map(
+                            (p) => (
+                              <>
+                                <motion.rect
+                                  key={`bar-stack-${barStack.index}-${bar.index}-partial-selected`}
+                                  x={bar.x}
+                                  y={bar.y}
+                                  width={bar.width}
+                                  height={bar.height}
+                                  fill="transparent"
+                                  stroke="#1C274A"
+                                  strokeWidth={1}
+                                  strokeDasharray="5 3"
+                                  pointerEvents="none"
+                                  shapeRendering="crispEdges"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                />
 
-                              <motion.rect
-                                key={`bar-stack-${barStack.index}-${bar.index}-partial-percentage-selected`}
-                                x={bar.x}
-                                y={bar.y}
-                                width={bar.width * p.relativePercentage}
-                                height={bar.height}
-                                fill="url(#lines)"
-                                pointerEvents="none"
-                                shapeRendering="crispEdges"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                              />
-                            </>
-                          ))}
-                        </AnimatePresence>
+                                <motion.rect
+                                  key={`bar-stack-${barStack.index}-${bar.index}-partial-percentage-selected`}
+                                  x={bar.x}
+                                  y={bar.y}
+                                  width={bar.width * p.relativePercentage}
+                                  height={bar.height}
+                                  fill="url(#lines)"
+                                  pointerEvents="none"
+                                  shapeRendering="crispEdges"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                />
+                              </>
+                            )
+                          )}
+                        </AnimatePresence> */}
                       </g>
                     );
                   })
@@ -311,7 +313,19 @@ const HorizontalStackedGroupedBar = <
             </BarStackHorizontal>
           </TooltipProvider>
 
-          {!ALL_SELECTED.length && !PARTIAL_SELECTED.length && !hover && (
+          {/* {((!ALL_SELECTED.length && !PARTIAL_SELECTED.length) || !interactive) && !hover && (
+            <rect
+              width={Math.max(width - 4, 0)}
+              height={Math.max(height - 4, 0)}
+              fill="transparent"
+              stroke="#1C274A"
+              strokeWidth={1}
+              pointerEvents="none"
+              shapeRendering="crispEdges"
+            />
+          )} */}
+
+          {!hover && (
             <rect
               width={Math.max(width - 4, 0)}
               height={Math.max(height - 4, 0)}

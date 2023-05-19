@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import cn from 'lib/classnames';
 
 import { sidebarOpenAtom, tabAtom } from 'store/explore-map';
@@ -53,7 +55,7 @@ const Sidebar = () => {
             className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-[640px] bg-white"
           >
             <Tabs value={tab} onValueChange={setTab} asChild>
-              <div className="flex h-full flex-col overflow-auto">
+              <div className="flex h-full grow flex-col overflow-auto">
                 <TabsList className="relative z-10 w-full">
                   <TabsTrigger value="foodscapes" />
                   <TabsTrigger value="risks" />
@@ -62,7 +64,7 @@ const Sidebar = () => {
                   <TabsTrigger value="case-studies" />
                 </TabsList>
 
-                <div className="relative z-0 -mt-20">
+                <div className="relative z-0 -mt-20 flex grow flex-col">
                   <TabsContent value="foodscapes">
                     <FoodscapesSidebar />
                   </TabsContent>
@@ -85,6 +87,16 @@ const Sidebar = () => {
                 </div>
               </div>
             </Tabs>
+
+            <Link
+              href="/"
+              className={cn({
+                'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 transition-colors sm:block':
+                  true,
+              })}
+            >
+              Foodscapes
+            </Link>
 
             <DialogTrigger asChild>
               <button className="absolute bottom-16 left-full flex h-8 w-8 items-center justify-center bg-navy-500 hover:bg-navy-400">

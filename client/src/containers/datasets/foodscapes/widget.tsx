@@ -4,14 +4,16 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import { filtersSelector, foodscapesAtom } from 'store/explore-map';
+import { filtersSelector, foodscapesAtom, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { FoodscapeData } from 'types/data';
+import { LayerSettings } from 'types/layers';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes, useFoodscapesGroups } from 'hooks/foodscapes';
+import { getArrayGroupValue, getArrayValue } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -28,9 +30,13 @@ const FoodscapesWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 
   const filters = useRecoilValue(filtersSelector('foodscapes'));
+  const layersSettings = useRecoilValue(layersSettingsAtom);
+  const setLayerSettings = useSetRecoilState(layersSettingsAtom);
 
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
+
+  const settings = layersSettings[DATASET.id] as LayerSettings<'foodscapes'>;
 
   const {
     data: foodscapesData,
@@ -39,6 +45,7 @@ const FoodscapesWidget = () => {
     isFetched: foodscapesIsFetched,
     isError: foodscapesIsError,
   } = useFoodscapes();
+
   const {
     data: foodscapesGroupData,
     isPlaceholderData: foodscapesGroupIsPlaceholderData,
@@ -46,6 +53,7 @@ const FoodscapesWidget = () => {
     isFetched: foodscapesGroupIsFetched,
     isError: foodscapesGroupIsError,
   } = useFoodscapesGroups();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
     sql: DATASET.widget.sql,
     shape: 'array',
@@ -57,6 +65,11 @@ const FoodscapesWidget = () => {
     return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, foodscapesData]);
 
+  const GROUPED_OPTIONS = useMemo(() => {
+    if (!data || !foodscapesGroupData) return [];
+    return foodscapesGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+  }, [data, foodscapesGroupData]);
+
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     if (!data || !foodscapesGroupData) return [];
     return (
@@ -66,27 +79,15 @@ const FoodscapesWidget = () => {
           const ids = g.values
             .filter((v) => data.map((d) => d.id).includes(v.value))
             .map((v) => v.value);
-          return ids.every((i) => foodscapes.includes(i));
+
+          return ids.length && ids.some((i) => foodscapes.includes(i));
         })
         .map((g) => g.value)
     );
   }, [data, foodscapesGroupData, foodscapes]);
 
   const handleBarClick = (key: number) => {
-    setFoodscapes((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const index = fs.findIndex((f) => f === key);
-
-      if (index === -1) {
-        fs.push(key);
-      } else {
-        fs.splice(index, 1);
-      }
-
-      return fs;
-    });
+    setFoodscapes((prev) => getArrayValue(prev, key));
   };
 
   const handleBarGroupClick = (key: number) => {
@@ -96,28 +97,7 @@ const FoodscapesWidget = () => {
       })
       .map((d) => d.value);
 
-    setFoodscapes((prev) => {
-      const fs = [...prev];
-
-      // push or slice key in fs array base on index
-      const every = ids.every((i) => fs.includes(i));
-
-      // if all ids are in fs, remove all
-      if (every) {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          fs.splice(index, 1);
-        });
-      } else {
-        ids.forEach((i) => {
-          const index = fs.findIndex((f) => f === i);
-          if (index === -1) {
-            fs.push(i);
-          }
-        });
-      }
-      return fs;
-    });
+    setFoodscapes((prev) => getArrayGroupValue(prev, ids));
   };
 
   const handleSelectGroupOnChange = useCallback(
@@ -154,9 +134,22 @@ const FoodscapesWidget = () => {
     [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
 
+  const handleTabChange = useCallback(
+    (value: string) => {
+      setLayerSettings({
+        ...layersSettings,
+        [DATASET.id]: {
+          ...layersSettings[DATASET.id],
+          group: value === 'group',
+        },
+      });
+    },
+    [DATASET.id, layersSettings, setLayerSettings]
+  );
+
   return (
     <section className="space-y-4 py-10">
-      <WidgetHeader title="Global Foodscapes" dataset={DATASET} />
+      <WidgetHeader title={DATASET.label} dataset={DATASET} />
 
       <div className="space-y-2">
         <p>
@@ -176,7 +169,7 @@ const FoodscapesWidget = () => {
         isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
         isError={isError || foodscapesIsError || foodscapesGroupIsError}
       >
-        <Tabs defaultValue="single">
+        <Tabs value={settings.group ? 'group' : 'single'} onValueChange={handleTabChange}>
           <TabsList>
             <TabsTrigger value="single">Foodscapes</TabsTrigger>
             <TabsTrigger value="group">Soil Groups</TabsTrigger>
@@ -200,6 +193,7 @@ const FoodscapesWidget = () => {
                   //
                   dataset={DATASET}
                   selected={foodscapes}
+                  ignore={null}
                   onBarClick={handleBarClick}
                   interactive
                 />
@@ -218,7 +212,7 @@ const FoodscapesWidget = () => {
                 size="s"
                 theme="light"
                 placeholder="Filter soil groups"
-                options={foodscapesGroupData}
+                options={GROUPED_OPTIONS}
                 values={GROUPED_SELECTED}
                 batchSelectionActive
                 clearSelectionActive
@@ -230,10 +224,15 @@ const FoodscapesWidget = () => {
                 <ChartGroup
                   dataset={DATASET}
                   selected={foodscapes}
+                  ignore={null}
                   onBarClick={handleBarGroupClick}
                   interactive
                 />
               </div>
+
+              <WidgetTop label="See top largest foodscapes">
+                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
           </TabsContent>
         </Tabs>

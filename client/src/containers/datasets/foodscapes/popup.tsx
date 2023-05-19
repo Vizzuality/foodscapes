@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
+import { LayerSettings } from 'types/layers';
 import { LngLat } from 'types/map';
 
 import { noPointData, usePointData } from 'hooks/data';
@@ -13,10 +14,11 @@ import { DATASETS } from 'constants/datasets';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface FoodscapesPopupProps {
+  settings: LayerSettings<'foodscapes'>;
   latLng: LngLat;
 }
 
-const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
+const FoodscapesPopup = ({ latLng, settings }: FoodscapesPopupProps) => {
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
   const band = `b${DATASET.layer.band}`;
 
@@ -45,23 +47,33 @@ const FoodscapesPopup = ({ latLng }: FoodscapesPopupProps) => {
         <div
           className="h-4 w-4 border"
           style={{
-            background: DATA?.color,
-            borderColor: DATA?.color ?? 'var(--color-navy-500)',
+            background: settings.group ? DATA?.parentColor : DATA?.color,
+            borderColor: settings.group
+              ? DATA?.parentColor ?? 'var(--color-navy-500)'
+              : DATA?.color ?? 'var(--color-navy-500)',
           }}
         />
-        <h2 className="text-base font-semibold">Foodscape</h2>
+        <h2 className="text-base font-semibold">
+          {settings.group ? DATASET.labelGroup : DATASET?.label}
+        </h2>
       </header>
+
       <div className={cn({ 'mt-2 pl-6': true })}>
         {isFetching && !isFetched && (
           <div className="space-y-1.5">
-            <Skeleton className="h-4 w-[175px]" />
-            <Skeleton className="h-4 w-[175px]" />
+            {!settings.group && <Skeleton className="h-4 w-[175px]" />}
+            {!settings.group && <Skeleton className="h-4 w-[175px]" />}
+            <Skeleton className="h-4 w-[100px]" />
           </div>
         )}
         {isFetched && (
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
-            {!!DATA && <h3 className="text-sm font-light">{DATA.label}</h3>}
+            {!!DATA && (
+              <h3 className="text-sm font-light">
+                {settings.group ? DATA.parentLabel : DATA.label}
+              </h3>
+            )}
           </>
         )}
       </div>

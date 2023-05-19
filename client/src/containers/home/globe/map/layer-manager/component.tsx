@@ -3,7 +3,13 @@ import FoodscapesLayer from 'containers/datasets/foodscapes/layer';
 const LayerManagerContainer = () => {
   return (
     <>
-      <FoodscapesLayer />
+      <FoodscapesLayer
+        settings={{
+          opacity: 1,
+          visibility: true,
+          group: false,
+        }}
+      />
     </>
   );
 };

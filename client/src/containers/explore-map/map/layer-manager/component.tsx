@@ -3,6 +3,7 @@ import { filtersSelector, layersAtom, layersSettingsAtom } from 'store/explore-m
 import { useRecoilValue } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
+import LocationLayer from 'containers/datasets/location/layer';
 import { MapboxOverlayProvider } from 'containers/explore-map/map/layer-manager/provider';
 
 const LayerManagerContainer = () => {
@@ -15,6 +16,8 @@ const LayerManagerContainer = () => {
 
   return (
     <MapboxOverlayProvider>
+      <LocationLayer settings={layersSettings.locations} filters={filters} />
+
       {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer];
         // We need to define where do we want to put the layer
@@ -28,6 +31,8 @@ const LayerManagerContainer = () => {
             filters={filters}
             settings={
               layersSettings[layer] ?? {
+                id: layer,
+                group: false,
                 opacity: 1,
                 visibility: true,
                 expand: false,

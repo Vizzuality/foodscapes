@@ -1,10 +1,10 @@
 import About from 'containers/about';
 import MetaTags from 'containers/meta-tags';
 
-const TITLE_TEXT = 'About | Towards Food System Transition';
+const TITLE_TEXT = 'About Foodscapes | Regenerative Food Systems for People and Nature';
 const DESCRIPTION_TEXT =
-  'Explaining what foodscapes are and how they can contribute to the transformation of the world food system.';
-const IMAGE_URL = `${process.env.NEXT_PUBLIC_BASE_PATH}images/meta/home.jpg`;
+  'The Nature Conservancy (TNC), International Institute for Applied Systems Analysis (IIASA), and SYSTEMIQ collaborate on Foodscapes, a project dedicated to promoting regenerative food systems and their impact on nature and people. Learn more about our research, vision, and how we aim to transform the food system through nature-based solutions.';
+const IMAGE_URL = `${process.env.NEXT_PUBLIC_BASE_PATH}images/meta/about.jpg`;
 
 const AboutPage: React.FC = () => {
   return (
