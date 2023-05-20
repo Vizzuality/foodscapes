@@ -117,15 +117,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      sql: squel
-        .select()
-        .field('crops', 'id')
-        .field('crop_groups', 'parent_id')
-        .field('SUM(pixel_count)', 'value')
-        .distinct()
-        .from('data')
-        .where('crops NOT IN (-9999)')
-        .group('crops'),
       download: squel
         .select()
         .from(
