@@ -9,7 +9,6 @@ import { useRecoilValue } from 'recoil';
 
 import { CropChartData, CropGroup } from 'types/crops';
 import { CropData, FiltersOmitProps } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useCrops, useCropsGroups } from 'hooks/crops';
 import { useData } from 'hooks/data';
@@ -19,7 +18,6 @@ import HorizontalStackedGroupedBar from 'components/charts/horizontal-stacked-gr
 import { CropsChartTooltipGroup } from './tooltips';
 
 interface CropsChartParentProps {
-  dataset: Dataset;
   interactive?: boolean;
   selected?: readonly number[];
   ignore?: FiltersOmitProps;
@@ -33,7 +31,6 @@ interface CropsChartProps extends CropsChartParentProps {
 const CropsChart = ({
   width,
   height,
-  dataset,
   interactive,
   ignore = 'crops',
   selected,
@@ -45,11 +42,7 @@ const CropsChart = ({
   const { data: cropsData } = useCrops();
   const { data: cropsGroupsData } = useCropsGroups();
 
-  const { data, error } = useData<CropData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, error } = useData<CropData>('crops', filters);
 
   // CONFIG
   const KEYS = useMemo(() => {

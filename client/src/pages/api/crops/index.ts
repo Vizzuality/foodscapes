@@ -24,7 +24,7 @@ const fetch = async () => {
   )
     .from('crops AS f')
     .leftJoin('crop_groups AS s', 'f.parent_id', 's.value')
-    .whereNotIn('f.value', [1, 2, 3]);
+    .whereNotIn('f.value', [-9999]);
 
   return API.request<Crop[]>({
     method: 'GET',

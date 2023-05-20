@@ -6,7 +6,6 @@ import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { CropData } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useCrops } from 'hooks/crops';
 import { useData } from 'hooks/data';
@@ -16,28 +15,23 @@ import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
 
 interface CropsTopChartProps {
-  dataset: Dataset;
   selected?: readonly number[];
   onBarClick?: (key: number) => void;
 }
 
-const CropsTopChart = ({ dataset, onBarClick }: CropsTopChartProps) => {
+const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
   const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
   const fQuery = useCrops();
 
-  const sql = dataset.widget.sql
-    //
-    .clone()
-    .order('value', false)
-    .limit(5);
+  // const sql = dataset.widget.sql
+  //   //
+  //   .clone()
+  //   .order('value', false)
+  //   .limit(5);
 
-  const dQuery = useData<CropData>({
-    sql,
-    shape: 'array',
-    ...filters,
-  });
+  const dQuery = useData<CropData>('crops', filters);
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: cropsData } = fQuery;

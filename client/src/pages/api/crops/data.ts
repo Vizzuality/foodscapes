@@ -16,12 +16,12 @@ const KNEX = knex({
 const fetch = async (filters: FiltersProps) => {
   const SQL = KNEX
     //
-    .select('d.foodscapes AS id', 'd.soil_groups AS parent_id')
+    .select('d.crops AS id', 'd.crop_groups AS parent_id')
     .sum('d.pixel_count AS value')
     .distinct()
     .from('data AS d')
-    .whereNotIn('d.foodscapes', [1, 2, 3])
-    .groupBy('d.foodscapes');
+    .whereNotIn('d.crops', [-9999])
+    .groupBy('d.crops');
 
   return API.request<FoodscapeData[]>({
     method: 'GET',
