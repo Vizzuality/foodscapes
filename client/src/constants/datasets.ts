@@ -19,15 +19,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      sql: squel
-        .select()
-        .field('foodscapes', 'id')
-        .field('soil_groups', 'parent_id')
-        .field('SUM(pixel_count)', 'value')
-        .distinct()
-        .from('data')
-        .where('foodscapes NOT IN (1,2,3)')
-        .group('foodscapes'),
       download: squel
         .select()
         .from(

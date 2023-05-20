@@ -5,17 +5,18 @@ import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { PointData } from 'types/data';
+import { FiltersProps, PointData } from 'types/data';
+import { Dataset } from 'types/datasets';
 import { LngLat } from 'types/map';
 
 import API from 'services/api';
 import TITILER_API from 'services/titiler';
 
-export const fetchData = (params: DatasetteParamsProps) => {
+export const fetchData = (id, filters: FiltersProps) => {
   return API.request({
     method: 'GET',
-    url: '/foodscapes.json',
-    params: datasetteAdapter(params),
+    url: `${id}/data`,
+    params: filters,
   }).then((response) => response.data);
 };
 
@@ -38,12 +39,13 @@ export const fetchPointData = ({ lng, lat }: LngLat) => {
 };
 
 export function useData<T = unknown>(
-  params: DatasetteParamsProps = {},
+  id: Dataset['id'],
+  filters: FiltersProps = {},
   queryOptions: UseQueryOptions<T[], unknown> = {}
 ) {
-  const fetch = () => fetchData(params);
+  const fetch = () => fetchData(id, filters);
 
-  const query = useQuery(['data', JSON.stringify(params)], fetch, {
+  const query = useQuery(['data', JSON.stringify({ id, ...filters })], fetch, {
     placeholderData: [],
     ...queryOptions,
   });
