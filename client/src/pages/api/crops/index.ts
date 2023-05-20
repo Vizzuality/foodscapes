@@ -9,6 +9,7 @@ import API from 'services/datasette';
 
 const KNEX = knex({
   client: 'sqlite3',
+  useNullAsDefault: true,
 });
 
 const fetch = async () => {
