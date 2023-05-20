@@ -36,7 +36,7 @@ const fetch = async () => {
   }).then((response) => response.data);
 };
 
-const Hello = async (
+const Foodscapes = async (
   req: NextApiRequest,
   res: NextApiResponse<Foodscape[] | { error: string }>
 ) => {
@@ -48,4 +48,4 @@ const Hello = async (
   }
 };
 
-export default Hello;
+export default Foodscapes;

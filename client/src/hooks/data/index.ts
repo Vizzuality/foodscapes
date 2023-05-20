@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { datasetteAdapter } from 'lib/adapters/datasette-adapter';
 import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -12,7 +11,7 @@ import { LngLat } from 'types/map';
 import API from 'services/api';
 import TITILER_API from 'services/titiler';
 
-export const fetchData = (id, params: DatasetteParamsProps) => {
+export const fetchData = (id: Dataset['id'], params: DatasetteParamsProps) => {
   return API.request({
     method: 'GET',
     url: `${id}/data`,
@@ -20,11 +19,10 @@ export const fetchData = (id, params: DatasetteParamsProps) => {
   }).then((response) => response.data);
 };
 
-export const downloadData = (params: DatasetteParamsProps) => {
+export const downloadData = (id: Dataset['id']) => {
   return API.request({
     method: 'GET',
-    url: '/foodscapes.csv',
-    params: datasetteAdapter(params),
+    url: `${id}/download`,
     headers: {
       'Content-Type': 'text/csv',
     },
@@ -55,9 +53,9 @@ export function useData<T = unknown>(
 
 // Download data
 export function useDownloadData() {
-  const fetch = (params: DatasetteParamsProps = {}) => downloadData(params);
+  const fetch = (id: Dataset['id']) => downloadData(id);
 
-  const mutation = useMutation<string, unknown, DatasetteParamsProps>(fetch);
+  const mutation = useMutation<string, unknown, Dataset['id']>(fetch);
 
   return mutation;
 }

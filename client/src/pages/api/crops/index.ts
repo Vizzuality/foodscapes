@@ -36,7 +36,7 @@ const fetch = async () => {
   }).then((response) => response.data);
 };
 
-const Hello = async (req: NextApiRequest, res: NextApiResponse<Crop[] | { error: string }>) => {
+const Crops = async (req: NextApiRequest, res: NextApiResponse<Crop[] | { error: string }>) => {
   try {
     const result = await fetch();
     res.status(200).json(result);
@@ -45,4 +45,4 @@ const Hello = async (req: NextApiRequest, res: NextApiResponse<Crop[] | { error:
   }
 };
 
-export default Hello;
+export default Crops;

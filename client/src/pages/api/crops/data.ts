@@ -4,7 +4,7 @@ import knex from 'knex';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import qs from 'query-string';
 
-import { FiltersProps, FoodscapeData } from 'types/data';
+import { FiltersProps, CropData } from 'types/data';
 
 import API from 'services/datasette';
 
@@ -23,7 +23,7 @@ const fetch = async (filters: FiltersProps) => {
     .whereNotIn('d.crops', [-9999])
     .groupBy('d.crops');
 
-  return API.request<FoodscapeData[]>({
+  return API.request<CropData[]>({
     method: 'GET',
     url: '/foodscapes.json',
     params: datasetteAdapter({
@@ -34,9 +34,9 @@ const fetch = async (filters: FiltersProps) => {
   }).then((response) => response.data);
 };
 
-const FoodscapesData = async (
+const CropsData = async (
   req: NextApiRequest,
-  res: NextApiResponse<FoodscapeData[] | { error: string }>
+  res: NextApiResponse<CropData[] | { error: string }>
 ) => {
   try {
     const filters = qs.parseUrl(req.url, {
@@ -52,4 +52,4 @@ const FoodscapesData = async (
   }
 };
 
-export default FoodscapesData;
+export default CropsData;

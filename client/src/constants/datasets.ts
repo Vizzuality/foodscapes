@@ -19,35 +19,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      download: squel
-        .select()
-        .from(
-          squel
-            .select()
-            .field('foodscapes', 'id')
-            .field('soil_groups', 'parent_id')
-            .field('SUM(pixel_count)', 'value')
-            .field('SUM(pixel_count * 3086.9136)', 'ha')
-            .distinct()
-            .from('data')
-            .where('foodscapes NOT IN (1,2,3)')
-            .group('foodscapes'),
-          'd'
-        )
-        .left_join(squel.select().from('foodscapes'), 'f', 'd.id = f.value')
-        .left_join(squel.select().from('soil_groups'), 'g', 'd.parent_id = g.value')
-        .field('d.id')
-        .field('f.label')
-        .field('f.color')
-        .field('d.value')
-        .field('d.ha')
-        .field(
-          'ROUND((d.ha / (SELECT SUM(pixel_count * 3086.9136) FROM data WHERE foodscapes NOT IN (1,2,3))) * 100, 2)',
-          'percentage'
-        )
-        .field('d.parent_id', 'parentId')
-        .field('g.label', 'parentLabel')
-        .field('g.color', 'parentColor'),
     },
   },
   {
@@ -66,14 +37,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      sql: squel
-        .select()
-        .field('intensity_groups', 'id')
-        .field('SUM(pixel_count)', 'value')
-        .distinct()
-        .from('data')
-        .where('intensity_groups NOT IN (0)')
-        .group('intensity_groups'),
       download: squel
         .select()
         .from(
