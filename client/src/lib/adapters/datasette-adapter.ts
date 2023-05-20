@@ -1,10 +1,10 @@
 import { Knex } from 'knex';
 
-import { FiltersProps } from 'types/data';
+import { FiltersProps, PaginationProps, SortProps } from 'types/data';
 
 import { DATA_JSON as LAND_USER_RISKS_DATA } from 'hooks/land-use-risks';
 
-export interface DatasetteParamsProps extends FiltersProps {
+export interface DatasetteParamsProps extends FiltersProps, SortProps, PaginationProps {
   sql?: Knex.QueryBuilder | Knex.QueryBuilder[];
   shape?: 'arrays' | 'objects' | 'array' | 'object';
   size?: number | 'max';
@@ -22,14 +22,19 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     pollutionRisk = [],
     country,
     province,
+    sortBy,
+    sortDirection,
     shape = 'array',
     size = 'max',
+    limit,
+    offset,
     json,
   } = params;
 
   const SQL = Array.isArray(sql) ? sql : [sql];
 
   const s = SQL.reduce((acc, query) => {
+    // Foodscapes
     if (!!foodscapes.length) {
       query.whereIn('foodscapes', foodscapes);
     }
@@ -39,7 +44,7 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
       query.whereIn('intensity_groups', intensities);
     }
 
-    // Intensities
+    // Crops
     if (!!crops?.length) {
       query.whereIn('crops', crops);
     }
@@ -70,6 +75,20 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
 
     if (!!pollutionRisk?.length) {
       query.where('pesticide_risk == ?', pollutionRisk[0] === -1 ? 0 : pollutionRisk[0]);
+    }
+
+    // Sort
+    if (!!sortBy) {
+      query.orderBy(sortBy, sortDirection ?? 'desc');
+    }
+
+    // Pagination
+    if (!!limit) {
+      query.limit(limit);
+    }
+
+    if (!!offset) {
+      query.offset(offset);
     }
 
     if (acc) {

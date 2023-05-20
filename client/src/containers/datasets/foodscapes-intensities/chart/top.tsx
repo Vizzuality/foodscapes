@@ -23,16 +23,13 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
   const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
-
   const fQuery = useFoodscapesIntensities();
-
-  // const sql = dataset.widget.sql
-  //   //
-  //   .clone()
-  //   .order('value', false)
-  //   .limit(5);
-
-  const dQuery = useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
+  const dQuery = useData<FoodscapeIntensityData>('foodscapes-intensities', {
+    ...filters,
+    sortBy: 'value',
+    sortDirection: 'desc',
+    limit: 5,
+  });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: foodscapesIntensitiesData } = fQuery;

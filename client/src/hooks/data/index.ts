@@ -5,18 +5,18 @@ import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { FiltersProps, PointData } from 'types/data';
+import { PointData } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LngLat } from 'types/map';
 
 import API from 'services/api';
 import TITILER_API from 'services/titiler';
 
-export const fetchData = (id, filters: FiltersProps) => {
+export const fetchData = (id, params: DatasetteParamsProps) => {
   return API.request({
     method: 'GET',
     url: `${id}/data`,
-    params: filters,
+    params,
   }).then((response) => response.data);
 };
 
@@ -40,12 +40,12 @@ export const fetchPointData = ({ lng, lat }: LngLat) => {
 
 export function useData<T = unknown>(
   id: Dataset['id'],
-  filters: FiltersProps = {},
+  params: DatasetteParamsProps = {},
   queryOptions: UseQueryOptions<T[], unknown> = {}
 ) {
-  const fetch = () => fetchData(id, filters);
+  const fetch = () => fetchData(id, params);
 
-  const query = useQuery(['data', JSON.stringify({ id, ...filters })], fetch, {
+  const query = useQuery(['data', JSON.stringify({ id, ...params })], fetch, {
     placeholderData: [],
     ...queryOptions,
   });

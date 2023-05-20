@@ -24,14 +24,12 @@ const FoodscapesTopChart = ({ onBarClick }: FoodscapesTopChartProps) => {
 
   // DATA
   const fQuery = useFoodscapes();
-
-  // const sql = dataset.widget.sql
-  //   //
-  //   .clone()
-  //   .order('value', false)
-  //   .limit(5);
-
-  const dQuery = useData<FoodscapeData>('foodscapes', filters);
+  const dQuery = useData<FoodscapeData>('foodscapes', {
+    ...filters,
+    sortBy: 'value',
+    sortDirection: 'desc',
+    limit: 5,
+  });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: foodscapesData } = fQuery;

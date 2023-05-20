@@ -65,3 +65,13 @@ export type FiltersOmitProps =
   | 'country'
   | 'province'
   | null;
+
+export type SortProps = {
+  sortBy?: string;
+  sortDirection?: string;
+};
+
+export type PaginationProps = {
+  limit?: number;
+  offset?: number;
+};

@@ -24,14 +24,12 @@ const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
 
   // DATA
   const fQuery = useCrops();
-
-  // const sql = dataset.widget.sql
-  //   //
-  //   .clone()
-  //   .order('value', false)
-  //   .limit(5);
-
-  const dQuery = useData<CropData>('crops', filters);
+  const dQuery = useData<CropData>('crops', {
+    ...filters,
+    sortBy: 'value',
+    sortDirection: 'desc',
+    limit: 5,
+  });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: cropsData } = fQuery;
