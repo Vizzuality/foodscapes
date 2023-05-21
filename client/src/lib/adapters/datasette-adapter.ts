@@ -2,7 +2,7 @@ import { Knex } from 'knex';
 
 import { FiltersProps, PaginationProps, SortProps } from 'types/data';
 
-import { DATA_JSON as LAND_USER_RISKS_DATA } from 'hooks/land-use-risks';
+import { DATA_JSON as LAND_USER_RISKS_DATA } from 'pages/api/land-use-risks';
 
 export interface DatasetteParamsProps extends FiltersProps, SortProps, PaginationProps {
   sql?: Knex.QueryBuilder | Knex.QueryBuilder[];
@@ -60,13 +60,13 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     }
 
     if (!!landUseRisk?.length) {
-      const where = LAND_USER_RISKS_DATA
+      const l = LAND_USER_RISKS_DATA
         // Filter the land use risks by the selected ones
-        .filter((d) => landUseRisk.includes(d.value))
-        .map((d) => `${d.column} = 1`)
-        .join(' OR ');
+        .find((d) => landUseRisk.includes(d.value));
 
-      query.where(where);
+      query.where({
+        [l.column]: 1,
+      });
     }
 
     if (!!climateRisk?.length) {

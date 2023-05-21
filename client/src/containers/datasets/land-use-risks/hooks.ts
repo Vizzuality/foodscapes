@@ -20,16 +20,16 @@ interface UseLandUseRiskSourceProps {
 }
 
 interface UseLandUseRiskLayerProps {
-  settings?: Partial<LayerSettings<'land-use-risk'>>;
+  settings?: Partial<LayerSettings<'land-use-risks'>>;
 }
 
 interface UseLandUseRiskLegendProps {
   dataset: Dataset;
-  settings?: LayerSettings<'land-use-risk'>;
+  settings?: LayerSettings<'land-use-risks'>;
 }
 
 export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData & { key: string } {
-  const DATASET = DATASETS.find((d) => d.id === 'land-use-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'land-use-risks');
   const { landUseRisk } = filters;
 
   const bands = DATASET.layer.bands;
@@ -81,7 +81,7 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
   }, [colormap, expression]);
 
   return {
-    id: 'land-use-risk-source',
+    id: 'land-use-risks-source',
     key: `${bands.toString()}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
@@ -94,7 +94,7 @@ export function useLayer({ settings }: UseLandUseRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'land-use-risk-layer',
+      id: 'land-use-risks-layer',
       type: 'raster',
       paint: {
         'raster-opacity': settings.opacity ?? 1,

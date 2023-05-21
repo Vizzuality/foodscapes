@@ -21,11 +21,13 @@ export interface ClimateRiskData {
 }
 
 export interface LandUseRiskData {
-  agricultural_frontier_zones: number;
-  area_with_high_conservation_value: number;
-  critically_endangered_ecosystems: number;
-  soil_erosion: number;
-  water_scarcity: number;
+  id:
+    | 'agricultural_frontier_zones'
+    | 'area_with_high_conservation_value'
+    | 'critically_endangered_ecosystems'
+    | 'soil_erosion'
+    | 'water_scarcity';
+  value: number;
 }
 export interface PollutionRiskData {
   risk: number;

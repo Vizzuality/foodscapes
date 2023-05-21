@@ -77,7 +77,7 @@ export const DATASETS = [
   },
   // RISKS
   {
-    id: 'land-use-risk',
+    id: 'land-use-risks',
     label: 'Land Use Change',
     group: 'risks',
     layer: {
@@ -92,24 +92,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      sql: squel
-        .select()
-        .field(
-          'SUM(CASE WHEN critically_endangered_ecosystems = 1 THEN pixel_count ELSE 0 END)',
-          'critically_endangered_ecosystems'
-        )
-        .field(
-          'SUM(CASE WHEN area_with_high_conservation_value = 1 THEN pixel_count ELSE 0 END)',
-          'area_with_high_conservation_value'
-        )
-        .field(
-          'SUM(CASE WHEN agricultural_frontier_zones = 1 THEN pixel_count ELSE 0 END)',
-          'agricultural_frontier_zones'
-        )
-        .field('SUM(CASE WHEN soil_erosion = 1 THEN pixel_count ELSE 0 END)', 'soil_erosion')
-        .field('SUM(CASE WHEN water_scarcity = 1 THEN pixel_count ELSE 0 END)', 'water_scarcity')
-        .from('data'),
-
       download: squel
         .select()
         .field(

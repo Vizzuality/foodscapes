@@ -12,7 +12,7 @@ export interface Dataset {
     | 'foodscapes-summary'
     | 'foodscapes-intensities'
     | 'crops'
-    | 'land-use-risk'
+    | 'land-use-risks'
     | 'climate-risk'
     | 'pollution-risk'
     | 'locations'

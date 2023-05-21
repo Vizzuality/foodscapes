@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import Image from 'next/image';
 
 import ClimateRiskWidget from 'containers/datasets/climate-risk/widget';
-import LandUseWidget from 'containers/datasets/land-use-risk/widget';
+import LandUseWidget from 'containers/datasets/land-use-risks/widget';
 import PollutionRiskWidget from 'containers/datasets/pollution-risk/widget';
 
 const RisksSidebar = forwardRef(() => {

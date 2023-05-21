@@ -50,7 +50,7 @@ export const layersSettingsAtom = atom<Record<Dataset['id'], LayerSettings<Datas
     foodscapes: { group: false, ...DEFAULT_SETTINGS },
     'foodscapes-intensities': { ...DEFAULT_SETTINGS },
     crops: { group: false, ...DEFAULT_SETTINGS },
-    'land-use-risk': { ...DEFAULT_SETTINGS },
+    'land-use-risks': { ...DEFAULT_SETTINGS },
     'climate-risk': { ...DEFAULT_SETTINGS },
     'pollution-risk': { ...DEFAULT_SETTINGS },
     locations: { ...DEFAULT_SETTINGS },

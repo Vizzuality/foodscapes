@@ -1,10 +1,3 @@
-// .select()
-// .field('intensity_groups', 'id')
-// .field('SUM(pixel_count)', 'value')
-// .distinct()
-// .from('data')
-// .where('intensity_groups NOT IN (0)')
-// .group('intensity_groups'),
 import { datasetteAdapter } from 'lib/adapters/datasette-adapter';
 
 import knex from 'knex';

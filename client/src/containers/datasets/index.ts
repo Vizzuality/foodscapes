@@ -19,10 +19,10 @@ import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
 // Land use risk
-import LandUseInfo from './land-use-risk/info.mdx';
-import LandUseLayer from './land-use-risk/layer';
-import LandUseLegend from './land-use-risk/legend';
-import LandUsePopup from './land-use-risk/popup';
+import LandUseInfo from './land-use-risks/info.mdx';
+import LandUseLayer from './land-use-risks/layer';
+import LandUseLegend from './land-use-risks/legend';
+import LandUsePopup from './land-use-risks/popup';
 // Pollution risk
 import PollutionRiskInfo from './pollution-risk/info.mdx';
 import PollutionRiskLayer from './pollution-risk/layer';
@@ -34,7 +34,7 @@ export const LAYERS = {
   'foodscapes-intensities': FoodscapesIntensitiesLayer,
   crops: CropsLayer,
   'climate-risk': ClimateRiskLayer,
-  'land-use-risk': LandUseLayer,
+  'land-use-risks': LandUseLayer,
   'pollution-risk': PollutionRiskLayer,
 };
 
@@ -43,7 +43,7 @@ export const LEGENDS = {
   'foodscapes-intensities': FoodscapesIntensitiesLegend,
   crops: CropsLegend,
   'climate-risk': ClimateRiskLegend,
-  'land-use-risk': LandUseLegend,
+  'land-use-risks': LandUseLegend,
   'pollution-risk': PollutionRiskLegend,
 };
 
@@ -52,7 +52,7 @@ export const POPUPS = {
   'foodscapes-intensities': FoodscapesIntensitiesPopup,
   crops: CropsPopup,
   'climate-risk': ClimateRiskPopup,
-  'land-use-risk': LandUsePopup,
+  'land-use-risks': LandUsePopup,
   'pollution-risk': PollutionRiskPopup,
 };
 
@@ -61,6 +61,6 @@ export const INFO = {
   'foodscapes-intensities': FoodscapesIntensitiesInfo,
   crops: CropsInfo,
   'climate-risk': ClimateRiskInfo,
-  'land-use-risk': LandUseInfo,
+  'land-use-risks': LandUseInfo,
   'pollution-risk': PollutionRiskInfo,
 };

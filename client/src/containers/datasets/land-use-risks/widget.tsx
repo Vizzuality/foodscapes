@@ -21,9 +21,7 @@ const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const LandUseRiskWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'land-use-risk');
-
-  const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
+  const DATASET = DATASETS.find((d) => d.id === 'land-use-risks');
 
   const filters = useRecoilValue(filtersSelector('landUseRisk'));
 
@@ -38,11 +36,10 @@ const LandUseRiskWidget = () => {
     isError: landUseIsError,
   } = useLandUseRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<LandUseRiskData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { isPlaceholderData, isFetching, isFetched, isError } = useData<LandUseRiskData>(
+    'land-use-risks',
+    filters
+  );
 
   const handleBarClick = useCallback(
     (v) => {
@@ -91,17 +88,12 @@ const LandUseRiskWidget = () => {
 
           <div className="space flex flex-col items-center space-y-2.5 py-2.5 text-xs">
             <div className="w-full">
-              <Chart
-                dataset={DATASET}
-                selected={landUseRisk}
-                ignore={null}
-                onBarClick={handleBarClick}
-              />
+              <Chart selected={landUseRisk} ignore={null} onBarClick={handleBarClick} />
             </div>
           </div>
 
           <WidgetTop label="See top affected foodscapes by land use risk">
-            <TopChart dataset={FOODSCAPES_DATASET} />
+            <TopChart />
           </WidgetTop>
         </div>
       </WidgetContent>

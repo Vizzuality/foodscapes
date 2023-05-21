@@ -8,7 +8,7 @@ const LandUseRiskLayer = ({
   settings,
   filters,
   beforeId,
-}: LayerProps<LayerSettings<'land-use-risk'>>) => {
+}: LayerProps<LayerSettings<'land-use-risks'>>) => {
   const SOURCE = useSource({ filters });
   const LAYER = useLayer({ settings });
 

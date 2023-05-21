@@ -7,7 +7,6 @@ import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { FiltersOmitProps, LandUseRiskData } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useLandUseRisks } from 'hooks/land-use-risks';
@@ -16,7 +15,6 @@ import { convertPixelCountToHA } from 'hooks/utils';
 import HorizontalBar from 'components/charts/horizontal-bar';
 
 interface LandUseRiskChartParentProps {
-  dataset: Dataset;
   selected?: readonly number[];
   ignore: FiltersOmitProps;
   onBarClick?: (bar) => void;
@@ -28,7 +26,6 @@ interface LandUseRiskChartProps extends LandUseRiskChartParentProps {
 }
 
 const LandUseRiskChart = ({
-  dataset,
   selected,
   ignore = 'landUseRisk',
   onBarClick,
@@ -38,41 +35,30 @@ const LandUseRiskChart = ({
   const { data: landUseRisksData } = useLandUseRisks();
 
   // DATA
-  const { data } = useData<LandUseRiskData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
-
-  const d1 = useMemo(() => {
-    if (!data) return null;
-
-    return data.reduce((acc, d) => {
-      return {
-        ...acc,
-        ...d,
-      };
-    }, {});
-  }, [data]);
+  const { data } = useData<LandUseRiskData>('land-use-risks', filters);
 
   const KEYS = useMemo(() => {
-    return Object.keys(d1).map((k) => k);
-  }, [d1]);
+    return data.map((d) => d.id);
+  }, [data]);
 
   const DATA = useMemo(() => {
-    if (!d1) return [];
+    if (!data) return [];
 
     return landUseRisksData
       .map((c) => {
+        const d1 = data.find((d) => d.id === c.column);
+        if (!d1) return null;
+
         return {
           ...c,
           id: c.value,
-          value: convertPixelCountToHA(d1[c.column], 1000000),
+          value: convertPixelCountToHA(d1.value, 1000000),
           color: c.color,
         };
       })
+      .filter((d) => d)
       .sort((a, b) => b.value - a.value);
-  }, [landUseRisksData, d1]);
+  }, [landUseRisksData, data]);
 
   const MAX = Math.max(...DATA.map((d) => d.value));
 
