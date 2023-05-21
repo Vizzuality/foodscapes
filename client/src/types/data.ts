@@ -30,8 +30,8 @@ export interface LandUseRiskData {
   value: number;
 }
 export interface PollutionRiskData {
-  risk: number;
-  not_risk: number;
+  id: 'risk' | 'not_risk';
+  value: number;
 }
 
 export interface LocationData {

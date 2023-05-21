@@ -9,7 +9,7 @@ const PollutionRiskLayer = ({
   settings,
   filters,
   beforeId,
-}: LayerProps<LayerSettings<'pollution-risk'>>) => {
+}: LayerProps<LayerSettings<'pollution-risks'>>) => {
   const SOURCE = useSource({ filters });
   const LAYER = useLayer({ settings });
 

@@ -24,7 +24,7 @@ export type LayerTypeSettings = {
   crops: CropsSettings;
   'land-use-risks': LandUseChangeSettings;
   'climate-risks': ClimateChangeSettings;
-  'pollution-risk': PollutionSettings;
+  'pollution-risks': PollutionSettings;
   locations: Settings;
   countries: Settings;
   provinces: Settings;

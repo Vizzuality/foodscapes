@@ -52,7 +52,7 @@ export const layersSettingsAtom = atom<Record<Dataset['id'], LayerSettings<Datas
     crops: { group: false, ...DEFAULT_SETTINGS },
     'land-use-risks': { ...DEFAULT_SETTINGS },
     'climate-risks': { ...DEFAULT_SETTINGS },
-    'pollution-risk': { ...DEFAULT_SETTINGS },
+    'pollution-risks': { ...DEFAULT_SETTINGS },
     locations: { ...DEFAULT_SETTINGS },
     countries: { ...DEFAULT_SETTINGS },
     provinces: { ...DEFAULT_SETTINGS },

@@ -19,18 +19,18 @@ interface UsePollutionRiskSourceProps {
 }
 
 interface UsePollutionRiskLayerProps {
-  settings?: Partial<LayerSettings<'pollution-risk'>>;
+  settings?: Partial<LayerSettings<'pollution-risks'>>;
 }
 
 interface UsePollutionRiskLegendProps {
   dataset: Dataset;
-  settings?: LayerSettings<'pollution-risk'>;
+  settings?: LayerSettings<'pollution-risks'>;
 }
 
 export function useSource({
   filters,
 }: UsePollutionRiskSourceProps): AnySourceData & { key: string } {
-  const DATASET = DATASETS.find((d) => d.id === 'pollution-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'pollution-risks');
   const { data: pollutionRisksData } = usePollutionRisks();
 
   const band = DATASET.layer.band;
@@ -68,7 +68,7 @@ export function useSource({
   }, [band, colormap, expression]);
 
   return {
-    id: 'pollution-risk-source',
+    id: 'pollution-risks-source',
     key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
@@ -81,7 +81,7 @@ export function useLayer({ settings }: UsePollutionRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'pollution-risk-layer',
+      id: 'pollution-risks-layer',
       type: 'raster',
       paint: {
         'raster-opacity': settings.opacity ?? 1,

@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import ClimateRiskWidget from 'containers/datasets/climate-risks/widget';
 import LandUseWidget from 'containers/datasets/land-use-risks/widget';
-import PollutionRiskWidget from 'containers/datasets/pollution-risk/widget';
+import PollutionRiskWidget from 'containers/datasets/pollution-risks/widget';
 
 const RisksSidebar = forwardRef(() => {
   return (

@@ -6,7 +6,6 @@ import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { FoodscapeData } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -16,28 +15,22 @@ import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
 
 interface RisksPollutionTopChartProps {
-  dataset: Dataset;
   selected?: readonly number[];
   onBarClick?: (key: number) => void;
 }
 
-const RisksPollutionTopChart = ({ dataset, onBarClick }: RisksPollutionTopChartProps) => {
+const RisksPollutionTopChart = ({ onBarClick }: RisksPollutionTopChartProps) => {
   const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
   const fQuery = useFoodscapes();
 
-  const sql = dataset.widget.sql
-    //
-    .clone()
-    .where('pesticide_risk = ?', [1])
-    .order('value', false)
-    .limit(5);
-
-  const dQuery = useData<FoodscapeData>({
-    sql,
-    shape: 'array',
+  const dQuery = useData<FoodscapeData>('foodscapes', {
     ...filters,
+    pollutionRisk: [1],
+    limit: 5,
+    sortBy: 'value',
+    sortDirection: 'desc',
   });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);

@@ -7,18 +7,16 @@ import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { FiltersOmitProps, PollutionRiskData } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { usePollutionRisks } from 'hooks/pollution-risks';
 
-import { PollutionRiskChartTooltip } from 'containers/datasets/pollution-risk/chart/tooltips';
+import { PollutionRiskChartTooltip } from 'containers/datasets/pollution-risks/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
 
 interface RisksChartParentProps {
-  dataset: Dataset;
   selected?: readonly number[];
   ignore: FiltersOmitProps;
   onPieClick?: (data: PieChartData) => void;
@@ -32,7 +30,6 @@ interface RisksChartProps extends RisksChartParentProps {
 const RisksChart = ({
   width,
   height,
-  dataset,
   selected,
   ignore = 'pollutionRisk',
   onPieClick,
@@ -42,36 +39,21 @@ const RisksChart = ({
   const { data: pollutionRiskData } = usePollutionRisks();
 
   // DATA
-  const { data } = useData<PollutionRiskData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data } = useData<PollutionRiskData>('pollution-risks', filters);
 
   const DATA = useMemo(() => {
-    if (!data) return [];
+    if (!data || !data.length) return [];
 
-    const d = data.reduce(
-      (acc, curr) => {
-        return {
-          '1': curr.risk + acc['1'],
-          '-1': curr.not_risk + acc['-1'],
-        };
-      },
-      {
-        '1': 0,
-        '-1': 0,
-      }
-    );
-
-    const total = d[-1] + d[1];
+    const total = data.reduce((acc, d) => acc + d.value, 0);
 
     return pollutionRiskData
       .map((c) => {
+        const d1 = data.find((d) => d.id === c.id);
+
         return {
           ...c,
           id: c.value,
-          value: d[c.value] / total,
+          value: d1.value / total,
           color: c.color,
         };
       })

@@ -19,9 +19,7 @@ const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const PollutionRiskWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'pollution-risk');
-
-  const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
+  const DATASET = DATASETS.find((d) => d.id === 'pollution-risks');
 
   const filters = useRecoilValue(filtersSelector('pollutionRisk'));
 
@@ -36,11 +34,10 @@ const PollutionRiskWidget = () => {
     isError: pollutionIsError,
   } = usePollutionRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<PollutionRiskData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { isPlaceholderData, isFetching, isFetched, isError } = useData<PollutionRiskData>(
+    'pollution-risks',
+    filters
+  );
 
   const handleChartClick = (data) => {
     if (pollution.includes(data.id)) {
@@ -88,17 +85,12 @@ const PollutionRiskWidget = () => {
             <p className="font-bold">Pesticide Risk</p>
 
             <div className="h-64 w-full">
-              <Chart
-                dataset={DATASET}
-                selected={pollution}
-                ignore={null}
-                onPieClick={handleChartClick}
-              />
+              <Chart selected={pollution} ignore={null} onPieClick={handleChartClick} />
             </div>
           </div>
 
           <WidgetTop label="See top affected foodscapes by pollution">
-            <TopChart dataset={FOODSCAPES_DATASET} />
+            <TopChart />
           </WidgetTop>
         </div>
       </WidgetContent>

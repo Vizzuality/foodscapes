@@ -17,7 +17,7 @@ interface PollutionRiskPopupProps {
 }
 
 const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
-  const DATASET = DATASETS.find((d) => d.id === 'pollution-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'pollution-risks');
   const band = `b${DATASET.layer.band}`;
 
   const f = usePollutionRisks();

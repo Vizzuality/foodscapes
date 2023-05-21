@@ -66,7 +66,7 @@ export function useSource({ filters }: UseClimateRiskSourceProps): AnySourceData
   }, [band, colormap, expression]);
 
   return {
-    id: 'climate-risk-source',
+    id: 'climate-risks-source',
     key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
@@ -79,7 +79,7 @@ export function useLayer({ settings }: UseClimateRiskLayerProps): AnyLayer {
   const visibility = settings.visibility ?? true;
   const layer = useMemo<AnyLayer>(() => {
     return {
-      id: 'climate-risk-layer',
+      id: 'climate-risks-layer',
       type: 'raster',
       paint: {
         'raster-opacity': settings.opacity ?? 1,

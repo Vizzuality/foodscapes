@@ -110,23 +110,10 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      sql: squel
-        .select()
-        .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
-        .field('SUM(CASE WHEN climate_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risk')
-        .from('data'),
-      download: squel
-        .select()
-        .field('SUM(CASE WHEN climate_risk = 1 THEN pixel_count * 3086.9136 ELSE 0 END)', 'risk')
-        .field(
-          'SUM(CASE WHEN climate_risk = 0 THEN pixel_count * 3086.9136 ELSE 0 END)',
-          'not_risk'
-        )
-        .from('data'),
     },
   },
   {
-    id: 'pollution-risk',
+    id: 'pollution-risks',
     label: 'Pollution',
     group: 'risks',
     layer: {
@@ -141,19 +128,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      sql: squel
-        .select()
-        .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count ELSE 0 END)', 'risk')
-        .field('SUM(CASE WHEN pesticide_risk = 0 THEN pixel_count ELSE 0 END)', 'not_risk')
-        .from('data'),
-      download: squel
-        .select()
-        .field('SUM(CASE WHEN pesticide_risk = 1 THEN pixel_count * 3086.9136 ELSE 0 END)', 'risk')
-        .field(
-          'SUM(CASE WHEN pesticide_risk = 0 THEN pixel_count * 3086.9136 ELSE 0 END)',
-          'not_risk'
-        )
-        .from('data'),
     },
   },
   // OPPORTUNITIES

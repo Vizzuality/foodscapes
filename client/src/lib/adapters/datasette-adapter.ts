@@ -60,12 +60,16 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     }
 
     if (!!landUseRisk?.length) {
-      const l = LAND_USER_RISKS_DATA
+      const risks = LAND_USER_RISKS_DATA
         // Filter the land use risks by the selected ones
-        .find((d) => landUseRisk.includes(d.value));
+        .filter((d) => landUseRisk.includes(d.value));
 
-      query.where({
-        [l.column]: 1,
+      query.where((q) => {
+        risks.forEach((r) => {
+          q.orWhere({
+            [r.column]: 1,
+          });
+        });
       });
     }
 
@@ -76,7 +80,9 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     }
 
     if (!!pollutionRisk?.length) {
-      query.where('pesticide_risk == ?', pollutionRisk[0] === -1 ? 0 : pollutionRisk[0]);
+      query.where({
+        pesticide_risk: pollutionRisk[0] === -1 ? 0 : 1,
+      });
     }
 
     // Sort

@@ -7,13 +7,13 @@ export const DATA_JSON = [
     id: 'not_risk',
     label: 'No risk',
     value: -1,
-    color: '#BF837000',
+    color: '#7B544700',
   },
   {
     id: 'risk',
     label: 'Risk',
     value: 1,
-    color: '#BF8370',
+    color: '#7B5447',
   },
 ] satisfies ClimateRisk[];
 
@@ -23,7 +23,7 @@ const fetch = async () => {
   });
 };
 
-const ClimateRisks = async (req: NextApiRequest, res: NextApiResponse) => {
+const PollutionRisks = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const result = await fetch();
     res.status(200).json(result);
@@ -32,4 +32,4 @@ const ClimateRisks = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default ClimateRisks;
+export default PollutionRisks;
