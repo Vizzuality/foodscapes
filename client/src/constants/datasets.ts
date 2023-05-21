@@ -22,6 +22,23 @@ export const DATASETS = [
     },
   },
   {
+    id: 'foodscapes-summary',
+    label: 'Foodscapes Summary',
+    group: 'other',
+    layer: {
+      enabled: false,
+      visible: false,
+    },
+    widget: {
+      enabled: true,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
     id: 'foodscapes-intensities',
     label: 'Foodscapes Intensity',
     group: 'foodscapes',
@@ -37,30 +54,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      download: squel
-        .select()
-        .from(
-          squel
-            .select()
-            .field('intensity_groups', 'id')
-            .field('SUM(pixel_count)', 'value')
-            .field('SUM(pixel_count * 3086.9136)', 'ha')
-            .distinct()
-            .from('data')
-            .where('intensity_groups NOT IN (0)')
-            .group('intensity_groups'),
-          'd'
-        )
-        .left_join(squel.select().from('intensity_groups'), 'f', 'd.id = f.value')
-        .field('d.id')
-        .field('f.label')
-        .field('f.color')
-        .field('d.value')
-        .field('d.ha')
-        .field(
-          'ROUND((d.ha / (SELECT SUM(pixel_count * 3086.9136) FROM data WHERE intensity_groups NOT IN (0))) * 100, 2)',
-          'percentage'
-        ),
     },
   },
   {

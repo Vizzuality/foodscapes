@@ -9,6 +9,7 @@ type Toolbar = {
 export interface Dataset {
   id:
     | 'foodscapes'
+    | 'foodscapes-summary'
     | 'foodscapes-intensities'
     | 'crops'
     | 'land-use-risk'
