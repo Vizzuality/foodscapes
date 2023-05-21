@@ -80,35 +80,6 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      download: squel
-        .select()
-        .from(
-          squel
-            .select()
-            .field('crops', 'id')
-            .field('crop_groups', 'parent_id')
-            .field('SUM(pixel_count)', 'value')
-            .field('SUM(pixel_count * 3086.9136)', 'ha')
-            .distinct()
-            .from('data')
-            .where('crops NOT IN (-9999)')
-            .group('crops'),
-          'd'
-        )
-        .left_join(squel.select().from('crops'), 'f', 'd.id = f.value')
-        .left_join(squel.select().from('crop_groups'), 'g', 'd.parent_id = g.value')
-        .field('d.id')
-        .field('f.label')
-        .field('f.color')
-        .field('d.value')
-        .field('d.ha')
-        .field(
-          'ROUND((d.ha / (SELECT SUM(pixel_count * 3086.9136) FROM data WHERE crops NOT IN (-9999))) * 100, 2)',
-          'percentage'
-        )
-        .field('d.parent_id', 'parentId')
-        .field('g.label', 'parentLabel')
-        .field('g.color', 'parentColor'),
     },
   },
   // RISKS
