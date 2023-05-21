@@ -92,33 +92,10 @@ export const DATASETS = [
         info: true,
         layer: true,
       },
-      download: squel
-        .select()
-        .field(
-          'SUM(CASE WHEN critically_endangered_ecosystems = 1 THEN pixel_count * 3086.9136  ELSE 0 END)',
-          'critically_endangered_ecosystems'
-        )
-        .field(
-          'SUM(CASE WHEN area_with_high_conservation_value = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
-          'area_with_high_conservation_value'
-        )
-        .field(
-          'SUM(CASE WHEN agricultural_frontier_zones = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
-          'agricultural_frontier_zones'
-        )
-        .field(
-          'SUM(CASE WHEN soil_erosion = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
-          'soil_erosion'
-        )
-        .field(
-          'SUM(CASE WHEN water_scarcity = 1 THEN pixel_count * 3086.9136 ELSE 0 END)',
-          'water_scarcity'
-        )
-        .from('data'),
     },
   },
   {
-    id: 'climate-risk',
+    id: 'climate-risks',
     label: 'Climate change',
     group: 'risks',
     layer: {

@@ -16,8 +16,8 @@ export interface CropData {
 }
 
 export interface ClimateRiskData {
-  risk: number;
-  not_risk: number;
+  id: 'risk' | 'not_risk';
+  value: number;
 }
 
 export interface LandUseRiskData {

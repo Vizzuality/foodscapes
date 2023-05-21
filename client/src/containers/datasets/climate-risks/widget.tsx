@@ -19,7 +19,7 @@ const Chart = dynamic(() => import('./chart'), { ssr: false });
 const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const ClimateRiskWidget = () => {
-  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'climate-risks');
 
   const FOODSCAPES_DATASET = DATASETS.find((d) => d.id === 'foodscapes');
 
@@ -36,11 +36,10 @@ const ClimateRiskWidget = () => {
     isError: climateIsError,
   } = useClimateRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>(
+    'climate-risks',
+    filters
+  );
 
   const handleChartClick = (data) => {
     if (climateChange.includes(data.id)) {
@@ -88,12 +87,7 @@ const ClimateRiskWidget = () => {
             <p className="font-bold">Climate Risk</p>
 
             <div className="h-64 w-full">
-              <Chart
-                ignore={null}
-                dataset={DATASET}
-                selected={climateChange}
-                onPieClick={handleChartClick}
-              />
+              <Chart ignore={null} selected={climateChange} onPieClick={handleChartClick} />
             </div>
           </div>
 

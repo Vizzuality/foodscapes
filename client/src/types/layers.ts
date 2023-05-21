@@ -23,7 +23,7 @@ export type LayerTypeSettings = {
   'foodscapes-intensities': FoodscapesIntentisitySettings;
   crops: CropsSettings;
   'land-use-risks': LandUseChangeSettings;
-  'climate-risk': ClimateChangeSettings;
+  'climate-risks': ClimateChangeSettings;
   'pollution-risk': PollutionSettings;
   locations: Settings;
   countries: Settings;

@@ -19,16 +19,16 @@ interface UseClimateRiskSourceProps {
 }
 
 interface UseClimateRiskLayerProps {
-  settings?: Partial<LayerSettings<'climate-risk'>>;
+  settings?: Partial<LayerSettings<'climate-risks'>>;
 }
 
 interface UseClimateRiskLegendProps {
   dataset: Dataset;
-  settings?: LayerSettings<'climate-risk'>;
+  settings?: LayerSettings<'climate-risks'>;
 }
 
 export function useSource({ filters }: UseClimateRiskSourceProps): AnySourceData & { key: string } {
-  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'climate-risks');
   const { data: climateRisksData } = useClimateRisks();
 
   const band = DATASET.layer.band;

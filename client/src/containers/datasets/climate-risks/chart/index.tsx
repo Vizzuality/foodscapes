@@ -7,18 +7,16 @@ import { scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { ClimateRiskData, FiltersOmitProps } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useClimateRisks } from 'hooks/climate-risks';
 import { useData } from 'hooks/data';
 
-import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risk/chart/tooltips';
+import { ClimateRiskChartTooltip } from 'containers/datasets/climate-risks/chart/tooltips';
 
 import PieChart from 'components/charts/pie/component';
 import { PieChartData } from 'components/charts/pie/types';
 
 interface ClimateRiskParentProps {
-  dataset: Dataset;
   selected?: readonly number[];
   ignore: FiltersOmitProps;
   onPieClick?: (data: PieChartData) => void;
@@ -32,7 +30,6 @@ interface ClimateRiskProps extends ClimateRiskParentProps {
 const ClimateRisk = ({
   width,
   height,
-  dataset,
   selected,
   ignore = 'climateRisk',
   onPieClick,
@@ -42,36 +39,21 @@ const ClimateRisk = ({
   const { data: climateRisksData } = useClimateRisks();
 
   // DATA
-  const { data } = useData<ClimateRiskData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data } = useData<ClimateRiskData>('climate-risks', filters);
 
   const DATA = useMemo(() => {
-    if (!data) return [];
+    if (!data || !data.length) return [];
 
-    const d = data.reduce(
-      (acc, curr) => {
-        return {
-          '1': curr.risk + acc['1'],
-          '-1': curr.not_risk + acc['-1'],
-        };
-      },
-      {
-        '1': 0,
-        '-1': 0,
-      }
-    );
-
-    const total = d[-1] + d[1];
+    const total = data.reduce((acc, d) => acc + d.value, 0);
 
     return climateRisksData
       .map((c) => {
+        const d1 = data.find((d) => d.id === c.id);
+
         return {
           ...c,
           id: c.value,
-          value: d[c.value] / total,
+          value: d1.value / total,
           color: c.color,
         };
       })

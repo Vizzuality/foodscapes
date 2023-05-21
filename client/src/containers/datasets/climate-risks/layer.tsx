@@ -8,7 +8,7 @@ const ClimateRiskLayer = ({
   settings,
   filters,
   beforeId,
-}: LayerProps<LayerSettings<'climate-risk'>>) => {
+}: LayerProps<LayerSettings<'climate-risks'>>) => {
   const SOURCE = useSource({ filters });
   const LAYER = useLayer({ settings });
 

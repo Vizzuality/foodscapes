@@ -70,7 +70,9 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     }
 
     if (!!climateRisk?.length) {
-      query.where('climate_risk == ?', climateRisk[0] === -1 ? 0 : climateRisk[0]);
+      query.where({
+        climate_risk: climateRisk[0] === -1 ? 0 : 1,
+      });
     }
 
     if (!!pollutionRisk?.length) {

@@ -21,23 +21,18 @@ interface RisksClimateChangeTopChartProps {
   onBarClick?: (key: number) => void;
 }
 
-const RisksClimateChangeTopChart = ({ dataset, onBarClick }: RisksClimateChangeTopChartProps) => {
+const RisksClimateChangeTopChart = ({ onBarClick }: RisksClimateChangeTopChartProps) => {
   const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
   const fQuery = useFoodscapes();
 
-  const sql = dataset.widget.sql
-    //
-    .clone()
-    .where('climate_risk = ?', [1])
-    .order('value', false)
-    .limit(5);
-
-  const dQuery = useData<FoodscapeData>({
-    sql,
-    shape: 'array',
+  const dQuery = useData<FoodscapeData>('foodscapes', {
     ...filters,
+    climateRisk: [1],
+    limit: 5,
+    sortBy: 'value',
+    sortDirection: 'desc',
   });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);

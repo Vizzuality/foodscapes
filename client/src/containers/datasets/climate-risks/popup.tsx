@@ -17,7 +17,7 @@ interface ClimateRiskPopupProps {
 }
 
 const ClimateRiskPopup = ({ latLng }: ClimateRiskPopupProps) => {
-  const DATASET = DATASETS.find((d) => d.id === 'climate-risk');
+  const DATASET = DATASETS.find((d) => d.id === 'climate-risks');
   const band = `b${DATASET.layer.band}`;
 
   const f = useClimateRisks();
