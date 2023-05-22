@@ -49,21 +49,18 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
   }, [id, layers, setLayers]);
 
   const handleDownload = useCallback(() => {
-    downloadMutation.mutate(
-      { sql: dataset.widget.download },
-      {
-        onSuccess: (data) => {
-          const url = window.URL.createObjectURL(new Blob([data]));
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', `${dataset.label}.csv`);
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-        },
-        onError: (error) => console.error(error),
-      }
-    );
+    downloadMutation.mutate(dataset.id, {
+      onSuccess: (data) => {
+        const url = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${dataset.label}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      },
+      onError: (error) => console.error(error),
+    });
   }, [dataset, downloadMutation]);
 
   return (

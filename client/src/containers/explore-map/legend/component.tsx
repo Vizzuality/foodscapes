@@ -7,8 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { Dataset } from 'types/datasets';
-import { LayerSettings } from 'types/layers';
+import { LayerSettings, LayerType } from 'types/layers';
 
 import { DATASETS } from 'constants/datasets';
 
@@ -80,7 +79,7 @@ const LegendContainer = () => {
         const InfoComponent = INFO[layer];
         const DATASET = DATASETS.find((d) => d.id === layer);
 
-        const settings: LayerSettings<Dataset['id']> = layersSettings[layer];
+        const settings: LayerSettings<LayerType> = layersSettings[layer];
 
         return (
           <LegendComponent

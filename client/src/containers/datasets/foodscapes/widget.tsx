@@ -54,11 +54,10 @@ const FoodscapesWidget = () => {
     isError: foodscapesGroupIsError,
   } = useFoodscapesGroups();
 
-  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>(
+    'foodscapes',
+    filters
+  );
 
   const OPTIONS = useMemo(() => {
     if (!data || !foodscapesData) return [];
@@ -191,7 +190,6 @@ const FoodscapesWidget = () => {
               <div className="h-8">
                 <Chart
                   //
-                  dataset={DATASET}
                   selected={foodscapes}
                   ignore={null}
                   onBarClick={handleBarClick}
@@ -200,7 +198,7 @@ const FoodscapesWidget = () => {
               </div>
 
               <WidgetTop label="See top largest foodscapes">
-                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+                <ChartTop onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>
@@ -222,7 +220,6 @@ const FoodscapesWidget = () => {
 
               <div className="h-8">
                 <ChartGroup
-                  dataset={DATASET}
                   selected={foodscapes}
                   ignore={null}
                   onBarClick={handleBarGroupClick}
@@ -231,7 +228,7 @@ const FoodscapesWidget = () => {
               </div>
 
               <WidgetTop label="See top largest foodscapes">
-                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+                <ChartTop onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>

@@ -6,7 +6,6 @@ import { scaleLinear, scaleOrdinal } from '@visx/scale';
 import { useRecoilValue } from 'recoil';
 
 import { FoodscapeIntensityData } from 'types/data';
-import { Dataset } from 'types/datasets';
 
 import { useData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
@@ -16,31 +15,20 @@ import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
 
 interface FoodscapesIntensitiesTopChartProps {
-  dataset: Dataset;
   selected?: readonly number[];
   onBarClick?: (key: number) => void;
 }
 
-const FoodscapesIntensitiesTopChart = ({
-  dataset,
-  onBarClick,
-}: FoodscapesIntensitiesTopChartProps) => {
+const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopChartProps) => {
   const filters = useRecoilValue(filtersSelector(null));
 
   // DATA
-
   const fQuery = useFoodscapesIntensities();
-
-  const sql = dataset.widget.sql
-    //
-    .clone()
-    .order('value', false)
-    .limit(5);
-
-  const dQuery = useData<FoodscapeIntensityData>({
-    sql,
-    shape: 'array',
+  const dQuery = useData<FoodscapeIntensityData>('foodscapes-intensities', {
     ...filters,
+    sortBy: 'value',
+    sortDirection: 'desc',
+    limit: 5,
   });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);

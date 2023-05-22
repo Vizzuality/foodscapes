@@ -38,11 +38,7 @@ const FoodscapesIntensitiesWidget = () => {
   } = useFoodscapesIntensities();
 
   const { data, isPlaceholderData, isFetching, isFetched, isError } =
-    useData<FoodscapeIntensityData>({
-      sql: DATASET.widget.sql,
-      shape: 'array',
-      ...filters,
-    });
+    useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
   const OPTIONS = useMemo(() => {
     if (!data) return [];
@@ -83,7 +79,6 @@ const FoodscapesIntensitiesWidget = () => {
           <div className="h-8">
             <Chart
               //
-              dataset={DATASET}
               selected={intensities}
               ignore={null}
               onBarClick={handleBarClick}
@@ -92,7 +87,7 @@ const FoodscapesIntensitiesWidget = () => {
           </div>
 
           <WidgetTop label="See top largest foodscapes intensities">
-            <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+            <ChartTop onBarClick={handleBarClick} />
           </WidgetTop>
         </div>
       </WidgetContent>

@@ -45,11 +45,10 @@ const CropsLegend = (props: CropsLegendProps) => {
     isError: cropsIsError,
   } = useCrops();
 
-  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>(
+    'crops',
+    filters
+  );
 
   const GROUPED_DATA = useMemo(() => {
     if (!data || !cropsData) return [];
@@ -85,7 +84,6 @@ const CropsLegend = (props: CropsLegendProps) => {
               {!settings.group && (
                 <Chart
                   //
-                  dataset={dataset}
                   ignore={null}
                 />
               )}
@@ -93,7 +91,6 @@ const CropsLegend = (props: CropsLegendProps) => {
               {settings.group && (
                 <ChartGroup
                   //
-                  dataset={dataset}
                   selected={filters.crops}
                   ignore={null}
                 />

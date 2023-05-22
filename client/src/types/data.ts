@@ -16,20 +16,22 @@ export interface CropData {
 }
 
 export interface ClimateRiskData {
-  risk: number;
-  not_risk: number;
+  id: 'risk' | 'not_risk';
+  value: number;
 }
 
 export interface LandUseRiskData {
-  agricultural_frontier_zones: number;
-  area_with_high_conservation_value: number;
-  critically_endangered_ecosystems: number;
-  soil_erosion: number;
-  water_scarcity: number;
+  id:
+    | 'agricultural_frontier_zones'
+    | 'area_with_high_conservation_value'
+    | 'critically_endangered_ecosystems'
+    | 'soil_erosion'
+    | 'water_scarcity';
+  value: number;
 }
 export interface PollutionRiskData {
-  risk: number;
-  not_risk: number;
+  id: 'risk' | 'not_risk';
+  value: number;
 }
 
 export interface LocationData {
@@ -65,3 +67,13 @@ export type FiltersOmitProps =
   | 'country'
   | 'province'
   | null;
+
+export type SortProps = {
+  sortBy?: string;
+  sortDirection?: string;
+};
+
+export type PaginationProps = {
+  limit?: number;
+  offset?: number;
+};

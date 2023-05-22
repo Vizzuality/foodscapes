@@ -13,6 +13,7 @@ export function titilerAdapter(params: FiltersProps = {}, initial = null) {
   } = params;
 
   return [
+    ...[[1, 2, 3].map((v) => `(b1!=${v})`).join('&')], // Remove foodscapes 1, 2, 3 always from map
     ...(initial ? [initial] : []),
     ...(foodscapes.length ? [foodscapes.map((v) => `(b1==${v})`).join('|')] : []),
     ...(intensities.length ? [intensities.map((v) => `(b3==${v})`).join('|')] : []),

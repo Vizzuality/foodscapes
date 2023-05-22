@@ -1,11 +1,11 @@
-import { Select } from 'squel';
+import { Knex } from 'knex';
 
-import { FiltersProps } from 'types/data';
+import { FiltersProps, PaginationProps, SortProps } from 'types/data';
 
-import { DATA_JSON as LAND_USER_RISKS_DATA } from 'hooks/land-use-risks';
+import { DATA_JSON as LAND_USER_RISKS_DATA } from 'pages/api/land-use-risks';
 
-export interface DatasetteParamsProps extends FiltersProps {
-  sql?: Select;
+export interface DatasetteParamsProps extends FiltersProps, SortProps, PaginationProps {
+  sql?: Knex.QueryBuilder | Knex.QueryBuilder[];
   shape?: 'arrays' | 'objects' | 'array' | 'object';
   size?: number | 'max';
   json?: string[];
@@ -22,58 +22,93 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     pollutionRisk = [],
     country,
     province,
+    sortBy,
+    sortDirection,
     shape = 'array',
     size = 'max',
+    limit,
+    offset,
     json,
   } = params;
-  const s = sql?.clone();
 
-  // Foodscapes
-  if (!!foodscapes.length) {
-    s.where('foodscapes IN ?', foodscapes);
-  }
+  const SQL = Array.isArray(sql) ? sql : [sql];
 
-  // Intensities
-  if (!!intensities?.length) {
-    s.where('intensity_groups IN ?', intensities);
-  }
+  const s = SQL.reduce((acc, query) => {
+    // Foodscapes
+    if (!!foodscapes.length) {
+      query.whereIn('foodscapes', foodscapes);
+    }
 
-  // Intensities
-  if (!!crops?.length) {
-    s.where('crops IN ?', crops);
-  }
+    // Intensities
+    if (!!intensities?.length) {
+      query.whereIn('intensity_groups', intensities);
+    }
 
-  // Country
-  if (!!country) {
-    s.where('country = ?', country);
-  }
+    // Crops
+    if (!!crops?.length) {
+      query.whereIn('crops', crops);
+    }
 
-  // Province
-  if (!!province) {
-    s.where('province = ?', province);
-  }
+    // Country
+    if (!!country) {
+      query.where({ country });
+    }
 
-  if (!!landUseRisk?.length) {
-    const where = LAND_USER_RISKS_DATA
-      // Filter the land use risks by the selected ones
-      .filter((d) => landUseRisk.includes(d.value))
-      .map((d) => `${d.column} = 1`)
-      .join(' OR ');
+    // Province
+    if (!!province) {
+      query.where({ province });
+    }
 
-    s.where(where);
-  }
+    if (!!landUseRisk?.length) {
+      const risks = LAND_USER_RISKS_DATA
+        // Filter the land use risks by the selected ones
+        .filter((d) => landUseRisk.includes(d.value));
 
-  if (!!climateRisk?.length) {
-    s.where('climate_risk == ?', climateRisk[0] === -1 ? 0 : climateRisk[0]);
-  }
+      query.where((q) => {
+        risks.forEach((r) => {
+          q.orWhere({
+            [r.column]: 1,
+          });
+        });
+      });
+    }
 
-  if (!!pollutionRisk?.length) {
-    s.where('pesticide_risk == ?', pollutionRisk[0] === -1 ? 0 : pollutionRisk[0]);
-  }
+    if (!!climateRisk?.length) {
+      query.where({
+        climate_risk: climateRisk[0] === -1 ? 0 : 1,
+      });
+    }
+
+    if (!!pollutionRisk?.length) {
+      query.where({
+        pesticide_risk: pollutionRisk[0] === -1 ? 0 : 1,
+      });
+    }
+
+    // Sort
+    if (!!sortBy) {
+      query.orderBy(sortBy, sortDirection ?? 'desc');
+    }
+
+    // Pagination
+    if (!!limit) {
+      query.limit(limit);
+    }
+
+    if (!!offset) {
+      query.offset(offset);
+    }
+
+    if (acc) {
+      return acc.union(query);
+    }
+
+    return query;
+  }, null as Knex.QueryBuilder);
 
   return {
     // SQL
-    sql: s?.toString(),
+    sql: s.toString(),
     // Shape
     _shape: shape,
     // Size
