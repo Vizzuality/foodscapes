@@ -27,7 +27,9 @@ const fetch = async () => {
         )
       )
 
-      .from('data AS d'),
+      .from('data AS d')
+      .whereNotIn('d.foodscapes', [1, 2, 3]),
+
     KNEX
       //
       .select(KNEX.raw("'not_risk' AS id"))
@@ -43,7 +45,8 @@ const fetch = async () => {
         )
       )
 
-      .from('data AS d'),
+      .from('data AS d')
+      .whereNotIn('d.foodscapes', [1, 2, 3]),
   ];
 
   return API.request({

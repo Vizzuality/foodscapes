@@ -26,7 +26,9 @@ const fetch = async () => {
           '(SUM(CASE WHEN d.climate_risk = 1 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
         )
       )
-      .from('data AS d'),
+      .from('data AS d')
+      .whereNotIn('d.foodscapes', [1, 2, 3]),
+
     KNEX
       //
       .select(KNEX.raw("'not_risk' AS id"))
@@ -41,7 +43,8 @@ const fetch = async () => {
           '(SUM(CASE WHEN d.climate_risk = 0 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
         )
       )
-      .from('data AS d'),
+      .from('data AS d')
+      .whereNotIn('d.foodscapes', [1, 2, 3]),
   ];
 
   return API.request({
