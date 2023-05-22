@@ -13,6 +13,7 @@ export interface Dataset {
     | 'land-use-risks'
     | 'climate-risks'
     | 'pollution-risks'
+    | 'restorations'
     | 'locations'
     | 'countries'
     | 'provinces';

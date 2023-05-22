@@ -54,6 +54,7 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
     'climate-risks': { ...DEFAULT_SETTINGS },
     'pollution-risks': { ...DEFAULT_SETTINGS },
     locations: { ...DEFAULT_SETTINGS },
+    restorations: { ...DEFAULT_SETTINGS },
   } satisfies Record<LayerType, LayerSettings<LayerType>>,
 
   effects: [
