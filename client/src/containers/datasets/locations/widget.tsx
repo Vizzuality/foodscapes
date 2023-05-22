@@ -73,20 +73,25 @@ const LocationRankingWidget = () => {
       <WidgetContent
         isPlaceholderData={
           cIsPlaceholderData ||
-          pIsPlaceholderData ||
           countriesIsPlaceholderData ||
-          (country && provincesIsPlaceholderData)
+          (country && provincesIsPlaceholderData) ||
+          (country && pIsPlaceholderData)
         }
         isFetching={
-          cIsFetching || pIsFetching || countriesIsFetching || (country && provincesIsFetching)
+          cIsFetching ||
+          countriesIsFetching ||
+          (country && provincesIsFetching) ||
+          (country && pIsFetching)
         }
         isFetched={
           cIsFetched &&
-          pIsFetched &&
           countriesIsFetched &&
-          (!country || (country && provincesIsFetched))
+          (!country || (country && provincesIsFetched)) &&
+          (!country || (country && pIsFetched))
         }
-        isError={cIsError || pIsError || countriesIsError || (country && provincesIsError)}
+        isError={
+          cIsError || countriesIsError || (country && provincesIsError) || (country && pIsError)
+        }
       >
         <div className="space-y-5">
           <SingleSelect

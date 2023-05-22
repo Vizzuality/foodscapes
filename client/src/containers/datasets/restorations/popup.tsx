@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
+import { LayerSettings } from 'types/layers';
 import { LngLat } from 'types/map';
 
 import { noPointData, usePointData } from 'hooks/data';
@@ -11,10 +12,18 @@ import { useIsLoading } from 'hooks/utils';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface RestorationsPopupProps {
+  settings: LayerSettings<'restorations'>;
   latLng: LngLat;
 }
 
-const RestorationsPopup = ({ latLng }: RestorationsPopupProps) => {
+const RestorationsPopup = ({ latLng, settings }: RestorationsPopupProps) => {
+  const { format } = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    minimumSignificantDigits: 1,
+    maximumSignificantDigits: 3,
+  });
+
   const f = useRestorations();
 
   const p = usePointData(latLng, {
@@ -26,22 +35,23 @@ const RestorationsPopup = ({ latLng }: RestorationsPopupProps) => {
 
   const { isFetching, isFetched } = useIsLoading([p]);
 
-  const DATA = useMemo(() => {
+  const DATA = useMemo<number | null>(() => {
     if (!pointData) return null;
     if (noPointData(pointData)) return null;
 
-    const d = restorationsData.filter((c) => pointData[`b${c.value}`] > 0);
+    const r = restorationsData.find((c) => c.column === settings.column);
+    const d = pointData[`b${r.value}`];
 
-    if (!d.length) return null;
+    if (d === -1) return null;
 
     return d;
-  }, [pointData, restorationsData]);
+  }, [pointData, restorationsData, settings.column]);
 
   return (
     <div>
       <header className="flex items-center space-x-2">
-        <div className={cn({ 'h-4 w-4 border border-navy-500': true, 'bg-red-500': !!DATA })} />
-        <h2 className="text-base font-semibold">Land Use risk</h2>
+        <div className={cn({ 'h-4 w-4 border border-navy-500': true, 'bg-green-500': !!DATA })} />
+        <h2 className="text-base font-semibold">Restoration</h2>
       </header>
 
       <div className={cn({ 'mt-2 pl-6': true })}>
@@ -49,15 +59,8 @@ const RestorationsPopup = ({ latLng }: RestorationsPopupProps) => {
         {isFetched && (
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
-            {!!DATA && (
-              <ul className="list-outside list-disc pl-4">
-                {DATA.map((d) => (
-                  <li key={d.id} className="text-sm font-light">
-                    {d.label}
-                  </li>
-                ))}
-              </ul>
-            )}
+            {!!DATA && DATA > 1 && <h3 className="text-sm font-light">{format(DATA)} ha</h3>}
+            {!!DATA && DATA < 1 && <h3 className="text-sm font-light">{'< 1 ha'}</h3>}
           </>
         )}
       </div>

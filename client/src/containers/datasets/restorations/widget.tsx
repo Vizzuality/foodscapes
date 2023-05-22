@@ -37,6 +37,7 @@ const RestorationsWidget = () => {
     <section className="space-y-4 py-10">
       <WidgetHeader title={DATASET.label} dataset={DATASET} />
       <WidgetContent
+        skeletonClassName="h-56"
         isPlaceholderData={isPlaceholderData || restorationIsPlaceholderData}
         isFetching={isFetching || restorationIsFetching}
         isFetched={isFetched && restorationIsFetched}

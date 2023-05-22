@@ -44,7 +44,6 @@ export function useSource({
   const {
     //
     data: restorationStatisticsData,
-    isFetching: restorationStatisticsIsFetching,
   } = useStatisticsData({ band, filters });
 
   const colormap = useMemo(() => {
@@ -57,12 +56,15 @@ export function useSource({
       ...CHROMA
         //
         .scale(COLORS)
-        .colors(10)
+        .colors(20)
         .map((color: ColorHex, i: number) => {
-          const { max } = restorationStatisticsData;
-          const step = max / 10;
+          const { max } = restorationStatisticsData || { max: 0 };
+          const step = max / 20;
 
-          return [[step * i, step * (i + 1)], convertHexToRgbaArray(color)];
+          // Clamp the opacity to min 0.25 and max 1
+          const opacity = Math.min(Math.max(0.25, (i + 1) / 3), 1);
+
+          return [[step * i, step * (i + 1)], convertHexToRgbaArray(color, opacity)];
         }),
     ];
 
@@ -85,8 +87,6 @@ export function useSource({
 
     return params.toString();
   }, [colormap, expression]);
-
-  if (restorationStatisticsIsFetching || !restorationsData || !restorationsData.length) return null;
 
   return {
     id: 'restorations-source',

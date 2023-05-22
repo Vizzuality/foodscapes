@@ -12,6 +12,7 @@ import { LegendContent } from 'containers/legend';
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
 import LegendTypeGradient from 'components/map/legend/types/gradient/component';
+import Select from 'components/ui/select/single/component';
 import { ColorHex } from 'types';
 
 import { useLegend } from './hooks';
@@ -21,7 +22,14 @@ export interface RestorationsLegendProps extends LegendItemProps<'restorations'>
 }
 
 const RestorationsLegend = (props: RestorationsLegendProps) => {
-  const { settings, filters, dataset } = props;
+  const { settings, filters, dataset, onChangeColumn } = props;
+
+  const { format } = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    minimumSignificantDigits: 1,
+    maximumSignificantDigits: 4,
+  });
 
   const {
     data: restorationsData,
@@ -52,31 +60,52 @@ const RestorationsLegend = (props: RestorationsLegendProps) => {
       CHROMA
         //
         .scale(COLORS)
-        .colors(10)
+        .colors(20)
         .map((color: ColorHex, i: number) => {
-          const { max } = restorationStatisticsData;
+          const { max } = restorationStatisticsData || {};
+          const opacity = Math.min(Math.max(0.25, (i + 1) / 3), 1);
 
           return {
-            color,
+            color: CHROMA(color).alpha(opacity).css(),
             value: null,
-            ...(i === 0 && { value: 0 }),
-            ...(i === 9 && { value: `${Math.round(max)} ha` }),
+            ...(i === 0 && { value: `${format(0)} ha` }),
+            ...(i === 9 && { value: `${format(max)} ha` }),
           };
         })
     );
-  }, [restorationStatisticsData]);
+  }, [restorationStatisticsData, format]);
 
   return (
     <LegendItem {...legend} {...props}>
-      <div className="divide-y divide-navy-500/20 px-4 pt-0 pb-1">
+      <div className="space-y-2 divide-y divide-navy-500/20 px-4 pt-0 pb-1">
         <LegendContent
           skeletonClassName="h-7"
-          isPlaceholderData={
-            restorationStatisticsIsPlaceholderData || restorationsIsPlaceholderData
-          }
-          isFetching={restorationStatisticsIsFetching || restorationsIsFetching}
-          isFetched={restorationStatisticsIsFetched && restorationsIsFetched}
-          isError={restorationStatisticsIsError || restorationsIsError}
+          isPlaceholderData={restorationsIsPlaceholderData}
+          isFetching={restorationsIsFetching}
+          isFetched={restorationsIsFetched}
+          isError={restorationsIsError}
+        >
+          <Select
+            id="restorations-legend-select"
+            theme="light"
+            size="s"
+            options={restorationsData.map((v) => ({
+              label: v.label,
+              value: v.column,
+            }))}
+            value={settings.column}
+            onChange={(value: string) => {
+              onChangeColumn(value);
+            }}
+          />
+        </LegendContent>
+
+        <LegendContent
+          skeletonClassName="h-7"
+          isPlaceholderData={restorationStatisticsIsPlaceholderData}
+          isFetching={restorationStatisticsIsFetching}
+          isFetched={restorationStatisticsIsFetched}
+          isError={restorationStatisticsIsError}
         >
           <LegendTypeGradient items={ITEMS} />
         </LegendContent>
