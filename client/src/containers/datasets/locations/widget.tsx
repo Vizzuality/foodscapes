@@ -53,9 +53,16 @@ const LocationRankingWidget = () => {
     isFetching: pIsFetching,
     isFetched: pIsFetched,
     isError: pIsError,
-  } = useData<ProvincesData>('provinces', filters, {
-    enabled: !!country,
-  });
+  } = useData<ProvincesData>(
+    'provinces',
+    {
+      ...filters,
+      country: country ?? null,
+    },
+    {
+      enabled: !!country,
+    }
+  );
 
   const COUNTRY_OPTIONS = useMemo(() => {
     if (!cData || !countriesData) return [];
