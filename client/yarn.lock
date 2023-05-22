@@ -12064,7 +12064,6 @@ __metadata:
     react-use-scroll-direction: ^0.1.0
     recoil: 0.7.6
     recoil-sync: 0.2.0
-    squel: 5.13.0
     start-server-and-test: 1.12.1
     storybook-addon-swc: 1.1.8
     svg-sprite-loader: 6.0.11
@@ -19734,13 +19733,6 @@ __metadata:
   version: 1.0.3
   resolution: "sprintf-js@npm:1.0.3"
   checksum: 19d79aec211f09b99ec3099b5b2ae2f6e9cdefe50bc91ac4c69144b6d3928a640bb6ae5b3def70c2e85a2c3d9f5ec2719921e3a59d3ca3ef4b2fd1a4656a0df3
-  languageName: node
-  linkType: hard
-
-"squel@npm:5.13.0":
-  version: 5.13.0
-  resolution: "squel@npm:5.13.0"
-  checksum: c68cfb89a820a6e99de66fcf0b16c1c45390cba7ec444597b5ff28508e8dc6aa29dc2bf75199bf790d71dc2afce3a454961d8b5fa99cd05e4f60656dfa9d5217
   languageName: node
   linkType: hard
 

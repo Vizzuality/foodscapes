@@ -1,5 +1,3 @@
-import { Select } from 'squel';
-
 type Toolbar = {
   download: boolean;
   info: boolean;
@@ -30,7 +28,5 @@ export interface Dataset {
   widget: {
     enabled: boolean;
     toolbar: Toolbar;
-    sql?: Select;
-    download?: Select;
   };
 }
