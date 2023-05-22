@@ -94,7 +94,7 @@ resource "aws_lb_listener_rule" "tiler" {
 
   condition {
     path_pattern {
-      values = ["/tiler*"]
+      values = ["/cog*"]
     }
   }
 }

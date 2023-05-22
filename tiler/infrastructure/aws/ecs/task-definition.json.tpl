@@ -23,12 +23,6 @@
                     "hostPort": 3000,
                     "protocol": "tcp"
                 }
-            ],
-            "environment": [
-                {
-                    "name": "TILER_ROOT_PATH",
-                    "value": "/tiler"
-                }
             ]
         }
     ],
