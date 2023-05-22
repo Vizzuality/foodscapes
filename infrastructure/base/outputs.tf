@@ -29,5 +29,5 @@ output "tiler_container_registry_url" {
 }
 
 output "acm_certificate_validation_fqdns" {
-  value = module.https_certificate.aws_acm_certificate_arn
+  value = module.https_certificate.aws_acm_certificate_validation_record_fqdns
 }
