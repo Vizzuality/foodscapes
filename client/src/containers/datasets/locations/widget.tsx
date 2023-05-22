@@ -4,7 +4,7 @@ import { provinceAtom, countryAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { LocationData } from 'types/data';
+import { CountriesData, ProvincesData } from 'types/data';
 
 import { useCountries } from 'hooks/countries';
 import { useData } from 'hooks/data';
@@ -39,31 +39,54 @@ const LocationRankingWidget = () => {
     isError: countriesIsError,
   } = useCountries();
 
-  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<LocationData>(
-    'locations',
-    filters
-  );
+  const {
+    data: cData,
+    isPlaceholderData: cIsPlaceholderData,
+    isFetching: cIsFetching,
+    isFetched: cIsFetched,
+    isError: cIsError,
+  } = useData<CountriesData>('countries', filters);
+
+  const {
+    data: pData,
+    isPlaceholderData: pIsPlaceholderData,
+    isFetching: pIsFetching,
+    isFetched: pIsFetched,
+    isError: pIsError,
+  } = useData<ProvincesData>('provinces', filters, {
+    enabled: !!country,
+  });
 
   const COUNTRY_OPTIONS = useMemo(() => {
-    if (!data || !countriesData) return [];
-    return countriesData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
-  }, [data, countriesData]);
+    if (!cData || !countriesData) return [];
+    return countriesData.filter((c) => cData.map((d) => d.id).includes(c.value));
+  }, [cData, countriesData]);
 
   const PROVINCE_OPTIONS = useMemo(() => {
-    if (!data || !provincesData) return [];
-    return provincesData.filter((c) => data.map((d) => d.id).includes(c.value));
-  }, [data, provincesData]);
+    if (!pData || !provincesData) return [];
+    return provincesData.filter((c) => pData.map((d) => d.id).includes(c.value));
+  }, [pData, provincesData]);
 
   return (
     <section className="space-y-4 pb-10">
       {/* <WidgetHeader title="Location ranking" dataset={DATASET} /> */}
       <WidgetContent
         isPlaceholderData={
-          isPlaceholderData || countriesIsPlaceholderData || (country && provincesIsPlaceholderData)
+          cIsPlaceholderData ||
+          pIsPlaceholderData ||
+          countriesIsPlaceholderData ||
+          (country && provincesIsPlaceholderData)
         }
-        isFetching={isFetching || countriesIsFetching || (country && provincesIsFetching)}
-        isFetched={isFetched && countriesIsFetched && (!country || (country && provincesIsFetched))}
-        isError={isError || countriesIsError || (country && provincesIsError)}
+        isFetching={
+          cIsFetching || pIsFetching || countriesIsFetching || (country && provincesIsFetching)
+        }
+        isFetched={
+          cIsFetched &&
+          pIsFetched &&
+          countriesIsFetched &&
+          (!country || (country && provincesIsFetched))
+        }
+        isError={cIsError || pIsError || countriesIsError || (country && provincesIsError)}
       >
         <div className="space-y-5">
           <SingleSelect

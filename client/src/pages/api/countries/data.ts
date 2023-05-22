@@ -16,11 +16,11 @@ const KNEX = knex({
 const fetch = async (filters: FiltersProps) => {
   const SQL = KNEX
     //
-    .select('province AS id', 'country AS parent_id')
+    .select('country AS id')
     .distinct()
     .from('data')
     .whereNotIn('country', [-9999])
-    .groupBy('province');
+    .groupBy('country');
 
   return API.request({
     method: 'GET',
@@ -34,7 +34,7 @@ const fetch = async (filters: FiltersProps) => {
   }).then((response) => response.data);
 };
 
-const LocationsData = async (req: NextApiRequest, res: NextApiResponse) => {
+const CountriesData = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const filters = qs.parseUrl(req.url, {
       parseNumbers: true,
@@ -49,4 +49,4 @@ const LocationsData = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default LocationsData;
+export default CountriesData;

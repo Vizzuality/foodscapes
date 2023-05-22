@@ -40,9 +40,12 @@ export interface RestorationsData {
   value: number;
 }
 
-export interface LocationData {
+export interface CountriesData {
   id: number;
-  name: string;
+}
+
+export interface ProvincesData {
+  id: number;
   parent_id: number;
 }
 

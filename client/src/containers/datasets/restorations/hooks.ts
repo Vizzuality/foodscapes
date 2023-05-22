@@ -2,15 +2,19 @@ import { useMemo } from 'react';
 
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
+import CHROMA from 'chroma-js';
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
-import { useRestorations } from 'hooks/restorations';
+import { useStatisticsData } from 'hooks/data';
+import { COLORS, useRestorations } from 'hooks/restorations';
+import { convertHexToRgbaArray } from 'hooks/utils';
 
 import env from 'env.mjs';
+import { ColorHex } from 'types';
 
 interface UseRestorationsSourceProps {
   filters: FiltersProps;
@@ -37,27 +41,33 @@ export function useSource({
     return restorationsData.find((v) => v.column === settings.column)?.value;
   }, [restorationsData, settings]);
 
-  console.log({
-    band,
-    restorationsData,
-    settings,
-  });
+  const {
+    //
+    data: restorationStatisticsData,
+    isFetching: restorationStatisticsIsFetching,
+  } = useStatisticsData({ band, filters });
 
   const colormap = useMemo(() => {
     // https://cogeotiff.github.io/rio-tiler/colormap/#intervals-colormaps
     const c = [
       [
-        [0, 1],
+        [-1, 0],
         [0, 0, 0, 0],
       ],
-      [
-        [1, 1000000],
-        [0, 0, 0, 255],
-      ],
+      ...CHROMA
+        //
+        .scale(COLORS)
+        .colors(10)
+        .map((color: ColorHex, i: number) => {
+          const { max } = restorationStatisticsData;
+          const step = max / 10;
+
+          return [[step * i, step * (i + 1)], convertHexToRgbaArray(color)];
+        }),
     ];
 
     return JSON.stringify(c);
-  }, []);
+  }, [restorationStatisticsData]);
 
   const expression = useMemo(() => {
     const where = titilerAdapter(filters);
@@ -76,7 +86,7 @@ export function useSource({
     return params.toString();
   }, [colormap, expression]);
 
-  if (!restorationsData || !restorationsData.length) return null;
+  if (restorationStatisticsIsFetching || !restorationsData || !restorationsData.length) return null;
 
   return {
     id: 'restorations-source',

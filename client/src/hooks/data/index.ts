@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 
 import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
+import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { PointData } from 'types/data';
+import { FiltersProps, PointData } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LngLat } from 'types/map';
 
@@ -27,6 +28,24 @@ export const downloadData = (id: Dataset['id']) => {
       'Content-Type': 'text/csv',
     },
   }).then((response) => response.data);
+};
+
+export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
+  const expression = () => {
+    const where = titilerAdapter(filters);
+
+    if (!where) return null;
+
+    return `where(${where},b${band},-1)`;
+  };
+
+  return TITILER_API.request({
+    method: 'GET',
+    url: `/cog/statistics`,
+    params: {
+      expression: expression(),
+    },
+  }).then((response) => response.data[expression()]);
 };
 
 export const fetchPointData = ({ lng, lat }: LngLat) => {
@@ -58,6 +77,22 @@ export function useDownloadData() {
   const mutation = useMutation<string, unknown, Dataset['id']>(fetch);
 
   return mutation;
+}
+
+export function useStatisticsData(
+  params: { band: number; filters: FiltersProps },
+  queryOptions: UseQueryOptions<any, unknown> = {}
+) {
+  const fetch = () => fetchStatisticsData(params.band, params.filters);
+
+  const query = useQuery(['data', JSON.stringify({ ...params })], fetch, {
+    placeholderData: {},
+    enabled: !!params.band,
+    keepPreviousData: false,
+    ...queryOptions,
+  });
+
+  return query;
 }
 
 // Point data

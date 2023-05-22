@@ -3,11 +3,14 @@
 import { PropsWithChildren } from 'react';
 
 // import Loading from 'components/loading';
+import cn from 'lib/classnames';
+
 import WidgetError from 'containers/widget/error';
 
 import { Skeleton } from 'components/ui/skeleton';
 
 export interface WidgetContentProps extends PropsWithChildren {
+  skeletonClassName?: string;
   isPlaceholderData: boolean;
   isFetching: boolean;
   isFetched: boolean;
@@ -15,6 +18,7 @@ export interface WidgetContentProps extends PropsWithChildren {
 }
 
 const WidgetContent = ({
+  skeletonClassName,
   children,
   isPlaceholderData,
   isFetching,
@@ -23,7 +27,14 @@ const WidgetContent = ({
 }: WidgetContentProps) => {
   return (
     <div className="relative">
-      {isPlaceholderData && <Skeleton className="h-20 w-full" />}
+      {isPlaceholderData && (
+        <Skeleton
+          className={cn({
+            'h-20 w-full': true,
+            [skeletonClassName]: !!skeletonClassName,
+          })}
+        />
+      )}
 
       {/* <Loading
         className="absolute z-10 flex h-full w-full items-center justify-center bg-white/50 py-2"

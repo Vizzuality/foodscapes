@@ -36,7 +36,7 @@ export const LegendTypeGradient: React.FC<LegendTypeGradientProps> = ({
 
       <ul className="mt-1 flex w-full justify-between">
         {items
-          .filter(({ value }) => !!value)
+          .filter(({ value }) => typeof value !== 'undefined' && value !== null)
           .map(({ value }) => (
             <li
               key={`${value}`}

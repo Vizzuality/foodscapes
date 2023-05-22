@@ -4,6 +4,8 @@ import { Restoration } from 'types/restorations';
 
 import API from 'services/api';
 
+export const COLORS = ['#B7F08B', '#528A22'];
+
 export function useRestorations(queryOptions: UseQueryOptions<Restoration[], unknown> = {}) {
   const fetchRestorations = () => {
     return API.request({

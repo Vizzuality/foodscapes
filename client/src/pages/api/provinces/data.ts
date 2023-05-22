@@ -34,7 +34,7 @@ const fetch = async (filters: FiltersProps) => {
   }).then((response) => response.data);
 };
 
-const LocationsData = async (req: NextApiRequest, res: NextApiResponse) => {
+const ProvincesData = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const filters = qs.parseUrl(req.url, {
       parseNumbers: true,
@@ -49,4 +49,4 @@ const LocationsData = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default LocationsData;
+export default ProvincesData;
