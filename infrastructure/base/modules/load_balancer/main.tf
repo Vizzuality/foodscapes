@@ -94,7 +94,12 @@ resource "aws_lb_listener_rule" "tiler" {
 
   condition {
     path_pattern {
-      values = ["/cog*"]
+      values = [
+        "/cog*",
+        "/stac*",
+        "/docs*",
+        "/openapi.json"
+      ]
     }
   }
 }
