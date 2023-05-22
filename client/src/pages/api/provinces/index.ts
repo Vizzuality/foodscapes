@@ -22,12 +22,12 @@ const fetch = async (cid) => {
       'f.iso',
       'f.bbox',
       'f.parent_id AS parentId',
-      's.label AS parentLabel',
-      's.iso AS parentIso'
+      'c.label AS parentLabel',
+      'c.iso AS parentIso'
     )
     .from('provinces AS f')
     .where({ 'f.parent_id': cid })
-    .leftJoin('countries AS s', 'f.parent_id', 's.value');
+    .leftJoin('countries AS c', 'f.parent_id', 'c.value');
 
   return API.request<Province[]>({
     method: 'GET',

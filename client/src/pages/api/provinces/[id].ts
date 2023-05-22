@@ -21,10 +21,14 @@ const fetch = async (id) => {
       'f.label',
       'f.iso',
       'f.bbox',
-      'f.geometry_geojson AS geojson'
+      'f.geometry_geojson AS geojson',
+      'f.parent_id AS parentId',
+      'c.label AS parentLabel',
+      'c.iso AS parentIso'
     )
     .from('provinces AS f')
-    .where({ 'f.value': id });
+    .where({ 'f.value': id })
+    .leftJoin('countries AS c', 'f.parent_id', 'c.value');
 
   return API.request<Province[]>({
     method: 'GET',
