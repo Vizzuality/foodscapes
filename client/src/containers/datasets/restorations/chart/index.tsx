@@ -10,7 +10,6 @@ import { FiltersOmitProps, RestorationsData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useRestorations } from 'hooks/restorations';
-import { convertPixelCountToHA } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -25,11 +24,7 @@ interface RestorationsChartProps extends RestorationsChartParentProps {
   height: number;
 }
 
-const RestorationsChart = ({
-  selected,
-  ignore = 'landUseRisk',
-  onBarClick,
-}: RestorationsChartProps) => {
+const RestorationsChart = ({ selected, ignore = null, onBarClick }: RestorationsChartProps) => {
   const filters = useRecoilValue(filtersSelector(ignore));
 
   const { data: restorationsData } = useRestorations();
@@ -52,7 +47,7 @@ const RestorationsChart = ({
         return {
           ...c,
           id: c.value,
-          value: convertPixelCountToHA(d1.value, 1000000),
+          value: d1.value / 1000000,
           color: c.color,
         };
       })
@@ -92,7 +87,7 @@ const RestorationsChart = ({
       data={DATA}
       xScale={xScale}
       colorScale={colorScale}
-      interactive
+      interactive={false}
       selected={selected}
       onBarClick={onBarClick}
     />

@@ -136,6 +136,7 @@ export const DATASETS = [
     layer: {
       enabled: true,
       visible: true,
+      bands: [14, 17],
     },
     widget: {
       enabled: true,

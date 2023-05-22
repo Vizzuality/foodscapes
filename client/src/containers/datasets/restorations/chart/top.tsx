@@ -29,7 +29,6 @@ const RestorationsTopChart = ({ onBarClick }: RestorationsTopChartProps) => {
 
   const dQuery = useData<FoodscapeData>('foodscapes', {
     ...filters,
-    landUseRisk: filters.landUseRisk.length ? filters.landUseRisk : [6, 7, 8, 9, 10],
     limit: 5,
     sortBy: 'value',
     sortDirection: 'desc',
