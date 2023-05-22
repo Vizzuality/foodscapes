@@ -4,6 +4,7 @@ import cn from 'lib/classnames';
 
 import { LayerSettings } from 'types/layers';
 import { LngLat } from 'types/map';
+import { Restoration } from 'types/restorations';
 
 import { noPointData, usePointData } from 'hooks/data';
 import { useRestorations } from 'hooks/restorations';
@@ -35,6 +36,12 @@ const RestorationsPopup = ({ latLng, settings }: RestorationsPopupProps) => {
 
   const { isFetching, isFetched } = useIsLoading([p]);
 
+  const RESTORATION = useMemo<Restoration>(() => {
+    if (!restorationsData) return null;
+    const r = restorationsData.find((c) => c.column === settings.column);
+    return r;
+  }, [restorationsData, settings.column]);
+
   const DATA = useMemo<number | null>(() => {
     if (!pointData) return null;
     if (noPointData(pointData)) return null;
@@ -49,9 +56,14 @@ const RestorationsPopup = ({ latLng, settings }: RestorationsPopupProps) => {
 
   return (
     <div>
-      <header className="flex items-center space-x-2">
-        <div className={cn({ 'h-4 w-4 border border-navy-500': true, 'bg-green-500': !!DATA })} />
-        <h2 className="text-base font-semibold">Restoration</h2>
+      <header className="flex space-x-2">
+        <div
+          className={cn({
+            'relative top-1 h-4 w-4 shrink-0 border border-navy-500': true,
+            'bg-green-500': !!DATA,
+          })}
+        />
+        <h2 className="text-base font-semibold">Restoration: {RESTORATION?.label}</h2>
       </header>
 
       <div className={cn({ 'mt-2 pl-6': true })}>
