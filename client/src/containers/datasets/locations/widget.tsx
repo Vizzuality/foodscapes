@@ -10,8 +10,6 @@ import { useCountries } from 'hooks/countries';
 import { useData } from 'hooks/data';
 import { useProvinces } from 'hooks/provinces';
 
-import { DATASETS } from 'constants/datasets';
-
 import { WidgetContent } from 'containers/widget';
 
 import SingleSelect from 'components/ui/select/single/component';
@@ -22,8 +20,6 @@ const LocationRankingWidget = () => {
 
   const province = useRecoilValue(provinceAtom);
   const setProvince = useSetRecoilState(provinceAtom);
-
-  const DATASET = DATASETS.find((d) => d.id === 'locations');
 
   const filters = useRecoilValue(filtersSelector(['country', 'province']));
 
@@ -43,11 +39,10 @@ const LocationRankingWidget = () => {
     isError: countriesIsError,
   } = useCountries();
 
-  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<LocationData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<LocationData>(
+    'locations',
+    filters
+  );
 
   const COUNTRY_OPTIONS = useMemo(() => {
     if (!data || !countriesData) return [];

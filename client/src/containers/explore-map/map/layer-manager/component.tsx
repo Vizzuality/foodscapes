@@ -3,7 +3,7 @@ import { filtersSelector, layersAtom, layersSettingsAtom } from 'store/explore-m
 import { useRecoilValue } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
-import LocationLayer from 'containers/datasets/location/layer';
+import LocationLayer from 'containers/datasets/locations/layer';
 import { MapboxOverlayProvider } from 'containers/explore-map/map/layer-manager/provider';
 
 const LayerManagerContainer = () => {

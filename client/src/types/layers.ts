@@ -26,8 +26,6 @@ export type LayerTypeSettings = {
   'climate-risks': ClimateChangeSettings;
   'pollution-risks': PollutionSettings;
   locations: Settings;
-  countries: Settings;
-  provinces: Settings;
 };
 
 export type LayerType = keyof LayerTypeSettings;

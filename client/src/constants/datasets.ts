@@ -1,5 +1,3 @@
-import squel from 'squel';
-
 import { Dataset } from 'types/datasets';
 export const DATASETS = [
   {
@@ -199,14 +197,6 @@ export const DATASETS = [
         info: false,
         layer: false,
       },
-      sql: squel
-        .select()
-        .field('province', 'id')
-        .field('country', 'parent_id')
-        .distinct()
-        .from('data')
-        .where('country NOT IN (-9999)')
-        .group('province'),
     },
   },
   {
@@ -214,16 +204,16 @@ export const DATASETS = [
     label: 'Countries',
     group: 'other',
     layer: {
-      enabled: true,
+      enabled: false,
       visible: false,
       band: 34,
     },
     widget: {
       enabled: false,
       toolbar: {
-        download: true,
-        info: true,
-        layer: true,
+        download: false,
+        info: false,
+        layer: false,
       },
     },
   },
@@ -232,16 +222,16 @@ export const DATASETS = [
     label: 'Provinces',
     group: 'other',
     layer: {
-      enabled: true,
+      enabled: false,
       visible: false,
       band: 35,
     },
     widget: {
       enabled: false,
       toolbar: {
-        download: true,
-        info: true,
-        layer: true,
+        download: false,
+        info: false,
+        layer: false,
       },
     },
   },
