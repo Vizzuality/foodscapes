@@ -12,19 +12,6 @@ const KNEX = knex({
   useNullAsDefault: true,
 });
 
-// const SQL = squel
-//   .select()
-//   .from(provinces, 'f')
-//   .left_join(countries, 's', 'f.parent_id = s.value')
-//   .field('f.value', 'id')
-//   .field('f.value')
-//   .field('f.label')
-//   .field('f.iso')
-//   .field('f.bbox')
-//   .field('f.parent_id', 'parentId')
-//   .field('s.label', 'parentLabel')
-//   .field('s.iso', 'parentIso');
-
 const fetch = async (cid) => {
   const SQL = KNEX
     //

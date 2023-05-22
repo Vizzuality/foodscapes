@@ -102,7 +102,6 @@
     "react-use-scroll-direction": "^0.1.0",
     "recoil": "0.7.6",
     "recoil-sync": "0.2.0",
-    "squel": "5.13.0",
     "tailwind-merge": "1.8.1",
     "tailwindcss": "3.2.6",
     "tailwindcss-animate": "1.0.5",
