@@ -4,7 +4,7 @@ import { urlSyncEffect } from 'recoil-sync';
 
 import { FiltersOmitProps, FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
-import { LayerSettings } from 'types/layers';
+import { LayerSettings, LayerType } from 'types/layers';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -44,19 +44,18 @@ const DEFAULT_SETTINGS = {
   expand: true,
 };
 
-export const layersSettingsAtom = atom<Record<Dataset['id'], LayerSettings<Dataset['id']>>>({
+export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType>>>({
   key: 'layers-settings',
   default: {
     foodscapes: { group: false, ...DEFAULT_SETTINGS },
     'foodscapes-intensities': { ...DEFAULT_SETTINGS },
     crops: { group: false, ...DEFAULT_SETTINGS },
-    'land-use-risk': { ...DEFAULT_SETTINGS },
-    'climate-risk': { ...DEFAULT_SETTINGS },
-    'pollution-risk': { ...DEFAULT_SETTINGS },
+    'land-use-risks': { ...DEFAULT_SETTINGS },
+    'climate-risks': { ...DEFAULT_SETTINGS },
+    'pollution-risks': { ...DEFAULT_SETTINGS },
     locations: { ...DEFAULT_SETTINGS },
-    countries: { ...DEFAULT_SETTINGS },
-    provinces: { ...DEFAULT_SETTINGS },
-  } satisfies Record<Dataset['id'], LayerSettings<Dataset['id']>>,
+  } satisfies Record<LayerType, LayerSettings<LayerType>>,
+
   effects: [
     urlSyncEffect({
       refine: dict(

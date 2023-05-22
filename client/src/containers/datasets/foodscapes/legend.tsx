@@ -45,11 +45,10 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
     isError: foodscapesIsError,
   } = useFoodscapes();
 
-  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<FoodscapeData>(
+    'foodscapes',
+    filters
+  );
 
   const GROUPED_DATA = useMemo(() => {
     if (!data || !foodscapesData) return [];
@@ -84,7 +83,6 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
               {!settings.group && (
                 <Chart
                   //
-                  dataset={dataset}
                   ignore={null}
                 />
               )}
@@ -92,7 +90,6 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
               {settings.group && (
                 <ChartGroup
                   //
-                  dataset={dataset}
                   selected={filters.foodscapes}
                   ignore={null}
                 />

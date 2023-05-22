@@ -2,29 +2,17 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { ClimateRisk } from 'types/climate-risks';
 
-const DATA_JSON = [
-  {
-    id: 0,
-    label: 'Not risk',
-    value: -1,
-    color: '#BF837000',
-  },
-  {
-    id: 1,
-    label: 'Risk',
-    value: 1,
-    color: '#BF8370',
-  },
-];
+import API from 'services/api';
 
 export function useClimateRisks(queryOptions: UseQueryOptions<ClimateRisk[], unknown> = {}) {
-  const fetchRisksClimateChange = () => {
-    return new Promise((resolve) => {
-      resolve(DATA_JSON);
-    });
+  const fetchClimateRisks = () => {
+    return API.request({
+      method: 'GET',
+      url: '/climate-risks',
+    }).then((response) => response.data);
   };
 
-  const query = useQuery(['climate-risk'], fetchRisksClimateChange, {
+  const query = useQuery(['climate-risks'], fetchClimateRisks, {
     placeholderData: [],
     ...queryOptions,
   });

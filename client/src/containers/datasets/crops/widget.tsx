@@ -52,11 +52,10 @@ const CropsWidget = () => {
     isFetched: cropsGroupIsFetched,
     isError: cropsGroupIsError,
   } = useCropsGroups();
-  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>({
-    sql: DATASET.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>(
+    'crops',
+    filters
+  );
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
     return (
@@ -183,7 +182,6 @@ const CropsWidget = () => {
               <div className="h-8">
                 <Chart
                   //
-                  dataset={DATASET}
                   selected={crops}
                   ignore={null}
                   onBarClick={handleBarClick}
@@ -192,7 +190,7 @@ const CropsWidget = () => {
               </div>
 
               <WidgetTop label="See top largest crops">
-                <ChartTop dataset={DATASET} onBarClick={handleBarClick} />
+                <ChartTop onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>
@@ -213,7 +211,6 @@ const CropsWidget = () => {
               />
               <div className="h-8">
                 <ChartGroup
-                  dataset={DATASET}
                   selected={crops}
                   ignore={null}
                   onBarClick={handleBarGroupClick}

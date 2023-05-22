@@ -41,12 +41,9 @@ const FoodscapesIntensitiesLegend = (props: FoodscapesIntensitiesLegendProps) =>
     isFetched: foodscapesIntensitiesIsFetched,
     isError: foodscapesIntensitiesIsError,
   } = useFoodscapesIntensities();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } =
-    useData<FoodscapeIntensityData>({
-      sql: dataset.widget.sql,
-      shape: 'array',
-      ...filters,
-    });
+    useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
   return (
     <LegendItem {...legend} {...props}>
@@ -59,7 +56,7 @@ const FoodscapesIntensitiesLegend = (props: FoodscapesIntensitiesLegendProps) =>
         <div className="divide-y divide-navy-500/20">
           <div className="ml-0.5 px-4 pt-3 pb-5">
             <div className="h-3.5">
-              <Chart dataset={dataset} ignore={null} />
+              <Chart ignore={null} />
             </div>
           </div>
 

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 import Image from 'next/image';
 
-import LocationRankingWidget from 'containers/datasets/location/widget';
+import LocationRankingWidget from 'containers/datasets/locations/widget';
 
 const LocationsSidebar = forwardRef(() => {
   return (

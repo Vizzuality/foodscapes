@@ -3,7 +3,6 @@ import { Layer } from '@deck.gl/core/typed';
 import { ClimateChangeSettings } from 'types/climate-risks';
 import { CropsSettings } from 'types/crops';
 import { FiltersProps } from 'types/data';
-import { Dataset } from 'types/datasets';
 import { FoodscapesSettings } from 'types/foodscapes';
 import { FoodscapesIntentisitySettings } from 'types/foodscapes-intensities';
 import { LandUseChangeSettings } from 'types/land-use-risks';
@@ -23,15 +22,15 @@ export type LayerTypeSettings = {
   foodscapes: FoodscapesSettings;
   'foodscapes-intensities': FoodscapesIntentisitySettings;
   crops: CropsSettings;
-  'land-use-risk': LandUseChangeSettings;
-  'climate-risk': ClimateChangeSettings;
-  'pollution-risk': PollutionSettings;
+  'land-use-risks': LandUseChangeSettings;
+  'climate-risks': ClimateChangeSettings;
+  'pollution-risks': PollutionSettings;
   locations: Settings;
-  countries: Settings;
-  provinces: Settings;
 };
 
-export type LayerSettings<I extends Dataset['id']> = I extends infer T
+export type LayerType = keyof LayerTypeSettings;
+
+export type LayerSettings<I extends LayerType> = I extends infer T
   ? T extends I
     ? LayerTypeSettings[T]
     : never

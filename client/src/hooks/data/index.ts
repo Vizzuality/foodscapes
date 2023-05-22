@@ -1,29 +1,28 @@
 import { useMemo } from 'react';
 
-import { datasetteAdapter } from 'lib/adapters/datasette-adapter';
 import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { PointData } from 'types/data';
+import { Dataset } from 'types/datasets';
 import { LngLat } from 'types/map';
 
 import API from 'services/api';
 import TITILER_API from 'services/titiler';
 
-export const fetchData = (params: DatasetteParamsProps) => {
+export const fetchData = (id: Dataset['id'], params: DatasetteParamsProps) => {
   return API.request({
     method: 'GET',
-    url: '/foodscapes.json',
-    params: datasetteAdapter(params),
+    url: `${id}/data`,
+    params,
   }).then((response) => response.data);
 };
 
-export const downloadData = (params: DatasetteParamsProps) => {
+export const downloadData = (id: Dataset['id']) => {
   return API.request({
     method: 'GET',
-    url: '/foodscapes.csv',
-    params: datasetteAdapter(params),
+    url: `${id}/download`,
     headers: {
       'Content-Type': 'text/csv',
     },
@@ -38,12 +37,13 @@ export const fetchPointData = ({ lng, lat }: LngLat) => {
 };
 
 export function useData<T = unknown>(
+  id: Dataset['id'],
   params: DatasetteParamsProps = {},
   queryOptions: UseQueryOptions<T[], unknown> = {}
 ) {
-  const fetch = () => fetchData(params);
+  const fetch = () => fetchData(id, params);
 
-  const query = useQuery(['data', JSON.stringify(params)], fetch, {
+  const query = useQuery(['data', JSON.stringify({ id, ...params })], fetch, {
     placeholderData: [],
     ...queryOptions,
   });
@@ -53,9 +53,9 @@ export function useData<T = unknown>(
 
 // Download data
 export function useDownloadData() {
-  const fetch = (params: DatasetteParamsProps = {}) => downloadData(params);
+  const fetch = (id: Dataset['id']) => downloadData(id);
 
-  const mutation = useMutation<string, unknown, DatasetteParamsProps>(fetch);
+  const mutation = useMutation<string, unknown, Dataset['id']>(fetch);
 
   return mutation;
 }

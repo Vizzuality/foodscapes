@@ -1,7 +1,7 @@
 import { Settings } from 'components/map/legend/types';
 
 export interface PollutionRisk {
-  id: number;
+  id: 'risk' | 'not_risk';
   label: string;
   color: string;
   value: 1 | -1;

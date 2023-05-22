@@ -1,8 +1,8 @@
 // Climate risk
-import ClimateRiskInfo from './climate-risk/info.mdx';
-import ClimateRiskLayer from './climate-risk/layer';
-import ClimateRiskLegend from './climate-risk/legend';
-import ClimateRiskPopup from './climate-risk/popup';
+import ClimateRiskInfo from './climate-risks/info.mdx';
+import ClimateRiskLayer from './climate-risks/layer';
+import ClimateRiskLegend from './climate-risks/legend';
+import ClimateRiskPopup from './climate-risks/popup';
 // Crops
 import CropsInfo from './crops/info.mdx';
 import CropsLayer from './crops/layer';
@@ -19,48 +19,48 @@ import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
 // Land use risk
-import LandUseInfo from './land-use-risk/info.mdx';
-import LandUseLayer from './land-use-risk/layer';
-import LandUseLegend from './land-use-risk/legend';
-import LandUsePopup from './land-use-risk/popup';
+import LandUseInfo from './land-use-risks/info.mdx';
+import LandUseLayer from './land-use-risks/layer';
+import LandUseLegend from './land-use-risks/legend';
+import LandUsePopup from './land-use-risks/popup';
 // Pollution risk
-import PollutionRiskInfo from './pollution-risk/info.mdx';
-import PollutionRiskLayer from './pollution-risk/layer';
-import PollutionRiskLegend from './pollution-risk/legend';
-import PollutionRiskPopup from './pollution-risk/popup';
+import PollutionRiskInfo from './pollution-risks/info.mdx';
+import PollutionRiskLayer from './pollution-risks/layer';
+import PollutionRiskLegend from './pollution-risks/legend';
+import PollutionRiskPopup from './pollution-risks/popup';
 
 export const LAYERS = {
   foodscapes: FoodscapesLayer,
   'foodscapes-intensities': FoodscapesIntensitiesLayer,
   crops: CropsLayer,
-  'climate-risk': ClimateRiskLayer,
-  'land-use-risk': LandUseLayer,
-  'pollution-risk': PollutionRiskLayer,
+  'climate-risks': ClimateRiskLayer,
+  'land-use-risks': LandUseLayer,
+  'pollution-risks': PollutionRiskLayer,
 };
 
 export const LEGENDS = {
   foodscapes: FoodscapesLegend,
   'foodscapes-intensities': FoodscapesIntensitiesLegend,
   crops: CropsLegend,
-  'climate-risk': ClimateRiskLegend,
-  'land-use-risk': LandUseLegend,
-  'pollution-risk': PollutionRiskLegend,
+  'climate-risks': ClimateRiskLegend,
+  'land-use-risks': LandUseLegend,
+  'pollution-risks': PollutionRiskLegend,
 };
 
 export const POPUPS = {
   foodscapes: FoodscapesPopup,
   'foodscapes-intensities': FoodscapesIntensitiesPopup,
   crops: CropsPopup,
-  'climate-risk': ClimateRiskPopup,
-  'land-use-risk': LandUsePopup,
-  'pollution-risk': PollutionRiskPopup,
+  'climate-risks': ClimateRiskPopup,
+  'land-use-risks': LandUsePopup,
+  'pollution-risks': PollutionRiskPopup,
 };
 
 export const INFO = {
   foodscapes: FoodscapesInfo,
   'foodscapes-intensities': FoodscapesIntensitiesInfo,
   crops: CropsInfo,
-  'climate-risk': ClimateRiskInfo,
-  'land-use-risk': LandUseInfo,
-  'pollution-risk': PollutionRiskInfo,
+  'climate-risks': ClimateRiskInfo,
+  'land-use-risks': LandUseInfo,
+  'pollution-risks': PollutionRiskInfo,
 };

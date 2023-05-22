@@ -4,8 +4,7 @@ import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
 import { FiltersProps } from 'types/data';
-import { Dataset } from 'types/datasets';
-import { LayerSettings, LayerTypeSettings } from 'types/layers';
+import { LayerSettings, LayerType, LayerTypeSettings } from 'types/layers';
 
 import { IconProps } from 'components/icon/types';
 
@@ -51,9 +50,7 @@ export interface LegendProps extends PropsWithChildren {
   onChangeOrder?: OnChangeOrder;
 }
 
-export interface LegendItemProps<I extends Dataset['id']>
-  extends PropsWithChildren,
-    LegendItemEvents {
+export interface LegendItemProps<I extends LayerType> extends PropsWithChildren, LegendItemEvents {
   id: string;
   name: string;
   className?: string;
@@ -79,7 +76,7 @@ export interface LegendItemToolbarProps extends LegendItemEvents {
   // components
   Components?: Components;
   // settings
-  settings?: LayerSettings<Dataset['id']>;
+  settings?: LayerSettings<LayerType>;
   settingsManager?: SettingsManager;
 }
 

@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import { filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue } from 'recoil';
-import squel from 'squel';
 
 import { useData } from 'hooks/data';
 import { convertPixelCountToHA } from 'hooks/utils';
@@ -28,17 +27,8 @@ const FoodscapesSummaryWidget = () => {
   });
 
   const { data, isError, isPlaceholderData, isFetching, isFetched } = useData<SummaryProps>(
-    {
-      sql: squel
-        .select()
-        .field('COUNT(DISTINCT foodscapes)', 'total_foodscapes')
-        .field('COUNT(DISTINCT country)', 'total_countries')
-        .field('SUM(pixel_count)', 'total_pixels')
-        .from('data')
-        .where('foodscapes NOT IN ?', [1, 2, 3]),
-      shape: 'array',
-      ...filters,
-    },
+    'foodscapes-summary',
+    filters,
     {
       keepPreviousData: true,
     }

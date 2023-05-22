@@ -2,29 +2,17 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { PollutionRisk } from 'types/pollution-risks';
 
-const DATA_JSON = [
-  {
-    id: 0,
-    label: 'Not risk',
-    value: -1,
-    color: '#7B544700',
-  },
-  {
-    id: 1,
-    label: 'Risk',
-    value: 1,
-    color: '#7B5447',
-  },
-];
+import API from 'services/api';
 
 export function usePollutionRisks(queryOptions: UseQueryOptions<PollutionRisk[], unknown> = {}) {
   const fetchPollutionRisks = () => {
-    return new Promise((resolve) => {
-      resolve(DATA_JSON);
-    });
+    return API.request({
+      method: 'GET',
+      url: '/pollution-risks',
+    }).then((response) => response.data);
   };
 
-  const query = useQuery(['pollution-risk'], fetchPollutionRisks, {
+  const query = useQuery(['pollution-risks'], fetchPollutionRisks, {
     placeholderData: [],
     ...queryOptions,
   });

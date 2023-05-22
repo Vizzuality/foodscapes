@@ -8,7 +8,6 @@ import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { useRecoilValue } from 'recoil';
 
 import { FiltersOmitProps, FoodscapeIntensityData } from 'types/data';
-import { Dataset } from 'types/datasets';
 import { FoodscapeIntensityChartData } from 'types/foodscapes-intensities';
 
 import { useData } from 'hooks/data';
@@ -19,7 +18,6 @@ import HorizontalStackedBar from 'components/charts/horizontal-stacked-bar';
 import { FoodscapesIntensitiesChartTooltip } from './tooltips';
 
 interface FoodscapesIntensitiesChartParentProps {
-  dataset: Dataset;
   interactive?: boolean;
   selected?: readonly number[];
   ignore?: FiltersOmitProps;
@@ -33,7 +31,6 @@ interface FoodscapesIntensitiesChartProps extends FoodscapesIntensitiesChartPare
 const FoodscapesIntensitiesChart = ({
   width,
   height,
-  dataset,
   interactive,
   selected,
   ignore = 'intensities',
@@ -44,11 +41,7 @@ const FoodscapesIntensitiesChart = ({
   // DATA
   const { data: foodscapesIntensitiesData } = useFoodscapesIntensities();
 
-  const { data } = useData<FoodscapeIntensityData>({
-    sql: dataset.widget.sql,
-    shape: 'array',
-    ...filters,
-  });
+  const { data } = useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
   // CONFIG
   const KEYS = useMemo(() => {
