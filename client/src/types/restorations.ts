@@ -11,5 +11,5 @@ export interface Restoration {
 }
 
 export type RestorationSettings = {
-  layer: Restoration['column'];
+  column: Restoration['column'];
 } & Settings;

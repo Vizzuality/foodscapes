@@ -9,8 +9,8 @@ const RestorationsLayer = ({
   filters,
   beforeId,
 }: LayerProps<LayerSettings<'restorations'>>) => {
-  const SOURCE = useSource({ filters });
-  const LAYER = useLayer({ settings });
+  const SOURCE = useSource({ filters, settings });
+  const LAYER = useLayer({ filters, settings });
 
   if (!SOURCE || !LAYER) return null;
 

@@ -8,15 +8,17 @@ import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
-import { DATASETS } from 'constants/datasets';
+import { useRestorations } from 'hooks/restorations';
 
 import env from 'env.mjs';
 
 interface UseRestorationsSourceProps {
   filters: FiltersProps;
+  settings?: Partial<LayerSettings<'restorations'>>;
 }
 
 interface UseRestorationsLayerProps {
+  filters: FiltersProps;
   settings?: Partial<LayerSettings<'restorations'>>;
 }
 
@@ -27,10 +29,20 @@ interface UseRestorationsLegendProps {
 
 export function useSource({
   filters,
+  settings,
 }: UseRestorationsSourceProps): AnySourceData & { key: string } {
-  const DATASET = DATASETS.find((d) => d.id === 'restorations');
+  const { data: restorationsData } = useRestorations();
 
-  const bands = DATASET.layer.bands;
+  const band = useMemo(() => {
+    return restorationsData.find((v) => v.column === settings.column)?.value;
+  }, [restorationsData, settings]);
+
+  console.log({
+    band,
+    restorationsData,
+    settings,
+  });
+
   const colormap = useMemo(() => {
     // https://cogeotiff.github.io/rio-tiler/colormap/#intervals-colormaps
     const c = [
@@ -38,22 +50,22 @@ export function useSource({
         [0, 1],
         [0, 0, 0, 0],
       ],
-      // ...COLORS.map((color, index) => {
-      //   return [[index + 1, index + 2], convertHexToRgbaArray(color, 1)];
-      // }),
+      [
+        [1, 1000000],
+        [0, 0, 0, 255],
+      ],
     ];
 
     return JSON.stringify(c);
   }, []);
 
   const expression = useMemo(() => {
-    const where = bands.map((b) => {
-      const w = titilerAdapter(filters, `(b${b} > 0)`);
-      return `where(${w},b${b},0)`;
-    });
+    const where = titilerAdapter(filters);
 
-    return where.join('+');
-  }, [bands, filters]);
+    if (!where) return null;
+
+    return `where(${where},b${band},-1)`;
+  }, [band, filters]);
 
   const searchParams = useMemo(() => {
     const params = new URLSearchParams();
@@ -64,9 +76,11 @@ export function useSource({
     return params.toString();
   }, [colormap, expression]);
 
+  if (!restorationsData || !restorationsData.length) return null;
+
   return {
     id: 'restorations-source',
-    key: `${bands.toString()}-${colormap}-${expression}`,
+    key: `${band.toString()}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
       `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
