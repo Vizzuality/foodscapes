@@ -44,6 +44,8 @@ export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
     url: `/cog/statistics`,
     params: {
       expression: expression(),
+      width: 4096,
+      height: 4096,
     },
   }).then((response) => response.data[expression()]);
 };

@@ -60,11 +60,12 @@ export function useSource({
         .map((color: ColorHex, i: number) => {
           const { max } = restorationStatisticsData || { max: 0 };
           const step = max / 20;
+          const offset = i + 1 === 20 ? 0.1 : 0;
 
           // Clamp the opacity to min 0.25 and max 1
           const opacity = Math.min(Math.max(0.25, (i + 1) / 3), 1);
 
-          return [[step * i, step * (i + 1)], convertHexToRgbaArray(color, opacity)];
+          return [[step * i, step * (i + 1) + offset], convertHexToRgbaArray(color, opacity)];
         }),
     ];
 
