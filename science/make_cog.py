@@ -22,7 +22,16 @@ from rio_cogeo import cog_translate, cog_profiles
     type=click.Path(exists=True, path_type=Path),
     help="Use the band description csv to set the band metadata and order",
 )
-def main(files: tuple[Path], output: Path, nodata: int | None, use_cog_driver: bool, description_file: Path | None):
+@click.option("--co", "creation_options", type=str, multiple=True, help="GDAL creation options like 'COMPRESS=DEFLATE'")
+def main(
+    files: tuple[Path],
+    output: Path,
+    nodata: int | None,
+    use_cog_driver: bool,
+    description_file: Path | None,
+    creation_options: list,
+):
+    creation_options = dict(param.split("=") for param in creation_options)
     description_table, files = filter_and_order_band_list(description_file, files)
     print_execution_description(use_cog_driver, files, nodata, output)
     stacked_raster, dest_kwargs = stack_bands(files, nodata, description_table)
@@ -37,6 +46,7 @@ def main(files: tuple[Path], output: Path, nodata: int | None, use_cog_driver: b
     if use_cog_driver:
         indicator = status.Status("Converting to COG using gdal driver...", spinner="earth", refresh_per_second=5)
         indicator.start()
+        dest_kwargs.update(creation_options)
         dest_kwargs.update({"driver": "COG", "TILING_SCHEME": "GoogleMapsCompatible"})
         with stacked_raster.open() as src:
             rio_shutil.copy(src, output, **dest_kwargs)
@@ -54,16 +64,16 @@ def main(files: tuple[Path], output: Path, nodata: int | None, use_cog_driver: b
             output_profile.update(
                 {k: v for k, v in dest_kwargs.items() if k in ["blockxsize", "blockysize", "compress", "interleave"]},
             )
+            output_profile.update(creation_options)
             gdal_config = dict(
-                GDAL_NUM_THREADS=2,
-                GDAL_TIFF_INTERNAL_MASK=True,
+                GDAL_NUM_THREADS=4,
+                GDAL_TIFF_INTERNAL_MASK=True,  # dunno if these are needed but they are in the rio cogeo docs
                 GDAL_TIFF_OVR_BLOCKSIZE=str(512),
             )
             cog_translate(
                 src,
                 output,
                 output_profile,
-                # indexes=dest_kwargs.get("count"),
                 nodata=dest_kwargs.pop("nodata"),
                 dtype=dest_kwargs.pop("dtype"),
                 web_optimized=True,
