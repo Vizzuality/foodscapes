@@ -17,6 +17,22 @@
 - `terraform apply -var-file=./path/to/tfvars/file`
 - Cross-check the plan, confirm if ok
 
+### ACM certificate validation
+
+As part of the Terraform plan, an AWS ACM certificate for the domain configured
+will be requested, and the related DNS records requested by the AWS ACM service
+for domain ownership validation will be displayed as part of the outputs of the
+applied plan.
+
+To keep DNS validation flexible (depending on how the target domain and its DNS
+are handled, and without requiring access to the DNS configuration via
+Terraform), the DNS records requested by the AWS ACM service will need to be
+created manually. Once the validation records have been set up and are
+propagated, the certificates will be issued and will be available for the AWS
+ALB load balancer included in the Terraform setup to use.
+
+### Migrating initial state to S3 storage
+
 Once the initial setup is done, the S3 bucket holding the state file will have
 been created: un-comment the `terraform` block in `main.tf` and run `terraform
 apply` again.
