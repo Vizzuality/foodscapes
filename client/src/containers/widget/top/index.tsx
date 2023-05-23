@@ -12,7 +12,7 @@ export interface WidgetTopProps extends PropsWithChildren {
 }
 
 const WidgetTop = ({ label, children }: WidgetTopProps) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Collapsible
@@ -34,7 +34,7 @@ const WidgetTop = ({ label, children }: WidgetTopProps) => {
       </CollapsibleTrigger>
 
       <CollapsibleContent>
-        <div className="relative mt-5 min-h-[40px]">{children}</div>
+        <div className="relative mt-2.5 min-h-[40px]">{children}</div>
       </CollapsibleContent>
     </Collapsible>
   );

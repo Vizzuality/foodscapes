@@ -20,12 +20,6 @@ type SummaryProps = {
 const FoodscapesSummaryWidget = () => {
   const filters = useRecoilValue(filtersSelector(null));
 
-  const { format } = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-    maximumSignificantDigits: 3,
-  });
-
   const { data, isError, isPlaceholderData, isFetching, isFetched } = useData<SummaryProps>(
     'foodscapes-summary',
     filters,
@@ -84,10 +78,14 @@ const FoodscapesSummaryWidget = () => {
             )}
             {!isPlaceholderData && !isError && (
               <>
-                <dd className="font-display text-3xl">{`~${format(
-                  convertPixelCountToHA(SUMMARY.total_pixels, 1000000)
+                <dd className="font-display text-3xl">{`~${convertPixelCountToHA(
+                  SUMMARY.total_pixels,
+                  {
+                    style: 'decimal',
+                    maximumFractionDigits: 2,
+                  }
                 )}`}</dd>
-                <dt className="text-xs">Million Hectares</dt>
+                <dt className="text-xs">Hectares</dt>
               </>
             )}
           </div>
