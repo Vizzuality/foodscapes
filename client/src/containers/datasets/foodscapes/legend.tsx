@@ -79,7 +79,7 @@ const FoodscapesLegend = (props: FoodscapesLegendProps) => {
       >
         <div className="divide-y divide-navy-500/20">
           <div className="ml-0.5 px-4 pt-3 pb-5">
-            <div className="h-3.5">
+            <div className="-ml-0.5 h-3.5">
               {!settings.group && (
                 <Chart
                   //
