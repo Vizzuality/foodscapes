@@ -11,10 +11,10 @@ import { useRestorations } from 'hooks/restorations';
 
 import { DATASETS } from 'constants/datasets';
 
-import { WidgetContent, WidgetHeader, WidgetTop } from 'containers/widget';
+import { WidgetContent, WidgetHeader } from 'containers/widget';
 
 const Chart = dynamic(() => import('./chart'), { ssr: false });
-const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
+// const TopChart = dynamic(() => import('./chart/top'), { ssr: false });
 
 const RestorationsWidget = () => {
   const DATASET = DATASETS.find((d) => d.id === 'restorations');
@@ -57,9 +57,9 @@ const RestorationsWidget = () => {
             </div>
           </div>
 
-          <WidgetTop label="See top foodscapes by restoration">
+          {/* <WidgetTop label="See top foodscapes by restoration">
             <TopChart />
-          </WidgetTop>
+          </WidgetTop> */}
         </div>
       </WidgetContent>
     </section>

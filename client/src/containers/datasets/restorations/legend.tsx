@@ -77,7 +77,7 @@ const RestorationsLegend = (props: RestorationsLegendProps) => {
 
   return (
     <LegendItem {...legend} {...props}>
-      <div className="space-y-2 divide-y divide-navy-500/20 px-4 pt-0 pb-1">
+      <div className="space-y-2 px-4 pt-0 pb-1">
         <LegendContent
           skeletonClassName="h-7"
           isPlaceholderData={restorationsIsPlaceholderData}
