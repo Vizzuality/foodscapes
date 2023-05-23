@@ -5,6 +5,7 @@ import { urlSyncEffect } from 'recoil-sync';
 import { FiltersOmitProps, FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings, LayerType } from 'types/layers';
+import { Bbox } from 'types/map';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -18,6 +19,32 @@ export const layersOpenAtom = atom({
 });
 
 // Map
+export const bboxAtom = atom<Bbox>({
+  key: 'bbox',
+  effects: [
+    ({ setSelf, onSet }) => {
+      onSet((newValue, oldValue) => {
+        if (!!newValue && !!oldValue && Array.isArray(newValue) && Array.isArray(oldValue)) {
+          const n = newValue.map((v) => Number(v.toFixed(2))) as Bbox;
+          const o = oldValue.map((v) => Number(v.toFixed(2))) as Bbox;
+          if (!n.every((v, i) => v === o[i])) {
+            return setSelf(n);
+          }
+        }
+        return newValue;
+      });
+    },
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
+export const tmpBboxAtom = atom<Bbox>({
+  key: 'tmp-bbox',
+  default: null,
+});
+
 export const basemapAtom = atom({
   key: 'basemap',
   default: 'light',

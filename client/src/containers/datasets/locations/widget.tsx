@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { provinceAtom, countryAtom, filtersSelector } from 'store/explore-map';
+import { provinceAtom, countryAtom, filtersSelector, tmpBboxAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -20,6 +20,8 @@ const LocationRankingWidget = () => {
 
   const province = useRecoilValue(provinceAtom);
   const setProvince = useSetRecoilState(provinceAtom);
+
+  const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
   const filters = useRecoilValue(filtersSelector(['country', 'province']));
 
@@ -54,6 +56,27 @@ const LocationRankingWidget = () => {
     return provincesData.filter((c) => data.map((d) => d.id).includes(c.value));
   }, [data, provincesData]);
 
+  const handleCountryChange = (value: number | null) => {
+    if (value === null) {
+      setCountry(null);
+    } else {
+      const C = countriesData?.find((c) => c.value === value);
+      setCountry(value as number);
+      setTmpBbox(C.bbox);
+    }
+    setProvince(null);
+  };
+
+  const handleProvinceChange = (value: number | null) => {
+    if (value === null) {
+      setProvince(null);
+    } else {
+      const P = provincesData?.find((c) => c.value === value);
+      setProvince(value as number);
+      setTmpBbox(P.bbox);
+    }
+  };
+
   return (
     <section className="space-y-4 pb-10">
       {/* <WidgetHeader title="Location ranking" dataset={DATASET} /> */}
@@ -73,14 +96,7 @@ const LocationRankingWidget = () => {
             placeholder="Select a country"
             options={COUNTRY_OPTIONS}
             value={country ?? null}
-            onChange={(value) => {
-              if (value === null) {
-                setCountry(null);
-              } else {
-                setCountry(value as number);
-              }
-              setProvince(null);
-            }}
+            onChange={handleCountryChange}
             clearable
           />
 
@@ -91,13 +107,7 @@ const LocationRankingWidget = () => {
             placeholder="Select a region"
             options={PROVINCE_OPTIONS}
             value={province ?? null}
-            onChange={(value) => {
-              if (value === null) {
-                setProvince(null);
-              } else {
-                setProvince(value as number);
-              }
-            }}
+            onChange={handleProvinceChange}
             clearable
             disabled={!country}
           />
