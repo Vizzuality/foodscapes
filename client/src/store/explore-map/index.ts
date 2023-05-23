@@ -21,8 +21,19 @@ export const layersOpenAtom = atom({
 // Map
 export const bboxAtom = atom<Bbox>({
   key: 'bbox',
-  default: null,
   effects: [
+    ({ setSelf, onSet }) => {
+      onSet((newValue, oldValue) => {
+        if (!!newValue && !!oldValue && Array.isArray(newValue) && Array.isArray(oldValue)) {
+          const n = newValue.map((v) => Number(v.toFixed(2))) as Bbox;
+          const o = oldValue.map((v) => Number(v.toFixed(2))) as Bbox;
+          if (!n.every((v, i) => v === o[i])) {
+            return setSelf(n);
+          }
+        }
+        return newValue;
+      });
+    },
     urlSyncEffect({
       refine: array(number()),
     }),
