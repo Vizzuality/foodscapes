@@ -1,4 +1,6 @@
 import type { ViewState, MapProps, FitBoundsOptions, MapboxMap } from 'react-map-gl';
+
+import { Bbox } from 'types/map';
 export interface CustomMapProps extends MapProps {
   /** A function that returns the map instance */
   children?: (map: MapboxMap) => React.ReactNode;
@@ -16,7 +18,7 @@ export interface CustomMapProps extends MapProps {
 
   /** An object that defines the bounds */
   bounds?: {
-    bbox: [number, number, number, number];
+    bbox: Bbox;
     options?: FitBoundsOptions;
     viewportOptions?: Partial<ViewState>;
   };
