@@ -111,6 +111,7 @@ const OpportunitiesSidebar = forwardRef(() => {
           alt="Risks tab"
           width={640}
           height={256}
+          priority
         />
       </div>
     </section>
