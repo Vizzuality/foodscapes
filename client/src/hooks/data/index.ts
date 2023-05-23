@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
-import { titilerAdapter } from 'lib/adapters/titiler-adapter';
+// import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
 
@@ -30,24 +30,25 @@ export const downloadData = (id: Dataset['id']) => {
   }).then((response) => response.data);
 };
 
-export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
-  const expression = () => {
-    const where = titilerAdapter(filters);
+export const fetchStatisticsData = (band: number) => {
+  // const expression = () => {
+  //   const where = titilerAdapter(filters);
 
-    if (!where) return null;
+  //   if (!where) return null;
 
-    return `where(${where},b${band},-1)`;
-  };
+  //   return `where(${where},b${band},-1)`;
+  // };
 
   return TITILER_API.request({
     method: 'GET',
     url: `/cog/statistics`,
     params: {
-      expression: expression(),
-      width: 4096,
-      height: 4096,
+      bidx: band,
+      // expression: expression(),
+      // width: 4000,
+      // height: 4000,
     },
-  }).then((response) => response.data[expression()]);
+  }).then((response) => response.data[`b${band}`]);
 };
 
 export const fetchPointData = ({ lng, lat }: LngLat) => {
@@ -85,7 +86,7 @@ export function useStatisticsData(
   params: { band: number; filters: FiltersProps },
   queryOptions: UseQueryOptions<any, unknown> = {}
 ) {
-  const fetch = () => fetchStatisticsData(params.band, params.filters);
+  const fetch = () => fetchStatisticsData(params.band);
 
   const query = useQuery(['data', JSON.stringify({ ...params })], fetch, {
     placeholderData: {},

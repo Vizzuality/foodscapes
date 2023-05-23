@@ -15,13 +15,23 @@ const fetch = async () => {
     KNEX
       //
       .select(KNEX.raw("'cropland_areas_suitable_for_restoration_area' AS id"))
-      .select(KNEX.raw('SUM(d.cropland_areas_suitable_for_restoration_area) AS value'))
+      .select(KNEX.raw('SUM(d.cropland_areas_suitable_for_restoration_area) AS ha'))
+      .select(
+        KNEX.raw(
+          '(SUM(d.cropland_areas_suitable_for_restoration_area) / (SELECT SUM(d.pixel_count) * 3086.9136)) * 100 as percentage'
+        )
+      )
       .from('data AS d')
       .whereNotIn('d.foodscapes', [1, 2, 3]),
     KNEX
       //
       .select(KNEX.raw("'grassland_areas_suitable_for_restoration_area' AS id"))
-      .select(KNEX.raw('SUM(d.grassland_areas_suitable_for_restoration_area) AS value'))
+      .select(KNEX.raw('SUM(d.grassland_areas_suitable_for_restoration_area) AS ha'))
+      .select(
+        KNEX.raw(
+          '(SUM(d.grassland_areas_suitable_for_restoration_area) / (SELECT SUM(d.pixel_count) * 3086.9136)) * 100 as percentage'
+        )
+      )
       .from('data AS d')
       .whereNotIn('d.foodscapes', [1, 2, 3]),
   ];
