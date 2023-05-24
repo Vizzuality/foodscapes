@@ -15,11 +15,6 @@ export interface CropData {
   parent_id: number;
 }
 
-export interface ClimateRiskData {
-  id: 'risk' | 'not_risk';
-  value: number;
-}
-
 export interface LandUseRiskData {
   id:
     | 'agricultural_frontier_zones'
@@ -29,14 +24,28 @@ export interface LandUseRiskData {
     | 'water_scarcity';
   value: number;
 }
+export interface ClimateRiskData {
+  id: 'risk' | 'not_risk';
+  value: number;
+}
 export interface PollutionRiskData {
   id: 'risk' | 'not_risk';
   value: number;
 }
 
-export interface LocationData {
+export interface RestorationsData {
+  id:
+    | 'cropland_areas_suitable_for_restoration_area'
+    | 'grassland_areas_suitable_for_restoration_area';
+  value: number;
+}
+
+export interface CountriesData {
   id: number;
-  name: string;
+}
+
+export interface ProvincesData {
+  id: number;
   parent_id: number;
 }
 

@@ -70,6 +70,7 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
     'climate-risks': { ...DEFAULT_SETTINGS },
     'pollution-risks': { ...DEFAULT_SETTINGS },
     locations: { ...DEFAULT_SETTINGS },
+    restorations: { ...DEFAULT_SETTINGS, column: 'grassland_areas_suitable_for_restoration_area' },
   } satisfies Record<LayerType, LayerSettings<LayerType>>,
 
   effects: [
@@ -80,6 +81,7 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
           visibility: bool(),
           expand: bool(),
           group: optional(bool()),
+          column: optional(string()),
         })
       ),
     }),

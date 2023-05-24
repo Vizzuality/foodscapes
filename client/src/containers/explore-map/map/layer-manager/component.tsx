@@ -29,15 +29,7 @@ const LayerManagerContainer = () => {
             key={layer}
             id={`${layer}-layer`}
             filters={filters}
-            settings={
-              layersSettings[layer] ?? {
-                id: layer,
-                group: false,
-                opacity: 1,
-                visibility: true,
-                expand: false,
-              }
-            }
+            settings={layersSettings[layer]}
             beforeId={beforeId}
             zIndex={1000 - i}
           />

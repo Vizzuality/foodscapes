@@ -129,23 +129,24 @@ export const DATASETS = [
     },
   },
   // OPPORTUNITIES
-  // {
-  //   id: 'restoration',
-  //   label: 'Restoration',
-  //   group: 'opportunities',
-  //   layer: {
-  //     enabled: false,
-  //     visible: true,
-  //   },
-  //   widget: {
-  //     enabled: false,
-  //     toolbar: {
-  //       download: true,
-  //       info: true,
-  //       layer: true,
-  //     },
-  //   },
-  // },
+  {
+    id: 'restorations',
+    label: 'Restoration',
+    group: 'opportunities',
+    layer: {
+      enabled: true,
+      visible: true,
+      bands: [14, 17],
+    },
+    widget: {
+      enabled: true,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
+    },
+  },
   // {
   //   id: 'agroforestry',
   //   label: 'Agroforestry',
