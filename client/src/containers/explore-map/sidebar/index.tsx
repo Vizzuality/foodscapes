@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import Filters from 'containers/explore-map/filters';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'containers/explore-map/sidebar/tabs';
 import CaseStudiesSidebar from 'containers/explore-map/sidebar/tabs/case-studies';
 import FoodscapesSidebar from 'containers/explore-map/sidebar/tabs/foodscapes';
@@ -110,6 +111,8 @@ const Sidebar = () => {
               </button>
             </DialogTrigger>
           </motion.div>
+
+          <Filters />
         </>
       </DialogContent>
     </Dialog>
