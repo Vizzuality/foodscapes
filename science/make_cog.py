@@ -119,21 +119,23 @@ def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame 
                     raise ValueError(
                         f"file {file} has a different CRS " f" from {files[0]} with {src.crs} and {first_crs}"
                     )
-                band_data = src.read(1)
+                band_data = src.read(1, masked=True)
                 if (nodata is not None) & (src.nodata != nodata):
-                    band_data = np.where(band_data == src.nodata, nodata, band_data)
+                    band_data.fill_value = nodata
 
                 if description_table is not None:
                     row: pd.DataFrame
                     row = description_table.loc[description_table["file_name"] == Path(file).name]
-                    dest.update_tags(bidx=band_idx, **row.iloc[0].to_dict())
+                    tags = row.iloc[0].to_dict()
+                    tags.update({"min": band_data.min(), "max": band_data.max()})
+                    dest.update_tags(bidx=band_idx, **tags)
                     dest.set_band_description(band_idx, row["widget_column"].squeeze())
                 else:
                     # just set band name as filename
                     # todo: will we use this script without csv file ever again? -> delete if/else branch
                     dest.set_band_description(band_idx, Path(file).stem)
 
-                dest.write(band_data, band_idx)
+                dest.write(band_data.filled(), band_idx)
         indicator.stop()
     return temp_file, dest_kwargs
 
