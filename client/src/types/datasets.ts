@@ -15,6 +15,7 @@ export interface Dataset {
     | 'pollution-risks'
     | 'restorations'
     | 'agroforestries'
+    | 'soil-healths'
     | 'locations'
     | 'countries'
     | 'provinces';

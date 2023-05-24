@@ -9,6 +9,7 @@ import { FoodscapesIntentisitySettings } from 'types/foodscapes-intensities';
 import { LandUseChangeSettings } from 'types/land-use-risks';
 import { PollutionSettings } from 'types/pollution-risks';
 import { RestorationSettings } from 'types/restorations';
+import { SoilHealthSettings } from 'types/soil-healths';
 
 import { Settings } from 'components/map/legend/types';
 
@@ -29,6 +30,7 @@ export type LayerTypeSettings = {
   'pollution-risks': PollutionSettings;
   restorations: RestorationSettings;
   agroforestries: AgroforestrySettings;
+  'soil-healths': SoilHealthSettings;
   locations: Settings;
 };
 
