@@ -118,7 +118,7 @@ const MapContainer = () => {
         bounds={bounds}
         initialViewState={{
           ...initialViewState,
-          bounds: bbox,
+          ...(bbox && { bounds: bbox }),
         }}
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMapViewStateChange={handleViewState}

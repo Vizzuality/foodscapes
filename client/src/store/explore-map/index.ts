@@ -21,6 +21,7 @@ export const layersOpenAtom = atom({
 // Map
 export const bboxAtom = atom<Bbox>({
   key: 'bbox',
+  default: null,
   effects: [
     ({ setSelf, onSet }) => {
       onSet((newValue, oldValue) => {
