@@ -40,6 +40,14 @@ export interface RestorationsData {
   value: number;
 }
 
+export interface AgroforestriesData {
+  id:
+    | 'cropland_areas_suitable_for_silvoarable_area'
+    | 'forest_ecoregions_suitable_for_silvopastoral_area'
+    | 'tropical_grassland_ecoregions_suitable_for_silvopastoral_area';
+  value: number;
+}
+
 export interface CountriesData {
   id: number;
 }

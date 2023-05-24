@@ -1,5 +1,6 @@
 import { Layer } from '@deck.gl/core/typed';
 
+import { AgroforestrySettings } from 'types/agroforestries';
 import { ClimateChangeSettings } from 'types/climate-risks';
 import { CropsSettings } from 'types/crops';
 import { FiltersProps } from 'types/data';
@@ -27,6 +28,7 @@ export type LayerTypeSettings = {
   'climate-risks': ClimateChangeSettings;
   'pollution-risks': PollutionSettings;
   restorations: RestorationSettings;
+  agroforestries: AgroforestrySettings;
   locations: Settings;
 };
 
