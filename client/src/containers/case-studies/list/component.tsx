@@ -14,10 +14,18 @@ const CaseStudiesList = () => {
   } = useCaseStudies();
   return (
     <section className="space-y-4 py-10">
-      {caseStudiesIsPlaceholderData && <Skeleton className="h-20 w-full" />}
+      {caseStudiesIsPlaceholderData && (
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10">
+          {[...Array(6)].map((_, idx) => (
+            <Skeleton key={idx} className="h-72 w-full" />
+          ))}
+        </div>
+      )}
+
       {caseStudiesIsError && caseStudiesIsFetched && !caseStudiesIsFetching && (
         <div className="text-center">Oops!! Something went wrong</div>
       )}
+
       {!caseStudiesIsPlaceholderData && !caseStudiesIsError && (
         <div className="grid grid-cols-2 gap-x-4 gap-y-10">
           {caseStudiesData.map((caseStudy) => (
