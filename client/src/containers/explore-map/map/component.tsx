@@ -93,7 +93,15 @@ const MapContainer = () => {
 
   const handleViewState = useCallback(() => {
     if (map) {
-      setBbox(map.getBounds().toArray().flat() as Bbox);
+      const b = map
+        .getBounds()
+        .toArray()
+        .flat()
+        .map((v) => {
+          return parseFloat(v.toFixed(2));
+        }) as Bbox;
+
+      setBbox(b as Bbox);
       setTmpBbox(null);
     }
   }, [map, setBbox, setTmpBbox]);
