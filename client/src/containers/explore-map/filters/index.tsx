@@ -5,6 +5,8 @@ import { filtersOpenAtom, filtersSelector } from 'store/explore-map';
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import RisksFilters from 'containers/explore-map/filters/risks';
+
 import Icon from 'components/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
@@ -62,6 +64,10 @@ const Filters = () => {
 
           <div>
             <FoodscapesFilters />
+          </div>
+
+          <div>
+            <RisksFilters />
           </div>
 
           <p>

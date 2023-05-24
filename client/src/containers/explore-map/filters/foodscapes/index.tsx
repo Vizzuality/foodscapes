@@ -97,7 +97,7 @@ const FoodscapesFilters = () => {
   return (
     <div>
       <div className="flex items-center justify-center space-x-2">
-        <Icon icon={FOODSCAPES_SVG} className="h-5 w-5 text-white" />
+        <Icon icon={FOODSCAPES_SVG} className="h-6 w-6 text-white" />
         <h3 className="font-display text-2xl">Foodscapes</h3>
       </div>
 
