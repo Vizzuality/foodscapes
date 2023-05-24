@@ -60,7 +60,7 @@ const AgroforestriesPopup = ({ latLng, settings }: AgroforestriesPopupProps) => 
         <div
           className={cn({
             'relative top-1 h-4 w-4 shrink-0 border border-navy-500': true,
-            'bg-green-500': !!DATA,
+            'bg-[#94c072]': !!DATA,
           })}
         />
         <h2 className="text-base font-semibold">Agroforestry: {RESTORATION?.label}</h2>

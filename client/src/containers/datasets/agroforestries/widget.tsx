@@ -46,8 +46,8 @@ const AgroforestriesWidget = () => {
         <div className="space-y-5">
           <div className="space-y-2">
             <p className="font-light">
-              This analysis specifically focuses on quantifying the possible atmospheric carbon
-              removal benefit of such habitat agroforestries.
+              The scenarios explore possible levels of agroforestry interventions that are most
+              likely to maintain current productivity and ecological integrity.
             </p>
           </div>
 

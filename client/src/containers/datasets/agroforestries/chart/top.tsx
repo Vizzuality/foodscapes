@@ -7,9 +7,9 @@ import { useRecoilValue } from 'recoil';
 
 import { FoodscapeData } from 'types/data';
 
+import { useAgroforestries } from 'hooks/agroforestries';
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
-import { useAgroforestries } from 'hooks/agroforestries';
 import { convertPixelCountToHA, useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
