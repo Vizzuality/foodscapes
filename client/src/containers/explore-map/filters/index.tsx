@@ -1,6 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+
+import { filtersOpenAtom } from 'store/explore-map';
 
 import { motion } from 'framer-motion';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 
@@ -9,7 +12,8 @@ import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 import FoodscapesFilters from './foodscapes';
 
 const Filters = () => {
-  const [open, setOpen] = useState(false);
+  const open = useRecoilValue(filtersOpenAtom);
+  const setOpen = useSetRecoilState(filtersOpenAtom);
 
   const handleFiltersClick = useCallback(() => {
     setOpen(!open);
