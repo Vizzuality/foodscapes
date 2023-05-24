@@ -10,7 +10,7 @@ export function useIsLoading(queries: DefinedUseQueryResult[]) {
   };
 }
 
-export function convertPixelCountToHA(value: number, options?: Intl.NumberFormatOptions) {
+export function formatHA(value: number, options?: Intl.NumberFormatOptions) {
   const v = Intl.NumberFormat('en-US', {
     notation: 'compact',
     compactDisplay: 'short',
@@ -22,7 +22,11 @@ export function convertPixelCountToHA(value: number, options?: Intl.NumberFormat
     ...options,
   });
 
-  return v.format(value * 3086.9136).replace(/(\d+)([A-Za-z]+)/, '$1 $2');
+  return v.format(value).replace(/(\d+)([A-Za-z]+)/, '$1 $2');
+}
+
+export function convertPixelCountToHA(value: number, options?: Intl.NumberFormatOptions) {
+  return formatHA(value * 3086.9136, options);
 }
 
 export function convertHexToRgbaArray(hex: ColorHex, opacity: number = 1): number[] {

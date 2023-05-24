@@ -10,7 +10,7 @@ import { FiltersOmitProps, RestorationsData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useRestorations } from 'hooks/restorations';
-import { convertPixelCountToHA } from 'hooks/utils';
+import { formatHA } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -48,7 +48,7 @@ const RestorationsChart = ({ selected, ignore = null, onBarClick }: Restorations
         return {
           ...c,
           id: c.value,
-          value: d1.value / 1000000,
+          value: d1.value,
           color: c.color,
         };
       })
@@ -90,7 +90,7 @@ const RestorationsChart = ({ selected, ignore = null, onBarClick }: Restorations
       colorScale={colorScale}
       interactive={false}
       selected={selected}
-      format={convertPixelCountToHA}
+      format={formatHA}
       onBarClick={onBarClick}
     />
   );
