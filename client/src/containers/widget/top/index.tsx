@@ -12,7 +12,7 @@ export interface WidgetTopProps extends PropsWithChildren {
 }
 
 const WidgetTop = ({ label, children }: WidgetTopProps) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <Collapsible
