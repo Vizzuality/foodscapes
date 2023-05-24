@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 
 import Image from 'next/image';
 
+import AgroforestriesWidget from 'containers/datasets/agroforestries/widget';
 import RestorationsWidget from 'containers/datasets/restorations/widget';
 
 const OpportunitiesSidebar = forwardRef(() => {
@@ -29,6 +30,9 @@ const OpportunitiesSidebar = forwardRef(() => {
         <div className="w-full px-20">
           <div className="border-t border-navy-500/30">
             <RestorationsWidget />
+          </div>
+          <div className="border-t border-navy-500/30">
+            <AgroforestriesWidget />
           </div>
         </div>
       </div>

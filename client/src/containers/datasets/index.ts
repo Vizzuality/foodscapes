@@ -1,3 +1,8 @@
+// Agroforestries
+import AgroforestriesInfo from './agroforestries/info.mdx';
+import AgroforestriesLayer from './agroforestries/layer';
+import AgroforestriesLegend from './agroforestries/legend';
+import AgroforestriesPopup from './agroforestries/popup';
 // Climate risk
 import ClimateRiskInfo from './climate-risks/info.mdx';
 import ClimateRiskLayer from './climate-risks/layer';
@@ -42,6 +47,7 @@ export const LAYERS = {
   'land-use-risks': LandUseLayer,
   'pollution-risks': PollutionRiskLayer,
   restorations: RestorationsLayer,
+  agroforestries: AgroforestriesLayer,
 };
 
 export const LEGENDS = {
@@ -52,6 +58,7 @@ export const LEGENDS = {
   'land-use-risks': LandUseLegend,
   'pollution-risks': PollutionRiskLegend,
   restorations: RestorationsLegend,
+  agroforestries: AgroforestriesLegend,
 };
 
 export const POPUPS = {
@@ -62,6 +69,7 @@ export const POPUPS = {
   'land-use-risks': LandUsePopup,
   'pollution-risks': PollutionRiskPopup,
   restorations: RestorationsPopup,
+  agroforestries: AgroforestriesPopup,
 };
 
 export const INFO = {
@@ -72,4 +80,5 @@ export const INFO = {
   'land-use-risks': LandUseInfo,
   'pollution-risks': PollutionRiskInfo,
   restorations: RestorationsInfo,
+  agroforestries: AgroforestriesInfo,
 };
