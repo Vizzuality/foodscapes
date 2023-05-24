@@ -44,7 +44,7 @@ const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
     // Loop through the data and add the label
     return data.map((d) => {
       const { label } = cropsData.find((f) => f.value === d.id) || {};
-      return { ...d, label, value: convertPixelCountToHA(d.value, 1000000) };
+      return { ...d, label };
     });
   }, [data, cropsData]);
 
@@ -90,6 +90,7 @@ const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
         xScale={xScale}
         interactive={false}
         colorScale={colorScale}
+        format={convertPixelCountToHA}
         onBarClick={handleBarClick}
       />
     </>

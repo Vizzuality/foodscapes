@@ -44,7 +44,7 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
     // Loop through the data and add the label
     return data.map((d) => {
       const { label } = foodscapesIntensitiesData.find((f) => f.value === d.id) || {};
-      return { ...d, label, value: convertPixelCountToHA(d.value, 1000000) };
+      return { ...d, label };
     });
   }, [data, foodscapesIntensitiesData]);
 
@@ -90,6 +90,7 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
         xScale={xScale}
         colorScale={colorScale}
         interactive={false}
+        format={convertPixelCountToHA}
         onBarClick={handleBarClick}
       />
     </>

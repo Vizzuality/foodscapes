@@ -10,8 +10,19 @@ export function useIsLoading(queries: DefinedUseQueryResult[]) {
   };
 }
 
-export function convertPixelCountToHA(value: number, factor = 1) {
-  return (value * 3086.9136) / factor;
+export function convertPixelCountToHA(value: number, options?: Intl.NumberFormatOptions) {
+  const v = Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    style: 'unit',
+    unit: 'hectare',
+    unitDisplay: 'short',
+    ...options,
+  });
+
+  return v.format(value * 3086.9136).replace(/(\d+)([A-Za-z]+)/, '$1 $2');
 }
 
 export function convertHexToRgbaArray(hex: ColorHex, opacity: number = 1): number[] {
