@@ -20,12 +20,6 @@ type SummaryProps = {
 const FoodscapesSummaryWidget = () => {
   const filters = useRecoilValue(filtersSelector(null));
 
-  const { format } = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-    maximumSignificantDigits: 3,
-  });
-
   const { data, isError, isPlaceholderData, isFetching, isFetched } = useData<SummaryProps>(
     'foodscapes-summary',
     filters,
@@ -58,6 +52,25 @@ const FoodscapesSummaryWidget = () => {
     );
   }, [data]);
 
+  const TOTAL_PIXELS = useMemo(() => {
+    if (SUMMARY.total_pixels === 0)
+      return {
+        value: 0,
+        unit: '',
+      };
+
+    if (SUMMARY.total_pixels * 3086.9136 < 1000000)
+      return {
+        value: SUMMARY.total_pixels / 1000,
+        unit: 'Thousands',
+      };
+
+    return {
+      value: SUMMARY.total_pixels / 1000000,
+      unit: 'Millions',
+    };
+  }, [SUMMARY]);
+
   return (
     <section className="pt-5 text-navy-500">
       {isError && isFetched && !isFetching && <WidgetError className="p-4" />}
@@ -84,10 +97,16 @@ const FoodscapesSummaryWidget = () => {
             )}
             {!isPlaceholderData && !isError && (
               <>
-                <dd className="font-display text-3xl">{`~${format(
-                  convertPixelCountToHA(SUMMARY.total_pixels, 1000000)
+                <dd className="font-display text-3xl">{`~${convertPixelCountToHA(
+                  TOTAL_PIXELS.value,
+                  {
+                    style: 'decimal',
+                    notation: 'standard',
+                    maximumSignificantDigits: 3,
+                    maximumFractionDigits: 0,
+                  }
                 )}`}</dd>
-                <dt className="text-xs">Million Hectares</dt>
+                <dt className="text-xs">{TOTAL_PIXELS.unit} Hectares</dt>
               </>
             )}
           </div>

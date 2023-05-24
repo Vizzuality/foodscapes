@@ -46,7 +46,13 @@ const RisksSidebar = forwardRef(() => {
       </div>
 
       <div>
-        <Image src="/images/sidebar/risks-tab.png" alt="Risks tab" width={640} height={256} />
+        <Image
+          src="/images/sidebar/risks-tab.png"
+          alt="Risks tab"
+          width={640}
+          height={256}
+          priority
+        />
       </div>
     </section>
   );

@@ -7,6 +7,8 @@ const API = axios.create({
   paramsSerializer: (params) => {
     return qs.stringify(params, { arrayFormat: 'bracket-separator', skipNull: true });
   },
+  timeout: 10000,
+  timeoutErrorMessage: 'Request timed out',
 });
 
 export default API;

@@ -38,7 +38,7 @@ const LandUseRiskLegend = (props: LandUseRiskLegendProps) => {
 
         {!landUseRisk.length && (
           <div className="space-y-2">
-            <p className="text-sm">Number of overlapping land use change risks</p>
+            <p className="text-xs">Number of overlapping land use change risks</p>
 
             <LegendTypeChoropleth
               items={landUseRisksData.map((c, i) => ({

@@ -52,7 +52,7 @@ const LandUseRiskChart = ({
         return {
           ...c,
           id: c.value,
-          value: convertPixelCountToHA(d1.value, 1000000),
+          value: d1.value,
           color: c.color,
         };
       })
@@ -94,6 +94,7 @@ const LandUseRiskChart = ({
       colorScale={colorScale}
       interactive
       selected={selected}
+      format={convertPixelCountToHA}
       onBarClick={onBarClick}
     />
   );
