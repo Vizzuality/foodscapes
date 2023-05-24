@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { filtersOpenAtom } from 'store/explore-map';
+import { filtersOpenAtom, filtersSelector } from 'store/explore-map';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -15,9 +15,18 @@ const Filters = () => {
   const open = useRecoilValue(filtersOpenAtom);
   const setOpen = useSetRecoilState(filtersOpenAtom);
 
+  const foodscapesFilters = useRecoilValue(filtersSelector('province'));
+
   const handleFiltersClick = useCallback(() => {
     setOpen(!open);
   }, [open, setOpen]);
+
+  const SELECTED_FOODSCAPES = useMemo(() => {
+    if (foodscapesFilters?.foodscapes.length > 1)
+      return `${foodscapesFilters?.foodscapes.length} foodscapes selected`;
+
+    return null;
+  }, [foodscapesFilters?.foodscapes.length]);
 
   return (
     <>
@@ -27,6 +36,8 @@ const Filters = () => {
         onClick={handleFiltersClick}
       >
         <p className="text-xs italic text-white">Filtering by:</p>
+
+        <p className="text-white">{SELECTED_FOODSCAPES}</p>
         <button
           type="button"
           className="cursor-pointer rounded-full bg-navy-400 p-2 text-xs font-bold uppercase"
@@ -34,6 +45,7 @@ const Filters = () => {
           Add filters
         </button>
       </motion.div>
+
       {open && (
         <div className="absolute z-20 h-full w-full max-w-[640px] space-y-8 bg-navy-500 px-20 pt-4 text-white">
           <div>

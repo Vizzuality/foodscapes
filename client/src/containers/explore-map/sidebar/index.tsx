@@ -112,7 +112,7 @@ const Sidebar = () => {
             </DialogTrigger>
           </motion.div>
 
-          <Filters />
+          {open && <Filters />}
         </>
       </DialogContent>
     </Dialog>
