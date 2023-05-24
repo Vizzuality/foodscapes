@@ -9,7 +9,7 @@ import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
-import { useStatisticsData } from 'hooks/data';
+import { useBand } from 'hooks/data';
 import { COLORS, useRestorations } from 'hooks/restorations';
 import { convertHexToRgbaArray } from 'hooks/utils';
 
@@ -44,7 +44,7 @@ export function useSource({
   const {
     //
     data: restorationStatisticsData,
-  } = useStatisticsData({ band, filters });
+  } = useBand({ band });
 
   const colormap = useMemo(() => {
     // https://cogeotiff.github.io/rio-tiler/colormap/#intervals-colormaps

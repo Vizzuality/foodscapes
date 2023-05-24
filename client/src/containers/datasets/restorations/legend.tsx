@@ -4,7 +4,7 @@ import CHROMA from 'chroma-js';
 
 import { Dataset } from 'types/datasets';
 
-import { useStatisticsData } from 'hooks/data';
+import { useBand } from 'hooks/data';
 import { COLORS, useRestorations } from 'hooks/restorations';
 
 import { LegendContent } from 'containers/legend';
@@ -22,7 +22,7 @@ export interface RestorationsLegendProps extends LegendItemProps<'restorations'>
 }
 
 const RestorationsLegend = (props: RestorationsLegendProps) => {
-  const { settings, filters, dataset, onChangeColumn } = props;
+  const { settings, dataset, onChangeColumn } = props;
 
   const { format } = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
@@ -45,12 +45,12 @@ const RestorationsLegend = (props: RestorationsLegendProps) => {
 
   const {
     //
-    data: restorationStatisticsData,
-    isPlaceholderData: restorationStatisticsIsPlaceholderData,
-    isFetching: restorationStatisticsIsFetching,
-    isFetched: restorationStatisticsIsFetched,
-    isError: restorationStatisticsIsError,
-  } = useStatisticsData({ band, filters });
+    data: restorationBandData,
+    isPlaceholderData: restorationBandIsPlaceholderData,
+    isFetching: restorationBandIsFetching,
+    isFetched: restorationBandIsFetched,
+    isError: restorationBandIsError,
+  } = useBand({ band });
 
   // DATA
   const legend = useLegend({ dataset, settings });
@@ -62,7 +62,7 @@ const RestorationsLegend = (props: RestorationsLegendProps) => {
         .scale(COLORS)
         .colors(20)
         .map((color: ColorHex, i: number) => {
-          const { max } = restorationStatisticsData || {};
+          const { max } = restorationBandData || {};
           const opacity = Math.min(Math.max(0.25, (i + 1) / 3), 1);
 
           return {
@@ -73,7 +73,7 @@ const RestorationsLegend = (props: RestorationsLegendProps) => {
           };
         })
     );
-  }, [restorationStatisticsData, format]);
+  }, [restorationBandData, format]);
 
   return (
     <LegendItem {...legend} {...props}>
@@ -102,10 +102,10 @@ const RestorationsLegend = (props: RestorationsLegendProps) => {
 
         <LegendContent
           skeletonClassName="h-7"
-          isPlaceholderData={restorationStatisticsIsPlaceholderData}
-          isFetching={restorationStatisticsIsFetching}
-          isFetched={restorationStatisticsIsFetched}
-          isError={restorationStatisticsIsError}
+          isPlaceholderData={restorationBandIsPlaceholderData}
+          isFetching={restorationBandIsFetching}
+          isFetched={restorationBandIsFetched}
+          isError={restorationBandIsError}
         >
           <LegendTypeGradient items={ITEMS} />
         </LegendContent>
