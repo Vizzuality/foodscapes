@@ -6,7 +6,9 @@ import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import CropsFilters from 'containers/explore-map/filters/crops';
+import CropsSelected from 'containers/explore-map/filters/crops/selected';
 import IntensitiesFilters from 'containers/explore-map/filters/foodscapes-intensities';
+import IntensitiesSelected from 'containers/explore-map/filters/foodscapes-intensities/selected';
 import FoodscapesSelected from 'containers/explore-map/filters/foodscapes/selected';
 import RisksFilters from 'containers/explore-map/filters/risks';
 
@@ -37,14 +39,18 @@ const Filters = () => {
       >
         <p className="text-xs italic text-white">Filtering by:</p>
 
-        <FoodscapesSelected />
+        <div className="flex flex-wrap space-x-2 space-y-2">
+          <FoodscapesSelected />
+          <IntensitiesSelected />
+          <CropsSelected />
 
-        <button
-          type="button"
-          className="cursor-pointer rounded-full bg-navy-400 p-2 text-xs font-bold uppercase"
-        >
-          Add filters
-        </button>
+          <button
+            type="button"
+            className="cursor-pointer rounded-full bg-navy-400 p-2 text-xs font-bold uppercase"
+          >
+            Add filters
+          </button>
+        </div>
       </motion.div>
 
       {open && (
