@@ -23,13 +23,6 @@ const fetch = async (params: DatasetteParamsProps) => {
     .whereNotIn('d.foodscapes', [1, 2, 3])
     .groupBy('d.foodscapes');
 
-  console.log(
-    datasetteAdapter({
-      sql: SQL,
-      shape: 'array',
-      ...params,
-    })
-  );
   return API.request<FoodscapeData[]>({
     method: 'GET',
     url: '/foodscapes.json',
@@ -52,41 +45,6 @@ const FoodscapesData = async (
       arrayFormat: 'bracket-separator',
       arrayFormatSeparator: ',',
     }).query as DatasetteParamsProps;
-
-    console.log({
-      url: req.url,
-      query: req.query,
-      'bracket-separator': qs.parseUrl(req.url, {
-        parseNumbers: true,
-        parseBooleans: true,
-        arrayFormat: 'bracket-separator',
-        arrayFormatSeparator: ',',
-      }).query,
-      bracket: qs.parseUrl(req.url, {
-        parseNumbers: true,
-        parseBooleans: true,
-        arrayFormat: 'bracket',
-        arrayFormatSeparator: ',',
-      }).query,
-      comma: qs.parseUrl(req.url, {
-        parseNumbers: true,
-        parseBooleans: true,
-        arrayFormat: 'comma',
-        arrayFormatSeparator: ',',
-      }).query,
-      index: qs.parseUrl(req.url, {
-        parseNumbers: true,
-        parseBooleans: true,
-        arrayFormat: 'index',
-        arrayFormatSeparator: ',',
-      }).query,
-      separator: qs.parseUrl(req.url, {
-        parseNumbers: true,
-        parseBooleans: true,
-        arrayFormat: 'separator',
-        arrayFormatSeparator: ',',
-      }).query,
-    });
 
     const result = await fetch(params);
     res.status(200).json(result);
