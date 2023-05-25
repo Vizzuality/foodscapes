@@ -197,7 +197,7 @@ const FoodscapesWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest foodscapes">
+              <WidgetTop label="Top largest foodscapes">
                 <ChartTop onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
@@ -227,7 +227,7 @@ const FoodscapesWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest foodscapes">
+              <WidgetTop label="Top largest foodscapes">
                 <ChartTop onBarClick={handleBarClick} />
               </WidgetTop>
             </div>

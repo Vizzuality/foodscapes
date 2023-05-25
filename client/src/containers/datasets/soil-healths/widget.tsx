@@ -58,7 +58,7 @@ const SoilHealthsWidget = () => {
             </div>
           </div>
 
-          {/* <WidgetTop label="See top foodscapes by soilHealths">
+          {/* <WidgetTop label="Top foodscapes by soilHealths">
             <TopChart />
           </WidgetTop> */}
         </div>

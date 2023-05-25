@@ -66,8 +66,8 @@ const THEME = {
   },
 
   sizes: {
-    base: 'px-1 py-3 text-sm',
-    s: 'px-1 py-1.5 text-sm',
+    base: 'px-0 py-3 text-sm',
+    s: 'px-0 py-1.5 text-sm',
     none: 'pr-10',
   },
 };
