@@ -69,3 +69,11 @@ CREATE TABLE provinces (
   [geometry] text,
   [bbox] text
 );
+
+CREATE TABLE case_studies (
+  [id] integer,
+  [slug] text,
+  [title] text,
+  [geometry] text,
+  [bbox] text
+)
