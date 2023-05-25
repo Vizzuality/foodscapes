@@ -23,7 +23,7 @@ done
 # exit with error if DATE or REVISION are not set
 if [ -z "$DATE" ] || [ -z "$REVISION" ]
 then
-  echo "Please specify both a date (YYYYMMDD) and revision number (XY)"
+  echo "Please specify both a date (-d YYYYMMDD) and revision number (-r XY)"
   exit 1
 fi
 
