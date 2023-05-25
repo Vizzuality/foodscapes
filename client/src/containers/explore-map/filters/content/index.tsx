@@ -23,7 +23,7 @@ const FiltersContent = ({
 }: FiltersContentProps) => {
   return (
     <div className="relative">
-      {isPlaceholderData && <Skeleton className="h-20 w-full bg-navy-400" />}
+      {isPlaceholderData && <Skeleton className="h-6 w-full bg-navy-400" />}
 
       {/* <Loading
         className="absolute z-10 flex h-full w-full items-center justify-center bg-white/50 py-2"

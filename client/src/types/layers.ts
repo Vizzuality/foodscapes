@@ -1,5 +1,6 @@
 import { Layer } from '@deck.gl/core/typed';
 
+import { AgroforestrySettings } from 'types/agroforestries';
 import { ClimateChangeSettings } from 'types/climate-risks';
 import { CropsSettings } from 'types/crops';
 import { FiltersProps } from 'types/data';
@@ -7,6 +8,8 @@ import { FoodscapesSettings } from 'types/foodscapes';
 import { FoodscapesIntentisitySettings } from 'types/foodscapes-intensities';
 import { LandUseChangeSettings } from 'types/land-use-risks';
 import { PollutionSettings } from 'types/pollution-risks';
+import { RestorationSettings } from 'types/restorations';
+import { SoilHealthSettings } from 'types/soil-healths';
 
 import { Settings } from 'components/map/legend/types';
 
@@ -25,6 +28,9 @@ export type LayerTypeSettings = {
   'land-use-risks': LandUseChangeSettings;
   'climate-risks': ClimateChangeSettings;
   'pollution-risks': PollutionSettings;
+  restorations: RestorationSettings;
+  agroforestries: AgroforestrySettings;
+  'soil-healths': SoilHealthSettings;
   locations: Settings;
 };
 

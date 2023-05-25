@@ -5,6 +5,7 @@ import { urlSyncEffect } from 'recoil-sync';
 import { FiltersOmitProps, FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings, LayerType } from 'types/layers';
+import { Bbox } from 'types/map';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -24,6 +25,21 @@ export const filtersOpenAtom = atom({
 });
 
 // Map
+export const bboxAtom = atom<Bbox>({
+  key: 'bbox',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
+export const tmpBboxAtom = atom<Bbox>({
+  key: 'tmp-bbox',
+  default: null,
+});
+
 export const basemapAtom = atom({
   key: 'basemap',
   default: 'light',
@@ -60,6 +76,9 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
     'climate-risks': { ...DEFAULT_SETTINGS },
     'pollution-risks': { ...DEFAULT_SETTINGS },
     locations: { ...DEFAULT_SETTINGS },
+    restorations: { ...DEFAULT_SETTINGS, column: 'grassland_areas_suitable_for_restoration_area' },
+    agroforestries: { ...DEFAULT_SETTINGS, column: 'cropland_areas_suitable_for_silvoarable_area' },
+    'soil-healths': { ...DEFAULT_SETTINGS, column: 'areas_suitable_for_cover_cropping_area' },
   } satisfies Record<LayerType, LayerSettings<LayerType>>,
 
   effects: [
@@ -70,6 +89,7 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
           visibility: bool(),
           expand: bool(),
           group: optional(bool()),
+          column: optional(string()),
         })
       ),
     }),

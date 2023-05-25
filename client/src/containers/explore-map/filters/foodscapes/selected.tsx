@@ -31,7 +31,8 @@ const FoodscapesSelected = () => {
 
   const SELECTED = useMemo(() => {
     if (foodscapes.length === 1) {
-      return OPTIONS.find((o) => o.value === foodscapes[0]);
+      const opt = OPTIONS.find((o) => o.value === foodscapes[0]);
+      return opt?.label;
     }
 
     if (foodscapes.length === OPTIONS.length) return 'All foodscapes';
@@ -40,7 +41,6 @@ const FoodscapesSelected = () => {
 
     return null;
   }, [OPTIONS, foodscapes]);
-  console.log({ SELECTED });
 
   const handleClearClick = () => {
     setFoodscapes([]);
@@ -50,7 +50,7 @@ const FoodscapesSelected = () => {
     <div
       className={cn({
         'flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
-        hidden: !SELECTED,
+        hidden: !foodscapes.length,
       })}
     >
       <p className="text-xs font-bold uppercase text-navy-500">{SELECTED}</p>

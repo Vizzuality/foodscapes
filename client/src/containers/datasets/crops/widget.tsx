@@ -217,6 +217,10 @@ const CropsWidget = () => {
                   interactive
                 />
               </div>
+
+              <WidgetTop label="See top largest crops">
+                <ChartTop onBarClick={handleBarClick} />
+              </WidgetTop>
             </div>
           </TabsContent>
         </Tabs>

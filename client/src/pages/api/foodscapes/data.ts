@@ -23,6 +23,13 @@ const fetch = async (params: DatasetteParamsProps) => {
     .whereNotIn('d.foodscapes', [1, 2, 3])
     .groupBy('d.foodscapes');
 
+  console.log(
+    datasetteAdapter({
+      sql: SQL,
+      shape: 'array',
+      ...params,
+    })
+  );
   return API.request<FoodscapeData[]>({
     method: 'GET',
     url: '/foodscapes.json',
@@ -44,6 +51,8 @@ const FoodscapesData = async (
       parseBooleans: true,
       arrayFormat: 'bracket-separator',
     }).query as DatasetteParamsProps;
+
+    console.log('params', params);
 
     const result = await fetch(params);
     res.status(200).json(result);

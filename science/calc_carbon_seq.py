@@ -24,15 +24,15 @@ def multiply_rasters(area_file: Path, carbon_coeff_file: Path, outfile: Path, no
         dest_kwargs.update(nodata=nodata)
         dest_src = cm.enter_context(rio.open(outfile, "w", **dest_kwargs))
 
-        area = area_src.read(1, masked=True).filled(nodata)
+        area = area_src.read(1, masked=True)
         # Use windows because the carbon rasters don't have the same shape as the area rasters.
         # (they should be having the same crs even the carbon coefficients are not tagged as 4326)
         # The zone outside the bounds of the carbon raster will be padded with 0s
         # thus working as if both rasters have the same shape
         window = rio.windows.from_bounds(*area_src.bounds, transform=carbon_src.transform)
-        carbon = carbon_src.read(1, window=window, boundless=True, fill_value=0, masked=True).filled(nodata)
+        carbon = carbon_src.read(1, window=window, boundless=True, fill_value=0, masked=True)
         res = carbon * area
-        dest_src.write(res, indexes=1)
+        dest_src.write(res.filled(nodata), indexes=1)
 
 
 @click.command(

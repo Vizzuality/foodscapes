@@ -46,7 +46,7 @@ const RisksPollutionTopChart = ({ onBarClick }: RisksPollutionTopChartProps) => 
     // Loop through the data and add the label
     return data.map((d) => {
       const { label } = foodscapesData.find((f) => f.value === d.id) || {};
-      return { ...d, label, value: convertPixelCountToHA(d.value, 1000000) };
+      return { ...d, label };
     });
   }, [data, foodscapesData]);
 
@@ -92,6 +92,7 @@ const RisksPollutionTopChart = ({ onBarClick }: RisksPollutionTopChartProps) => 
         xScale={xScale}
         colorScale={colorScale}
         interactive={false}
+        format={convertPixelCountToHA}
         onBarClick={handleBarClick}
       />
     </>

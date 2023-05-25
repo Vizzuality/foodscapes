@@ -4,9 +4,9 @@ import click
 import numpy as np
 import pandas as pd
 import rasterio as rio
-from rasterio import MemoryFile
-from rasterio import shutil as rio_shutil
+from rasterio import shutil as rio_shutil, MemoryFile
 from rich import print, status
+from rio_cogeo import cog_translate, cog_profiles
 
 
 @click.command(help="Create a multiband COG or tif from multiple tif files")
@@ -15,38 +15,77 @@ from rich import print, status
 @click.option(
     "--nodata", type=int, help="set no data value. This will also replace the old no data values with the new one."
 )
-@click.option("--cog", is_flag=True, help="Make output a cog")
+@click.option("--use-cog-driver", is_flag=True, help="Make output a cog using the gdal driver")
 @click.option(
     "--description-file",
     "description_file",
     type=click.Path(exists=True, path_type=Path),
     help="Use the band description csv to set the band metadata and order",
 )
-def main(files: tuple[Path], output: Path, nodata: int | None, cog: bool, description_file: Path | None):
+@click.option("--co", "creation_options", type=str, multiple=True, help="GDAL creation options like 'COMPRESS=DEFLATE'")
+def main(
+    files: tuple[Path],
+    output: Path,
+    nodata: int | None,
+    use_cog_driver: bool,
+    description_file: Path | None,
+    creation_options: list,
+):
+    creation_options = dict(param.split("=") for param in creation_options)
     description_table, files = filter_and_order_band_list(description_file, files)
-    print_execution_description(cog, files, nodata, output)
+    print_execution_description(use_cog_driver, files, nodata, output)
     stacked_raster, dest_kwargs = stack_bands(files, nodata, description_table)
-    with stacked_raster.open() as src:
-        if cog:
-            indicator = status.Status("Converting to COG...", spinner="earth", refresh_per_second=5)
-            indicator.start()
-            dest_kwargs.update(
-                {
-                    "driver": "COG",
-                    "TILING_SCHEME": "GoogleMapsCompatible",
-                    "ZOOM_LEVEL_STRATEGY": "upper",
-                    "overview_resampling": "nearest",
-                    "warp_resampling": "nearest",
-                    "blocksize": 512,
-                }
-            )
+    dest_kwargs.update(
+        {
+            "ZOOM_LEVEL_STRATEGY": "upper",
+            "overview_resampling": "nearest",
+            "warp_resampling": "nearest",
+            "blocksize": 512,
+        }
+    )
+    if use_cog_driver:
+        indicator = status.Status("Converting to COG using gdal driver...", spinner="earth", refresh_per_second=5)
+        indicator.start()
+        dest_kwargs.update(creation_options)
+        dest_kwargs.update({"driver": "COG", "TILING_SCHEME": "GoogleMapsCompatible"})
+        with stacked_raster.open() as src:
             rio_shutil.copy(src, output, **dest_kwargs)
             indicator.stop()
             print("Done")
-
-        else:
-            print(f"Writing file {output} ...")
-            rio_shutil.copy(src, output, **dest_kwargs)
+    else:
+        indicator = status.Status("Converting to custom COG with rio cogeo...", spinner="earth", refresh_per_second=5)
+        indicator.start()
+        # Forcing interleaving to BAND makes the resuling multiband COG much faster to read and
+        # operate by rio-tiler. It is what we want because we will always read single bands from the
+        # multiband COG.
+        dest_kwargs.update({"interleave": "BAND"})
+        with stacked_raster.open() as src:
+            output_profile = cog_profiles.get("raw")
+            output_profile.update(
+                {k: v for k, v in dest_kwargs.items() if k in ["blockxsize", "blockysize", "compress", "interleave"]},
+            )
+            output_profile.update(creation_options)
+            gdal_config = dict(
+                GDAL_NUM_THREADS=4,
+                GDAL_TIFF_INTERNAL_MASK=True,  # dunno if these are needed but they are in the rio cogeo docs
+                GDAL_TIFF_OVR_BLOCKSIZE=str(512),
+            )
+            cog_translate(
+                src,
+                output,
+                output_profile,
+                nodata=dest_kwargs.pop("nodata"),
+                dtype=dest_kwargs.pop("dtype"),
+                web_optimized=True,
+                zoom_level=5,  # todo: make this a parameter or calculate it
+                in_memory=False,
+                forward_band_tags=True,
+                forward_ns_tags=True,
+                quiet=True,
+                config=gdal_config,
+            )
+            indicator.stop()
+            print("Done")
 
 
 def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame | None) -> tuple[MemoryFile, dict]:
@@ -58,7 +97,7 @@ def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame 
     dest_kwargs.update(
         {
             "driver": "GTiff",
-            "interleave": "pixel",
+            "interleave": "BAND",
             "tiled": True,
             "blockxsize": 512,
             "blockysize": 512,
@@ -68,33 +107,37 @@ def stack_bands(files: list[Path], nodata: int, description_table: pd.DataFrame 
             "dtype": "float32",
         }
     )
-    mem_file = MemoryFile()
-    with mem_file.open(**dest_kwargs) as dest:
-        indicator = status.Status("Collecting bands and writing nodata", spinner="moon")
+    temp_file = MemoryFile()
+    with temp_file.open(**dest_kwargs) as dest:
+        indicator = status.Status("Collecting bands and writing nodata: ", spinner="moon")
         indicator.start()
         for i, file in enumerate(files):
+            indicator.update(f"Collecting bands and writing nodata: {file.name}", spinner="moon")
             band_idx = i + 1
             with rio.open(file) as src:
                 if src.crs != first_crs:
                     raise ValueError(
                         f"file {file} has a different CRS " f" from {files[0]} with {src.crs} and {first_crs}"
                     )
-                band_data = src.read(1)
+                band_data = src.read(1, masked=True)
                 if (nodata is not None) & (src.nodata != nodata):
-                    band_data = np.where(band_data == src.nodata, nodata, band_data)
+                    band_data.fill_value = nodata
 
                 if description_table is not None:
                     row: pd.DataFrame
                     row = description_table.loc[description_table["file_name"] == Path(file).name]
-                    dest.update_tags(bidx=band_idx, **row.iloc[0].to_dict())
+                    tags = row.iloc[0].to_dict()
+                    tags.update({"min": band_data.min(), "max": band_data.max()})
+                    dest.update_tags(bidx=band_idx, **tags)
+                    dest.set_band_description(band_idx, row["widget_column"].squeeze())
                 else:
                     # just set band name as filename
                     # todo: will we use this script without csv file ever again? -> delete if/else branch
                     dest.set_band_description(band_idx, Path(file).stem)
 
-                dest.write(band_data, band_idx)
+                dest.write(band_data.filled(), band_idx)
         indicator.stop()
-    return mem_file, dest_kwargs
+    return temp_file, dest_kwargs
 
 
 def filter_and_order_band_list(description_file: Path | None, files: tuple[Path]) -> tuple[pd.DataFrame | None, [Path]]:

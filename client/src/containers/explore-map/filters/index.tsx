@@ -32,7 +32,7 @@ const Filters = () => {
     <>
       <motion.div
         whileHover={{ scaleY: 1.1 }}
-        className="fixed bottom-0 left-0 z-10 flex w-full max-w-[640px] items-center space-x-4 overflow-hidden bg-navy-500 py-2 px-10"
+        className="absolute bottom-0 left-0 z-10 flex w-full max-w-[640px] items-center space-x-4 overflow-hidden bg-navy-500 py-2 px-10"
         onClick={handleFiltersClick}
       >
         <p className="text-xs italic text-white">Filtering by:</p>
@@ -48,7 +48,7 @@ const Filters = () => {
       </motion.div>
 
       {open && (
-        <div className="fixed top-0 left-0 h-full w-full max-w-[640px] space-y-8 bg-navy-500 px-20 pt-4 text-white">
+        <div className="absolute top-0 left-0 z-20 h-full w-full max-w-[640px] space-y-8 bg-navy-500 px-20 pt-4 text-white">
           <div>
             <p className="text-xs italic text-white">Filtering by:</p>
 

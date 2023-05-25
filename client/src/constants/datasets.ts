@@ -129,40 +129,60 @@ export const DATASETS = [
     },
   },
   // OPPORTUNITIES
-  // {
-  //   id: 'restoration',
-  //   label: 'Restoration',
-  //   group: 'opportunities',
-  //   layer: {
-  //     enabled: false,
-  //     visible: true,
-  //   },
-  //   widget: {
-  //     enabled: false,
-  //     toolbar: {
-  //       download: true,
-  //       info: true,
-  //       layer: true,
-  //     },
-  //   },
-  // },
-  // {
-  //   id: 'agroforestry',
-  //   label: 'Agroforestry',
-  //   group: 'opportunities',
-  //   layer: {
-  //     enabled: false,
-  //     visible: true,
-  //   },
-  //   widget: {
-  //     enabled: false,
-  //     toolbar: {
-  //       download: true,
-  //       info: true,
-  //       layer: true,
-  //     },
-  //   },
-  // },
+  {
+    id: 'restorations',
+    label: 'Restoration',
+    group: 'opportunities',
+    layer: {
+      enabled: true,
+      visible: true,
+      bands: [14, 17],
+    },
+    widget: {
+      enabled: true,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
+    },
+  },
+  {
+    id: 'agroforestries',
+    label: 'Agroforestry',
+    group: 'opportunities',
+    layer: {
+      enabled: true,
+      visible: true,
+      bands: [20, 23, 26],
+    },
+    widget: {
+      enabled: true,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
+    },
+  },
+  {
+    id: 'soil-healths',
+    label: 'Soil Health Management',
+    group: 'opportunities',
+    layer: {
+      enabled: true,
+      visible: true,
+      bands: [29, 32],
+    },
+    widget: {
+      enabled: true,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
+    },
+  },
   // {
   //   id: 'soil-health-management-cover-crops-area',
   //   label: 'Soil Health Management (cover crops area)',

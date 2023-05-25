@@ -73,6 +73,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
         {({ open }) => (
           <>
             <Float
+              key={open ? 'open' : 'closed'}
               adaptiveWidth
               placement="bottom-start"
               portal

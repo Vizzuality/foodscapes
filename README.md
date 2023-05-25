@@ -39,7 +39,7 @@ by other services in your local development environment).
 
 From the root of the repository:
 
-`docker-compose up`
+`docker compose up`
 
 Once all the container images are (re)built and the services start successfully,
 the components of the platform should be available on the ports configured in

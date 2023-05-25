@@ -1,3 +1,8 @@
+// Agroforestries
+import AgroforestriesInfo from './agroforestries/info.mdx';
+import AgroforestriesLayer from './agroforestries/layer';
+import AgroforestriesLegend from './agroforestries/legend';
+import AgroforestriesPopup from './agroforestries/popup';
 // Climate risk
 import ClimateRiskInfo from './climate-risks/info.mdx';
 import ClimateRiskLayer from './climate-risks/layer';
@@ -28,6 +33,16 @@ import PollutionRiskInfo from './pollution-risks/info.mdx';
 import PollutionRiskLayer from './pollution-risks/layer';
 import PollutionRiskLegend from './pollution-risks/legend';
 import PollutionRiskPopup from './pollution-risks/popup';
+// Restorations
+import RestorationsInfo from './restorations/info.mdx';
+import RestorationsLayer from './restorations/layer';
+import RestorationsLegend from './restorations/legend';
+import RestorationsPopup from './restorations/popup';
+// Soil health
+import SoilHealthsInfo from './soil-healths/info.mdx';
+import SoilHealthsLayer from './soil-healths/layer';
+import SoilHealthsLegend from './soil-healths/legend';
+import SoilHealthsPopup from './soil-healths/popup';
 
 export const LAYERS = {
   foodscapes: FoodscapesLayer,
@@ -36,6 +51,9 @@ export const LAYERS = {
   'climate-risks': ClimateRiskLayer,
   'land-use-risks': LandUseLayer,
   'pollution-risks': PollutionRiskLayer,
+  restorations: RestorationsLayer,
+  agroforestries: AgroforestriesLayer,
+  'soil-healths': SoilHealthsLayer,
 };
 
 export const LEGENDS = {
@@ -45,6 +63,9 @@ export const LEGENDS = {
   'climate-risks': ClimateRiskLegend,
   'land-use-risks': LandUseLegend,
   'pollution-risks': PollutionRiskLegend,
+  restorations: RestorationsLegend,
+  agroforestries: AgroforestriesLegend,
+  'soil-healths': SoilHealthsLegend,
 };
 
 export const POPUPS = {
@@ -54,6 +75,9 @@ export const POPUPS = {
   'climate-risks': ClimateRiskPopup,
   'land-use-risks': LandUsePopup,
   'pollution-risks': PollutionRiskPopup,
+  restorations: RestorationsPopup,
+  agroforestries: AgroforestriesPopup,
+  'soil-healths': SoilHealthsPopup,
 };
 
 export const INFO = {
@@ -63,4 +87,7 @@ export const INFO = {
   'climate-risks': ClimateRiskInfo,
   'land-use-risks': LandUseInfo,
   'pollution-risks': PollutionRiskInfo,
+  restorations: RestorationsInfo,
+  agroforestries: AgroforestriesInfo,
+  'soil-healths': SoilHealthsInfo,
 };

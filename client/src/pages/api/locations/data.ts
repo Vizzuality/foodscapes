@@ -28,6 +28,7 @@ const fetch = async (filters: FiltersProps) => {
     params: datasetteAdapter({
       sql: SQL,
       shape: 'array',
+      size: 'max',
       ...filters,
     }),
   }).then((response) => response.data);

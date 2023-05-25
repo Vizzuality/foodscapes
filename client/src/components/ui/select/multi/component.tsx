@@ -104,6 +104,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
         {({ open }) => (
           <>
             <Float
+              key={open ? 'open' : 'closed'}
               adaptiveWidth
               placement="bottom-start"
               portal

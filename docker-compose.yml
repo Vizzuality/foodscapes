@@ -19,7 +19,7 @@ services:
     build:
       context: ./tiler
       args:
-        - TILER_FOODSCAPES_COG_FILENAME=${TILER_FOODSCAPES_COG_FILENAME:-foodscapes_stack_cog_lzw.tif}
+        - TILER_FOODSCAPES_COG_FILENAME=${TILER_FOODSCAPES_COG_FILENAME}
         - DATA_CORE_COG_SOURCE_URL=${DATA_CORE_COG_SOURCE_URL}
         - DATA_CORE_COG_CHECKSUM=${DATA_CORE_COG_CHECKSUM}
     env_file: .env
