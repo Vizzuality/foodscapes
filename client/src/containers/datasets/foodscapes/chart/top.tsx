@@ -24,9 +24,7 @@ const FoodscapesTopChart = ({ onBarClick }: FoodscapesTopChartProps) => {
 
   // DATA
   const fQuery = useFoodscapes();
-  const dQuery = useData<FoodscapeData>('foodscapes', {
-    ...filters,
-  });
+  const dQuery = useData<FoodscapeData>('foodscapes', filters);
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: foodscapesData } = fQuery;
