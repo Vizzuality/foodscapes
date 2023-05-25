@@ -20,9 +20,9 @@ const FoodscapesSelected = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data } = useData<FoodscapeData>('foodscapes', filters);
-
   const { data: foodscapesData } = useFoodscapes();
+
+  const { data } = useData<FoodscapeData>('foodscapes', filters);
 
   const OPTIONS = useMemo(() => {
     if (!data || !foodscapesData) return [];

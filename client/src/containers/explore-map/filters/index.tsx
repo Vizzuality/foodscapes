@@ -5,19 +5,24 @@ import { filtersOpenAtom } from 'store/explore-map';
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import ClimateRisksFilters from 'containers/explore-map/filters/climate-risks';
+import ClimateRisksSelected from 'containers/explore-map/filters/climate-risks/selected';
 import CropsFilters from 'containers/explore-map/filters/crops';
 import CropsSelected from 'containers/explore-map/filters/crops/selected';
 import IntensitiesFilters from 'containers/explore-map/filters/foodscapes-intensities';
 import IntensitiesSelected from 'containers/explore-map/filters/foodscapes-intensities/selected';
 import FoodscapesSelected from 'containers/explore-map/filters/foodscapes/selected';
-import RisksFilters from 'containers/explore-map/filters/risks';
+import LandUseFilters from 'containers/explore-map/filters/land-use-risks';
+import LandUseSelected from 'containers/explore-map/filters/land-use-risks/selected';
+import PollutionRisksFilters from 'containers/explore-map/filters/pollution-risks';
+import PollutionRisksSelected from 'containers/explore-map/filters/pollution-risks/selected';
 
 import Icon from 'components/icon';
 
 import FOODSCAPES_SVG from 'svgs/tabs/tab-foodscapes.svg?sprite';
 // import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
 // import OPPORTUNITIES_SVG from 'svgs/tabs/tab-opportunities.svg?sprite';
-// import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
+import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import FoodscapesFilters from './foodscapes';
@@ -40,9 +45,15 @@ const Filters = () => {
         <p className="text-xs italic text-white">Filtering by:</p>
 
         <div className="flex flex-wrap space-x-2 space-y-2">
+          {/* Foodscapes */}
           <FoodscapesSelected />
           <IntensitiesSelected />
           <CropsSelected />
+
+          {/* Risks */}
+          <LandUseSelected />
+          <ClimateRisksSelected />
+          <PollutionRisksSelected />
 
           <button
             type="button"
@@ -81,7 +92,16 @@ const Filters = () => {
           </div>
 
           <div>
-            <RisksFilters />
+            <div className="flex items-center justify-center space-x-2">
+              <Icon icon={RISKS_SVG} className="h-6 w-6 text-white" />
+              <h3 className="font-display text-2xl">Risks</h3>
+            </div>
+
+            <div className="space-y-4">
+              <LandUseFilters />
+              <ClimateRisksFilters />
+              <PollutionRisksFilters />
+            </div>
           </div>
         </div>
       )}
