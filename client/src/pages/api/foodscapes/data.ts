@@ -50,9 +50,10 @@ const FoodscapesData = async (
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',
+      arrayFormatSeparator: ',',
     }).query as DatasetteParamsProps;
 
-    console.log('params', params);
+    console.log({ params, query: req.query });
 
     const result = await fetch(params);
     res.status(200).json(result);
