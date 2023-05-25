@@ -10,6 +10,17 @@ export function useIsLoading(queries: DefinedUseQueryResult[]) {
   };
 }
 
+export function formatPercentage(value: number, options?: Intl.NumberFormatOptions) {
+  const v = Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    style: 'percent',
+    ...options,
+  });
+
+  return v.format(value);
+}
+
 export function formatHA(value: number, options?: Intl.NumberFormatOptions) {
   const v = Intl.NumberFormat('en-US', {
     notation: 'compact',
