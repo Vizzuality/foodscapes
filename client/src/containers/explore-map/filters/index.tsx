@@ -5,6 +5,7 @@ import { filtersOpenAtom } from 'store/explore-map';
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import AreasOfInterestFilters from 'containers/explore-map/filters/areas-of-interest';
 import ClimateRisksFilters from 'containers/explore-map/filters/climate-risks';
 import ClimateRisksSelected from 'containers/explore-map/filters/climate-risks/selected';
 import CropsFilters from 'containers/explore-map/filters/crops';
@@ -20,8 +21,7 @@ import PollutionRisksSelected from 'containers/explore-map/filters/pollution-ris
 import Icon from 'components/icon';
 
 import FOODSCAPES_SVG from 'svgs/tabs/tab-foodscapes.svg?sprite';
-// import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
-// import OPPORTUNITIES_SVG from 'svgs/tabs/tab-opportunities.svg?sprite';
+import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
 import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
@@ -102,6 +102,15 @@ const Filters = () => {
               <ClimateRisksFilters />
               <PollutionRisksFilters />
             </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-center space-x-2">
+              <Icon icon={LOCATIONS_SVG} className="h-6 w-6 text-white" />
+              <h3 className="font-display text-2xl">Locations</h3>
+            </div>
+
+            <AreasOfInterestFilters />
           </div>
         </div>
       )}
