@@ -9,7 +9,7 @@ import { CropData } from 'types/data';
 
 import { useCrops } from 'hooks/crops';
 import { useData } from 'hooks/data';
-import { convertPixelCountToHA, useIsLoading } from 'hooks/utils';
+import { convertPixelCountToHA, formatPercentage, useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
@@ -40,12 +40,19 @@ const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
     return data.map((d) => d.id);
   }, [data]);
 
+  const TOTAL = useMemo(() => {
+    return data.reduce((acc, d) => acc + d.value, 0);
+  }, [data]);
+
   const DATA = useMemo(() => {
     // Loop through the data and add the label
-    return data.map((d) => {
-      const { label } = cropsData.find((f) => f.value === d.id) || {};
-      return { ...d, label };
-    });
+    return data
+      .map((d) => {
+        const { label } = cropsData.find((f) => f.value === d.id) || {};
+        return { ...d, label };
+      })
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
   }, [data, cropsData]);
 
   const MAX = Math.max(...DATA.map((d) => d.value));
@@ -54,7 +61,7 @@ const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
@@ -90,7 +97,7 @@ const CropsTopChart = ({ onBarClick }: CropsTopChartProps) => {
         xScale={xScale}
         interactive={false}
         colorScale={colorScale}
-        format={convertPixelCountToHA}
+        format={(d) => `${convertPixelCountToHA(d)} | ${formatPercentage(d / TOTAL)}`}
         onBarClick={handleBarClick}
       />
     </>
