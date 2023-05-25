@@ -46,7 +46,7 @@ const FoodscapesData = async (
   res: NextApiResponse<FoodscapeData[] | { error: string }>
 ) => {
   try {
-    const params = qs.parseUrl(req.url, {
+    const params = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',
