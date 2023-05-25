@@ -76,4 +76,27 @@ UPDATE provinces
 ALTER TABLE provinces
   DROP COLUMN geometry_wkt;
 
+ALTER TABLE case_studies
+  RENAME COLUMN "geometry" to "geometry_wkt";
+
+ALTER TABLE case_studies
+  ADD COLUMN bbox_geojson text;
+
+ALTER TABLE case_studies
+  ADD COLUMN geometry_geojson text;
+
+SELECT AddGeometryColumn('case_studies', 'geometry', 4326, 'MULTIPOLYGON', 'XY');
+
+UPDATE case_studies
+  SET
+    geometry = GeomFromText(geometry_wkt, 4326);
+
+UPDATE case_studies
+  SET
+    bbox_geojson = AsGeoJSON(Envelope(geometry));
+
+UPDATE case_studies
+  SET
+    geometry_geojson = AsGeoJSON(geometry);
+
 VACUUM;
