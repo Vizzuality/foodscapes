@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import AgroforestriesWidget from 'containers/datasets/agroforestries/widget';
 import RestorationsWidget from 'containers/datasets/restorations/widget';
+import SoilHealthsWidget from 'containers/datasets/soil-healths/widget';
 
 const OpportunitiesSidebar = forwardRef(() => {
   return (
@@ -33,6 +34,9 @@ const OpportunitiesSidebar = forwardRef(() => {
           </div>
           <div className="border-t border-navy-500/30">
             <AgroforestriesWidget />
+          </div>
+          <div className="border-t border-navy-500/30">
+            <SoilHealthsWidget />
           </div>
         </div>
       </div>

@@ -48,6 +48,11 @@ export interface AgroforestriesData {
   value: number;
 }
 
+export interface SoilHealthsData {
+  id: 'areas_suitable_for_cover_cropping_area' | 'areas_suitable_for_minimum_tillage_area';
+  value: number;
+}
+
 export interface CountriesData {
   id: number;
 }

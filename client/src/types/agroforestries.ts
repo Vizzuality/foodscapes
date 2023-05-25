@@ -8,7 +8,7 @@ export interface Agroforestry {
     | 'cropland_areas_suitable_for_silvoarable_area'
     | 'forest_ecoregions_suitable_for_silvopastoral_area'
     | 'tropical_grassland_ecoregions_suitable_for_silvopastoral_area';
-  value: 6 | 7 | 8 | 9 | 10;
+  value: 20 | 23 | 26;
 }
 
 export type AgroforestrySettings = {

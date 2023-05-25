@@ -154,7 +154,7 @@ export const DATASETS = [
     layer: {
       enabled: true,
       visible: true,
-      bands: [14, 17],
+      bands: [20, 23, 26],
     },
     widget: {
       enabled: true,
@@ -165,23 +165,24 @@ export const DATASETS = [
       },
     },
   },
-  // {
-  //   id: 'agroforestry',
-  //   label: 'Agroforestry',
-  //   group: 'opportunities',
-  //   layer: {
-  //     enabled: false,
-  //     visible: true,
-  //   },
-  //   widget: {
-  //     enabled: false,
-  //     toolbar: {
-  //       download: true,
-  //       info: true,
-  //       layer: true,
-  //     },
-  //   },
-  // },
+  {
+    id: 'soil-healths',
+    label: 'Soil Health Management',
+    group: 'opportunities',
+    layer: {
+      enabled: true,
+      visible: true,
+      bands: [29, 32],
+    },
+    widget: {
+      enabled: true,
+      toolbar: {
+        download: true,
+        info: true,
+        layer: true,
+      },
+    },
+  },
   // {
   //   id: 'soil-health-management-cover-crops-area',
   //   label: 'Soil Health Management (cover crops area)',
