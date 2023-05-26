@@ -45,6 +45,7 @@ const CropsWidget = () => {
     isFetched: cropsIsFetched,
     isError: cropsIsError,
   } = useCrops();
+
   const {
     data: cropsGroupData,
     isPlaceholderData: cropsGroupIsPlaceholderData,
@@ -52,6 +53,7 @@ const CropsWidget = () => {
     isFetched: cropsGroupIsFetched,
     isError: cropsGroupIsError,
   } = useCropsGroups();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>(
     'crops',
     filters

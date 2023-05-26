@@ -1,6 +1,16 @@
 import { useCallback } from 'react';
 
-import { filtersOpenAtom } from 'store/explore-map';
+import {
+  climateRiskAtom,
+  countryAtom,
+  cropsAtom,
+  filtersOpenAtom,
+  foodscapesAtom,
+  intensitiesAtom,
+  landUseRiskAtom,
+  pollutionRiskAtom,
+  provinceAtom,
+} from 'store/explore-map';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -31,9 +41,44 @@ const Filters = () => {
   const open = useRecoilValue(filtersOpenAtom);
   const setOpen = useSetRecoilState(filtersOpenAtom);
 
+  const setFoodscapes = useSetRecoilState(foodscapesAtom);
+  const setIntensities = useSetRecoilState(intensitiesAtom);
+  const setCrops = useSetRecoilState(cropsAtom);
+
+  const setClimateChange = useSetRecoilState(climateRiskAtom);
+  const setLandUseRisk = useSetRecoilState(landUseRiskAtom);
+  const setPollution = useSetRecoilState(pollutionRiskAtom);
+
+  const setCountry = useSetRecoilState(countryAtom);
+  const setProvince = useSetRecoilState(provinceAtom);
+
   const handleFiltersClick = useCallback(() => {
     setOpen(!open);
   }, [open, setOpen]);
+
+  const handleClearClick = useCallback(() => {
+    setFoodscapes([]);
+    setIntensities([]);
+    setCrops([]);
+    setClimateChange([]);
+    setLandUseRisk([]);
+    setPollution([]);
+    setCountry(null);
+    setProvince(null);
+
+    setOpen(!open);
+  }, [
+    setFoodscapes,
+    setIntensities,
+    setCrops,
+    setClimateChange,
+    setLandUseRisk,
+    setPollution,
+    setCountry,
+    setProvince,
+    setOpen,
+    open,
+  ]);
 
   return (
     <>
@@ -65,7 +110,7 @@ const Filters = () => {
       </motion.div>
 
       {open && (
-        <div className="absolute top-0 left-0 z-20 h-full w-full max-w-[640px] space-y-8 bg-navy-500 px-20 pt-4 text-white">
+        <div className="absolute top-0 left-0 z-20 h-full w-full max-w-[640px] space-y-8 overflow-auto bg-navy-500 px-20 py-4 text-white">
           <div>
             <p className="text-xs italic text-white">Filtering by:</p>
 
@@ -111,6 +156,16 @@ const Filters = () => {
             </div>
 
             <AreasOfInterestFilters />
+          </div>
+
+          <div className="flex justify-end space-x-4 text-xs">
+            <button type="button" className="italic underline" onClick={handleClearClick}>
+              Clear all filters
+            </button>
+
+            <button type="button" className="h-6 w-12 bg-navy-400" onClick={handleFiltersClick}>
+              Done
+            </button>
           </div>
         </div>
       )}
