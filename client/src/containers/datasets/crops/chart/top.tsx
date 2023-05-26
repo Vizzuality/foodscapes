@@ -27,12 +27,7 @@ const CropsTopChart = ({ settings, onBarClick }: CropsTopChartProps) => {
 
   // DATA
   const fQuery = useCrops();
-  const dQuery = useData<CropData>('crops', {
-    ...filters,
-    sortBy: 'value',
-    sortDirection: 'desc',
-    limit: 5,
-  });
+  const dQuery = useData<CropData>('crops', filters);
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: cropsData } = fQuery;
