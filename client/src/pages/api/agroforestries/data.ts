@@ -65,7 +65,7 @@ const fetch = async (filters: FiltersProps) => {
 
 const AgroforestriesData = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const filters = qs.parseUrl(req.url, {
+    const filters = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',

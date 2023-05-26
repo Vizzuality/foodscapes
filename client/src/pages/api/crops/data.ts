@@ -39,7 +39,7 @@ const CropsData = async (
   res: NextApiResponse<CropData[] | { error: string }>
 ) => {
   try {
-    const filters = qs.parseUrl(req.url, {
+    const filters = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',
