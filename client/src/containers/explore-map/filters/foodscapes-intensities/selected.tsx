@@ -51,7 +51,7 @@ const IntensitiesSelected = () => {
   return (
     <div
       className={cn({
-        'flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
+        'flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2 mb-3 mr-3': true,
         hidden: !intensities.length,
       })}
     >

@@ -89,7 +89,7 @@ const Filters = () => {
       >
         <p className="text-xs italic text-white">Filtering by:</p>
 
-        <div className="flex flex-wrap space-x-2 space-y-2">
+        <div className="flex flex-wrap">
           {/* Foodscapes */}
           <FoodscapesSelected />
           <IntensitiesSelected />

@@ -49,7 +49,7 @@ const AreasOfInterestSelected = () => {
   return (
     <div
       className={cn({
-        'flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
+        'mb-3 mr-3 flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
         hidden: !foodscapes.length,
       })}
     >
