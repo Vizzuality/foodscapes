@@ -20,9 +20,11 @@ import ClimateRisksFilters from 'containers/explore-map/filters/climate-risks';
 import ClimateRisksSelected from 'containers/explore-map/filters/climate-risks/selected';
 import CropsFilters from 'containers/explore-map/filters/crops';
 import CropsSelected from 'containers/explore-map/filters/crops/selected';
+import CropsGroupsSelected from 'containers/explore-map/filters/crops/selected-group';
 import IntensitiesFilters from 'containers/explore-map/filters/foodscapes-intensities';
 import IntensitiesSelected from 'containers/explore-map/filters/foodscapes-intensities/selected';
 import FoodscapesSelected from 'containers/explore-map/filters/foodscapes/selected';
+import FoodscapesGroupsSelected from 'containers/explore-map/filters/foodscapes/selected-group';
 import LandUseFilters from 'containers/explore-map/filters/land-use-risks';
 import LandUseSelected from 'containers/explore-map/filters/land-use-risks/selected';
 import PollutionRisksFilters from 'containers/explore-map/filters/pollution-risks';
@@ -84,16 +86,18 @@ const Filters = () => {
     <>
       <motion.div
         whileHover={{ scaleY: 1.1 }}
-        className="absolute bottom-0 left-0 z-10 flex w-full max-w-[640px] items-center space-x-4 overflow-hidden bg-navy-500 py-2 px-10"
+        className="absolute bottom-0 left-0 z-10 flex w-full max-w-[640px] items-center justify-between space-x-6 overflow-hidden bg-navy-500 py-4 px-10"
         onClick={handleFiltersClick}
       >
         <p className="text-xs italic text-white">Filtering by:</p>
 
-        <div className="flex flex-wrap">
+        <div className="flex flex-1 flex-wrap items-center">
           {/* Foodscapes */}
           <FoodscapesSelected />
+          <FoodscapesGroupsSelected />
           <IntensitiesSelected />
           <CropsSelected />
+          <CropsGroupsSelected />
 
           {/* Risks */}
           <LandUseSelected />
@@ -102,7 +106,7 @@ const Filters = () => {
 
           <button
             type="button"
-            className="cursor-pointer rounded-full bg-navy-400 p-2 text-xs font-bold uppercase"
+            className="mb-3 mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase"
           >
             Add filters
           </button>
