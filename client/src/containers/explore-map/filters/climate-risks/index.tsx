@@ -57,6 +57,7 @@ const ClimateRisksFilters = () => {
           size="s"
           theme="dark"
           placeholder="Select..."
+          loading={isFetching || climateIsFetching}
           options={OPTIONS}
           value={climateChange[0] ?? null}
           onChange={(value) => {

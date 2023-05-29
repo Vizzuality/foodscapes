@@ -42,7 +42,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   }, [options]);
 
   const SELECTED = useMemo(() => {
-    if (loading) return 'Loading...';
+    // if (loading) return 'Loading...';
 
     if (!selected.length) return placeholder || 'Select items';
 
@@ -60,7 +60,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     if (selected.length > 1) return `Selected items (${selected.length})`;
 
     return null;
-  }, [loading, options, placeholder, selected, OPTIONS_ENABLED]);
+  }, [options, placeholder, selected, OPTIONS_ENABLED]);
 
   useEffect(() => {
     if (values) {
@@ -152,28 +152,26 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}
-                    iconClassName="w-3 h-3"
+                    iconClassName="w-3 h-3 shrink-0"
                   />
 
-                  {!!selected.length && !loading && clearSelectionActive && (
+                  {!!selected.length && clearSelectionActive && (
                     <button type="button" className="pointer-events-auto" onClick={handleClearAll}>
                       <Icon
                         icon={CLOSE_SVG}
                         className={cx({
-                          'h-3.5 w-3.5': true,
+                          'h-3.5 w-3.5 shrink-0': true,
                         })}
                       />
                     </button>
                   )}
 
-                  {!loading && (
-                    <Icon
-                      icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                      className={cx({
-                        'h-3 w-3': true,
-                      })}
-                    />
-                  )}
+                  <Icon
+                    icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
+                    className={cx({
+                      'h-3 w-3 shrink-0': true,
+                    })}
+                  />
                 </span>
               </Listbox.Button>
 

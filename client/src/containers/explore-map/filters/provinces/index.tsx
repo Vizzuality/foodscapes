@@ -32,11 +32,11 @@ const ProvincesFilters = () => {
   } = useProvinces(country);
 
   const {
-    data: pData,
-    isPlaceholderData: pIsPlaceholderData,
-    isFetching: pIsFetching,
-    isFetched: pIsFetched,
-    isError: pIsError,
+    data: data,
+    isPlaceholderData,
+    isFetching,
+    isFetched,
+    isError,
   } = useData<ProvincesData>(
     'provinces',
     {
@@ -49,13 +49,13 @@ const ProvincesFilters = () => {
   );
 
   const OPTIONS = useMemo(() => {
-    if (!pData || !provincesData) return [];
+    if (!data || !provincesData) return [];
 
     return provincesData.map((c) => ({
       ...c,
-      disabled: !pData.map((d) => d.id).includes(c.value),
+      disabled: !data.map((d) => d.id).includes(c.value),
     }));
-  }, [pData, provincesData]);
+  }, [data, provincesData]);
 
   const handleProvinceChange = (value: number | null) => {
     if (value === null) {
@@ -74,13 +74,13 @@ const ProvincesFilters = () => {
       <FiltersContent
         skeletonClassname="h-[34px]"
         isPlaceholderData={
-          (country && provincesIsPlaceholderData) || (country && pIsPlaceholderData)
+          (country && provincesIsPlaceholderData) || (country && isPlaceholderData)
         }
-        isFetching={(country && provincesIsFetching) || (country && pIsFetching)}
+        isFetching={(country && provincesIsFetching) || (country && isFetching)}
         isFetched={
-          (!country || (country && provincesIsFetched)) && (!country || (country && pIsFetched))
+          (!country || (country && provincesIsFetched)) && (!country || (country && isFetched))
         }
-        isError={(country && provincesIsError) || (country && pIsError)}
+        isError={(country && provincesIsError) || (country && isError)}
       >
         <SingleSelect
           id="province-location-select"
@@ -88,6 +88,7 @@ const ProvincesFilters = () => {
           theme="dark"
           placeholder="Regions"
           options={OPTIONS}
+          loading={(country && provincesIsFetching) || (country && isFetching)}
           value={province ?? null}
           onChange={handleProvinceChange}
           clearable

@@ -58,6 +58,7 @@ const LandUseFilters = () => {
           theme="dark"
           placeholder="Select..."
           options={OPTIONS}
+          loading={isFetching || landUseIsFetching}
           value={landUseRisk[0] ?? null}
           onChange={(value) => {
             if (value === null) {

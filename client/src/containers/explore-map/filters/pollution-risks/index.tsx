@@ -58,6 +58,7 @@ const PollutionRisksFilters = () => {
           theme="dark"
           placeholder="Select..."
           options={OPTIONS}
+          loading={isFetching || pollutionIsFetching}
           value={pollution[0] ?? null}
           onChange={(value) => {
             if (value === null) {
