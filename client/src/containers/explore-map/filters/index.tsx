@@ -23,21 +23,22 @@ import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
 import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
-import AreasOfInterestFilters from './areas-of-interest';
 import ClimateRisksFilters from './climate-risks';
 import ClimateRisksSelected from './climate-risks/selected';
+import CountriesFilters from './countries';
+import CountriesSelected from './countries/selected';
 import CropsFilters from './crops';
 import CropsSelected from './crops/selected';
-// import CropsGroupsSelected from './crops/selected-group';
 import FoodscapesFilters from './foodscapes';
 import IntensitiesFilters from './foodscapes-intensities';
 import IntensitiesSelected from './foodscapes-intensities/selected';
 import FoodscapesSelected from './foodscapes/selected';
-// import FoodscapesGroupsSelected from './foodscapes/selected-group';
 import LandUseFilters from './land-use-risks';
 import LandUseSelected from './land-use-risks/selected';
 import PollutionRisksFilters from './pollution-risks';
 import PollutionRisksSelected from './pollution-risks/selected';
+import ProvincesFilters from './provinces';
+import ProvincesSelected from './provinces/selected';
 
 const Filters = () => {
   const open = useRecoilValue(filtersOpenAtom);
@@ -116,6 +117,10 @@ const Filters = () => {
             <ClimateRisksSelected />
             <PollutionRisksSelected />
 
+            {/* Locations */}
+            <CountriesSelected />
+            <ProvincesSelected />
+
             <button
               type="button"
               className="mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase"
@@ -172,7 +177,10 @@ const Filters = () => {
               <h3 className="font-display text-2xl">Locations</h3>
             </div>
 
-            <AreasOfInterestFilters />
+            <div className="space-y-4">
+              <CountriesFilters />
+              <ProvincesFilters />
+            </div>
           </div>
 
           <div className="flex justify-end space-x-4 text-xs">
