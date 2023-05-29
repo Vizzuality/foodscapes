@@ -19,6 +19,7 @@ const CaseStudiesListItem = ({ caseStudy }: CaseStudiesListItemProps) => {
           alt={caseStudy.title}
           fill
           priority
+          style={{ objectFit: 'cover' }}
         />
       </span>
       <span className="mt-4 text-xs">{caseStudy.description}</span>

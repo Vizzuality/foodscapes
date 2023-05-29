@@ -54,7 +54,13 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
           <>
             <div className="relative z-10 flex justify-center pt-8">
               <span className="relative block h-72 w-full overflow-hidden">
-                <Image src={caseStudy.image} alt={caseStudy.title} fill priority />
+                <Image
+                  src={caseStudy.image}
+                  alt={caseStudy.title}
+                  fill
+                  priority
+                  style={{ objectFit: 'cover' }}
+                />
               </span>
             </div>
             <div className="relative z-10 mt-6 flex flex-col items-center justify-center">
