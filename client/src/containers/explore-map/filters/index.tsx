@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import cn from 'lib/classnames';
+
 import {
   climateRiskAtom,
   countryAtom,
@@ -12,23 +14,7 @@ import {
   provinceAtom,
 } from 'store/explore-map';
 
-import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-
-import AreasOfInterestFilters from 'containers/explore-map/filters/areas-of-interest';
-import ClimateRisksFilters from 'containers/explore-map/filters/climate-risks';
-import ClimateRisksSelected from 'containers/explore-map/filters/climate-risks/selected';
-import CropsFilters from 'containers/explore-map/filters/crops';
-import CropsSelected from 'containers/explore-map/filters/crops/selected';
-import CropsGroupsSelected from 'containers/explore-map/filters/crops/selected-group';
-import IntensitiesFilters from 'containers/explore-map/filters/foodscapes-intensities';
-import IntensitiesSelected from 'containers/explore-map/filters/foodscapes-intensities/selected';
-import FoodscapesSelected from 'containers/explore-map/filters/foodscapes/selected';
-import FoodscapesGroupsSelected from 'containers/explore-map/filters/foodscapes/selected-group';
-import LandUseFilters from 'containers/explore-map/filters/land-use-risks';
-import LandUseSelected from 'containers/explore-map/filters/land-use-risks/selected';
-import PollutionRisksFilters from 'containers/explore-map/filters/pollution-risks';
-import PollutionRisksSelected from 'containers/explore-map/filters/pollution-risks/selected';
 
 import Icon from 'components/icon';
 
@@ -37,7 +23,21 @@ import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
 import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
+import AreasOfInterestFilters from './areas-of-interest';
+import ClimateRisksFilters from './climate-risks';
+import ClimateRisksSelected from './climate-risks/selected';
+import CropsFilters from './crops';
+import CropsSelected from './crops/selected';
+// import CropsGroupsSelected from './crops/selected-group';
 import FoodscapesFilters from './foodscapes';
+import IntensitiesFilters from './foodscapes-intensities';
+import IntensitiesSelected from './foodscapes-intensities/selected';
+import FoodscapesSelected from './foodscapes/selected';
+// import FoodscapesGroupsSelected from './foodscapes/selected-group';
+import LandUseFilters from './land-use-risks';
+import LandUseSelected from './land-use-risks/selected';
+import PollutionRisksFilters from './pollution-risks';
+import PollutionRisksSelected from './pollution-risks/selected';
 
 const Filters = () => {
   const open = useRecoilValue(filtersOpenAtom);
@@ -58,60 +58,73 @@ const Filters = () => {
     setOpen(!open);
   }, [open, setOpen]);
 
-  const handleClearClick = useCallback(() => {
-    setFoodscapes([]);
-    setIntensities([]);
-    setCrops([]);
-    setClimateChange([]);
-    setLandUseRisk([]);
-    setPollution([]);
-    setCountry(null);
-    setProvince(null);
+  const handleClearClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      setFoodscapes([]);
+      setIntensities([]);
+      setCrops([]);
+      setClimateChange([]);
+      setLandUseRisk([]);
+      setPollution([]);
+      setCountry(null);
+      setProvince(null);
 
-    setOpen(!open);
-  }, [
-    setFoodscapes,
-    setIntensities,
-    setCrops,
-    setClimateChange,
-    setLandUseRisk,
-    setPollution,
-    setCountry,
-    setProvince,
-    setOpen,
-    open,
-  ]);
+      setOpen(!open);
+    },
+    [
+      setFoodscapes,
+      setIntensities,
+      setCrops,
+      setClimateChange,
+      setLandUseRisk,
+      setPollution,
+      setCountry,
+      setProvince,
+      setOpen,
+      open,
+    ]
+  );
 
   return (
     <>
-      <motion.div
-        whileHover={{ scaleY: 1.1 }}
-        className="absolute bottom-0 left-0 z-10 flex w-full max-w-[640px] items-center justify-between space-x-6 overflow-hidden bg-navy-500 py-4 px-10"
+      <div
+        className={cn({
+          'group absolute bottom-0 left-0 z-10 w-full cursor-pointer bg-navy-500': true,
+        })}
         onClick={handleFiltersClick}
       >
-        <p className="text-xs italic text-white">Filtering by:</p>
+        <div
+          className={cn({
+            'flex items-start space-x-6 overflow-hidden bg-navy-500 py-4 px-10 transition-transform':
+              true,
+            'group-hover:-translate-y-1': true,
+          })}
+        >
+          <p className="shrink-0 py-1.5 text-xs italic text-white">Filtering by:</p>
 
-        <div className="flex flex-1 flex-wrap items-center">
-          {/* Foodscapes */}
-          <FoodscapesSelected />
-          <FoodscapesGroupsSelected />
-          <IntensitiesSelected />
-          <CropsSelected />
-          <CropsGroupsSelected />
+          <div className="flex flex-wrap gap-1">
+            {/* Foodscapes */}
+            <FoodscapesSelected />
+            {/* <FoodscapesGroupsSelected /> */}
+            <IntensitiesSelected />
+            <CropsSelected />
+            {/* <CropsGroupsSelected /> */}
 
-          {/* Risks */}
-          <LandUseSelected />
-          <ClimateRisksSelected />
-          <PollutionRisksSelected />
+            {/* Risks */}
+            <LandUseSelected />
+            <ClimateRisksSelected />
+            <PollutionRisksSelected />
 
-          <button
-            type="button"
-            className="mb-3 mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase"
-          >
-            Add filters
-          </button>
+            <button
+              type="button"
+              className="mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase"
+            >
+              Add filters
+            </button>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
       {open && (
         <div className="absolute top-0 left-0 z-20 h-full w-full max-w-[640px] space-y-8 overflow-auto bg-navy-500 px-20 py-4 text-white">

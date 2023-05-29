@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import cn from 'lib/classnames';
-
 import { filtersSelector, foodscapesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -11,9 +9,7 @@ import { FoodscapeData } from 'types/data';
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 
-import Icon from 'components/icon';
-
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import FilterSelected from 'containers/explore-map/filters/selected';
 
 const FoodscapesSelected = () => {
   const filters = useRecoilValue(filtersSelector('foodscapes'));
@@ -42,27 +38,13 @@ const FoodscapesSelected = () => {
     return null;
   }, [OPTIONS, foodscapes]);
 
-  const handleClearClick = () => {
+  const handleClearClick = (e) => {
+    e.stopPropagation();
     setFoodscapes([]);
   };
 
   return (
-    <div
-      className={cn({
-        'mb-3 mr-3 flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
-        hidden: !foodscapes.length,
-      })}
-    >
-      <p className="text-xs font-bold uppercase text-navy-500">{SELECTED}</p>
-
-      <button
-        type="button"
-        className="flex items-center justify-center rounded-full bg-navy-500 p-1"
-        onClick={handleClearClick}
-      >
-        <Icon icon={CLOSE_SVG} className="h-3 w-3 text-white" />
-      </button>
-    </div>
+    <FilterSelected text={SELECTED} visible={!!foodscapes.length} onClear={handleClearClick} />
   );
 };
 

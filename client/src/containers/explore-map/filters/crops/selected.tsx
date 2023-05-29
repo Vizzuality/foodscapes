@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
 
-import cn from 'lib/classnames';
-
 import { cropsAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -11,9 +9,7 @@ import { CropData } from 'types/data';
 import { useCrops } from 'hooks/crops';
 import { useData } from 'hooks/data';
 
-import Icon from 'components/icon';
-
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import FilterSelected from 'containers/explore-map/filters/selected';
 
 const CropsSelected = () => {
   const cropsFilters = useRecoilValue(filtersSelector('crops'));
@@ -44,28 +40,12 @@ const CropsSelected = () => {
     return null;
   }, [OPTIONS, crops]);
 
-  const handleClearClick = () => {
+  const handleClearClick = (e) => {
+    e.stopPropagation();
     setCrops([]);
   };
 
-  return (
-    <div
-      className={cn({
-        'mb-3 mr-3 flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
-        hidden: !crops.length,
-      })}
-    >
-      <p className="text-xs font-bold uppercase text-navy-500">{SELECTED}</p>
-
-      <button
-        type="button"
-        className="flex items-center justify-center rounded-full bg-navy-500 p-1"
-        onClick={handleClearClick}
-      >
-        <Icon icon={CLOSE_SVG} className="h-3 w-3 text-white" />
-      </button>
-    </div>
-  );
+  return <FilterSelected text={SELECTED} visible={!!crops.length} onClear={handleClearClick} />;
 };
 
 export default CropsSelected;
