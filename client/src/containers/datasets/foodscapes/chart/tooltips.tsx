@@ -5,6 +5,7 @@ import { BarGroupBar, SeriesPoint } from '@visx/shape/lib/types';
 import { FoodscapeChartData } from 'types/foodscapes';
 
 import { useFoodscapes } from 'hooks/foodscapes';
+import { convertPixelCountToHA } from 'hooks/utils';
 
 import { TooltipProps } from 'components/charts/horizontal-stacked-bar';
 
@@ -21,6 +22,7 @@ export const FoodscapesChartTooltip = forwardRef<HTMLDivElement, TooltipProps<Fo
       maximumFractionDigits: 2,
     });
 
+    const area = convertPixelCountToHA(bar.data[id]);
     const percentage = formatPercentage(bar.data[id] / total);
 
     return (
@@ -28,8 +30,11 @@ export const FoodscapesChartTooltip = forwardRef<HTMLDivElement, TooltipProps<Fo
         ref={ref}
         className="relative max-w-[180px] space-y-1 border border-navy-500/25 bg-white p-1 text-navy-500 shadow-md"
       >
-        <h3 className="text-[8px] font-bold uppercase">{f.label}</h3>
-        <span>{percentage}</span>
+        <div>
+          <h3 className="border-b border-navy-200 text-[8px] font-bold uppercase">{f.label}</h3>
+          <div>{area}</div>
+          <div>{percentage}</div>
+        </div>
       </div>
     );
   }
@@ -56,6 +61,7 @@ export const FoodscapesChartTooltipGroup = forwardRef<
     maximumFractionDigits: 2,
   });
 
+  const area = convertPixelCountToHA(bar.data[id]);
   const percentage = formatPercentage(bar.data[id] / total);
 
   return (
@@ -64,14 +70,16 @@ export const FoodscapesChartTooltipGroup = forwardRef<
       className="relative max-w-[180px] space-y-1 border border-navy-500/25 bg-white p-1 text-navy-500 shadow-md"
     >
       <div>
-        <h3 className="text-[8px] font-bold uppercase">{label}</h3>
+        <h3 className="border-b border-navy-200 text-[8px] font-bold uppercase">{label}</h3>
+        <div>{area}</div>
         <span>{percentage}</span>
       </div>
 
       {!!partialTotal && (
         <>
           <h3 className="text-[8px] font-bold uppercase">Selected</h3>
-          <span>{formatPercentage(partialTotal)}</span>
+
+          <div>{formatPercentage(partialTotal)}</div>
         </>
       )}
     </div>

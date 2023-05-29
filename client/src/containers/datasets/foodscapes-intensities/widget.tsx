@@ -86,7 +86,7 @@ const FoodscapesIntensitiesWidget = () => {
             />
           </div>
 
-          <WidgetTop label="See top largest foodscapes intensities">
+          <WidgetTop label="Top largest foodscapes intensities">
             <ChartTop onBarClick={handleBarClick} />
           </WidgetTop>
         </div>

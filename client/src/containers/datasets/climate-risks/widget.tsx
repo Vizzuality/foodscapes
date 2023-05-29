@@ -91,7 +91,7 @@ const ClimateRiskWidget = () => {
             </div>
           </div>
 
-          <WidgetTop label="See top affected foodscapes by climate risk">
+          <WidgetTop label="Top affected foodscapes by climate risk">
             <TopChart dataset={FOODSCAPES_DATASET} />
           </WidgetTop>
         </div>

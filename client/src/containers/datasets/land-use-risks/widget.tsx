@@ -92,7 +92,7 @@ const LandUseRiskWidget = () => {
             </div>
           </div>
 
-          <WidgetTop label="See top affected foodscapes by land use risk">
+          <WidgetTop label="Top affected foodscapes by land use risk">
             <TopChart />
           </WidgetTop>
         </div>

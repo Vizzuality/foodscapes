@@ -10,7 +10,7 @@ import { FiltersOmitProps, SoilHealthsData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useSoilHealths } from 'hooks/soil-healths';
-import { formatHA } from 'hooks/utils';
+import { formatHA, formatPercentage } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -49,6 +49,7 @@ const SoilHealthsChart = ({ selected, ignore = null, onBarClick }: SoilHealthsCh
           ...c,
           id: c.value,
           value: d1.value,
+          percentage: d1.percentage,
           color: c.color,
         };
       })
@@ -68,7 +69,7 @@ const SoilHealthsChart = ({ selected, ignore = null, onBarClick }: SoilHealthsCh
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
@@ -90,7 +91,7 @@ const SoilHealthsChart = ({ selected, ignore = null, onBarClick }: SoilHealthsCh
       colorScale={colorScale}
       interactive={false}
       selected={selected}
-      format={formatHA}
+      format={(d) => `${formatHA(d.value)} | ${formatPercentage(d.percentage / 100)}`}
       onBarClick={onBarClick}
     />
   );

@@ -89,7 +89,7 @@ const PollutionRiskWidget = () => {
             </div>
           </div>
 
-          <WidgetTop label="See top affected foodscapes by pollution">
+          <WidgetTop label="Top affected foodscapes by pollution">
             <TopChart />
           </WidgetTop>
         </div>

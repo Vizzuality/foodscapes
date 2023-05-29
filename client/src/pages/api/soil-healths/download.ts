@@ -15,7 +15,7 @@ const fetch = async () => {
     KNEX
       //
       .select(KNEX.raw("'areas_suitable_for_cover_cropping_area' AS id"))
-      .select(KNEX.raw('SUM(d.areas_suitable_for_cover_cropping_area) AS value'))
+      .select(KNEX.raw('SUM(d.areas_suitable_for_cover_cropping_area) AS ha'))
       .select(
         KNEX.raw(
           '(SUM(d.areas_suitable_for_cover_cropping_area) / (SELECT SUM(d.pixel_count) * 3086.9136)) * 100 as percentage'
@@ -26,7 +26,7 @@ const fetch = async () => {
     KNEX
       //
       .select(KNEX.raw("'areas_suitable_for_minimum_tillage_area' AS id"))
-      .select(KNEX.raw('SUM(d.areas_suitable_for_minimum_tillage_area) AS value'))
+      .select(KNEX.raw('SUM(d.areas_suitable_for_minimum_tillage_area) AS ha'))
       .select(
         KNEX.raw(
           '(SUM(d.areas_suitable_for_minimum_tillage_area) / (SELECT SUM(d.pixel_count) * 3086.9136)) * 100 as percentage'
