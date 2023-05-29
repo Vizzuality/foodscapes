@@ -37,7 +37,7 @@ export function useSource({
 }: UseRestorationsSourceProps): AnySourceData & { key: string } {
   const { data: restorationsData } = useRestorations();
 
-  const band = useMemo(() => {
+  const band = useMemo<number>(() => {
     return restorationsData.find((v) => v.column === settings.column)?.value;
   }, [restorationsData, settings]);
 
@@ -91,7 +91,7 @@ export function useSource({
 
   return {
     id: 'restorations-source',
-    key: `${band.toString()}-${colormap}-${expression}`,
+    key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
       `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,

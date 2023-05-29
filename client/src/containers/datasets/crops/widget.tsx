@@ -191,8 +191,8 @@ const CropsWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest crops">
-                <ChartTop onBarClick={handleBarClick} />
+              <WidgetTop label="Top largest crops">
+                <ChartTop settings={settings} onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>
@@ -220,8 +220,8 @@ const CropsWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest crops">
-                <ChartTop onBarClick={handleBarClick} />
+              <WidgetTop label="Top largest crop groups">
+                <ChartTop settings={settings} onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>

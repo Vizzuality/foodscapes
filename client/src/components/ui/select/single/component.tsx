@@ -11,6 +11,7 @@ import THEME from 'components/ui/select/constants/theme';
 
 import CHEVRON_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 import CHEVRON_UP_SVG from 'svgs/ui/arrow-up.svg?sprite';
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import type { SingleSelectProps } from './types';
 
@@ -56,6 +57,15 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
     }
   };
 
+  const handleReset = (e) => {
+    e.stopPropagation();
+    setSelected(null);
+
+    if (onChange) {
+      onChange(null);
+    }
+  };
+
   return (
     <div
       className={cx({
@@ -95,12 +105,23 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                 })}
               >
                 <span className="block truncate">{SELECTED}</span>
-                <span className="pointer-events-none relative inset-y-0.5 flex items-center">
+                <span className="pointer-events-none relative inset-y-0.5 flex items-center space-x-2">
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}
                     iconClassName="w-3 h-3"
                   />
+
+                  {!!selected && !loading && clearable && (
+                    <button type="button" className="pointer-events-auto" onClick={handleReset}>
+                      <Icon
+                        icon={CLOSE_SVG}
+                        className={cx({
+                          'h-3.5 w-3.5': true,
+                        })}
+                      />
+                    </button>
+                  )}
 
                   {!loading && (
                     <Icon

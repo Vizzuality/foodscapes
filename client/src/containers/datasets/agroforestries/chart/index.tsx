@@ -10,7 +10,7 @@ import { FiltersOmitProps, AgroforestriesData } from 'types/data';
 
 import { useAgroforestries } from 'hooks/agroforestries';
 import { useData } from 'hooks/data';
-import { formatHA } from 'hooks/utils';
+import { formatHA, formatPercentage } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -49,6 +49,7 @@ const AgroforestriesChart = ({ selected, ignore = null, onBarClick }: Agroforest
           ...c,
           id: c.value,
           value: d1.value,
+          percentage: d1.percentage,
           color: c.color,
         };
       })
@@ -68,7 +69,7 @@ const AgroforestriesChart = ({ selected, ignore = null, onBarClick }: Agroforest
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
@@ -90,7 +91,7 @@ const AgroforestriesChart = ({ selected, ignore = null, onBarClick }: Agroforest
       colorScale={colorScale}
       interactive={false}
       selected={selected}
-      format={formatHA}
+      format={(d) => `${formatHA(d.value)} | ${formatPercentage(d.percentage / 100)}`}
       onBarClick={onBarClick}
     />
   );
