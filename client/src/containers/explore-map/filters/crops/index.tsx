@@ -40,22 +40,30 @@ const CropsFilters = () => {
     filters
   );
 
-  const OPTIONS_CROPS = useMemo(() => {
-    return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
+  const OPTIONS = useMemo(() => {
+    return cropsData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
   }, [data, cropsData]);
 
   const GROUPED_OPTIONS = useMemo(() => {
     if (!data || !cropsGroupData) return [];
-    return cropsGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+
+    return cropsGroupData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.parent_id).includes(c.value),
+    }));
   }, [data, cropsGroupData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
+    if (!data || !cropsGroupData) return [];
     return (
       cropsGroupData
         //
         .filter((g) => {
           const ids = g.values
-            .filter((v) => data.map((d) => d.id).includes(v.value))
+            // .filter((v) => data.map((d) => d.id).includes(v.value))
 
             .map((v) => v.value);
           return ids.length && ids.some((i) => crops.includes(i));
@@ -116,7 +124,7 @@ const CropsFilters = () => {
             size="s"
             theme="dark"
             placeholder="Select..."
-            options={OPTIONS_CROPS}
+            options={OPTIONS}
             values={crops as number[]}
             batchSelectionActive
             clearSelectionActive

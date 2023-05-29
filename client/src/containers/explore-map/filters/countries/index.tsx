@@ -30,18 +30,18 @@ const CountriesFilters = () => {
     isError: countriesIsError,
   } = useCountries();
 
-  const {
-    data: cData,
-    isPlaceholderData: cIsPlaceholderData,
-    isFetching: cIsFetching,
-    isFetched: cIsFetched,
-    isError: cIsError,
-  } = useData<CountriesData>('countries', filters);
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CountriesData>(
+    'countries',
+    filters
+  );
 
-  const COUNTRY_OPTIONS = useMemo(() => {
-    if (!cData || !countriesData) return [];
-    return countriesData.filter((c) => cData.map((d) => d.id).includes(c.value));
-  }, [cData, countriesData]);
+  const OPTIONS = useMemo(() => {
+    if (!data || !countriesData) return [];
+    return countriesData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
+  }, [data, countriesData]);
 
   const handleCountryChange = (value: number | null) => {
     if (value === null) {
@@ -60,10 +60,10 @@ const CountriesFilters = () => {
 
       <FiltersContent
         skeletonClassname="h-[34px]"
-        isPlaceholderData={cIsPlaceholderData || countriesIsPlaceholderData}
-        isFetching={cIsFetching || countriesIsFetching}
-        isFetched={cIsFetched && countriesIsFetched}
-        isError={cIsError || countriesIsError}
+        isPlaceholderData={isPlaceholderData || countriesIsPlaceholderData}
+        isFetching={isFetching || countriesIsFetching}
+        isFetched={isFetched && countriesIsFetched}
+        isError={isError || countriesIsError}
       >
         <div className="space-y-4">
           <SingleSelect
@@ -71,7 +71,7 @@ const CountriesFilters = () => {
             size="s"
             theme="dark"
             placeholder="Select..."
-            options={COUNTRY_OPTIONS}
+            options={OPTIONS}
             value={country ?? null}
             onChange={handleCountryChange}
             clearable

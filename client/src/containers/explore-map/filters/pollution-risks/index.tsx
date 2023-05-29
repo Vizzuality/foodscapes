@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { filtersSelector, pollutionRiskAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -25,12 +27,19 @@ const PollutionRisksFilters = () => {
     isError: pollutionIsError,
   } = usePollutionRisks();
 
-  const {
-    isPlaceholderData: pollutionRiskIsPlaceholderData,
-    isFetching: pollutionRiskIsFetching,
-    isFetched: pollutionRiskIsFetched,
-    isError: pollutionRiskIsError,
-  } = useData<PollutionRiskData>('pollution-risks', pollutionFilters);
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<PollutionRiskData>(
+    'pollution-risks',
+    pollutionFilters
+  );
+
+  const OPTIONS = useMemo(() => {
+    if (!data || !pollutionData) return [];
+
+    return pollutionData.map((c) => ({
+      ...c,
+      disabled: !data.find((d) => d.id === c.id)?.value,
+    }));
+  }, [data, pollutionData]);
 
   return (
     <div className="space-y-1">
@@ -38,17 +47,17 @@ const PollutionRisksFilters = () => {
 
       <FiltersContent
         skeletonClassname="h-[34px]"
-        isPlaceholderData={pollutionRiskIsPlaceholderData || pollutionIsPlaceholderData}
-        isFetching={pollutionRiskIsFetching || pollutionIsFetching}
-        isFetched={pollutionRiskIsFetched && pollutionIsFetched}
-        isError={pollutionRiskIsError || pollutionIsError}
+        isPlaceholderData={isPlaceholderData || pollutionIsPlaceholderData}
+        isFetching={isFetching || pollutionIsFetching}
+        isFetched={isFetched && pollutionIsFetched}
+        isError={isError || pollutionIsError}
       >
         <SingleSelect
           id="pollution-risk"
           size="s"
           theme="dark"
           placeholder="Select..."
-          options={pollutionData}
+          options={OPTIONS}
           value={pollution[0] ?? null}
           onChange={(value) => {
             if (value === null) {

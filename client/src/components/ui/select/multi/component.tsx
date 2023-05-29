@@ -36,6 +36,11 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   const initialValues = values || [];
   const [selected, setSelected] = useState(initialValues);
 
+  const OPTIONS_ENABLED = useMemo(() => {
+    if (!options) return [];
+    return options.filter((o) => !o.disabled);
+  }, [options]);
+
   const SELECTED = useMemo(() => {
     if (loading) return 'Loading...';
 
@@ -49,12 +54,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       return null;
     }
 
-    if (selected.length === options.length) return `All items selected`;
+    if (selected.length === OPTIONS_ENABLED.length || selected.length > OPTIONS_ENABLED.length)
+      return `All items selected`;
 
     if (selected.length > 1) return `Selected items (${selected.length})`;
 
     return null;
-  }, [loading, options, placeholder, selected]);
+  }, [loading, options, placeholder, selected, OPTIONS_ENABLED]);
 
   useEffect(() => {
     if (values) {
@@ -75,13 +81,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   const handleSelectAll = useCallback(
     (e) => {
       e.stopPropagation();
-      const allOptions = options.map((o) => o.value);
+      const allOptions = OPTIONS_ENABLED.map((o) => o.value);
       setSelected(allOptions);
       if (onChange) {
         onChange(allOptions);
       }
     },
-    [onChange, options]
+    [onChange, OPTIONS_ENABLED]
   );
 
   const handleClearAll = useCallback(
@@ -202,9 +208,11 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                     >
                       {selected.length < 1 && clearSelectionLabel}
                       {selected.length >= 1 &&
-                        selected.length !== options.length &&
+                        selected.length !== OPTIONS_ENABLED.length &&
+                        selected.length < OPTIONS_ENABLED.length &&
                         `${clearSelectionLabel} (${selected.length} Selected)`}
-                      {selected.length === options.length &&
+                      {(selected.length === OPTIONS_ENABLED.length ||
+                        selected.length > OPTIONS_ENABLED.length) &&
                         `${clearSelectionLabel} (All selected)`}
                     </button>
                   )}
@@ -212,7 +220,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                 {options.map((opt) => {
                   return (
-                    <Listbox.Option key={opt.value} value={opt.value}>
+                    <Listbox.Option key={opt.value} value={opt.value} disabled={opt.disabled}>
                       {({ active: a, selected: s, disabled: d }) => (
                         <div
                           className={cx({

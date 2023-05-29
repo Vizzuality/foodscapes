@@ -40,14 +40,20 @@ const FoodscapesFilters = () => {
     filters
   );
 
-  const OPTIONS_FOODSCAPES = useMemo(() => {
-    if (!data || !foodscapesData) return [];
-    return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
+  const OPTIONS = useMemo(() => {
+    return foodscapesData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
   }, [data, foodscapesData]);
 
   const GROUPED_OPTIONS = useMemo(() => {
     if (!data || !foodscapesGroupData) return [];
-    return foodscapesGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+
+    return foodscapesGroupData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.parent_id).includes(c.value),
+    }));
   }, [data, foodscapesGroupData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
@@ -56,9 +62,8 @@ const FoodscapesFilters = () => {
       foodscapesGroupData
         //
         .filter((g) => {
-          const ids = g.values
-            .filter((v) => data.map((d) => d.id).includes(v.value))
-            .map((v) => v.value);
+          const ids = g.values.map((v) => v.value);
+          // .filter((v) => data.map((d) => d.id).includes(v.value))
 
           return ids.length && ids.some((i) => foodscapes.includes(i));
         })
@@ -119,7 +124,7 @@ const FoodscapesFilters = () => {
             size="s"
             theme="dark"
             placeholder="Select..."
-            options={OPTIONS_FOODSCAPES}
+            options={OPTIONS}
             values={foodscapes as number[]}
             batchSelectionActive
             clearSelectionActive

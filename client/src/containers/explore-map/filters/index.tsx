@@ -124,7 +124,7 @@ const Filters = () => {
 
             <button
               type="button"
-              className="mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase"
+              className="mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase transition-colors hover:bg-white"
             >
               Add filters
             </button>
@@ -147,7 +147,7 @@ const Filters = () => {
 
               <button
                 type="button"
-                className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-white"
+                className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-white transition-colors hover:bg-navy-200"
                 onClick={handleFiltersClick}
               >
                 <Icon icon={CLOSE_SVG} className="h-4 w-4 text-navy-500" />

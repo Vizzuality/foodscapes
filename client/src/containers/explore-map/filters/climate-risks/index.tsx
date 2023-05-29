@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { climateRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -25,12 +27,19 @@ const ClimateRisksFilters = () => {
     isError: climateIsError,
   } = useClimateRisks();
 
-  const {
-    isPlaceholderData: riskIsPlaceholderData,
-    isFetching: riskIsFetching,
-    isFetched: riskIsFetched,
-    isError: riskIsError,
-  } = useData<ClimateRiskData>('climate-risks', climateFilters);
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>(
+    'climate-risks',
+    climateFilters
+  );
+
+  const OPTIONS = useMemo(() => {
+    if (!data || !climateData) return [];
+
+    return climateData.map((c) => ({
+      ...c,
+      disabled: !data.find((d) => d.id === c.id)?.value,
+    }));
+  }, [data, climateData]);
 
   return (
     <div className="space-y-1">
@@ -38,17 +47,17 @@ const ClimateRisksFilters = () => {
 
       <FiltersContent
         skeletonClassname="h-[34px]"
-        isPlaceholderData={riskIsPlaceholderData || climateIsPlaceholderData}
-        isFetching={riskIsFetching || climateIsFetching}
-        isFetched={riskIsFetched && climateIsFetched}
-        isError={riskIsError || climateIsError}
+        isPlaceholderData={isPlaceholderData || climateIsPlaceholderData}
+        isFetching={isFetching || climateIsFetching}
+        isFetched={isFetched && climateIsFetched}
+        isError={isError || climateIsError}
       >
         <SingleSelect
           id="riks-climate-change-select"
           size="s"
           theme="dark"
           placeholder="Select..."
-          options={climateData}
+          options={OPTIONS}
           value={climateChange[0] ?? null}
           onChange={(value) => {
             if (value === null) {

@@ -48,9 +48,13 @@ const ProvincesFilters = () => {
     }
   );
 
-  const PROVINCE_OPTIONS = useMemo(() => {
+  const OPTIONS = useMemo(() => {
     if (!pData || !provincesData) return [];
-    return provincesData.filter((c) => pData.map((d) => d.id).includes(c.value));
+
+    return provincesData.map((c) => ({
+      ...c,
+      disabled: !pData.map((d) => d.id).includes(c.value),
+    }));
   }, [pData, provincesData]);
 
   const handleProvinceChange = (value: number | null) => {
@@ -83,7 +87,7 @@ const ProvincesFilters = () => {
           size="s"
           theme="dark"
           placeholder="Regions"
-          options={PROVINCE_OPTIONS}
+          options={OPTIONS}
           value={province ?? null}
           onChange={handleProvinceChange}
           clearable

@@ -160,7 +160,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
 
                 {options.map((opt) => {
                   return (
-                    <Listbox.Option key={opt.value} value={opt.value}>
+                    <Listbox.Option key={opt.value} value={opt.value} disabled={opt.disabled}>
                       {({ active: a, selected: s, disabled: d }) => (
                         <div
                           className={cx({

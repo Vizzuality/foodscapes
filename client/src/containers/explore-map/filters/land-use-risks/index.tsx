@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { filtersSelector, landUseRiskAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -25,12 +27,19 @@ const LandUseFilters = () => {
     isError: landUseIsError,
   } = useLandUseRisks();
 
-  const {
-    isPlaceholderData: landIsPlaceholderData,
-    isFetching: landIsFetching,
-    isFetched: landIsFetched,
-    isError: landIsError,
-  } = useData<LandUseRiskData>('land-use-risks', landUseFilters);
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<LandUseRiskData>(
+    'land-use-risks',
+    landUseFilters
+  );
+
+  const OPTIONS = useMemo(() => {
+    if (!data || !landUseData) return [];
+
+    return landUseData.map((c) => ({
+      ...c,
+      disabled: !data.find((d) => d.id === c.column)?.value,
+    }));
+  }, [data, landUseData]);
 
   return (
     <div className="space-y-1">
@@ -38,17 +47,17 @@ const LandUseFilters = () => {
 
       <FiltersContent
         skeletonClassname="h-[34px]"
-        isPlaceholderData={landUseIsPlaceholderData || landIsPlaceholderData}
-        isFetching={landUseIsFetching || landIsFetching}
-        isFetched={landUseIsFetched && landIsFetched}
-        isError={landUseIsError || landIsError}
+        isPlaceholderData={landUseIsPlaceholderData || isPlaceholderData}
+        isFetching={landUseIsFetching || isFetching}
+        isFetched={landUseIsFetched && isFetched}
+        isError={landUseIsError || isError}
       >
         <SingleSelect
           id="riks-land-use-change-select"
           size="s"
           theme="dark"
           placeholder="Select..."
-          options={landUseData}
+          options={OPTIONS}
           value={landUseRisk[0] ?? null}
           onChange={(value) => {
             if (value === null) {

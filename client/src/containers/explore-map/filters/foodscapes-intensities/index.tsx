@@ -27,18 +27,16 @@ const IntensitiesFilters = () => {
     isError: intensitiesIsError,
   } = useFoodscapesIntensities();
 
-  const {
-    data: intensityData,
-    isPlaceholderData: intensityIsPlaceholderData,
-    isFetching: intensityIsFetching,
-    isFetched: intensityIsFetched,
-    isError: intensityIsError,
-  } = useData<FoodscapeIntensityData>('foodscapes-intensities', intensitiesFilters);
+  const { data, isPlaceholderData, isFetching, isFetched, isError } =
+    useData<FoodscapeIntensityData>('foodscapes-intensities', intensitiesFilters);
 
-  const OPTIONS_INTENSITIES = useMemo(() => {
-    if (!intensityData) return [];
-    return intensitiesData.filter((c) => intensityData.map((d) => d.id).includes(c.value));
-  }, [intensityData, intensitiesData]);
+  const OPTIONS = useMemo(() => {
+    if (!data || !intensitiesData) return [];
+    return intensitiesData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
+  }, [data, intensitiesData]);
 
   return (
     <div className="space-y-1">
@@ -46,21 +44,21 @@ const IntensitiesFilters = () => {
 
       <FiltersContent
         skeletonClassname="h-[34px]"
-        isPlaceholderData={intensitiesIsPlaceholderData || intensityIsPlaceholderData}
-        isFetching={intensitiesIsFetched || intensityIsFetched}
-        isFetched={intensitiesIsFetched && intensityIsFetched}
-        isError={intensitiesIsError || intensityIsError}
+        isPlaceholderData={intensitiesIsPlaceholderData || isPlaceholderData}
+        isFetching={intensitiesIsFetched || isFetched}
+        isFetched={intensitiesIsFetched && isFetched}
+        isError={intensitiesIsError || isError}
       >
         <MultiSelect
           id="foodscapes-multiselect"
           size="s"
           theme="dark"
           placeholder="Select..."
-          options={OPTIONS_INTENSITIES}
+          options={OPTIONS}
           values={intensities as number[]}
           batchSelectionActive
           clearSelectionActive
-          loading={intensitiesIsFetching || intensityIsFetching}
+          loading={intensitiesIsFetching || isFetching}
           onChange={(values) => setIntensities(values as number[])}
         />
       </FiltersContent>
