@@ -41,7 +41,7 @@ const CaseStudiesList = () => {
       )}
 
       {!caseStudiesIsPlaceholderData && !caseStudiesIsError && (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8">
           {caseStudiesData.map((caseStudy) => (
             <div key={caseStudy.id}>
               <button

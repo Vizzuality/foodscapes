@@ -9,7 +9,9 @@ interface CaseStudiesListItemProps {
 const CaseStudiesListItem = ({ caseStudy }: CaseStudiesListItemProps) => {
   return (
     <div className="flex flex-col text-center">
-      <span className="mb-4 px-4 font-display">{caseStudy.title}</span>
+      <span className="mb-4 flex h-12 items-end justify-center px-4 font-display">
+        {caseStudy.title}
+      </span>
       <span className="relative block h-48 overflow-hidden">
         <Image
           className="duration-300 ease-in hover:scale-110"
