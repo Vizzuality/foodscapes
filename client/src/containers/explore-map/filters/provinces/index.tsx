@@ -64,17 +64,20 @@ const ProvincesFilters = () => {
   };
 
   return (
-    <FiltersContent
-      isPlaceholderData={(country && provincesIsPlaceholderData) || (country && pIsPlaceholderData)}
-      isFetching={(country && provincesIsFetching) || (country && pIsFetching)}
-      isFetched={
-        (!country || (country && provincesIsFetched)) && (!country || (country && pIsFetched))
-      }
-      isError={(country && provincesIsError) || (country && pIsError)}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Regions</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Regions</p>
 
+      <FiltersContent
+        skeletonClassname="h-[34px]"
+        isPlaceholderData={
+          (country && provincesIsPlaceholderData) || (country && pIsPlaceholderData)
+        }
+        isFetching={(country && provincesIsFetching) || (country && pIsFetching)}
+        isFetched={
+          (!country || (country && provincesIsFetched)) && (!country || (country && pIsFetched))
+        }
+        isError={(country && provincesIsError) || (country && pIsError)}
+      >
         <SingleSelect
           id="province-location-select"
           size="s"
@@ -86,8 +89,8 @@ const ProvincesFilters = () => {
           clearable
           disabled={!country}
         />
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

@@ -33,15 +33,16 @@ const ClimateRisksFilters = () => {
   } = useData<ClimateRiskData>('climate-risks', climateFilters);
 
   return (
-    <FiltersContent
-      isPlaceholderData={riskIsPlaceholderData || climateIsPlaceholderData}
-      isFetching={riskIsFetching || climateIsFetching}
-      isFetched={riskIsFetched && climateIsFetched}
-      isError={riskIsError || climateIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Climate change</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Climate change</p>
 
+      <FiltersContent
+        skeletonClassname="h-[34px]"
+        isPlaceholderData={riskIsPlaceholderData || climateIsPlaceholderData}
+        isFetching={riskIsFetching || climateIsFetching}
+        isFetched={riskIsFetched && climateIsFetched}
+        isError={riskIsError || climateIsError}
+      >
         <SingleSelect
           id="riks-climate-change-select"
           size="s"
@@ -58,8 +59,8 @@ const ClimateRisksFilters = () => {
           }}
           clearable
         />
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

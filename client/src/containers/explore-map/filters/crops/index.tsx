@@ -98,15 +98,18 @@ const CropsFilters = () => {
   );
 
   return (
-    <FiltersContent
-      isPlaceholderData={isPlaceholderData || cropsIsPlaceholderData || cropsGroupIsPlaceholderData}
-      isFetching={isFetching || cropsIsFetching || cropsGroupIsFetching}
-      isFetched={isFetched && cropsIsFetched && cropsGroupIsFetched}
-      isError={isError || cropsIsError || cropsGroupIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Crop production</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Crop production</p>
 
+      <FiltersContent
+        skeletonClassname="h-[76px]"
+        isPlaceholderData={
+          isPlaceholderData || cropsIsPlaceholderData || cropsGroupIsPlaceholderData
+        }
+        isFetching={isFetching || cropsIsFetching || cropsGroupIsFetching}
+        isFetched={isFetched && cropsIsFetched && cropsGroupIsFetched}
+        isError={isError || cropsIsError || cropsGroupIsError}
+      >
         <div className="space-y-2">
           <MultiSelect
             id="crops-multiselect"
@@ -134,8 +137,8 @@ const CropsFilters = () => {
             onChange={handleSelectGroupOnChange}
           />
         </div>
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

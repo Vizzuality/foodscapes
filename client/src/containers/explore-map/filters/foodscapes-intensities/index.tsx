@@ -41,15 +41,16 @@ const IntensitiesFilters = () => {
   }, [intensityData, intensitiesData]);
 
   return (
-    <FiltersContent
-      isPlaceholderData={intensitiesIsPlaceholderData || intensityIsPlaceholderData}
-      isFetching={intensitiesIsFetched || intensityIsFetched}
-      isFetched={intensitiesIsFetched && intensityIsFetched}
-      isError={intensitiesIsError || intensityIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Foodscapes intensity</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Foodscapes intensity</p>
 
+      <FiltersContent
+        skeletonClassname="h-[34px]"
+        isPlaceholderData={intensitiesIsPlaceholderData || intensityIsPlaceholderData}
+        isFetching={intensitiesIsFetched || intensityIsFetched}
+        isFetched={intensitiesIsFetched && intensityIsFetched}
+        isError={intensitiesIsError || intensityIsError}
+      >
         <MultiSelect
           id="foodscapes-multiselect"
           size="s"
@@ -62,8 +63,8 @@ const IntensitiesFilters = () => {
           loading={intensitiesIsFetching || intensityIsFetching}
           onChange={(values) => setIntensities(values as number[])}
         />
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

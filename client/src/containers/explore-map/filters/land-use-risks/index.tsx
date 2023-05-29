@@ -33,15 +33,16 @@ const LandUseFilters = () => {
   } = useData<LandUseRiskData>('land-use-risks', landUseFilters);
 
   return (
-    <FiltersContent
-      isPlaceholderData={landUseIsPlaceholderData || landIsPlaceholderData}
-      isFetching={landUseIsFetching || landIsFetching}
-      isFetched={landUseIsFetched && landIsFetched}
-      isError={landUseIsError || landIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Land use change</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Land use change</p>
 
+      <FiltersContent
+        skeletonClassname="h-[34px]"
+        isPlaceholderData={landUseIsPlaceholderData || landIsPlaceholderData}
+        isFetching={landUseIsFetching || landIsFetching}
+        isFetched={landUseIsFetched && landIsFetched}
+        isError={landUseIsError || landIsError}
+      >
         <SingleSelect
           id="riks-land-use-change-select"
           size="s"
@@ -58,8 +59,8 @@ const LandUseFilters = () => {
           }}
           clearable
         />
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

@@ -101,17 +101,18 @@ const FoodscapesFilters = () => {
   );
 
   return (
-    <FiltersContent
-      isPlaceholderData={
-        isPlaceholderData || foodscapesIsPlaceholderData || foodscapesGroupIsPlaceholderData
-      }
-      isFetching={isFetching || foodscapesIsFetching || foodscapesGroupIsFetching}
-      isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
-      isError={isError || foodscapesIsError || foodscapesGroupIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Global foodscapes</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Global foodscapes</p>
 
+      <FiltersContent
+        skeletonClassname="h-[76px]"
+        isPlaceholderData={
+          isPlaceholderData || foodscapesIsPlaceholderData || foodscapesGroupIsPlaceholderData
+        }
+        isFetching={isFetching || foodscapesIsFetching || foodscapesGroupIsFetching}
+        isFetched={isFetched && foodscapesIsFetched && foodscapesGroupIsFetched}
+        isError={isError || foodscapesIsError || foodscapesGroupIsError}
+      >
         <div className="space-y-2">
           <MultiSelect
             id="foodscapes-multiselect"
@@ -139,8 +140,8 @@ const FoodscapesFilters = () => {
             onChange={handleSelectGroupOnChange}
           />
         </div>
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

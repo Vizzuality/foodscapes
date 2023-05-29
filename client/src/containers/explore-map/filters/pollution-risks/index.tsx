@@ -33,15 +33,16 @@ const PollutionRisksFilters = () => {
   } = useData<PollutionRiskData>('pollution-risks', pollutionFilters);
 
   return (
-    <FiltersContent
-      isPlaceholderData={pollutionRiskIsPlaceholderData || pollutionIsPlaceholderData}
-      isFetching={pollutionRiskIsFetching || pollutionIsFetching}
-      isFetched={pollutionRiskIsFetched && pollutionIsFetched}
-      isError={pollutionRiskIsError || pollutionIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Pollution</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Pollution</p>
 
+      <FiltersContent
+        skeletonClassname="h-[34px]"
+        isPlaceholderData={pollutionRiskIsPlaceholderData || pollutionIsPlaceholderData}
+        isFetching={pollutionRiskIsFetching || pollutionIsFetching}
+        isFetched={pollutionRiskIsFetched && pollutionIsFetched}
+        isError={pollutionRiskIsError || pollutionIsError}
+      >
         <SingleSelect
           id="pollution-risk"
           size="s"
@@ -58,8 +59,8 @@ const PollutionRisksFilters = () => {
           }}
           clearable
         />
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 

@@ -55,15 +55,16 @@ const CountriesFilters = () => {
   };
 
   return (
-    <FiltersContent
-      isPlaceholderData={cIsPlaceholderData || countriesIsPlaceholderData}
-      isFetching={cIsFetching || countriesIsFetching}
-      isFetched={cIsFetched && countriesIsFetched}
-      isError={cIsError || countriesIsError}
-    >
-      <div className="space-y-1">
-        <p className="font-sans text-xs font-bold">Countries</p>
+    <div className="space-y-1">
+      <p className="font-sans text-xs font-bold">Countries</p>
 
+      <FiltersContent
+        skeletonClassname="h-[34px]"
+        isPlaceholderData={cIsPlaceholderData || countriesIsPlaceholderData}
+        isFetching={cIsFetching || countriesIsFetching}
+        isFetched={cIsFetched && countriesIsFetched}
+        isError={cIsError || countriesIsError}
+      >
         <div className="space-y-4">
           <SingleSelect
             id="countries-location-select"
@@ -76,8 +77,8 @@ const CountriesFilters = () => {
             clearable
           />
         </div>
-      </div>
-    </FiltersContent>
+      </FiltersContent>
+    </div>
   );
 };
 
