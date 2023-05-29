@@ -69,7 +69,7 @@ const AgroforestriesChart = ({ selected, ignore = null, onBarClick }: Agroforest
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
