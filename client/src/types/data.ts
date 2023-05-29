@@ -38,6 +38,7 @@ export interface RestorationsData {
     | 'cropland_areas_suitable_for_restoration_area'
     | 'grassland_areas_suitable_for_restoration_area';
   value: number;
+  percentage: number;
 }
 
 export interface AgroforestriesData {
@@ -46,11 +47,13 @@ export interface AgroforestriesData {
     | 'forest_ecoregions_suitable_for_silvopastoral_area'
     | 'tropical_grassland_ecoregions_suitable_for_silvopastoral_area';
   value: number;
+  percentage: number;
 }
 
 export interface SoilHealthsData {
   id: 'areas_suitable_for_cover_cropping_area' | 'areas_suitable_for_minimum_tillage_area';
   value: number;
+  percentage: number;
 }
 
 export interface CountriesData {

@@ -10,7 +10,7 @@ import { FiltersOmitProps, RestorationsData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useRestorations } from 'hooks/restorations';
-import { formatHA } from 'hooks/utils';
+import { formatHA, formatPercentage } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -49,6 +49,7 @@ const RestorationsChart = ({ selected, ignore = null, onBarClick }: Restorations
           ...c,
           id: c.value,
           value: d1.value,
+          percentage: d1.percentage,
           color: c.color,
         };
       })
@@ -90,7 +91,7 @@ const RestorationsChart = ({ selected, ignore = null, onBarClick }: Restorations
       colorScale={colorScale}
       interactive={false}
       selected={selected}
-      format={formatHA}
+      format={(d) => `${formatHA(d.value)} | ${formatPercentage(d.percentage / 100)}`}
       onBarClick={onBarClick}
     />
   );

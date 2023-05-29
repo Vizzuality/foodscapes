@@ -123,7 +123,7 @@ const FoodscapesTopChart = ({ settings, onBarClick }: FoodscapesTopChartProps) =
         xScale={xScale}
         colorScale={colorScale}
         interactive={false}
-        format={(d) => `${convertPixelCountToHA(d)} | ${formatPercentage(d / TOTAL)}`}
+        format={(d) => `${convertPixelCountToHA(d.value)} | ${formatPercentage(d.value / TOTAL)}`}
         onBarClick={handleBarClick}
       />
     </>

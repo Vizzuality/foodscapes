@@ -123,7 +123,7 @@ const CropsTopChart = ({ settings, onBarClick }: CropsTopChartProps) => {
         xScale={xScale}
         interactive={false}
         colorScale={colorScale}
-        format={(d) => `${convertPixelCountToHA(d)} | ${formatPercentage(d / TOTAL)}`}
+        format={(d) => `${convertPixelCountToHA(d.value)} | ${formatPercentage(d.value / TOTAL)}`}
         onBarClick={handleBarClick}
       />
     </>
