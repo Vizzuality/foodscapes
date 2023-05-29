@@ -104,8 +104,15 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                   [THEME[theme].button.states.error]: state === 'error',
                 })}
               >
-                <span className="block truncate">{SELECTED}</span>
-                <span className="pointer-events-none relative inset-y-0.5 flex items-center space-x-2">
+                <span
+                  className={cx({
+                    'block truncate': true,
+                    [THEME[theme].selected]: !!selected,
+                  })}
+                >
+                  {SELECTED}
+                </span>
+                <span className="pointer-events-none relative flex items-center space-x-2">
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}

@@ -70,7 +70,7 @@ const CountriesFilters = () => {
             id="countries-location-select"
             size="s"
             theme="dark"
-            placeholder="Countries"
+            placeholder="Select..."
             options={COUNTRY_OPTIONS}
             value={country ?? null}
             onChange={handleCountryChange}

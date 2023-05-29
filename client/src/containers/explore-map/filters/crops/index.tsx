@@ -115,7 +115,7 @@ const CropsFilters = () => {
             id="crops-multiselect"
             size="s"
             theme="dark"
-            placeholder="Crops"
+            placeholder="Select..."
             options={OPTIONS_CROPS}
             values={crops as number[]}
             batchSelectionActive
@@ -128,7 +128,7 @@ const CropsFilters = () => {
             id="crops-groups-multiselect"
             size="s"
             theme="dark"
-            placeholder="Filter crop groups"
+            placeholder="Select..."
             options={GROUPED_OPTIONS}
             values={GROUPED_SELECTED}
             batchSelectionActive

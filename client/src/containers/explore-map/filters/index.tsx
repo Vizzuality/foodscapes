@@ -14,6 +14,7 @@ import {
   provinceAtom,
 } from 'store/explore-map';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
@@ -91,7 +92,7 @@ const Filters = () => {
     <>
       <div
         className={cn({
-          'group absolute bottom-0 left-0 z-10 w-full cursor-pointer bg-navy-500': true,
+          'group sticky bottom-0 left-0 z-10 w-full cursor-pointer bg-navy-500': true,
         })}
         onClick={handleFiltersClick}
       >
@@ -104,7 +105,7 @@ const Filters = () => {
         >
           <p className="shrink-0 py-1.5 text-xs italic text-white">Filtering by:</p>
 
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-2">
             {/* Foodscapes */}
             <FoodscapesSelected />
             {/* <FoodscapesGroupsSelected /> */}
@@ -131,69 +132,78 @@ const Filters = () => {
         </div>
       </div>
 
-      {open && (
-        <div className="absolute top-0 left-0 z-20 h-full w-full max-w-[640px] space-y-8 overflow-auto bg-navy-500 px-20 py-4 text-white">
-          <div>
-            <p className="text-xs italic text-white">Filtering by:</p>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="filters"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ bounce: 0 }}
+            className="absolute top-0 left-0 z-20 h-full w-full max-w-[640px] space-y-8 overflow-auto bg-navy-500 px-20 py-4 text-white"
+          >
+            <div>
+              <p className="text-xs italic text-white">Filtering by:</p>
 
-            <button
-              type="button"
-              className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-white"
-              onClick={handleFiltersClick}
-            >
-              <Icon icon={CLOSE_SVG} className="h-6 w-6 text-navy-500" />
-            </button>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-center space-x-2">
-              <Icon icon={FOODSCAPES_SVG} className="h-6 w-6 text-white" />
-              <h3 className="font-display text-2xl">Foodscapes</h3>
+              <button
+                type="button"
+                className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-white"
+                onClick={handleFiltersClick}
+              >
+                <Icon icon={CLOSE_SVG} className="h-4 w-4 text-navy-500" />
+              </button>
             </div>
 
-            <div className="space-y-4">
-              <FoodscapesFilters />
-              <IntensitiesFilters />
-              <CropsFilters />
-            </div>
-          </div>
+            <div>
+              <div className="flex items-center justify-center space-x-2">
+                <Icon icon={FOODSCAPES_SVG} className="h-6 w-6 text-white" />
+                <h3 className="font-display text-2xl">Foodscapes</h3>
+              </div>
 
-          <div>
-            <div className="flex items-center justify-center space-x-2">
-              <Icon icon={RISKS_SVG} className="h-6 w-6 text-white" />
-              <h3 className="font-display text-2xl">Risks</h3>
-            </div>
-
-            <div className="space-y-4">
-              <LandUseFilters />
-              <ClimateRisksFilters />
-              <PollutionRisksFilters />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-center space-x-2">
-              <Icon icon={LOCATIONS_SVG} className="h-6 w-6 text-white" />
-              <h3 className="font-display text-2xl">Locations</h3>
+              <div className="space-y-4">
+                <FoodscapesFilters />
+                <IntensitiesFilters />
+                <CropsFilters />
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <CountriesFilters />
-              <ProvincesFilters />
+            <div>
+              <div className="flex items-center justify-center space-x-2">
+                <Icon icon={RISKS_SVG} className="h-6 w-6 text-white" />
+                <h3 className="font-display text-2xl">Risks</h3>
+              </div>
+
+              <div className="space-y-4">
+                <LandUseFilters />
+                <ClimateRisksFilters />
+                <PollutionRisksFilters />
+              </div>
             </div>
-          </div>
 
-          <div className="flex justify-end space-x-4 text-xs">
-            <button type="button" className="italic underline" onClick={handleClearClick}>
-              Clear all filters
-            </button>
+            <div>
+              <div className="flex items-center justify-center space-x-2">
+                <Icon icon={LOCATIONS_SVG} className="h-6 w-6 text-white" />
+                <h3 className="font-display text-2xl">Locations</h3>
+              </div>
 
-            <button type="button" className="h-6 w-12 bg-navy-400" onClick={handleFiltersClick}>
-              Done
-            </button>
-          </div>
-        </div>
-      )}
+              <div className="space-y-4">
+                <CountriesFilters />
+                <ProvincesFilters />
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-4 text-xs">
+              <button type="button" className="italic underline" onClick={handleClearClick}>
+                Clear all filters
+              </button>
+
+              <button type="button" className="h-6 w-12 bg-navy-400" onClick={handleFiltersClick}>
+                Done
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

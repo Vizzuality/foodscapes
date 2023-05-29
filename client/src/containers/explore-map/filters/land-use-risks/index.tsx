@@ -47,7 +47,7 @@ const LandUseFilters = () => {
           id="riks-land-use-change-select"
           size="s"
           theme="dark"
-          placeholder="Filter risk"
+          placeholder="Select..."
           options={landUseData}
           value={landUseRisk[0] ?? null}
           onChange={(value) => {

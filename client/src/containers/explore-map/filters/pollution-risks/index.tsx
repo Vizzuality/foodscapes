@@ -47,7 +47,7 @@ const PollutionRisksFilters = () => {
           id="pollution-risk"
           size="s"
           theme="dark"
-          placeholder="Filter risk"
+          placeholder="Select..."
           options={pollutionData}
           value={pollution[0] ?? null}
           onChange={(value) => {

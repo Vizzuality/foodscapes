@@ -55,7 +55,7 @@ const IntensitiesFilters = () => {
           id="foodscapes-multiselect"
           size="s"
           theme="dark"
-          placeholder="Intensity groups"
+          placeholder="Select..."
           options={OPTIONS_INTENSITIES}
           values={intensities as number[]}
           batchSelectionActive

@@ -85,6 +85,8 @@ const Sidebar = () => {
                   <CaseStudiesSidebar />
                 </TabsContent>
               </div>
+
+              <Filters />
             </div>
           </Tabs>
 
@@ -109,8 +111,6 @@ const Sidebar = () => {
               />
             </button>
           </DialogTrigger>
-
-          <Filters />
         </motion.div>
       </DialogContent>
     </Dialog>
