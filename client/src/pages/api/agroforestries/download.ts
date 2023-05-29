@@ -15,7 +15,7 @@ const fetch = async () => {
     KNEX
       //
       .select(KNEX.raw("'cropland_areas_suitable_for_silvoarable_area' AS id"))
-      .select(KNEX.raw('SUM(d.cropland_areas_suitable_for_silvoarable_area) AS value'))
+      .select(KNEX.raw('SUM(d.cropland_areas_suitable_for_silvoarable_area) AS ha'))
       .select(
         KNEX.raw(
           '(SUM(d.cropland_areas_suitable_for_silvoarable_area) / (SELECT SUM(d.pixel_count) * 3086.9136)) * 100 as percentage'
@@ -26,7 +26,7 @@ const fetch = async () => {
     KNEX
       //
       .select(KNEX.raw("'forest_ecoregions_suitable_for_silvopastoral_area' AS id"))
-      .select(KNEX.raw('SUM(d.forest_ecoregions_suitable_for_silvopastoral_area) AS value'))
+      .select(KNEX.raw('SUM(d.forest_ecoregions_suitable_for_silvopastoral_area) AS ha'))
       .select(
         KNEX.raw(
           '(SUM(d.forest_ecoregions_suitable_for_silvopastoral_area) / (SELECT SUM(d.pixel_count) * 3086.9136)) * 100 as percentage'
@@ -38,7 +38,7 @@ const fetch = async () => {
       //
       .select(KNEX.raw("'tropical_grassland_ecoregions_suitable_for_silvopastoral_area' AS id"))
       .select(
-        KNEX.raw('SUM(d.tropical_grassland_ecoregions_suitable_for_silvopastoral_area) AS value')
+        KNEX.raw('SUM(d.tropical_grassland_ecoregions_suitable_for_silvopastoral_area) AS ha')
       )
       .select(
         KNEX.raw(

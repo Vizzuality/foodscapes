@@ -23,6 +23,7 @@ export interface LandUseRiskData {
     | 'soil_erosion'
     | 'water_scarcity';
   value: number;
+  percentage: number;
 }
 export interface ClimateRiskData {
   id: 'risk' | 'not_risk';
