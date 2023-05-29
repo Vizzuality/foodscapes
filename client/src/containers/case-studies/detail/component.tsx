@@ -72,7 +72,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
       </header>
 
       {!caseStudyIsPlaceholderData && !caseStudyIsError && (
-        <div className="mt-16 w-full border-t px-20 pt-10">
+        <div className="mt-16 w-full overflow-hidden border-t px-20 pt-10">
           <Content />
         </div>
       )}
