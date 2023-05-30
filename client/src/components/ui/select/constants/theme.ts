@@ -25,7 +25,7 @@ const THEME = {
   light: {
     container: 'text-gray-600 text-sm',
     button: {
-      base: 'flex justify-between items-center w-full text-left transition duration-150 ease-in-out cursor-pointer border-b border-dashed bg-white',
+      base: 'flex justify-between items-center w-full text-left transition duration-150 ease-in-out cursor-pointer border-b border-dashed bg-white space-x-4',
       states: {
         none: 'border-gray-800',
         error: 'border-red-500',

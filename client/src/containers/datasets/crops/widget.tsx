@@ -75,12 +75,19 @@ const CropsWidget = () => {
   }, [data, cropsGroupData, crops]);
 
   const OPTIONS = useMemo(() => {
-    return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
+    return cropsData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
   }, [data, cropsData]);
 
   const GROUPED_OPTIONS = useMemo(() => {
     if (!data || !cropsGroupData) return [];
-    return cropsGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+
+    return cropsGroupData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.parent_id).includes(c.value),
+    }));
   }, [data, cropsGroupData]);
 
   const handleBarClick = (key: number) => {

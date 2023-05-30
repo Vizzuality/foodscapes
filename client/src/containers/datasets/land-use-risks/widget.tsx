@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -36,10 +36,19 @@ const LandUseRiskWidget = () => {
     isError: landUseIsError,
   } = useLandUseRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<LandUseRiskData>(
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<LandUseRiskData>(
     'land-use-risks',
     filters
   );
+
+  const OPTIONS = useMemo(() => {
+    if (!data || !landUseData) return [];
+
+    return landUseData.map((c) => ({
+      ...c,
+      disabled: !data.find((d) => d.id === c.column)?.value,
+    }));
+  }, [data, landUseData]);
 
   const handleBarClick = useCallback(
     (v) => {
@@ -74,7 +83,7 @@ const LandUseRiskWidget = () => {
             size="s"
             theme="light"
             placeholder="Filter risk"
-            options={landUseData}
+            options={OPTIONS}
             value={landUseRisk[0] ?? null}
             onChange={(value) => {
               if (value === null) {
