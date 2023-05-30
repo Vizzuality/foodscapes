@@ -18,6 +18,12 @@ export const layersOpenAtom = atom({
   default: false,
 });
 
+// Filters
+export const filtersOpenAtom = atom({
+  key: 'filters-open',
+  default: false,
+});
+
 // Map
 export const bboxAtom = atom<Bbox>({
   key: 'bbox',

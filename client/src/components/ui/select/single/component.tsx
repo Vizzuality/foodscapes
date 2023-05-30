@@ -35,7 +35,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
   const [selected, setSelected] = useState(initialValue);
 
   const SELECTED = useMemo(() => {
-    if (loading) return 'Loading...';
+    // if (loading) return 'Loading...';
 
     if (selected) {
       const option = options.find((o) => o.value === selected);
@@ -43,7 +43,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
     }
 
     return placeholder;
-  }, [options, selected, placeholder, loading]);
+  }, [options, selected, placeholder]);
 
   useEffect(() => {
     setSelected(value);
@@ -104,33 +104,38 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                   [THEME[theme].button.states.error]: state === 'error',
                 })}
               >
-                <span className="block truncate">{SELECTED}</span>
-                <span className="pointer-events-none relative inset-y-0.5 flex items-center space-x-2">
+                <span
+                  className={cx({
+                    'block truncate': true,
+                    [THEME[theme].selected]: !!selected,
+                  })}
+                >
+                  {SELECTED}
+                </span>
+                <span className="pointer-events-none relative flex items-center space-x-2">
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}
-                    iconClassName="w-3 h-3"
+                    iconClassName="w-3 h-3 shrink-0"
                   />
 
-                  {!!selected && !loading && clearable && (
+                  {!!selected && clearable && (
                     <button type="button" className="pointer-events-auto" onClick={handleReset}>
                       <Icon
                         icon={CLOSE_SVG}
                         className={cx({
-                          'h-3.5 w-3.5': true,
+                          'h-3.5 w-3.5 shrink-0': true,
                         })}
                       />
                     </button>
                   )}
 
-                  {!loading && (
-                    <Icon
-                      icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                      className={cx({
-                        'h-3 w-3': true,
-                      })}
-                    />
-                  )}
+                  <Icon
+                    icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
+                    className={cx({
+                      'h-3 w-3 shrink-0': true,
+                    })}
+                  />
                 </span>
               </Listbox.Button>
 
@@ -153,7 +158,7 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
 
                 {options.map((opt) => {
                   return (
-                    <Listbox.Option key={opt.value} value={opt.value}>
+                    <Listbox.Option key={opt.value} value={opt.value} disabled={opt.disabled}>
                       {({ active: a, selected: s, disabled: d }) => (
                         <div
                           className={cx({

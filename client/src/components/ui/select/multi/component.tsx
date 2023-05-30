@@ -36,8 +36,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   const initialValues = values || [];
   const [selected, setSelected] = useState(initialValues);
 
+  const OPTIONS_ENABLED = useMemo(() => {
+    if (!options) return [];
+    return options.filter((o) => !o.disabled);
+  }, [options]);
+
   const SELECTED = useMemo(() => {
-    if (loading) return 'Loading...';
+    // if (loading) return 'Loading...';
 
     if (!selected.length) return placeholder || 'Select items';
 
@@ -49,12 +54,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       return null;
     }
 
-    if (selected.length === options.length) return `All items selected`;
+    if (selected.length === OPTIONS_ENABLED.length || selected.length > OPTIONS_ENABLED.length)
+      return `All items selected`;
 
     if (selected.length > 1) return `Selected items (${selected.length})`;
 
     return null;
-  }, [loading, options, placeholder, selected]);
+  }, [options, placeholder, selected, OPTIONS_ENABLED]);
 
   useEffect(() => {
     if (values) {
@@ -75,13 +81,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   const handleSelectAll = useCallback(
     (e) => {
       e.stopPropagation();
-      const allOptions = options.map((o) => o.value);
+      const allOptions = OPTIONS_ENABLED.map((o) => o.value);
       setSelected(allOptions);
       if (onChange) {
         onChange(allOptions);
       }
     },
-    [onChange, options]
+    [onChange, OPTIONS_ENABLED]
   );
 
   const handleClearAll = useCallback(
@@ -134,33 +140,38 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   [THEME[theme].button.states.error]: state === 'error',
                 })}
               >
-                <span className="block truncate">{SELECTED}</span>
-                <span className="pointer-events-none relative inset-y-0.5 flex items-center space-x-2">
+                <span
+                  className={cx({
+                    'block truncate': true,
+                    [THEME[theme].selected]: !!selected.length,
+                  })}
+                >
+                  {SELECTED}
+                </span>
+                <span className="pointer-events-none relative flex items-center space-x-2">
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}
-                    iconClassName="w-3 h-3"
+                    iconClassName="w-3 h-3 shrink-0"
                   />
 
-                  {!!selected.length && !loading && clearSelectionActive && (
+                  {!!selected.length && clearSelectionActive && (
                     <button type="button" className="pointer-events-auto" onClick={handleClearAll}>
                       <Icon
                         icon={CLOSE_SVG}
                         className={cx({
-                          'h-3.5 w-3.5': true,
+                          'h-3.5 w-3.5 shrink-0': true,
                         })}
                       />
                     </button>
                   )}
 
-                  {!loading && (
-                    <Icon
-                      icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                      className={cx({
-                        'h-3 w-3': true,
-                      })}
-                    />
-                  )}
+                  <Icon
+                    icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
+                    className={cx({
+                      'h-3 w-3 shrink-0': true,
+                    })}
+                  />
                 </span>
               </Listbox.Button>
 
@@ -195,9 +206,11 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                     >
                       {selected.length < 1 && clearSelectionLabel}
                       {selected.length >= 1 &&
-                        selected.length !== options.length &&
+                        selected.length !== OPTIONS_ENABLED.length &&
+                        selected.length < OPTIONS_ENABLED.length &&
                         `${clearSelectionLabel} (${selected.length} Selected)`}
-                      {selected.length === options.length &&
+                      {(selected.length === OPTIONS_ENABLED.length ||
+                        selected.length > OPTIONS_ENABLED.length) &&
                         `${clearSelectionLabel} (All selected)`}
                     </button>
                   )}
@@ -205,7 +218,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                 {options.map((opt) => {
                   return (
-                    <Listbox.Option key={opt.value} value={opt.value}>
+                    <Listbox.Option key={opt.value} value={opt.value} disabled={opt.disabled}>
                       {({ active: a, selected: s, disabled: d }) => (
                         <div
                           className={cx({
