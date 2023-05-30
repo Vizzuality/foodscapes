@@ -53,7 +53,7 @@ const Content = () => {
               },
             }}
             transition={{ duration: ANIMATION_DURATION / 1000, ease: 'easeInOut' }}
-            className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-[640px] bg-white"
+            className="pointer-events-auto absolute left-0 top-0 z-30 h-full w-full bg-white"
           >
             <div className="flex h-full grow flex-col overflow-y-auto pb-10">
               {content?.type === 'case-study' && <CaseStudiesDetail id={content?.id} />}

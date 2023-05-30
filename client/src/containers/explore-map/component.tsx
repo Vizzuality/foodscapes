@@ -1,4 +1,3 @@
-import Content from 'containers/explore-map/content';
 import Sidebar from 'containers/explore-map/sidebar';
 
 import { Media } from 'components/media-query';
@@ -20,7 +19,6 @@ const ExploreMap = () => {
       </Media>
       <Media greaterThanOrEqual="sm">
         <Sidebar />
-        <Content />
       </Media>
     </div>
   );

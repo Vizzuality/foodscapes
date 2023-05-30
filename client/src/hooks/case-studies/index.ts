@@ -1,7 +1,8 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import CaseStudiesInfo from 'data/case-studies';
 
 import { CaseStudy } from 'types/case-studies';
+
+import CaseStudiesInfo from 'data/case-studies';
 
 import API from 'services/api';
 

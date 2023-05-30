@@ -30,7 +30,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
 
   return (
     <div className="flex flex-col">
-      <header className="relative z-0 px-20 pt-36">
+      <header className="relative z-0 px-20 pt-10">
         <div className="relative z-10 flex justify-between text-xs font-bold">
           <button
             className="flex items-center gap-3 uppercase"

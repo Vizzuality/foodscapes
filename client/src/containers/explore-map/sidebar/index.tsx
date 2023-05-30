@@ -2,12 +2,13 @@ import Link from 'next/link';
 
 import cn from 'lib/classnames';
 
-import { sidebarOpenAtom, tabAtom, contentOpenAtom } from 'store/explore-map';
+import { sidebarOpenAtom, tabAtom } from 'store/explore-map';
 
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import Content from 'containers/explore-map/content';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'containers/explore-map/sidebar/tabs';
 import CaseStudiesSidebar from 'containers/explore-map/sidebar/tabs/case-studies';
 import FoodscapesSidebar from 'containers/explore-map/sidebar/tabs/foodscapes';
@@ -26,14 +27,6 @@ const Sidebar = () => {
   const tab = useRecoilValue(tabAtom);
   const setTab = useSetRecoilState(tabAtom);
 
-  const contentOpen = useRecoilValue(contentOpenAtom);
-
-  let motionVariant = open ? 'open' : 'exit';
-
-  if (contentOpen) {
-    motionVariant = 'reduced';
-  }
-
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -47,15 +40,15 @@ const Sidebar = () => {
         <>
           <motion.div
             key="sidebar"
-            initial={motionVariant}
-            animate={motionVariant}
+            initial="initial"
+            animate={open ? 'animate' : 'exit'}
             exit="exit"
             variants={{
-              open: {
+              initial: {
                 x: '0%',
               },
-              reduced: {
-                x: '-5%',
+              animate: {
+                x: '0%',
               },
               exit: {
                 x: '-100%',
@@ -95,17 +88,17 @@ const Sidebar = () => {
                     <CaseStudiesSidebar />
                   </TabsContent>
                 </div>
+
+                <Content />
               </div>
             </Tabs>
 
             <Link
               href="/"
               className={cn({
-                'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 sm:block':
+                'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 transition-colors sm:block':
                   true,
                 'transition-[colors,transform_0.5s] ease-in-out': true,
-                'translate-x-8': motionVariant !== 'reduced',
-                'translate-x-16': motionVariant === 'reduced',
               })}
             >
               Foodscapes
