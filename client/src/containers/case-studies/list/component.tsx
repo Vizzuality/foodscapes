@@ -1,6 +1,8 @@
-import { contentAtom } from 'store/explore-map';
+import { contentAtom, tmpBboxAtom } from 'store/explore-map';
 
 import { useSetRecoilState } from 'recoil';
+
+import { CaseStudy } from 'types/case-studies';
 
 import { useCaseStudies } from 'hooks/case-studies';
 
@@ -10,6 +12,7 @@ import CaseStudiesListItem from '../list-item/component';
 
 const CaseStudiesList = () => {
   const setContentAtom = useSetRecoilState(contentAtom);
+  const setTmpBboxAtom = useSetRecoilState(tmpBboxAtom);
 
   const {
     data: caseStudiesData,
@@ -19,11 +22,13 @@ const CaseStudiesList = () => {
     isPlaceholderData: caseStudiesIsPlaceholderData,
   } = useCaseStudies();
 
-  const handleCaseStudyClick = (id) => {
+  const handleCaseStudyClick = (caseStudy: CaseStudy) => {
     setContentAtom({
-      id,
+      id: caseStudy.id,
       type: 'case-study',
     });
+
+    setTmpBboxAtom(caseStudy.bbox);
   };
 
   return (
@@ -48,7 +53,7 @@ const CaseStudiesList = () => {
                 type="button"
                 className="w-full"
                 aria-label={`View ${caseStudy.title} case study`}
-                onClick={() => handleCaseStudyClick(caseStudy.id)}
+                onClick={() => handleCaseStudyClick(caseStudy)}
               >
                 <CaseStudiesListItem caseStudy={caseStudy} />
               </button>
