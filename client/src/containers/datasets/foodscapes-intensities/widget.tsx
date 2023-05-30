@@ -41,8 +41,11 @@ const FoodscapesIntensitiesWidget = () => {
     useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
   const OPTIONS = useMemo(() => {
-    if (!data) return [];
-    return intensitiesData.filter((c) => data.map((d) => d.id).includes(c.value));
+    if (!data || !intensitiesData) return [];
+    return intensitiesData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
   }, [data, intensitiesData]);
 
   const handleBarClick = (key: number) => {

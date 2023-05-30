@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import dynamic from 'next/dynamic';
 
 import { climateRiskAtom, filtersSelector } from 'store/explore-map';
@@ -36,17 +38,26 @@ const ClimateRiskWidget = () => {
     isError: climateIsError,
   } = useClimateRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>(
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<ClimateRiskData>(
     'climate-risks',
     filters
   );
 
-  const handleChartClick = (data) => {
-    if (climateChange.includes(data.id)) {
+  const OPTIONS = useMemo(() => {
+    if (!data || !climateData) return [];
+
+    return climateData.map((c) => ({
+      ...c,
+      disabled: !data.find((d) => d.id === c.id)?.value,
+    }));
+  }, [data, climateData]);
+
+  const handleChartClick = (d) => {
+    if (climateChange.includes(d.id)) {
       return setClimateChange([]);
     }
 
-    setClimateChange([data.id]);
+    setClimateChange([d.id]);
   };
 
   return (
@@ -71,8 +82,9 @@ const ClimateRiskWidget = () => {
             size="s"
             theme="light"
             placeholder="Filter risk"
-            options={climateData}
+            options={OPTIONS}
             value={climateChange[0] ?? null}
+            loading={isFetching || climateIsFetching}
             onChange={(value) => {
               if (value === null) {
                 setClimateChange([]);
