@@ -17,7 +17,7 @@ const CropsSelected = () => {
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
 
-  const { data: cropsData } = useCrops();
+  const { data: cropsData, isFetched: cropsIsFetched } = useCrops();
 
   const { data } = useData<CropData>('crops', cropsFilters);
 
@@ -45,7 +45,11 @@ const CropsSelected = () => {
     setCrops([]);
   };
 
-  return <FilterSelected text={SELECTED} visible={!!crops.length} onClear={handleClearClick} />;
+  return (
+    cropsIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!crops.length} onClear={handleClearClick} />
+    )
+  );
 };
 
 export default CropsSelected;

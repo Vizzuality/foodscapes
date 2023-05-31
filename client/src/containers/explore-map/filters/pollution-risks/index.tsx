@@ -56,7 +56,7 @@ const PollutionRisksFilters = () => {
           id="pollution-risk"
           size="s"
           theme="dark"
-          placeholder="Select..."
+          placeholder="All pollution risks"
           options={OPTIONS}
           loading={isFetching || pollutionIsFetching}
           value={pollution[0] ?? null}

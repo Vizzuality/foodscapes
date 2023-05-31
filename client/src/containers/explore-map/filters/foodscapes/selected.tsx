@@ -16,7 +16,7 @@ const FoodscapesSelected = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData } = useFoodscapes();
+  const { data: foodscapesData, isFetched: foodscapesIsFetched } = useFoodscapes();
 
   const { data } = useData<FoodscapeData>('foodscapes', filters);
 
@@ -44,7 +44,9 @@ const FoodscapesSelected = () => {
   };
 
   return (
-    <FilterSelected text={SELECTED} visible={!!foodscapes.length} onClear={handleClearClick} />
+    foodscapesIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!foodscapes.length} onClear={handleClearClick} />
+    )
   );
 };
 

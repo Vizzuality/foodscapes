@@ -56,7 +56,7 @@ const ClimateRisksFilters = () => {
           id="riks-climate-change-select"
           size="s"
           theme="dark"
-          placeholder="Select..."
+          placeholder="All climate changes"
           loading={isFetching || climateIsFetching}
           options={OPTIONS}
           value={climateChange[0] ?? null}

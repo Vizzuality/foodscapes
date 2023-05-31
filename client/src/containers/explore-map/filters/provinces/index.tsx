@@ -86,7 +86,7 @@ const ProvincesFilters = () => {
           id="province-location-select"
           size="s"
           theme="dark"
-          placeholder="Regions"
+          placeholder="All Regions"
           options={OPTIONS}
           loading={(country && provincesIsFetching) || (country && isFetching)}
           value={province ?? null}

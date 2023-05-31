@@ -19,7 +19,7 @@ const IntensitiesSelected = () => {
 
   const { data } = useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
-  const { data: intensitiesData } = useFoodscapesIntensities();
+  const { data: intensitiesData, isFetched: intensitiesIsFetched } = useFoodscapesIntensities();
 
   const OPTIONS = useMemo(() => {
     if (!data || !intensitiesData) return [];
@@ -46,7 +46,9 @@ const IntensitiesSelected = () => {
   };
 
   return (
-    <FilterSelected text={SELECTED} visible={!!intensities.length} onClear={handleClearClick} />
+    intensitiesIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!intensities.length} onClear={handleClearClick} />
+    )
   );
 };
 

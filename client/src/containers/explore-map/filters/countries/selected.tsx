@@ -13,7 +13,7 @@ const CountriesSelected = () => {
   const setCountry = useSetRecoilState(countryAtom);
   const setProvince = useSetRecoilState(provinceAtom);
 
-  const { data: countriesData } = useCountries();
+  const { data: countriesData, isFetched: countriesIsFetched } = useCountries();
 
   const OPTIONS = useMemo(() => {
     if (!countriesData) return [];
@@ -35,7 +35,11 @@ const CountriesSelected = () => {
     setProvince(null);
   };
 
-  return <FilterSelected text={SELECTED} visible={!!country} onClear={handleClearClick} />;
+  return (
+    countriesIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!country} onClear={handleClearClick} />
+    )
+  );
 };
 
 export default CountriesSelected;

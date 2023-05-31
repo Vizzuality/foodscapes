@@ -12,7 +12,7 @@ const PollutionRisksSelected = () => {
   const pollution = useRecoilValue(pollutionRiskAtom);
   const setPollution = useSetRecoilState(pollutionRiskAtom);
 
-  const { data: pollutionData } = usePollutionRisks();
+  const { data: pollutionData, isFetched: pollutionIsFetched } = usePollutionRisks();
 
   const SELECTED = useMemo(() => {
     if (pollution.length === 1) {
@@ -32,7 +32,11 @@ const PollutionRisksSelected = () => {
     setPollution([]);
   };
 
-  return <FilterSelected text={SELECTED} visible={!!pollution.length} onClear={handleClearClick} />;
+  return (
+    pollutionIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!pollution.length} onClear={handleClearClick} />
+    )
+  );
 };
 
 export default PollutionRisksSelected;

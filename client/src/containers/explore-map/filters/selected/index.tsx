@@ -2,6 +2,14 @@ import { MouseEvent } from 'react';
 
 import cn from 'lib/classnames';
 
+import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '@radix-ui/react-tooltip';
+
 import Icon from 'components/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
@@ -14,22 +22,37 @@ interface FilterSelectedProps {
 
 const FilterSelected = ({ text, visible, onClear }: FilterSelectedProps) => {
   return (
-    <div
-      className={cn({
-        'flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
-        hidden: !visible,
-      })}
-    >
-      <p className="text-xs font-bold uppercase text-navy-500 line-clamp-1">{text}</p>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          className={cn({
+            'flex items-center justify-between space-x-2 rounded-3xl bg-white p-1 pl-2': true,
+            hidden: !visible,
+          })}
+        >
+          <p className="text-xs font-bold uppercase text-navy-500 line-clamp-1">{text}</p>
 
-      <button
-        type="button"
-        className="flex items-center justify-center rounded-full bg-navy-500 p-1"
-        onClick={onClear}
-      >
-        <Icon icon={CLOSE_SVG} className="h-3 w-3 text-white" />
-      </button>
-    </div>
+          <button
+            type="button"
+            className="flex items-center justify-center rounded-full bg-navy-500 p-1"
+            onClick={onClear}
+          >
+            <Icon icon={CLOSE_SVG} className="h-3 w-3 text-white" />
+          </button>
+        </div>
+      </TooltipTrigger>
+      <TooltipPortal>
+        <TooltipContent
+          side="top"
+          align="center"
+          className="rounded-none border-gray-400 bg-white p-2"
+        >
+          <div className="text-xs text-navy-500">{text}</div>
+
+          <TooltipArrow className="fill-white" width={10} height={5} />
+        </TooltipContent>
+      </TooltipPortal>
+    </Tooltip>
   );
 };
 

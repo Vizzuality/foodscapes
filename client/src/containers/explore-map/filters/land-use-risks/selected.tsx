@@ -12,7 +12,7 @@ const LandUseSelected = () => {
   const landUseRisk = useRecoilValue(landUseRiskAtom);
   const setLandUseRisk = useSetRecoilState(landUseRiskAtom);
 
-  const { data: landUseData } = useLandUseRisks();
+  const { data: landUseData, isFetched: landUseisFetched } = useLandUseRisks();
 
   const SELECTED = useMemo(() => {
     if (landUseRisk.length === 1) {
@@ -33,7 +33,9 @@ const LandUseSelected = () => {
   };
 
   return (
-    <FilterSelected text={SELECTED} visible={!!landUseRisk.length} onClear={handleClearClick} />
+    landUseisFetched && (
+      <FilterSelected text={SELECTED} visible={!!landUseRisk.length} onClear={handleClearClick} />
+    )
   );
 };
 
