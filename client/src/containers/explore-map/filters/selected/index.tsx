@@ -46,13 +46,15 @@ const FilterSelected = ({ text, popover, visible, onClear }: FilterSelectedProps
         <TooltipContent
           side="top"
           align="center"
-          className="max-w-sm rounded-none border-gray-400 bg-white p-2"
+          className="max-w-sm rounded-none bg-white p-2 shadow-lg"
         >
-          {popover?.map((p) => (
-            <div key={p.id} className="text-xs text-navy-500">
-              {p.label}
-            </div>
-          ))}
+          <ul className="list-disc space-y-1 pl-4">
+            {popover?.map((p) => (
+              <li key={p.id} className="text-xs text-navy-500">
+                {p.label}
+              </li>
+            ))}
+          </ul>
 
           <TooltipArrow className="fill-white" width={10} height={5} />
         </TooltipContent>

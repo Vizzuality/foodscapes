@@ -27,11 +27,6 @@ const PollutionRisksSelected = () => {
     return null;
   }, [pollutionData, pollution]);
 
-  const POPOVER_SELECTED = useMemo(() => {
-    const selected = pollutionData.filter((o) => pollution.includes(o.value));
-    return selected;
-  }, [pollutionData, pollution]);
-
   const handleClearClick = (e) => {
     e.stopPropagation();
     setPollution([]);
@@ -39,12 +34,7 @@ const PollutionRisksSelected = () => {
 
   return (
     pollutionIsFetched && (
-      <FilterSelected
-        text={SELECTED}
-        popover={POPOVER_SELECTED}
-        visible={!!pollution.length}
-        onClear={handleClearClick}
-      />
+      <FilterSelected text={SELECTED} visible={!!pollution.length} onClear={handleClearClick} />
     )
   );
 };
