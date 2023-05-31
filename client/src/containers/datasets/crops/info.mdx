@@ -1,13 +1,57 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 
-A foodscape is a terrestrial or aquatic food production area defined by a series of distinct
-biophysical attributes and management patterns, which can be mapped. They cover all parts of
-the globe where food is produced.
+## Crops
+Dominant or most productive crop per pixel area.
 
-*Copyright © 2021 The Nature Conservancy; International Institute for Applied Systems
-Analysis; SYSTEMIQ*
+#### Geographic coverage
+Global
+
+#### Spatial resolution
+~10 km
+
+#### Date of content
+2010
+
+### Description
+This dataset represents the most productive crop per pixel area, and it has been produced from the
+[Spatial Production Allocation Model (SPAM)](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/PRFF8V).
+IFPRI's SPAM uses a cross-entropy approach to make plausible estimates of crop distribution within disaggregated units.
+Moving the data from coarser units such as countries and sub-national provinces,
+to finer units such as grid cells, reveals spatial patterns of crop performance,
+creating a global grid-scape at the confluence between geography and agricultural production systems.
+Improving spatial understanding of crop production systems allows policymakers and donors
+to better target agricultural and rural development policies and investments,
+increasing food security and growth with minimal environmental impacts.
+
+
+### Citation
+International Food Policy Research Institute, 2019, "Global Spatially-Disaggregated Crop Production Statistics Data for 2010 Version 2.0", https://doi.org/10.7910/DVN/PRFF8V, Harvard Dataverse, V4
+
+### License
+CC BY 4.0
+
+## Crop Groups
+Dominant crop group
+
+#### Geographic coverage
+Global
+
+#### Spatial resolution
+~10 km
+
+#### Date of content
+2010
+
+### Description
+Grouped crops covered by SPAM into six crop groups: Cereals and Oil Crops,
+Tubers, Legumes and Pulses, Perennials, Vegetables, and Other crops. These
+groupings were chosen based on similar cultivation forms, practices, or their commonly
+associated cultivation such as cereals and oil crops in animal feed production. We then
+calculated for each crop group and grid cell the total production area relative to the total area
+of cropland, resulting in a series of maps highlighting which crop group is predominantly grown
+in an area.
 
 export default ({ children, ...props }) => (
   <LayoutMdx {...props}>
