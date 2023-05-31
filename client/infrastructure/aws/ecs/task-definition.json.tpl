@@ -13,8 +13,7 @@
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
                 "awslogs-group": "client",
-                "awslogs-stream-prefix": "client",
-                "awslogs-create-group": "true"
+                "awslogs-stream-prefix": "client"
                 }
             },
             "portMappings": [
