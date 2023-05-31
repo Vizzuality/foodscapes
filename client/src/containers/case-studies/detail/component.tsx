@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { contentAtom } from 'store/explore-map';
 
+import { motion } from 'framer-motion';
 import { useSetRecoilState } from 'recoil';
 
 import { useCaseStudy } from 'hooks/case-studies';
@@ -29,7 +30,17 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
   const Content = caseStudy?.content;
 
   return (
-    <div className="flex flex-col">
+    <motion.div
+      // initial="initial"
+      // animate="animate"
+      // exit="exit"
+      // variants={{
+      //   initial: { opacity: 0, x: -20 },
+      //   animate: { opacity: 1, x: 0 },
+      //   exit: { opacity: 0, x: -20 },
+      // }}
+      className="flex flex-col"
+    >
       <header className="relative z-0 px-20 pt-36">
         <div className="relative z-10 flex justify-between text-xs font-bold">
           <button
@@ -78,7 +89,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
           <Content />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

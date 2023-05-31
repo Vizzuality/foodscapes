@@ -26,10 +26,12 @@ export const contentAtom = atom({
   default: null,
   effects: [
     urlSyncEffect({
-      refine: object({
-        id: number(),
-        type: string(),
-      }),
+      refine: nullable(
+        object({
+          id: number(),
+          type: string(),
+        })
+      ),
     }),
   ],
 });

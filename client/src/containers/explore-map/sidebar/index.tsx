@@ -95,9 +95,13 @@ const Sidebar = () => {
                 </TabsContent>
 
                 <TabsContent value="case-studies">
-                  <AnimatePresence>
-                    {content?.type === 'case-study' && <CaseStudiesDetail id={content?.id} />}
-                    {content?.type !== 'case-study' && <CaseStudiesSidebar />}
+                  <AnimatePresence mode="wait">
+                    {content?.type === 'case-study' && (
+                      <CaseStudiesDetail key="case-study-detail-sidebar" id={content?.id} />
+                    )}
+                    {content?.type !== 'case-study' && (
+                      <CaseStudiesSidebar key="case-study-sidebar" />
+                    )}
                   </AnimatePresence>
                 </TabsContent>
               </div>
