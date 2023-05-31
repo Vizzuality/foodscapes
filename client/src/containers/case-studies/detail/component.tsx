@@ -64,14 +64,13 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
             </div>
             <div className="relative z-10 mt-6 flex flex-col items-center justify-center">
               <h2 className="text-center font-display text-5xl">{caseStudy.title}</h2>
-              <h3 className="pt-2">{caseStudy.description}</h3>
             </div>
           </>
         )}
       </header>
 
       {!caseStudyIsPlaceholderData && !caseStudyIsError && (
-        <div className="mt-16 w-full overflow-hidden border-t px-20 pt-10">
+        <div className="mt-10 w-full overflow-hidden border-t px-20 pt-10">
           <Content />
         </div>
       )}

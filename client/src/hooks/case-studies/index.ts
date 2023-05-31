@@ -6,11 +6,11 @@ import { CaseStudy } from 'types/case-studies';
 
 import API from 'services/api';
 
-function addInfoToCaseStudy(caseStudy) {
-  const caseStudyInfo = CaseStudiesInfo[caseStudy?.slug];
+function addInfoToCaseStudy(c: Partial<CaseStudy>): CaseStudy {
+  const caseStudyInfo = CaseStudiesInfo[c?.slug];
 
   return {
-    ...caseStudy,
+    ...c,
     ...(caseStudyInfo && {
       ...caseStudyInfo?.data,
       content: caseStudyInfo.content,
@@ -23,15 +23,12 @@ export function useCaseStudies(queryOptions: UseQueryOptions<CaseStudy[], unknow
     return API.request({
       method: 'GET',
       url: '/case-studies',
-    }).then((response) =>
-      response.data
-        .map((caseStudy) => addInfoToCaseStudy(caseStudy))
-        .filter(({ content }) => !!content)
-    );
+    }).then((response) => response.data);
   };
 
   const query = useQuery(['case-studies'], fetchCaseStudies, {
     placeholderData: [],
+    select: (data: CaseStudy[]) => data.map(addInfoToCaseStudy),
     ...queryOptions,
   });
 
@@ -43,11 +40,12 @@ export function useCaseStudy(id, queryOptions: UseQueryOptions<CaseStudy, unknow
     return API.request({
       method: 'GET',
       url: `/case-studies/${id}`,
-    }).then((response) => addInfoToCaseStudy(response.data));
+    }).then((response) => response.data);
   };
 
   const query = useQuery(['case-study', id], fetchCaseStudy, {
     placeholderData: [],
+    select: (data: CaseStudy) => addInfoToCaseStudy(data),
     ...queryOptions,
   });
 
