@@ -17,7 +17,7 @@ const CropsSelected = () => {
   const crops = useRecoilValue(cropsAtom);
   const setCrops = useSetRecoilState(cropsAtom);
 
-  const { data: cropsData } = useCrops();
+  const { data: cropsData, isFetched: cropsIsFetched } = useCrops();
 
   const { data } = useData<CropData>('crops', cropsFilters);
 
@@ -40,12 +40,26 @@ const CropsSelected = () => {
     return null;
   }, [OPTIONS, crops]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = OPTIONS.filter((o) => crops.includes(o.value));
+    return selected;
+  }, [OPTIONS, crops]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setCrops([]);
   };
 
-  return <FilterSelected text={SELECTED} visible={!!crops.length} onClear={handleClearClick} />;
+  return (
+    cropsIsFetched && (
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!crops.length}
+        onClear={handleClearClick}
+      />
+    )
+  );
 };
 
 export default CropsSelected;

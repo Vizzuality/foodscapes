@@ -56,7 +56,7 @@ const LandUseFilters = () => {
           id="riks-land-use-change-select"
           size="s"
           theme="dark"
-          placeholder="Select..."
+          placeholder="All land use changes"
           options={OPTIONS}
           loading={isFetching || landUseIsFetching}
           value={landUseRisk[0] ?? null}

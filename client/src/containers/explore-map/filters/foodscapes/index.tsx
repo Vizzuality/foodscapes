@@ -123,7 +123,7 @@ const FoodscapesFilters = () => {
             id="foodscapes-multiselect"
             size="s"
             theme="dark"
-            placeholder="Select..."
+            placeholder="All foodscapes"
             options={OPTIONS}
             values={foodscapes as number[]}
             batchSelectionActive
@@ -136,7 +136,7 @@ const FoodscapesFilters = () => {
             id="foodscapes-groups-multiselect"
             size="s"
             theme="dark"
-            placeholder="Select..."
+            placeholder="All foodscapes groups"
             options={GROUPED_OPTIONS}
             values={GROUPED_SELECTED}
             batchSelectionActive

@@ -197,7 +197,11 @@ const Filters = () => {
                 Clear all filters
               </button>
 
-              <button type="button" className="h-6 w-12 bg-navy-400" onClick={handleFiltersClick}>
+              <button
+                type="button"
+                className="h-6 w-12 rounded bg-navy-400 px-1"
+                onClick={handleFiltersClick}
+              >
                 Done
               </button>
             </div>

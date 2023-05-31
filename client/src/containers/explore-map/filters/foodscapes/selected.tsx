@@ -16,7 +16,7 @@ const FoodscapesSelected = () => {
   const foodscapes = useRecoilValue(foodscapesAtom);
   const setFoodscapes = useSetRecoilState(foodscapesAtom);
 
-  const { data: foodscapesData } = useFoodscapes();
+  const { data: foodscapesData, isFetched: foodscapesIsFetched } = useFoodscapes();
 
   const { data } = useData<FoodscapeData>('foodscapes', filters);
 
@@ -38,13 +38,25 @@ const FoodscapesSelected = () => {
     return null;
   }, [OPTIONS, foodscapes]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = OPTIONS.filter((o) => foodscapes.includes(o.value));
+    return selected;
+  }, [OPTIONS, foodscapes]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setFoodscapes([]);
   };
 
   return (
-    <FilterSelected text={SELECTED} visible={!!foodscapes.length} onClear={handleClearClick} />
+    foodscapesIsFetched && (
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!foodscapes.length}
+        onClear={handleClearClick}
+      />
+    )
   );
 };
 

@@ -19,7 +19,7 @@ const IntensitiesSelected = () => {
 
   const { data } = useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
-  const { data: intensitiesData } = useFoodscapesIntensities();
+  const { data: intensitiesData, isFetched: intensitiesIsFetched } = useFoodscapesIntensities();
 
   const OPTIONS = useMemo(() => {
     if (!data || !intensitiesData) return [];
@@ -40,13 +40,25 @@ const IntensitiesSelected = () => {
     return null;
   }, [OPTIONS, intensities]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = OPTIONS.filter((o) => intensities.includes(o.value));
+    return selected;
+  }, [OPTIONS, intensities]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setIntensities([]);
   };
 
   return (
-    <FilterSelected text={SELECTED} visible={!!intensities.length} onClear={handleClearClick} />
+    intensitiesIsFetched && (
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!intensities.length}
+        onClear={handleClearClick}
+      />
+    )
   );
 };
 

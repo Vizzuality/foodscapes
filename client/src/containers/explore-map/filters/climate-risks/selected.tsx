@@ -12,7 +12,7 @@ const ClimateRisksSelected = () => {
   const climateChange = useRecoilValue(climateRiskAtom);
   const setClimateChange = useSetRecoilState(climateRiskAtom);
 
-  const { data: climateData } = useClimateRisks();
+  const { data: climateData, isFetched: climateIsFetched } = useClimateRisks();
 
   const SELECTED = useMemo(() => {
     if (climateChange.length === 1) {
@@ -33,7 +33,9 @@ const ClimateRisksSelected = () => {
   };
 
   return (
-    <FilterSelected text={SELECTED} visible={!!climateChange.length} onClear={handleClearClick} />
+    climateIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!climateChange.length} onClear={handleClearClick} />
+    )
   );
 };
 
