@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { contentAtom, contentOpenAtom } from 'store/explore-map';
 
@@ -11,6 +11,8 @@ import { CaseStudiesDetail } from 'containers/case-studies';
 const ANIMATION_DURATION = 500;
 
 const Content = () => {
+  const timeout = useRef<NodeJS.Timeout>(null);
+
   const open = useRecoilValue(contentOpenAtom);
   const setOpen = useSetRecoilState(contentOpenAtom);
 
@@ -19,12 +21,13 @@ const Content = () => {
 
   useEffect(() => {
     if (!content?.type) return;
+    if (timeout.current) clearTimeout(timeout.current);
     setOpen(true);
   }, [content, setOpen]);
 
   useEffect(() => {
     if (open) return;
-    setTimeout(resetContentAtom, ANIMATION_DURATION);
+    timeout.current = setTimeout(resetContentAtom, ANIMATION_DURATION);
   }, [open, resetContentAtom]);
 
   return (
