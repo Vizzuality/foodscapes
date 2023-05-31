@@ -9,7 +9,7 @@ import { FoodscapeIntensityData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
-import { convertPixelCountToHA, useIsLoading } from 'hooks/utils';
+import { convertPixelCountToHA, formatPercentage, useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
@@ -24,12 +24,7 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
 
   // DATA
   const fQuery = useFoodscapesIntensities();
-  const dQuery = useData<FoodscapeIntensityData>('foodscapes-intensities', {
-    ...filters,
-    sortBy: 'value',
-    sortDirection: 'desc',
-    limit: 5,
-  });
+  const dQuery = useData<FoodscapeIntensityData>('foodscapes-intensities', filters);
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery]);
   const { data: foodscapesIntensitiesData } = fQuery;
@@ -40,12 +35,19 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
     return data.map((d) => d.id);
   }, [data]);
 
+  const TOTAL = useMemo(() => {
+    return data.reduce((acc, d) => acc + d.value, 0);
+  }, [data]);
+
   const DATA = useMemo(() => {
     // Loop through the data and add the label
-    return data.map((d) => {
-      const { label } = foodscapesIntensitiesData.find((f) => f.value === d.id) || {};
-      return { ...d, label };
-    });
+    return data
+      .map((d) => {
+        const { label } = foodscapesIntensitiesData.find((f) => f.value === d.id) || {};
+        return { ...d, label };
+      })
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
   }, [data, foodscapesIntensitiesData]);
 
   const MAX = Math.max(...DATA.map((d) => d.value));
@@ -54,7 +56,7 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
@@ -90,7 +92,7 @@ const FoodscapesIntensitiesTopChart = ({ onBarClick }: FoodscapesIntensitiesTopC
         xScale={xScale}
         colorScale={colorScale}
         interactive={false}
-        format={convertPixelCountToHA}
+        format={(d) => `${convertPixelCountToHA(d.value)} | ${formatPercentage(d.value / TOTAL)}`}
         onBarClick={handleBarClick}
       />
     </>

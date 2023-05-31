@@ -16,7 +16,7 @@ interface HorizontalBarProps<D extends DataProps> {
   colorScale: ScaleOrdinal<string, string, never>;
   selected?: readonly number[];
   interactive?: boolean;
-  format: (value: number) => string;
+  format: (value: D) => string;
   onBarClick?: (bar: D) => void;
 }
 
@@ -69,7 +69,7 @@ const HorizontalBar = <D extends DataProps>({
                 />
 
                 <div className="shrink-0 whitespace-nowrap text-[8px] font-bold text-navy-500">
-                  {format(value)}
+                  {format(d)}
                 </div>
               </div>
 

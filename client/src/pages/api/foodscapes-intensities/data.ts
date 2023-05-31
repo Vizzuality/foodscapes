@@ -39,7 +39,7 @@ const FoodscapeIntensitiesData = async (
   res: NextApiResponse<FoodscapeIntensityData[] | { error: string }>
 ) => {
   try {
-    const filters = qs.parseUrl(req.url, {
+    const filters = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',

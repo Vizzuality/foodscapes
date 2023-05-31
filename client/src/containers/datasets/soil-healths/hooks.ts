@@ -91,7 +91,7 @@ export function useSource({
 
   return {
     id: 'soil-healths-source',
-    key: `${band.toString()}-${colormap}-${expression}`,
+    key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
       `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,

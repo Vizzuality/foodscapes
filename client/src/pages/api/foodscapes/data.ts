@@ -16,20 +16,16 @@ const KNEX = knex({
 const fetch = async (params: DatasetteParamsProps) => {
   const SQL = KNEX
     //
-    .select('d.foodscapes AS id', 'd.soil_groups AS parent_id')
-    .sum('d.pixel_count AS value')
+    .select(
+      'd.foodscapes AS id',
+      'd.soil_groups AS parent_id',
+      KNEX.raw('SUM(d.pixel_count) as value')
+    )
     .distinct()
     .from('data AS d')
     .whereNotIn('d.foodscapes', [1, 2, 3])
     .groupBy('d.foodscapes');
 
-  console.log(
-    datasetteAdapter({
-      sql: SQL,
-      shape: 'array',
-      ...params,
-    })
-  );
   return API.request<FoodscapeData[]>({
     method: 'GET',
     url: '/foodscapes.json',
@@ -46,14 +42,12 @@ const FoodscapesData = async (
   res: NextApiResponse<FoodscapeData[] | { error: string }>
 ) => {
   try {
-    const params = qs.parseUrl(req.url, {
+    const params = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',
       arrayFormatSeparator: ',',
     }).query as DatasetteParamsProps;
-
-    console.log({ params, query: req.query });
 
     const result = await fetch(params);
     res.status(200).json(result);

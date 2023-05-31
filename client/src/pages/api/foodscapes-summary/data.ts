@@ -33,7 +33,7 @@ const fetch = async (params: DatasetteParamsProps) => {
 
 const FoodscapesData = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const params = qs.parseUrl(req.url, {
+    const params = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',

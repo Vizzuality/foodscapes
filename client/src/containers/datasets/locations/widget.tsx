@@ -68,12 +68,19 @@ const LocationRankingWidget = () => {
 
   const COUNTRY_OPTIONS = useMemo(() => {
     if (!cData || !countriesData) return [];
-    return countriesData.filter((c) => cData.map((d) => d.id).includes(c.value));
+    return countriesData.map((c) => ({
+      ...c,
+      disabled: !cData.map((d) => d.id).includes(c.value),
+    }));
   }, [cData, countriesData]);
 
   const PROVINCE_OPTIONS = useMemo(() => {
     if (!pData || !provincesData) return [];
-    return provincesData.filter((c) => pData.map((d) => d.id).includes(c.value));
+
+    return provincesData.map((c) => ({
+      ...c,
+      disabled: !pData.map((d) => d.id).includes(c.value),
+    }));
   }, [pData, provincesData]);
 
   const handleCountryChange = (value: number | null) => {

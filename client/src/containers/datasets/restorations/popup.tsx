@@ -8,7 +8,7 @@ import { Restoration } from 'types/restorations';
 
 import { noPointData, usePointData } from 'hooks/data';
 import { useRestorations } from 'hooks/restorations';
-import { useIsLoading } from 'hooks/utils';
+import { formatHA, formatPercentage, useIsLoading } from 'hooks/utils';
 
 import { Skeleton } from 'components/ui/skeleton';
 
@@ -18,13 +18,6 @@ interface RestorationsPopupProps {
 }
 
 const RestorationsPopup = ({ latLng, settings }: RestorationsPopupProps) => {
-  const { format } = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-    minimumSignificantDigits: 1,
-    maximumSignificantDigits: 3,
-  });
-
   const f = useRestorations();
 
   const p = usePointData(latLng, {
@@ -71,7 +64,21 @@ const RestorationsPopup = ({ latLng, settings }: RestorationsPopupProps) => {
         {isFetched && (
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
-            {!!DATA && DATA > 1 && <h3 className="text-sm font-light">{format(DATA)} ha</h3>}
+            {!!DATA && DATA > 1 && (
+              <h3 className="text-sm font-light">
+                {`
+                ${formatHA(DATA, {
+                  notation: 'standard',
+                  maximumFractionDigits: 0,
+                })}
+                |
+                ${formatPercentage(DATA / 3086.9136, {
+                  notation: 'standard',
+                  maximumFractionDigits: 2,
+                })}
+                `}
+              </h3>
+            )}
             {!!DATA && DATA < 1 && <h3 className="text-sm font-light">{'< 1 ha'}</h3>}
           </>
         )}
