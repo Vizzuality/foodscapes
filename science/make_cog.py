@@ -23,6 +23,7 @@ from rio_cogeo import cog_translate, cog_profiles
     help="Use the band description csv to set the band metadata and order",
 )
 @click.option("--co", "creation_options", type=str, multiple=True, help="GDAL creation options like 'COMPRESS=DEFLATE'")
+@click.option("--add-mask", is_flag=True, help="Add a mask band to the output")
 def main(
     files: tuple[Path],
     output: Path,
@@ -30,6 +31,7 @@ def main(
     use_cog_driver: bool,
     description_file: Path | None,
     creation_options: list,
+    add_mask: bool,
 ):
     creation_options = dict(param.split("=") for param in creation_options)
     description_table, files = filter_and_order_band_list(description_file, files)
@@ -83,6 +85,7 @@ def main(
                 forward_ns_tags=True,
                 quiet=True,
                 config=gdal_config,
+                add_mask=add_mask,
             )
             indicator.stop()
             print("Done")

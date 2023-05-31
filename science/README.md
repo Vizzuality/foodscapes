@@ -63,7 +63,7 @@ python upsample_raster.py \
 
 Third! Squeeze everything into a single COG with 30ish bands like so:
 ```shell
-python make_cog.py --nodata -1 \
+python make_cog.py --add-mask --nodata -1 \
   --description-file data/layers_20230215_00.csv \
   data/foodscapes/*.tif data/crop/*.tif data/risks/*.tif data/interventions/res/*.tif data/country/country.tif data/country/province.tif \
   data/foodscapes_cog_<YYYYMMDD>_<XX>.tif
