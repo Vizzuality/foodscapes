@@ -40,6 +40,11 @@ const IntensitiesSelected = () => {
     return null;
   }, [OPTIONS, intensities]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = OPTIONS.filter((o) => intensities.includes(o.value));
+    return selected;
+  }, [OPTIONS, intensities]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setIntensities([]);
@@ -47,7 +52,12 @@ const IntensitiesSelected = () => {
 
   return (
     intensitiesIsFetched && (
-      <FilterSelected text={SELECTED} visible={!!intensities.length} onClear={handleClearClick} />
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!intensities.length}
+        onClear={handleClearClick}
+      />
     )
   );
 };

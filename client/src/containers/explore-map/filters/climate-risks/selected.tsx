@@ -27,6 +27,11 @@ const ClimateRisksSelected = () => {
     return null;
   }, [climateData, climateChange]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = climateData.filter((o) => climateChange.includes(o.value));
+    return selected;
+  }, [climateData, climateChange]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setClimateChange([]);
@@ -34,7 +39,12 @@ const ClimateRisksSelected = () => {
 
   return (
     climateIsFetched && (
-      <FilterSelected text={SELECTED} visible={!!climateChange.length} onClear={handleClearClick} />
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!climateChange.length}
+        onClear={handleClearClick}
+      />
     )
   );
 };

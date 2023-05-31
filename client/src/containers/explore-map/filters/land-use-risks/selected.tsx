@@ -27,6 +27,11 @@ const LandUseSelected = () => {
     return null;
   }, [landUseData, landUseRisk]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = landUseData.filter((o) => landUseRisk.includes(o.value));
+    return selected;
+  }, [landUseData, landUseRisk]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setLandUseRisk([]);
@@ -34,7 +39,12 @@ const LandUseSelected = () => {
 
   return (
     landUseisFetched && (
-      <FilterSelected text={SELECTED} visible={!!landUseRisk.length} onClear={handleClearClick} />
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!landUseRisk.length}
+        onClear={handleClearClick}
+      />
     )
   );
 };

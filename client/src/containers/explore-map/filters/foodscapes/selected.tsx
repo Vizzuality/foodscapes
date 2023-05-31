@@ -38,6 +38,11 @@ const FoodscapesSelected = () => {
     return null;
   }, [OPTIONS, foodscapes]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = OPTIONS.filter((o) => foodscapes.includes(o.value));
+    return selected;
+  }, [OPTIONS, foodscapes]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setFoodscapes([]);
@@ -45,7 +50,12 @@ const FoodscapesSelected = () => {
 
   return (
     foodscapesIsFetched && (
-      <FilterSelected text={SELECTED} visible={!!foodscapes.length} onClear={handleClearClick} />
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!foodscapes.length}
+        onClear={handleClearClick}
+      />
     )
   );
 };

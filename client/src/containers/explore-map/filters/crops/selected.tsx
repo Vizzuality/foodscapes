@@ -40,6 +40,11 @@ const CropsSelected = () => {
     return null;
   }, [OPTIONS, crops]);
 
+  const POPOVER_SELECTED = useMemo(() => {
+    const selected = OPTIONS.filter((o) => crops.includes(o.value));
+    return selected;
+  }, [OPTIONS, crops]);
+
   const handleClearClick = (e) => {
     e.stopPropagation();
     setCrops([]);
@@ -47,7 +52,12 @@ const CropsSelected = () => {
 
   return (
     cropsIsFetched && (
-      <FilterSelected text={SELECTED} visible={!!crops.length} onClear={handleClearClick} />
+      <FilterSelected
+        text={SELECTED}
+        popover={POPOVER_SELECTED}
+        visible={!!crops.length}
+        onClear={handleClearClick}
+      />
     )
   );
 };
