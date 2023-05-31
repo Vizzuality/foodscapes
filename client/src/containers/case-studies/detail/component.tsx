@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { contentOpenAtom } from 'store/explore-map';
+import { contentAtom } from 'store/explore-map';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -20,17 +20,17 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
     isFetching: caseStudyIsFetching,
   } = useCaseStudy(id);
 
-  const setContentOpen = useSetRecoilState(contentOpenAtom);
+  const setContent = useSetRecoilState(contentAtom);
 
   const handleCloseCaseStudyDetailClick = () => {
-    setContentOpen(false);
+    setContent(null);
   };
 
   const Content = caseStudy?.content;
 
   return (
     <div className="flex flex-col">
-      <header className="relative z-0 px-20 pt-10">
+      <header className="relative z-0 px-20 pt-36">
         <div className="relative z-10 flex justify-between text-xs font-bold">
           <button
             className="flex items-center gap-3 uppercase"
@@ -43,7 +43,11 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
         </div>
         <div className="absolute top-0 left-0 z-0 h-72 w-full bg-violet-500" />
 
-        {caseStudyIsPlaceholderData && <Skeleton className="mt-8 h-72 w-full" />}
+        {caseStudyIsPlaceholderData && (
+          <div className="mt-8 h-72 w-full bg-gray-200">
+            <Skeleton className="h-full w-full" />
+          </div>
+        )}
 
         {caseStudyIsError && caseStudyIsFetched && !caseStudyIsFetching && (
           <div className="text-center">Oops!! Something went wrong</div>
@@ -70,7 +74,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
       </header>
 
       {!caseStudyIsPlaceholderData && !caseStudyIsError && (
-        <div className="mt-10 w-full overflow-hidden border-t px-20 pt-10">
+        <div className="mt-10 w-full overflow-hidden border-t px-20 pt-10 pb-10">
           <Content />
         </div>
       )}

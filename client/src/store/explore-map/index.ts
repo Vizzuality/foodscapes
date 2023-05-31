@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { array, bool, dict, nullable, number, object, optional, string } from '@recoiljs/refine';
-import { atom, selector, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
+import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 import { FiltersOmitProps, FiltersProps } from 'types/data';
@@ -32,17 +32,6 @@ export const contentAtom = atom({
       }),
     }),
   ],
-});
-
-export const contentOpenAtom = atom({
-  key: 'content-open',
-  default: selector({
-    key: 'content-open-default',
-    get: ({ get }) => {
-      const content = get(contentAtom);
-      return !!content?.type;
-    },
-  }),
 });
 
 // Filters
