@@ -1,5 +1,5 @@
 const DATA = {
-  description: 'Curabitur porttitor, tellus vel feugiat placerat',
+  description: 'New Zealand',
   image: '/images/case-studies/central-new-zealand-aquaculture/featured.png',
 };
 
