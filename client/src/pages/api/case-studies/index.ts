@@ -29,6 +29,8 @@ const fetch = async () => {
       shape: 'array',
       json: ['bbox', 'geojson'],
       size: 'max',
+      sortBy: 'title',
+      sortDirection: 'asc',
     }),
   }).then((response) => response.data);
 };
