@@ -38,9 +38,8 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
             onClick={handleCloseCaseStudyDetailClick}
           >
             <Icon icon={CHEVRON_LEFT_SVG} className="h-3.5 w-3.5" />
-            Back to Case Studies
+            Case Studies
           </button>
-          <span className="uppercase">Case study</span>
         </div>
         <div className="absolute top-0 left-0 z-0 h-72 w-full bg-violet-500" />
 

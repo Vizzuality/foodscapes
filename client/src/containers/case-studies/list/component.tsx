@@ -8,7 +8,7 @@ import { useCaseStudies } from 'hooks/case-studies';
 
 import { Skeleton } from 'components/ui/skeleton';
 
-import CaseStudiesListItem from '../list-item/component';
+import CaseStudiesListItem from './item/component';
 
 const CaseStudiesList = () => {
   const setContentAtom = useSetRecoilState(contentAtom);
