@@ -53,7 +53,7 @@ app.include_router(foodscapes_tiler.router, tags=["foodscapes"], prefix="/cog/fo
 irrecoverable_carbon_tiler = SimpleTiler(
     router_prefix="/cog/irrecoverable_carbon", path_dependency=default_irrecoverable_carbon_cog_url
 )
-app.include_router(irrecoverable_carbon_tiler.router, tags=["irrecoverable carbon"], prefix="/cog/irrecoverable_carbon")
+app.include_router(irrecoverable_carbon_tiler.router, tags=["Irrecoverable carbon"], prefix="/cog/irrecoverable_carbon")
 
 deprivation_index_tiler = SimpleTiler(
     router_prefix="/cog/deprivation_index", path_dependency=default_deprivation_index_cog_url
