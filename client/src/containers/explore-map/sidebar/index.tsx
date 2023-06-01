@@ -1,13 +1,16 @@
+import { useMemo, useRef } from 'react';
+
 import Link from 'next/link';
 
 import cn from 'lib/classnames';
 
-import { sidebarOpenAtom, tabAtom } from 'store/explore-map';
+import { contentAtom, sidebarOpenAtom, tabAtom } from 'store/explore-map';
 
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { CaseStudiesDetail } from 'containers/case-studies';
 import Filters from 'containers/explore-map/filters';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'containers/explore-map/sidebar/tabs';
 import CaseStudiesSidebar from 'containers/explore-map/sidebar/tabs/case-studies';
@@ -21,11 +24,21 @@ import Icon from 'components/icon';
 import ARROW_LEFT_SVG from 'svgs/ui/arrow-left.svg?sprite';
 
 const Sidebar = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const open = useRecoilValue(sidebarOpenAtom);
   const setOpen = useSetRecoilState(sidebarOpenAtom);
 
   const tab = useRecoilValue(tabAtom);
   const setTab = useSetRecoilState(tabAtom);
+
+  const content = useRecoilValue(contentAtom);
+
+  useMemo(() => {
+    if (scrollRef.current && tab && (content?.id || !content?.id)) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [tab, content?.id]);
 
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
@@ -55,7 +68,7 @@ const Sidebar = () => {
           className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-[640px] bg-white"
         >
           <Tabs value={tab} onValueChange={setTab} asChild>
-            <div className="flex h-full grow flex-col overflow-auto">
+            <div ref={scrollRef} className="flex h-full grow flex-col overflow-auto">
               <TabsList className="relative z-10 w-full">
                 <TabsTrigger value="foodscapes" />
                 <TabsTrigger value="risks" />
@@ -82,7 +95,14 @@ const Sidebar = () => {
                 </TabsContent>
 
                 <TabsContent value="case-studies">
-                  <CaseStudiesSidebar />
+                  <AnimatePresence mode="wait">
+                    {content?.type === 'case-study' && (
+                      <CaseStudiesDetail key="case-study-detail-sidebar" id={content?.id} />
+                    )}
+                    {content?.type !== 'case-study' && (
+                      <CaseStudiesSidebar key="case-study-sidebar" />
+                    )}
+                  </AnimatePresence>
                 </TabsContent>
               </div>
 

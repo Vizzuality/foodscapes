@@ -15,6 +15,7 @@ module.exports = {
     './src/containers/**/*.@(tsx|mdx|ts)',
     './src/layouts/**/*.@(tsx|mdx|ts)',
     './src/pages/**/*.@(tsx|mdx)',
+    './src/data/**/*.@(mdx)',
   ],
   plugins: [forms, lineClamp, animate, typography],
   theme: {

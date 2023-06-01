@@ -20,6 +20,22 @@ export const layersOpenAtom = atom({
   default: false,
 });
 
+// Content
+export const contentAtom = atom({
+  key: 'content',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: nullable(
+        object({
+          id: number(),
+          type: string(),
+        })
+      ),
+    }),
+  ],
+});
+
 // Filters
 export const filtersOpenAtom = atom({
   key: 'filters-open',

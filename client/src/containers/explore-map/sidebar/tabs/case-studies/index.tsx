@@ -1,10 +1,21 @@
 import { forwardRef } from 'react';
 
+import { motion } from 'framer-motion';
+
 import { CaseStudiesList } from 'containers/case-studies';
 
 const CaseStudiesSidebar = forwardRef(() => {
   return (
-    <section>
+    <motion.section
+    // initial="initial"
+    // animate="animate"
+    // exit="exit"
+    // variants={{
+    //   initial: { opacity: 0 },
+    //   animate: { opacity: 1 },
+    //   exit: { opacity: 0 },
+    // }}
+    >
       <header>
         <div className="relative z-0 px-20 pt-36">
           <h2 className="relative z-10 border-b border-navy-500/30 pb-6 text-xl font-medium">
@@ -27,7 +38,7 @@ const CaseStudiesSidebar = forwardRef(() => {
           <CaseStudiesList />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 });
 
