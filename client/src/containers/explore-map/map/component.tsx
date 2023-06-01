@@ -2,6 +2,9 @@ import { useCallback, useMemo, useRef } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import Image from 'next/image';
+import Link from 'next/link';
+
 import {
   basemapAtom,
   bboxAtom,
@@ -117,7 +120,10 @@ const MapContainer = () => {
   );
 
   return (
-    <div className="absolute right-0 h-screen w-full">
+    <div className="absolute right-0 z-0 h-screen w-full">
+      <Link href="/" className="absolute top-5 left-5 z-10">
+        <Image src="/images/logo-map.svg" alt="Logo" width={151} height={29} />
+      </Link>
       <Map
         id={id}
         mapStyle={MAP_STYLE}
