@@ -14,7 +14,7 @@ import CHEVRON_LEFT_SVG from 'svgs/ui/arrow-left.svg?sprite';
 
 const CaseStudyDetail = ({ id }: { id: number }) => {
   const {
-    data: caseStudy,
+    data: caseStudyData,
     isPlaceholderData: caseStudyIsPlaceholderData,
     isError: caseStudyIsError,
     isFetched: caseStudyIsFetched,
@@ -27,7 +27,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
     setContent(null);
   };
 
-  const Content = caseStudy?.content;
+  const Content = caseStudyData?.content;
 
   return (
     <motion.div
@@ -55,7 +55,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
         <div className="absolute top-0 left-0 z-0 h-72 w-full bg-violet-500" />
 
         {caseStudyIsPlaceholderData && (
-          <div className="mt-8 h-72 w-full bg-gray-200">
+          <div className="relative z-10 mt-8 h-72 w-full rounded-md bg-gray-50">
             <Skeleton className="h-full w-full" />
           </div>
         )}
@@ -69,8 +69,8 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
             <div className="relative z-10 flex justify-center pt-8">
               <span className="relative block h-72 w-full overflow-hidden">
                 <Image
-                  src={caseStudy.image}
-                  alt={caseStudy.title}
+                  src={caseStudyData.image}
+                  alt={caseStudyData.title}
                   fill
                   priority
                   style={{ objectFit: 'cover' }}
@@ -78,7 +78,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
               </span>
             </div>
             <div className="relative z-10 mt-6 flex flex-col items-center justify-center">
-              <h2 className="text-center font-display text-5xl">{caseStudy.title}</h2>
+              <h2 className="text-center font-display text-5xl">{caseStudyData.title}</h2>
             </div>
           </>
         )}
