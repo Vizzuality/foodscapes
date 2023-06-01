@@ -56,7 +56,7 @@ export const downloadData = (id: Dataset['id']) => {
 export const fetchBandData = (band: number) => {
   return TITILER_API.request({
     method: 'GET',
-    url: `/cog/info`,
+    url: `/cog/foodscapes/info`,
   }).then((response) => {
     const { band_metadata: metadatas } = response.data;
 
@@ -76,7 +76,7 @@ export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
 
   return TITILER_API.request({
     method: 'GET',
-    url: `/cog/statistics`,
+    url: `/cog/foodscapes/statistics`,
     params: {
       bidx: band,
       expression: expression(),
@@ -89,7 +89,7 @@ export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
 export const fetchPointData = ({ lng, lat }: LngLat) => {
   return TITILER_API.request({
     method: 'GET',
-    url: `/cog/point/${lng},${lat}`,
+    url: `/cog/foodscapes/point/${lng},${lat}`,
   }).then((response) => response.data);
 };
 

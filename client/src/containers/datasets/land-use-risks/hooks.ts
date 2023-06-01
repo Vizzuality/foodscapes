@@ -85,7 +85,7 @@ export function useSource({ filters }: UseLandUseRiskSourceProps): AnySourceData
     key: `${bands.toString()}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
-      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
+      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/foodscapes/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
     ],
   };
 }
