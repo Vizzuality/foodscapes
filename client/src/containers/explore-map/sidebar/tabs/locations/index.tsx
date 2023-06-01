@@ -9,7 +9,7 @@ const LocationsSidebar = forwardRef(() => {
     <section className="flex grow flex-col justify-between">
       <div>
         <header>
-          <div className="relative z-0 px-20 pt-36">
+          <div className="relative z-0 px-20 pt-72">
             <h2 className="relative z-10 border-b border-navy-500/30 pb-6 text-xl font-medium">
               Locations
             </h2>

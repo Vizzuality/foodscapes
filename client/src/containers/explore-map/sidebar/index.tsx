@@ -69,6 +69,17 @@ const Sidebar = () => {
         >
           <Tabs value={tab} onValueChange={setTab} asChild>
             <div ref={scrollRef} className="flex h-full grow flex-col overflow-auto">
+              <div className="relative z-10 px-20 py-5">
+                <Link
+                  href="/"
+                  className={cn({
+                    'py-1 font-display text-3xl text-navy-500 transition-colors': true,
+                  })}
+                >
+                  Foodscapes
+                </Link>
+              </div>
+
               <TabsList className="relative z-10 w-full">
                 <TabsTrigger value="foodscapes" />
                 <TabsTrigger value="risks" />
@@ -77,7 +88,7 @@ const Sidebar = () => {
                 <TabsTrigger value="case-studies" />
               </TabsList>
 
-              <div className="relative z-0 -mt-20 flex grow flex-col">
+              <div className="relative z-0 -mt-60 flex grow flex-col">
                 <TabsContent value="foodscapes">
                   <FoodscapesSidebar />
                 </TabsContent>
@@ -109,16 +120,6 @@ const Sidebar = () => {
               <Filters />
             </div>
           </Tabs>
-
-          <Link
-            href="/"
-            className={cn({
-              'absolute top-5 left-full hidden translate-x-8 py-1 font-display text-2xl text-navy-500 transition-colors sm:block':
-                true,
-            })}
-          >
-            Foodscapes
-          </Link>
 
           <DialogTrigger asChild>
             <button className="absolute bottom-16 left-full flex h-8 w-8 items-center justify-center bg-navy-500 hover:bg-navy-400">

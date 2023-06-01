@@ -27,7 +27,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
     setContent(null);
   };
 
-  const Content = caseStudyData?.content;
+  const CaseStudyContent = caseStudyData?.content;
 
   return (
     <motion.div
@@ -41,7 +41,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
       // }}
       className="flex flex-col"
     >
-      <header className="relative z-0 px-20 pt-36">
+      <header className="relative z-0 px-20 pt-72">
         <div className="relative z-10 flex justify-between text-xs font-bold">
           <button
             className="flex items-center gap-3 uppercase"
@@ -52,7 +52,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
             Case Studies
           </button>
         </div>
-        <div className="absolute top-0 left-0 z-0 h-72 w-full bg-violet-500" />
+        <div className="absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.72))] w-full bg-violet-500" />
 
         {caseStudyIsPlaceholderData && (
           <div className="relative z-10 mt-8 h-72 w-full rounded-md bg-gray-50">
@@ -86,7 +86,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
 
       {!caseStudyIsPlaceholderData && !caseStudyIsError && (
         <div className="mt-10 w-full overflow-hidden border-t px-20 pt-10 pb-10">
-          <Content />
+          <CaseStudyContent />
         </div>
       )}
     </motion.div>
