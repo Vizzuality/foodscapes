@@ -50,6 +50,6 @@ cat source/metadata/layers_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscape
 cat source/metadata/countries_legend_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' countries"
 cat source/metadata/provinces_legend_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' provinces"
 
-cat source/case_studies_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' case_studies"
+cat source/metadata/case_studies_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' case_studies"
 
 sqlite3 dest/foodscapes.db < foodscapes_metadata-cleanup.sql
