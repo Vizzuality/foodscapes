@@ -223,7 +223,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                     return (
                       <div key={g.value}>
-                        <h3 className="pl-5 pb-2 text-xs font-bold">{g.label}</h3>
+                        <h3 className="py-2 pl-5 text-xs font-bold">{g.label}</h3>
                         {groupOptions.map((opt) => {
                           return <Option key={opt.value} opt={opt} theme={theme} />;
                         })}
