@@ -40,17 +40,18 @@ const HorizontalBar = <D extends DataProps>({
             <li
               key={label + i}
               className={cn({
-                'group cursor-pointer': interactive,
+                'group cursor-pointer': interactive && value > 0,
               })}
-              {...(interactive && {
-                onMouseEnter: () => {
-                  setHover(id);
-                },
-                onMouseLeave: () => {
-                  setHover(null);
-                },
-                onClick: () => onBarClick(d),
-              })}
+              {...(interactive &&
+                value > 0 && {
+                  onMouseEnter: () => {
+                    setHover(id);
+                  },
+                  onMouseLeave: () => {
+                    setHover(null);
+                  },
+                  onClick: () => onBarClick(d),
+                })}
             >
               <div
                 style={{

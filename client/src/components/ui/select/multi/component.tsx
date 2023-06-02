@@ -156,14 +156,14 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   />
 
                   {!!selected.length && clearSelectionActive && (
-                    <button type="button" className="pointer-events-auto" onClick={handleClearAll}>
+                    <span className="pointer-events-auto" onClick={handleClearAll}>
                       <Icon
                         icon={CLOSE_SVG}
                         className={cx({
                           'h-3.5 w-3.5 shrink-0': true,
                         })}
                       />
-                    </button>
+                    </span>
                   )}
 
                   <Icon

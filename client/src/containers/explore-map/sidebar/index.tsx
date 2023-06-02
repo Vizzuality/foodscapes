@@ -68,7 +68,10 @@ const Sidebar = () => {
           className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-[640px] bg-white"
         >
           <Tabs value={tab} onValueChange={setTab} asChild>
-            <div ref={scrollRef} className="flex h-full grow flex-col overflow-auto">
+            <div
+              ref={scrollRef}
+              className="flex h-full grow flex-col overflow-y-auto overflow-x-hidden"
+            >
               <div className="relative z-10 px-20 py-5">
                 <Link
                   href="/"

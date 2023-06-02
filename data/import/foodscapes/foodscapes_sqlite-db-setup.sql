@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS "data" (
 [areas_suitable_for_minimum_tillage_Cseq] float,
 [country] integer,
 [province] integer,
+[case_studies] integer,
 [pixel_count] integer
 );
 

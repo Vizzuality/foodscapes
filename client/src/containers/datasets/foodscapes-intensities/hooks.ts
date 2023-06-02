@@ -66,12 +66,14 @@ export function useSource({
     return params.toString();
   }, [band, colormap, expression]);
 
+  const at = window.devicePixelRatio > 1 ? '@2x' : '@1x';
+
   return {
     id: 'foodscapes-intensities-source',
     key: `${band}-${colormap}-${expression}`,
     type: 'raster',
     tiles: [
-      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/foodscapes/tiles/WebMercatorQuad/{z}/{x}/{y}@1x.png?${searchParams}`,
+      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/foodscapes/tiles/WebMercatorQuad/{z}/{x}/{y}${at}.png?${searchParams}`,
     ],
   };
 }

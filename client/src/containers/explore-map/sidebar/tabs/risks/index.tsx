@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 
 import Image from 'next/image';
 
+import cn from 'lib/classnames';
+
 import ClimateRiskWidget from 'containers/datasets/climate-risks/widget';
 import LandUseWidget from 'containers/datasets/land-use-risks/widget';
 import PollutionRiskWidget from 'containers/datasets/pollution-risks/widget';
@@ -18,7 +20,13 @@ const RisksSidebar = forwardRef(() => {
             <h3 className="relative z-10 pt-6 font-display text-5xl">
               The State of Our Foodscapes
             </h3>
-            <div className="absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-red-500" />
+            <div
+              className={cn({
+                'absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-red-500': true,
+                'after:absolute after:top-0 after:left-full after:z-0 after:h-full after:w-full after:bg-red-500':
+                  true,
+              })}
+            />
           </div>
           <div className="space-y-4 px-20 pt-4 pb-10">
             <p>

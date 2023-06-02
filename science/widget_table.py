@@ -72,7 +72,7 @@ def main(files: list[Path], description_file: Path, output_path: Path):
 
     # Pivot DataFrame
     filter_columns = list(
-        description_table[description_table["section"].isin(["foodscapes", "risks", "locations"])]["widget_column"]
+        description_table[description_table["section"].isin(["foodscapes", "risks", "locations", "case studies"])]["widget_column"]
     )
     continuous_columns = list(description_table[description_table["section"].isin(["opportunities"])]["widget_column"])
     mean_columns = [element for element in continuous_columns if element.endswith("_fraq")]
