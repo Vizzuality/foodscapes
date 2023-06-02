@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import cn from 'lib/classnames';
+
 import { contentAtom } from 'store/explore-map';
 
 import { motion } from 'framer-motion';
@@ -52,7 +54,13 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
             Case Studies
           </button>
         </div>
-        <div className="absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.72))] w-full bg-violet-500" />
+        <div
+          className={cn({
+            'absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-violet-500': true,
+            'after:absolute after:top-0 after:left-full after:z-0 after:h-full after:w-full after:bg-violet-500':
+              true,
+          })}
+        />
 
         {caseStudyIsPlaceholderData && (
           <div className="relative z-10 mt-8 h-72 w-full rounded-md bg-gray-50">
