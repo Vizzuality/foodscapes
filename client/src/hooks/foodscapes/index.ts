@@ -67,7 +67,7 @@ export function useFoodscapesGroups(queryOptions: UseQueryOptions<Foodscape[], u
       ),
       ([key, value]) =>
         ({
-          key,
+          id: key,
           value: key,
           values: value,
           label: value.map((v) => v.parentLabel).reduce((_, v) => v, ''),

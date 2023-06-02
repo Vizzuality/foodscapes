@@ -62,6 +62,7 @@ const FoodscapesWidget = () => {
   const OPTIONS = useMemo(() => {
     return foodscapesData.map((c) => ({
       ...c,
+      group: c.parentId,
       disabled: !data.map((d) => d.id).includes(c.value),
     }));
   }, [data, foodscapesData]);
@@ -187,6 +188,7 @@ const FoodscapesWidget = () => {
                 theme="light"
                 placeholder="Filter foodscapes"
                 options={OPTIONS}
+                groups={GROUPED_OPTIONS}
                 values={foodscapes as number[]}
                 batchSelectionActive
                 clearSelectionActive

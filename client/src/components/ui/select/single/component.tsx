@@ -120,14 +120,14 @@ export const Select: FC<SingleSelectProps> = (props: SingleSelectProps) => {
                   />
 
                   {!!selected && clearable && (
-                    <button type="button" className="pointer-events-auto" onClick={handleReset}>
+                    <span className="pointer-events-auto" onClick={handleReset}>
                       <Icon
                         icon={CLOSE_SVG}
                         className={cx({
                           'h-3.5 w-3.5 shrink-0': true,
                         })}
                       />
-                    </button>
+                    </span>
                   )}
 
                   <Icon

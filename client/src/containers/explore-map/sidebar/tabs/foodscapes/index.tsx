@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 
 import Image from 'next/image';
 
+import cn from 'lib/classnames';
+
 import CropsWidget from 'containers/datasets/crops/widget';
 import FoodscapesIntensitiesWidget from 'containers/datasets/foodscapes-intensities/widget';
 import FoodscapesSummaryWidget from 'containers/datasets/foodscapes-summary/widget';
@@ -19,7 +21,14 @@ const FoodscapesSidebar = forwardRef(() => {
             <h3 className="relative z-10 pt-6 font-display text-5xl">
               Toward Food System Transition
             </h3>
-            <div className="absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-yellow-500" />
+            <div
+              className={cn({
+                'absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-yellow-500':
+                  true,
+                'after:absolute after:top-0 after:left-full after:z-0 after:h-full after:w-full after:bg-yellow-500':
+                  true,
+              })}
+            />
           </div>
           <div className="space-y-4 px-20 pt-4 pb-10">
             <p>

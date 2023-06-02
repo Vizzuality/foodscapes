@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import cn from 'lib/classnames';
+
 import { motion } from 'framer-motion';
 
 import { CaseStudiesList } from 'containers/case-studies';
@@ -22,7 +24,14 @@ const CaseStudiesSidebar = forwardRef(() => {
             Case Studies
           </h2>
           <h3 className="relative z-10 pt-6 font-display text-5xl">Foodscapes in Focus</h3>
-          <div className="absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-violet-500" />
+          <div
+            className={cn({
+              'absolute top-0 left-0 z-0 h-[calc(100%_-_theme(space.8))] w-full bg-violet-500':
+                true,
+              'after:absolute after:top-0 after:left-full after:z-0 after:h-full after:w-full after:bg-violet-500':
+                true,
+            })}
+          />
         </div>
         <div className="space-y-4 px-20 pt-4 pb-10">
           <p>

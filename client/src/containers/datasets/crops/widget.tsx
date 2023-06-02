@@ -77,6 +77,7 @@ const CropsWidget = () => {
   const OPTIONS = useMemo(() => {
     return cropsData.map((c) => ({
       ...c,
+      group: c.parentId,
       disabled: !data.map((d) => d.id).includes(c.value),
     }));
   }, [data, cropsData]);
@@ -182,6 +183,7 @@ const CropsWidget = () => {
                 theme="light"
                 placeholder="Filter crops"
                 options={OPTIONS}
+                groups={GROUPED_OPTIONS}
                 values={crops as number[]}
                 batchSelectionActive
                 clearSelectionActive
