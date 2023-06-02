@@ -43,6 +43,7 @@ const FoodscapesFilters = () => {
   const OPTIONS = useMemo(() => {
     return foodscapesData.map((c) => ({
       ...c,
+      group: c.parentId,
       disabled: !data.map((d) => d.id).includes(c.value),
     }));
   }, [data, foodscapesData]);
@@ -125,6 +126,7 @@ const FoodscapesFilters = () => {
             theme="dark"
             placeholder="All foodscapes"
             options={OPTIONS}
+            groups={GROUPED_OPTIONS}
             values={foodscapes as number[]}
             batchSelectionActive
             clearSelectionActive

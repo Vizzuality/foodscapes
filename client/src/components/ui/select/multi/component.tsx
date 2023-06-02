@@ -7,8 +7,8 @@ import { Listbox } from '@headlessui/react';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import { Checkbox } from 'components/ui/checkbox';
 import THEME from 'components/ui/select/constants/theme';
+import { Option } from 'components/ui/select/multi/option/component';
 
 import CHEVRON_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 import CHEVRON_UP_SVG from 'svgs/ui/arrow-up.svg?sprite';
@@ -24,6 +24,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     clearSelectionLabel = 'Clear all',
     disabled = false,
     options,
+    groups,
     placeholder = 'Select...',
     loading,
     size = 'base',
@@ -216,37 +217,24 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   )}
                 </div>
 
-                {options.map((opt) => {
-                  return (
-                    <Listbox.Option key={opt.value} value={opt.value} disabled={opt.disabled}>
-                      {({ active: a, selected: s, disabled: d }) => (
-                        <div
-                          className={cx({
-                            'flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
-                              true,
-                            [THEME[theme].item.base]: true,
-                            [THEME[theme].item.active]: a,
-                            [THEME[theme].item.selected]: s,
-                            [THEME[theme].item.disabled]: d,
-                          })}
-                        >
-                          <Checkbox
-                            className="cursor-pointer checked:bg-black focus:text-black focus:ring-black"
-                            checked={s}
-                          />
+                {groups &&
+                  groups.map((g) => {
+                    const groupOptions = options.filter((o) => o.group === g.value);
 
-                          <span
-                            className={cx({
-                              'block line-clamp-2': true,
-                            })}
-                          >
-                            {opt.label}
-                          </span>
-                        </div>
-                      )}
-                    </Listbox.Option>
-                  );
-                })}
+                    return (
+                      <div key={g.value}>
+                        <h3 className="py-2 pl-5 text-xs font-bold">{g.label}</h3>
+                        {groupOptions.map((opt) => {
+                          return <Option key={opt.value} opt={opt} theme={theme} />;
+                        })}
+                      </div>
+                    );
+                  })}
+
+                {!groups &&
+                  options.map((opt) => {
+                    return <Option key={opt.value} opt={opt} theme={theme} />;
+                  })}
               </Listbox.Options>
             </Float>
           </>

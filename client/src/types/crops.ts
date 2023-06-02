@@ -11,7 +11,7 @@ export interface Crop {
 }
 
 export interface CropGroup {
-  key: number;
+  id: number;
   value: number;
   values: Crop[];
   label: string;
