@@ -46,6 +46,7 @@ export function useCaseStudy(id, queryOptions: UseQueryOptions<CaseStudy, unknow
   const query = useQuery(['case-study', id], fetchCaseStudy, {
     placeholderData: [],
     select: (data: CaseStudy) => addInfoToCaseStudy(data),
+    enabled: !!id,
     ...queryOptions,
   });
 
