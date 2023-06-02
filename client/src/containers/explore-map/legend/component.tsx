@@ -23,7 +23,7 @@ const LegendContainer = () => {
   const setLayerSettings = useSetRecoilState(layersSettingsAtom);
   const filters = useRecoilValue(filtersSelector(null));
 
-  const onChangeOrder = useCallback(
+  const handleChangeOrder = useCallback(
     (order) => {
       const newLayers = order.map((id) => {
         return layers.find((layer) => layer === id);
@@ -34,7 +34,7 @@ const LegendContainer = () => {
     [layers, setLayers]
   );
 
-  const onChangeOpacity = useDebouncedCallback(
+  const handleChangeOpacity = useDebouncedCallback(
     (id, opacity) =>
       setLayerSettings({
         ...layersSettings,
@@ -47,7 +47,7 @@ const LegendContainer = () => {
     { maxWait: 1000 }
   );
 
-  const onChangeVisibility = useCallback(
+  const handleChangeVisibility = useCallback(
     (id, visibility) =>
       setLayerSettings({
         ...layersSettings,
@@ -59,13 +59,25 @@ const LegendContainer = () => {
     [layersSettings, setLayerSettings]
   );
 
-  const onChangeExpand = useCallback(
+  const handleChangeExpand = useCallback(
     (id, expand) =>
       setLayerSettings({
         ...layersSettings,
         [id]: {
           ...(layersSettings[id] || { opacity: 1, visibility: true, expand: true }),
           expand,
+        },
+      }),
+    [layersSettings, setLayerSettings]
+  );
+
+  const handleChangeColumn = useCallback(
+    (id, column) =>
+      setLayerSettings({
+        ...layersSettings,
+        [id]: {
+          ...(layersSettings[id] || { opacity: 1, visibility: true, expand: true }),
+          column,
         },
       }),
     [layersSettings, setLayerSettings]
@@ -92,18 +104,29 @@ const LegendContainer = () => {
               Info: InfoComponent ? <InfoComponent {...DATASET} /> : null,
             }}
             onChangeOpacity={(opacity) => {
-              onChangeOpacity(layer, opacity);
+              handleChangeOpacity(layer, opacity);
             }}
             onChangeVisibility={(visibility) => {
-              onChangeVisibility(layer, visibility);
+              handleChangeVisibility(layer, visibility);
             }}
             onChangeExpand={(expand) => {
-              onChangeExpand(layer, expand);
+              handleChangeExpand(layer, expand);
+            }}
+            onChangeColumn={(column) => {
+              handleChangeColumn(layer, column);
             }}
           />
         );
       });
-  }, [layers, filters, onChangeOpacity, onChangeVisibility, onChangeExpand, layersSettings]);
+  }, [
+    layers,
+    filters,
+    handleChangeOpacity,
+    handleChangeVisibility,
+    handleChangeExpand,
+    handleChangeColumn,
+    layersSettings,
+  ]);
 
   return (
     <AnimatePresence>
@@ -122,7 +145,7 @@ const LegendContainer = () => {
               handle: true,
               handleIcon: <div className="text-white">Drag</div>,
             }}
-            onChangeOrder={onChangeOrder}
+            onChangeOrder={handleChangeOrder}
           >
             {ITEMS}
           </Legend>

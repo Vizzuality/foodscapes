@@ -10,7 +10,7 @@ import { FoodscapeData } from 'types/data';
 import { useData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
 import { useLandUseRisks } from 'hooks/land-use-risks';
-import { convertPixelCountToHA, useIsLoading } from 'hooks/utils';
+import { convertPixelCountToHA, formatPercentage, useIsLoading } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 import Loading from 'components/loading';
@@ -30,9 +30,6 @@ const RisksClimateChangeTopChart = ({ onBarClick }: RisksClimateChangeTopChartPr
   const dQuery = useData<FoodscapeData>('foodscapes', {
     ...filters,
     landUseRisk: filters.landUseRisk.length ? filters.landUseRisk : [6, 7, 8, 9, 10],
-    limit: 5,
-    sortBy: 'value',
-    sortDirection: 'desc',
   });
 
   const { isFetching, isFetched } = useIsLoading([fQuery, dQuery, cQuery]);
@@ -44,12 +41,19 @@ const RisksClimateChangeTopChart = ({ onBarClick }: RisksClimateChangeTopChartPr
     return data.map((d) => d.id);
   }, [data]);
 
+  const TOTAL = useMemo(() => {
+    return data.reduce((acc, d) => acc + d.value, 0);
+  }, [data]);
+
   const DATA = useMemo(() => {
     // Loop through the data and add the label
-    return data.map((d) => {
-      const { label } = foodscapesData.find((f) => f.value === d.id) || {};
-      return { ...d, label, value: convertPixelCountToHA(d.value, 1000000) };
-    });
+    return data
+      .map((d) => {
+        const { label } = foodscapesData.find((f) => f.value === d.id) || {};
+        return { ...d, label };
+      })
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 5);
   }, [data, foodscapesData]);
 
   const MAX = Math.max(...DATA.map((d) => d.value));
@@ -58,7 +62,7 @@ const RisksClimateChangeTopChart = ({ onBarClick }: RisksClimateChangeTopChartPr
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
@@ -94,6 +98,7 @@ const RisksClimateChangeTopChart = ({ onBarClick }: RisksClimateChangeTopChartPr
         xScale={xScale}
         colorScale={colorScale}
         interactive={false}
+        format={(d) => `${convertPixelCountToHA(d.value)} | ${formatPercentage(d.value / TOTAL)}`}
         onBarClick={handleBarClick}
       />
     </>

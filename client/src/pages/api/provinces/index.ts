@@ -41,7 +41,7 @@ const fetch = async (cid) => {
   }).then((response) => response.data);
 };
 
-const Countries = async (
+const Provinces = async (
   req: NextApiRequest,
   res: NextApiResponse<Province[] | { error: string }>
 ) => {
@@ -54,4 +54,4 @@ const Countries = async (
   }
 };
 
-export default Countries;
+export default Provinces;

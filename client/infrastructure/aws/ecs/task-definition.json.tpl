@@ -13,10 +13,16 @@
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
                 "awslogs-group": "client",
-                "awslogs-stream-prefix": "client",
-                "awslogs-create-group": "true"
+                "awslogs-stream-prefix": "client"
                 }
-            }
+            },
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ]
         }
     ],
     "networkMode": "awsvpc",

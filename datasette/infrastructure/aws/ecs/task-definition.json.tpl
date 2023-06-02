@@ -13,10 +13,16 @@
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
                 "awslogs-group": "datasette",
-                "awslogs-stream-prefix": "datasette",
-                "awslogs-create-group": "true"
+                "awslogs-stream-prefix": "datasette"
                 }
-            }
+            },
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ]
         }
     ],
     "networkMode": "awsvpc",

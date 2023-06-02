@@ -4,7 +4,7 @@ It consists of 3 scripts:
 1. `calc_carbon_seq.py` which multiplies intervention's area
 suitability rasters by carbon coefficients to get the carbon sequestration potential per pixel.
 2. `upsample_raster.py` To upsample the intervention rasters from 5 arcmin to 0.05 degrees.
-3. `stack_raster.py` The one and only. This takes a list of rasters and a description csv to use as
+3. `make_cog.py` The one and only. This takes a list of rasters and a description csv to use as
 metadata source and band order.
 
 In order to end with a correct COG one needs to have all the data sources on hand. There is no 
@@ -43,7 +43,7 @@ You need an environment (python) with rasterio, pandas, rich, click... _TODO: wr
 
 All  the scripts have a nice* `--help` ;).
 
-First! compute the **carbon sequestration** per pixel at native resolution (before resampling) with  
+First! compute the **carbon sequestration** per pixel at native resolution (before resampling) with:
 ```shell
 python calc_carbon_seq.py --nodata 0 \
     --area data/interventions/area_suitability_raster \
@@ -51,7 +51,7 @@ python calc_carbon_seq.py --nodata 0 \
     --out data/interventions/carbon_totals
 ```
 
-⚠ **Careful with the nodata. We are using 0.**
+⚠ **Careful with the nodata. We should be using -1 (don't trust).**
 
 Second! UPsample the intervention rasters to the correct resolution using a reference file.
 ```shell
@@ -63,7 +63,7 @@ python upsample_raster.py \
 
 Third! Squeeze everything into a single COG with 30ish bands like so:
 ```shell
-python stack_raster.py --cog --nodata 0 \
+python make_cog.py --add-mask --nodata -1 \
   --description-file data/layers_20230215_00.csv \
   data/foodscapes/*.tif data/crop/*.tif data/risks/*.tif data/interventions/res/*.tif data/country/country.tif data/country/province.tif \
   data/foodscapes_cog_<YYYYMMDD>_<XX>.tif

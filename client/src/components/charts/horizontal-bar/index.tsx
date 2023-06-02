@@ -16,6 +16,7 @@ interface HorizontalBarProps<D extends DataProps> {
   colorScale: ScaleOrdinal<string, string, never>;
   selected?: readonly number[];
   interactive?: boolean;
+  format: (value: D) => string;
   onBarClick?: (bar: D) => void;
 }
 
@@ -25,15 +26,10 @@ const HorizontalBar = <D extends DataProps>({
   colorScale,
   selected,
   interactive,
+  format,
   onBarClick,
 }: HorizontalBarProps<D>) => {
   const [hover, setHover] = useState<number | null>(null);
-
-  const { format } = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-    maximumSignificantDigits: 3,
-  });
 
   return (
     <div className="relative">
@@ -73,7 +69,7 @@ const HorizontalBar = <D extends DataProps>({
                 />
 
                 <div className="shrink-0 whitespace-nowrap text-[8px] font-bold text-navy-500">
-                  {format(value)}M Ha
+                  {format(d)}
                 </div>
               </div>
 

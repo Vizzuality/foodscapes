@@ -10,7 +10,7 @@ import { FiltersOmitProps, LandUseRiskData } from 'types/data';
 
 import { useData } from 'hooks/data';
 import { useLandUseRisks } from 'hooks/land-use-risks';
-import { convertPixelCountToHA } from 'hooks/utils';
+import { convertPixelCountToHA, formatPercentage } from 'hooks/utils';
 
 import HorizontalBar from 'components/charts/horizontal-bar';
 
@@ -52,7 +52,8 @@ const LandUseRiskChart = ({
         return {
           ...c,
           id: c.value,
-          value: convertPixelCountToHA(d1.value, 1000000),
+          value: d1.value,
+          percentage: d1.percentage,
           color: c.color,
         };
       })
@@ -72,7 +73,7 @@ const LandUseRiskChart = ({
   const xScale = useMemo(() => {
     return scaleLinear<number>({
       domain: [0, MAX],
-      range: [0, 100],
+      range: [5, 100],
       round: true,
     });
   }, [MAX]);
@@ -94,6 +95,7 @@ const LandUseRiskChart = ({
       colorScale={colorScale}
       interactive
       selected={selected}
+      format={(d) => `${convertPixelCountToHA(d.value)} | ${formatPercentage(d.percentage / 100)}`}
       onBarClick={onBarClick}
     />
   );

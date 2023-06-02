@@ -31,7 +31,7 @@ const Header = () => {
   return (
     <header
       className={cn({
-        'fixed top-0 left-0 z-30 w-full bg-white py-4 sm:left-1/2 sm:w-auto sm:-translate-x-1/2 sm:bg-transparent sm:py-6':
+        'fixed top-0 left-0 z-30 w-full bg-white py-4 sm:left-1/2 sm:hidden sm:w-auto sm:-translate-x-1/2 sm:bg-transparent sm:py-6':
           true,
       })}
     >

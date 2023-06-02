@@ -28,6 +28,7 @@ const fetch = async (filters: FiltersProps) => {
     params: datasetteAdapter({
       sql: SQL,
       shape: 'array',
+      size: 'max',
       ...filters,
     }),
   }).then((response) => response.data);
@@ -35,7 +36,7 @@ const fetch = async (filters: FiltersProps) => {
 
 const LocationsData = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const filters = qs.parseUrl(req.url, {
+    const filters = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',

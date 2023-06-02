@@ -60,13 +60,19 @@ const FoodscapesWidget = () => {
   );
 
   const OPTIONS = useMemo(() => {
-    if (!data || !foodscapesData) return [];
-    return foodscapesData.filter((c) => data.map((d) => d.id).includes(c.value));
+    return foodscapesData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
   }, [data, foodscapesData]);
 
   const GROUPED_OPTIONS = useMemo(() => {
     if (!data || !foodscapesGroupData) return [];
-    return foodscapesGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+
+    return foodscapesGroupData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.parent_id).includes(c.value),
+    }));
   }, [data, foodscapesGroupData]);
 
   const GROUPED_SELECTED = useMemo<number[]>(() => {
@@ -197,8 +203,8 @@ const FoodscapesWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest foodscapes">
-                <ChartTop onBarClick={handleBarClick} />
+              <WidgetTop label="Top largest foodscapes">
+                <ChartTop settings={settings} onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>
@@ -227,8 +233,8 @@ const FoodscapesWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest foodscapes">
-                <ChartTop onBarClick={handleBarClick} />
+              <WidgetTop label="Top largest soil groups">
+                <ChartTop settings={settings} onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>

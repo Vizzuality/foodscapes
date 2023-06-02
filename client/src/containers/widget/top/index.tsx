@@ -12,7 +12,7 @@ export interface WidgetTopProps extends PropsWithChildren {
 }
 
 const WidgetTop = ({ label, children }: WidgetTopProps) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Collapsible
@@ -22,19 +22,19 @@ const WidgetTop = ({ label, children }: WidgetTopProps) => {
       }}
     >
       <CollapsibleTrigger className="mt-5 flex items-center space-x-2 font-semibold text-navy-500 hover:underline">
-        <span>{label}</span>
+        <span className="text-sm">{label}</span>
 
         <Icon
           icon={ARROW_DOWN_SVG}
           className={cn({
-            'relative top-px h-3 w-3 text-navy-500 transition-transform': true,
+            'relative top-px h-2 w-2 text-navy-500 transition-transform': true,
             'rotate-180': open,
           })}
         />
       </CollapsibleTrigger>
 
       <CollapsibleContent>
-        <div className="relative mt-5 min-h-[40px]">{children}</div>
+        <div className="relative mt-2.5 min-h-[40px]">{children}</div>
       </CollapsibleContent>
     </Collapsible>
   );

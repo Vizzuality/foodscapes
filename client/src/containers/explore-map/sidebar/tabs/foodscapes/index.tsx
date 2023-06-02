@@ -12,7 +12,7 @@ const FoodscapesSidebar = forwardRef(() => {
     <section className="flex grow flex-col justify-between">
       <div>
         <header>
-          <div className="relative z-0 px-20 pt-36">
+          <div className="relative z-0 px-20 pt-72">
             <h2 className="relative z-10 border-b border-navy-500/30 pb-6 text-xl font-medium">
               Foodscapes
             </h2>
@@ -43,7 +43,13 @@ const FoodscapesSidebar = forwardRef(() => {
       </div>
 
       <div>
-        <Image src="/images/sidebar/foodscapes-tab.png" alt="Risks tab" width={640} height={256} />
+        <Image
+          src="/images/sidebar/foodscapes-tab.png"
+          alt="Risks tab"
+          width={640}
+          height={256}
+          priority
+        />
       </div>
     </section>
   );

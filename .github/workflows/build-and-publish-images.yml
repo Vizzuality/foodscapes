@@ -16,16 +16,17 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  AWS_ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
-  AWS_ECS_CLUSTER: ${{ secrets.AWS_ECS_CLUSTER }}
-  AWS_ECS_SERVICE: ${{ secrets.AWS_ECS_CLUSTER }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ECR_REPOSITORY: ${{ vars.AWS_ECR_REPOSITORY }}
+  AWS_ECS_CLUSTER: ${{ vars.AWS_ECS_CLUSTER }}
+  AWS_ECS_SERVICE: ${{ vars.AWS_ECS_CLUSTER }}
 
 jobs:
   build_and_deploy:
     name: Build image, push to ECR and deploy on ECS
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         service-name:
           - client
@@ -50,7 +51,7 @@ jobs:
 
       - name: Prepare task definition template
         env:
-          AWS_ECS_EXECUTION_ROLE_ARN: ${{ secrets.AWS_ECS_EXECUTION_ROLE_ARN }}
+          AWS_ECS_EXECUTION_ROLE_ARN: ${{ vars.AWS_ECS_EXECUTION_ROLE_ARN }}
           AWS_REGION: ${{ env.AWS_REGION }}
         run: |
           envsubst < ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json.tpl > ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
@@ -83,18 +84,20 @@ jobs:
           push: true
           # @todo: define build-args depending on matrix element
           build-args: |
-            DATASETTE_SQLITE_DB_FILENAME=foodscapes.db
-            DATA_CORE_SQLITE_DB_SOURCE_URL=${{ secrets.DATA_CORE_SQLITE_DB_SOURCE_URL }}
-            DATA_CORE_SQLITE_DB_CHECKSUM=${{ secrets.DATA_CORE_SQLITE_DB_CHECKSUM }}
-            DATA_CORE_COG_SOURCE_URL=${{ secrets.DATA_CORE_COG_SOURCE_URL }}
-            DATA_CORE_COG_CHECKSUM=${{ secrets.DATA_CORE_COG_CHECKSUM }}
-            DATASETTE_CORS_ORIGINS=${{ secrets.DATASETTE_CORS_ORIGINS }}
-            TILER_FOODSCAPES_COG_FILENAME=foodscapes_stack_cog_lzw.tif
-            TILER_ROOT_PATH=''
-            TILER_CORS_ORIGINS_REGEX=${{ secrets.TILER_CORS_ORIGINS_REGEX }}
-            APP_NEXT_PUBLIC_API_URL=${{ secrets.APP_NEXT_PUBLIC_API_URL }}
-            APP_NEXT_PUBLIC_TITILER_API_URL=${{ secrets.APP_NEXT_PUBLIC_TITILER_API_URL }}
-            APP_NEXT_PUBLIC_MAPBOX_API_TOKEN=${{ secrets.APP_NEXT_PUBLIC_MAPBOX_API_TOKEN }}
+            DATASETTE_CORS_ORIGINS=${{ vars.DATASETTE_CORS_ORIGINS }}
+            DATA_CORE_SQLITE_DB_SOURCE_URL=${{ vars.DATA_CORE_SQLITE_DB_SOURCE_URL }}
+            DATA_CORE_SQLITE_DB_CHECKSUM=${{ vars.DATA_CORE_SQLITE_DB_CHECKSUM }}
+            DATA_CORE_COG_SOURCE_URL=${{ vars.DATA_CORE_COG_SOURCE_URL }}
+            DATA_CORE_COG_CHECKSUM=${{ vars.DATA_CORE_COG_CHECKSUM }}
+            DATA_IRRECOVERABLE_CARBON_COG_SOURCE_URL=${{ vars.DATA_IRRECOVERABLE_CARBON_COG_SOURCE_URL}}
+            DATA_IRRECOVERABLE_CARBON_COG_CHECKSUM=${{ vars.DATA_IRRECOVERABLE_CARBON_COG_CHECKSUM }}
+            DATA_DEPRIVATION_INDEX_COG_SOURCE_URL=${{ vars.DATA_DEPRIVATION_INDEX_COG_SOURCE_URL }}
+            DATA_DEPRIVATION_INDEX_COG_CHECKSUM=${{ vars.DATA_DEPRIVATION_INDEX_COG_CHECKSUM }}
+            TILER_ROOT_PATH=${{ vars.TILER_ROOT_PATH }}
+            TILER_CORS_ORIGINS_REGEX=${{ vars.TILER_CORS_ORIGINS_REGEX }}
+            APP_NEXT_PUBLIC_API_URL=${{ vars.APP_NEXT_PUBLIC_API_URL }}
+            APP_NEXT_PUBLIC_TITILER_API_URL=${{ vars.APP_NEXT_PUBLIC_TITILER_API_URL }}
+            APP_NEXT_PUBLIC_MAPBOX_API_TOKEN=${{ vars.APP_NEXT_PUBLIC_MAPBOX_API_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition

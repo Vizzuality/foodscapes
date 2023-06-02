@@ -1,20 +1,22 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
-import { useMap, ViewState } from 'react-map-gl';
+import { useMap } from 'react-map-gl';
+
+import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   basemapAtom,
-  countryAtom,
+  bboxAtom,
   layersAtom,
   popupAtom,
-  provinceAtom,
   sidebarOpenAtom,
+  tmpBboxAtom,
 } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useCountry } from 'hooks/countries';
-import { useProvince } from 'hooks/provinces';
+import { Bbox } from 'types/map';
 
 import { BASEMAPS } from 'constants/basemaps';
 
@@ -42,7 +44,6 @@ const DEFAULT_PROPS: CustomMapProps = {
 
 const MapContainer = () => {
   const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
-  const [viewState, setViewState] = useState<Partial<ViewState>>({});
 
   const { [id]: map } = useMap();
 
@@ -51,18 +52,16 @@ const MapContainer = () => {
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
   const sidebarOpen = useRecoilValue(sidebarOpenAtom);
+  const bbox = useRecoilValue(bboxAtom);
+  const tmpBbox = useRecoilValue(tmpBboxAtom);
 
-  //leer estado si hay pais y provincia SINGULAR
-  const country = useRecoilValue(countryAtom);
-  const province = useRecoilValue(provinceAtom);
-
-  const { data: countryData } = useCountry(country);
-  const { data: provinceData } = useProvince(province);
+  const setBbox = useSetRecoilState(bboxAtom);
+  const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
   const bounds: CustomMapProps['bounds'] | null = useMemo(() => {
-    if (countryData || provinceData) {
+    if (tmpBbox) {
       return {
-        bbox: provinceData?.bbox || countryData?.bbox,
+        bbox: tmpBbox,
         options: {
           padding: {
             top: 50,
@@ -73,8 +72,9 @@ const MapContainer = () => {
         },
       };
     }
+
     return null;
-  }, [countryData, provinceData]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [tmpBbox]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setPopup = useSetRecoilState(popupAtom);
 
@@ -94,9 +94,20 @@ const MapContainer = () => {
     });
   }, [map]);
 
-  const handleViewState = useCallback((vw: ViewState) => {
-    setViewState(vw);
-  }, []);
+  const handleViewState = useCallback(() => {
+    if (map) {
+      const b = map
+        .getBounds()
+        .toArray()
+        .flat()
+        .map((v) => {
+          return parseFloat(v.toFixed(2));
+        }) as Bbox;
+
+      setBbox(b as Bbox);
+      setTmpBbox(null);
+    }
+  }, [map, setBbox, setTmpBbox]);
 
   const handleClick = useCallback(
     (e) => {
@@ -109,15 +120,20 @@ const MapContainer = () => {
   );
 
   return (
-    <div className="absolute right-0 h-screen w-full">
+    <div className="absolute right-0 z-0 h-screen w-full">
+      <Link href="/" className="absolute top-5 left-5 z-10">
+        <Image src="/images/logo-map.svg" alt="Logo" width={151} height={29} />
+      </Link>
       <Map
         id={id}
         mapStyle={MAP_STYLE}
         minZoom={minZoom}
         maxZoom={maxZoom}
         bounds={bounds}
-        initialViewState={initialViewState}
-        viewState={viewState}
+        initialViewState={{
+          ...initialViewState,
+          ...(bbox && { bounds: bbox }),
+        }}
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
         onMapViewStateChange={handleViewState}
         onClick={handleClick}

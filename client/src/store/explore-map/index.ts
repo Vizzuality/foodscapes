@@ -1,10 +1,13 @@
+import { useEffect } from 'react';
+
 import { array, bool, dict, nullable, number, object, optional, string } from '@recoiljs/refine';
-import { atom, selectorFamily } from 'recoil';
+import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 import { FiltersOmitProps, FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings, LayerType } from 'types/layers';
+import { Bbox } from 'types/map';
 
 // Menus
 export const sidebarOpenAtom = atom({
@@ -17,7 +20,44 @@ export const layersOpenAtom = atom({
   default: false,
 });
 
+// Content
+export const contentAtom = atom({
+  key: 'content',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: nullable(
+        object({
+          id: number(),
+          type: string(),
+        })
+      ),
+    }),
+  ],
+});
+
+// Filters
+export const filtersOpenAtom = atom({
+  key: 'filters-open',
+  default: false,
+});
+
 // Map
+export const bboxAtom = atom<Bbox>({
+  key: 'bbox',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: array(number()),
+    }),
+  ],
+});
+
+export const tmpBboxAtom = atom<Bbox>({
+  key: 'tmp-bbox',
+  default: null,
+});
+
 export const basemapAtom = atom({
   key: 'basemap',
   default: 'light',
@@ -44,18 +84,22 @@ const DEFAULT_SETTINGS = {
   expand: true,
 };
 
+const SETTINGS = {
+  foodscapes: { group: false, ...DEFAULT_SETTINGS },
+  'foodscapes-intensities': { ...DEFAULT_SETTINGS },
+  crops: { group: false, ...DEFAULT_SETTINGS },
+  'land-use-risks': { ...DEFAULT_SETTINGS },
+  'climate-risks': { ...DEFAULT_SETTINGS },
+  'pollution-risks': { ...DEFAULT_SETTINGS },
+  locations: { ...DEFAULT_SETTINGS },
+  restorations: { ...DEFAULT_SETTINGS, column: 'grassland_areas_suitable_for_restoration_area' },
+  agroforestries: { ...DEFAULT_SETTINGS, column: 'cropland_areas_suitable_for_silvoarable_area' },
+  'soil-healths': { ...DEFAULT_SETTINGS, column: 'areas_suitable_for_cover_cropping_area' },
+} satisfies Record<LayerType, LayerSettings<LayerType>>;
+
 export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType>>>({
   key: 'layers-settings',
-  default: {
-    foodscapes: { group: false, ...DEFAULT_SETTINGS },
-    'foodscapes-intensities': { ...DEFAULT_SETTINGS },
-    crops: { group: false, ...DEFAULT_SETTINGS },
-    'land-use-risks': { ...DEFAULT_SETTINGS },
-    'climate-risks': { ...DEFAULT_SETTINGS },
-    'pollution-risks': { ...DEFAULT_SETTINGS },
-    locations: { ...DEFAULT_SETTINGS },
-  } satisfies Record<LayerType, LayerSettings<LayerType>>,
-
+  default: SETTINGS,
   effects: [
     urlSyncEffect({
       refine: dict(
@@ -64,6 +108,7 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
           visibility: bool(),
           expand: bool(),
           group: optional(bool()),
+          column: optional(string()),
         })
       ),
     }),
@@ -185,37 +230,32 @@ export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps | F
     },
 });
 
-// export function useSyncExploreMap() {
-//   const layers = useRecoilValue(layersAtom);
+export function useSyncExploreMap() {
+  const layers = useRecoilValue(layersAtom);
 
-//   const syncAtoms = useRecoilCallback(
-//     ({ snapshot, set, reset }) =>
-//       async () => {
-//         const lys = await snapshot.getPromise(layersAtom);
-//         const lysSettings = await snapshot.getPromise(layersSettingsAtom);
+  const syncAtoms = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async () => {
+        const lys = await snapshot.getPromise(layersAtom);
+        const lysSettings = await snapshot.getPromise(layersSettingsAtom);
 
-//         // Remove layersettings that are not in layers
-//         (Object.keys(lysSettings) as Array<Dataset['id']>).forEach((ly) => {
-//           if (!lys.includes(ly)) {
-//             set(layersSettingsAtom, (prev) => {
-//               const { [ly]: l, ...rest } = prev;
-//               return rest as Record<Dataset['id'], LayerSettings<Dataset['id']>>;
-//             });
-//           }
-//         });
+        // Reset layersettings that are not in layers
+        (Object.keys(lysSettings) as Array<LayerType>).forEach((ly) => {
+          if (!lys.includes(ly)) {
+            set(layersSettingsAtom, (prev) => ({
+              ...prev,
+              [ly]: { ...SETTINGS[ly] },
+            }));
+          }
+        });
+      },
+    []
+  );
 
-//         if (lys.length === 0) {
-//           reset(layersSettingsAtom);
-//           reset(popupAtom);
-//         }
-//       },
-//     []
-//   );
+  // Sync layersettings when layers change
+  useEffect(() => {
+    syncAtoms();
+  }, [layers.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
-//   // Sync layersettings when layers change
-//   useEffect(() => {
-//     syncAtoms();
-//   }, [layers]); // eslint-disable-line react-hooks/exhaustive-deps
-
-//   return null;
-// }
+  return null;
+}
