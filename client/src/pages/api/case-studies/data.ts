@@ -21,7 +21,6 @@ const fetch = async (filters: FiltersProps) => {
     .from('data')
     .whereNotIn('case_studies', [-9999])
     .groupBy('case_studies');
-  console.log(SQL.toString());
   return API.request({
     method: 'GET',
     url: '/foodscapes.json',
