@@ -1,4 +1,4 @@
-import { caseStudyAtom, tmpBboxAtom } from 'store/explore-map';
+import { caseStudyAtom, countryAtom, provinceAtom, tmpBboxAtom } from 'store/explore-map';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -11,6 +11,8 @@ import { Skeleton } from 'components/ui/skeleton';
 import CaseStudiesListItem from './item/component';
 
 const CaseStudiesList = () => {
+  const setCountry = useSetRecoilState(countryAtom);
+  const setProvince = useSetRecoilState(provinceAtom);
   const setCaseStudy = useSetRecoilState(caseStudyAtom);
   const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
@@ -22,9 +24,9 @@ const CaseStudiesList = () => {
     isPlaceholderData: caseStudiesIsPlaceholderData,
   } = useCaseStudies();
 
-  console.log('caseStudiesData', caseStudiesData);
-
   const handleCaseStudyClick = (caseStudy: CaseStudy) => {
+    setCountry(null);
+    setProvince(null);
     setCaseStudy(caseStudy.id);
     setTmpBbox(caseStudy.bbox);
   };
