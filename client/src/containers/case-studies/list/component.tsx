@@ -1,4 +1,4 @@
-import { contentAtom, tmpBboxAtom } from 'store/explore-map';
+import { caseStudyAtom, tmpBboxAtom } from 'store/explore-map';
 
 import { useSetRecoilState } from 'recoil';
 
@@ -11,8 +11,8 @@ import { Skeleton } from 'components/ui/skeleton';
 import CaseStudiesListItem from './item/component';
 
 const CaseStudiesList = () => {
-  const setContentAtom = useSetRecoilState(contentAtom);
-  const setTmpBboxAtom = useSetRecoilState(tmpBboxAtom);
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
+  const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
   const {
     data: caseStudiesData,
@@ -23,12 +23,8 @@ const CaseStudiesList = () => {
   } = useCaseStudies();
 
   const handleCaseStudyClick = (caseStudy: CaseStudy) => {
-    setContentAtom({
-      id: caseStudy.id,
-      type: 'case-study',
-    });
-
-    setTmpBboxAtom(caseStudy.bbox);
+    setCaseStudy(caseStudy.id);
+    setTmpBbox(caseStudy.bbox);
   };
 
   return (
