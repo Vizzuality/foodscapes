@@ -18,6 +18,7 @@ const CaseStudiesListItem = ({ caseStudy }: CaseStudiesListItemProps) => {
           src={caseStudy.image}
           alt={caseStudy.title}
           fill
+          sizes="500px"
           priority
           style={{ objectFit: 'cover' }}
         />

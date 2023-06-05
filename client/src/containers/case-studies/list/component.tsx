@@ -22,6 +22,8 @@ const CaseStudiesList = () => {
     isPlaceholderData: caseStudiesIsPlaceholderData,
   } = useCaseStudies();
 
+  console.log('caseStudiesData', caseStudiesData);
+
   const handleCaseStudyClick = (caseStudy: CaseStudy) => {
     setCaseStudy(caseStudy.id);
     setTmpBbox(caseStudy.bbox);
