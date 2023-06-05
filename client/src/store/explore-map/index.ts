@@ -95,6 +95,7 @@ const SETTINGS = {
   restorations: { ...DEFAULT_SETTINGS, column: 'grassland_areas_suitable_for_restoration_area' },
   agroforestries: { ...DEFAULT_SETTINGS, column: 'cropland_areas_suitable_for_silvoarable_area' },
   'soil-healths': { ...DEFAULT_SETTINGS, column: 'areas_suitable_for_cover_cropping_area' },
+  'protected-areas': { ...DEFAULT_SETTINGS },
 } satisfies Record<LayerType, LayerSettings<LayerType>>;
 
 export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType>>>({

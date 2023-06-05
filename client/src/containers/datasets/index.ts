@@ -33,6 +33,10 @@ import PollutionRiskInfo from './pollution-risks/info.mdx';
 import PollutionRiskLayer from './pollution-risks/layer';
 import PollutionRiskLegend from './pollution-risks/legend';
 import PollutionRiskPopup from './pollution-risks/popup';
+// Protected areas
+import ProtectedAreasInfo from './protected-areas/info.mdx';
+import ProtectedAreasLayer from './protected-areas/layer';
+import ProtectedAreasLegend from './protected-areas/legend';
 // Restorations
 import RestorationsInfo from './restorations/info.mdx';
 import RestorationsLayer from './restorations/layer';
@@ -44,6 +48,8 @@ import SoilHealthsLayer from './soil-healths/layer';
 import SoilHealthsLegend from './soil-healths/legend';
 import SoilHealthsPopup from './soil-healths/popup';
 
+// import ProtectedAreasPopup from './protected-areas/popup';
+
 export const LAYERS = {
   foodscapes: FoodscapesLayer,
   'foodscapes-intensities': FoodscapesIntensitiesLayer,
@@ -54,6 +60,7 @@ export const LAYERS = {
   restorations: RestorationsLayer,
   agroforestries: AgroforestriesLayer,
   'soil-healths': SoilHealthsLayer,
+  'protected-areas': ProtectedAreasLayer,
 };
 
 export const LEGENDS = {
@@ -66,6 +73,7 @@ export const LEGENDS = {
   restorations: RestorationsLegend,
   agroforestries: AgroforestriesLegend,
   'soil-healths': SoilHealthsLegend,
+  'protected-areas': ProtectedAreasLegend,
 };
 
 export const POPUPS = {
@@ -90,4 +98,5 @@ export const INFO = {
   restorations: RestorationsInfo,
   agroforestries: AgroforestriesInfo,
   'soil-healths': SoilHealthsInfo,
+  'protected-areas': ProtectedAreasInfo,
 };
