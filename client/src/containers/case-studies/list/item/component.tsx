@@ -1,14 +1,22 @@
+import cx from 'classnames';
+
 import Image from 'next/image';
 
 import { CaseStudy } from 'types/case-studies';
 
 interface CaseStudiesListItemProps {
   caseStudy: CaseStudy;
+  disabled: boolean;
 }
 
-const CaseStudiesListItem = ({ caseStudy }: CaseStudiesListItemProps) => {
+const CaseStudiesListItem = ({ caseStudy, disabled }: CaseStudiesListItemProps) => {
   return (
-    <div className="group/item flex flex-col text-center">
+    <div
+      className={cx({
+        'group/item flex flex-col text-center': true,
+        'cursor-default opacity-50': disabled,
+      })}
+    >
       <span className="mb-4 flex h-12 items-end justify-center px-4 font-display">
         {caseStudy.title}
       </span>

@@ -1,10 +1,19 @@
 import { useMemo } from 'react';
 
-import { caseStudyAtom, countryAtom, provinceAtom, tmpBboxAtom } from 'store/explore-map';
+import {
+  caseStudyAtom,
+  countryAtom,
+  filtersSelector,
+  provinceAtom,
+  tmpBboxAtom,
+} from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { CaseStudy } from 'types/case-studies';
+
 import { useCaseStudies } from 'hooks/case-studies';
+import { useData } from 'hooks/data';
 
 import FiltersContent from 'containers/explore-map/filters/content';
 
@@ -18,6 +27,8 @@ const CaseStudiesFilters = () => {
 
   const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
+  const filters = useRecoilValue(filtersSelector(['country', 'province', 'caseStudy']));
+
   const {
     data: caseStudiesData,
     isFetching: caseStudiesIsFetching,
@@ -26,23 +37,30 @@ const CaseStudiesFilters = () => {
     isPlaceholderData: caseStudiesIsPlaceholderData,
   } = useCaseStudies();
 
-  const handleCaseStudyClick = (value: number | null) => {
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CaseStudy>(
+    'case-studies',
+    filters
+  );
+
+  const handleCaseStudyChange = (value: number | null) => {
     setCountry(null);
     setProvince(null);
     setCaseStudy(value);
-    const bbox = caseStudiesData?.find((c) => c.id === value)?.bbox;
-    setTmpBbox(bbox);
+    if (value) {
+      const bbox = caseStudiesData?.find((c) => c.id === value)?.bbox;
+      setTmpBbox(bbox);
+    }
   };
 
   const OPTIONS = useMemo(() => {
-    if (!caseStudiesData) return [];
+    if (!data || !caseStudiesData) return [];
     return caseStudiesData.map((c) => ({
       ...c,
       value: c.id,
       label: c.title,
-      disabled: caseStudy === c.id,
+      disabled: !data.map((d) => d.id).includes(c.id),
     }));
-  }, [caseStudiesData, caseStudy]);
+  }, [caseStudiesData, data]);
 
   return (
     <div className="space-y-1">
@@ -50,20 +68,20 @@ const CaseStudiesFilters = () => {
 
       <FiltersContent
         skeletonClassname="h-[34px]"
-        isPlaceholderData={caseStudiesIsPlaceholderData}
-        isFetching={caseStudiesIsFetching}
-        isFetched={caseStudiesIsFetched}
-        isError={caseStudiesIsError}
+        isPlaceholderData={isPlaceholderData || caseStudiesIsPlaceholderData}
+        isFetching={isFetching || caseStudiesIsFetching}
+        isFetched={isFetched || caseStudiesIsFetched}
+        isError={isError || caseStudiesIsError}
       >
         <div className="space-y-4">
           <SingleSelect
-            id="countries-location-select"
+            id="case-studies-select"
             size="s"
             theme="dark"
             placeholder="All case studies"
             options={OPTIONS}
             value={caseStudy ?? null}
-            onChange={handleCaseStudyClick}
+            onChange={handleCaseStudyChange}
             clearable
           />
         </div>

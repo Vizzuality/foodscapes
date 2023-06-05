@@ -1,45 +1,43 @@
 import { useMemo } from 'react';
 
-import { countryAtom, provinceAtom } from 'store/explore-map';
+import { caseStudyAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useCountries } from 'hooks/countries';
+import { useCaseStudies } from 'hooks/case-studies';
 
 import FilterSelected from 'containers/explore-map/filters/selected';
 
-const CountriesSelected = () => {
-  const country = useRecoilValue(countryAtom);
-  const setCountry = useSetRecoilState(countryAtom);
-  const setProvince = useSetRecoilState(provinceAtom);
+const CaseStudiesSelected = () => {
+  const caseStudy = useRecoilValue(caseStudyAtom);
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
 
-  const { data: countriesData, isFetched: countriesIsFetched } = useCountries();
+  const { data: caseStudiesData, isFetched: caseStudiesIsFetched } = useCaseStudies();
 
   const OPTIONS = useMemo(() => {
-    if (!countriesData) return [];
-    return countriesData;
-  }, [countriesData]);
+    if (!caseStudiesData) return [];
+    return caseStudiesData;
+  }, [caseStudiesData]);
 
   const SELECTED = useMemo(() => {
-    if (country) {
-      const opt = OPTIONS.find((o) => o.value === country);
-      return opt?.label;
+    if (caseStudy) {
+      const opt = OPTIONS.find((o) => o.id === caseStudy);
+      return opt?.title;
     }
 
     return null;
-  }, [OPTIONS, country]);
+  }, [OPTIONS, caseStudy]);
 
   const handleClearClick = (e) => {
     e.stopPropagation();
-    setCountry(null);
-    setProvince(null);
+    setCaseStudy(null);
   };
 
   return (
-    countriesIsFetched && (
-      <FilterSelected text={SELECTED} visible={!!country} onClear={handleClearClick} />
+    caseStudiesIsFetched && (
+      <FilterSelected text={SELECTED} visible={!!caseStudy} onClear={handleClearClick} />
     )
   );
 };
 
-export default CountriesSelected;
+export default CaseStudiesSelected;

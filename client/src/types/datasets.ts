@@ -18,7 +18,8 @@ export interface Dataset {
     | 'soil-healths'
     | 'locations'
     | 'countries'
-    | 'provinces';
+    | 'provinces'
+    | 'case-studies';
   label: string;
   labelGroup?: string;
   group: string;

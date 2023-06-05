@@ -18,6 +18,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import CaseStudiesFilters from 'containers/explore-map/filters/case-studies';
+import CaseStudiesSelected from 'containers/explore-map/filters/case-studies/selected';
 
 import Icon from 'components/icon';
 
@@ -124,6 +125,9 @@ const Filters = () => {
             {/* Locations */}
             <CountriesSelected />
             <ProvincesSelected />
+
+            {/* Case Studies */}
+            <CaseStudiesSelected />
 
             <button
               type="button"

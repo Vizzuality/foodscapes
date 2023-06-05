@@ -255,4 +255,22 @@ export const DATASETS = [
       },
     },
   },
+  {
+    id: 'case-studies',
+    label: 'Case Studies',
+    group: 'other',
+    layer: {
+      enabled: false,
+      visible: false,
+      band: 35,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
 ] satisfies Dataset[] as Dataset[];
