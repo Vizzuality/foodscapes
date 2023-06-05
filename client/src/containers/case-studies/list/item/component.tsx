@@ -22,7 +22,7 @@ const CaseStudiesListItem = ({ caseStudy, disabled }: CaseStudiesListItemProps) 
       </span>
       <span className="relative block h-48 overflow-hidden">
         <Image
-          className="duration-300 ease-in group-hover/item:scale-110"
+          className={cx({ 'duration-300 ease-in': true, 'group-hover/item:scale-110': !disabled })}
           src={caseStudy.image}
           alt={caseStudy.title}
           fill

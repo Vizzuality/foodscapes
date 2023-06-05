@@ -66,7 +66,8 @@ const CaseStudiesList = () => {
                   type="button"
                   className="w-full"
                   aria-label={`View ${caseStudy.title} case study`}
-                  onClick={() => !cardDisabled && handleCaseStudyClick(caseStudy)}
+                  onClick={() => handleCaseStudyClick(caseStudy)}
+                  disabled={cardDisabled}
                 >
                   <CaseStudiesListItem caseStudy={caseStudy} disabled={cardDisabled} />
                 </button>
