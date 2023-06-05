@@ -1,4 +1,4 @@
-import { contentAtom, filtersSelector, layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { caseStudyAtom, filtersSelector, layersAtom, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue } from 'recoil';
 
@@ -13,14 +13,14 @@ const LayerManagerContainer = () => {
 
   const filters = useRecoilValue(filtersSelector(null));
 
-  const caseStudy = useRecoilValue(contentAtom);
+  const caseStudy = useRecoilValue(caseStudyAtom);
 
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
 
   return (
     <MapboxOverlayProvider>
       <LocationLayer settings={layersSettings.locations} filters={filters} />
-      <CaseStudyLayer settings={{ id: caseStudy?.id }} />
+      <CaseStudyLayer settings={{ id: caseStudy }} />
 
       {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer];

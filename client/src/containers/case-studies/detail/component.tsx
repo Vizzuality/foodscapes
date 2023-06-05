@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import cn from 'lib/classnames';
 
-import { contentAtom } from 'store/explore-map';
+import { caseStudyAtom } from 'store/explore-map';
 
 import { motion } from 'framer-motion';
 import { useSetRecoilState } from 'recoil';
@@ -23,10 +23,10 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
     isFetching: caseStudyIsFetching,
   } = useCaseStudy(id);
 
-  const setContent = useSetRecoilState(contentAtom);
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
 
   const handleCloseCaseStudyDetailClick = () => {
-    setContent(null);
+    setCaseStudy(null);
   };
 
   const CaseStudyContent = caseStudyData?.content;

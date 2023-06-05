@@ -1,6 +1,12 @@
 import { useMemo } from 'react';
 
-import { countryAtom, filtersSelector, provinceAtom, tmpBboxAtom } from 'store/explore-map';
+import {
+  caseStudyAtom,
+  countryAtom,
+  filtersSelector,
+  provinceAtom,
+  tmpBboxAtom,
+} from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -17,10 +23,11 @@ const CountriesFilters = () => {
   const country = useRecoilValue(countryAtom);
   const setCountry = useSetRecoilState(countryAtom);
   const setProvince = useSetRecoilState(provinceAtom);
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
 
   const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
-  const filters = useRecoilValue(filtersSelector(['country', 'province']));
+  const filters = useRecoilValue(filtersSelector(['country', 'province', 'caseStudy']));
 
   const {
     data: countriesData,
@@ -52,6 +59,7 @@ const CountriesFilters = () => {
       setTmpBbox(C.bbox);
     }
     setProvince(null);
+    setCaseStudy(null);
   };
 
   return (
