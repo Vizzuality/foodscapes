@@ -256,6 +256,23 @@ export const DATASETS = [
     },
   },
   {
+    id: 'protected-areas',
+    label: 'Protected Areas',
+    group: 'contextual',
+    layer: {
+      enabled: true,
+      visible: true,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
     id: 'case-studies',
     label: 'Case Studies',
     group: 'other',

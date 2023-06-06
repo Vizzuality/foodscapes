@@ -18,15 +18,15 @@ const PopupContainer = () => {
 
   return (
     <Popup
-      latitude={popup.lat}
-      longitude={popup.lng}
+      latitude={popup.lngLat.lat}
+      longitude={popup.lngLat.lng}
       closeOnClick={false}
       style={{
         padding: 0,
       }}
       onClose={() => setPopup(null)}
     >
-      <div className="space-y-2.5 p-2.5 pr-6 text-navy-500 shadow-[0_20px_15px_rgba(0,0,0,0.1)]">
+      <div className="min-w-[250px] space-y-2.5 p-2.5 pr-6 text-navy-500 shadow-[0_20px_15px_rgba(0,0,0,0.1)]">
         {layers
           .filter((layer) => {
             const layerSettings = layersSettings[layer];
@@ -35,10 +35,10 @@ const PopupContainer = () => {
           })
           .map((layer) => {
             const PopupComponent = POPUPS[layer];
-            return <PopupComponent key={layer} latLng={popup} settings={layersSettings[layer]} />;
+            return <PopupComponent key={layer} event={popup} settings={layersSettings[layer]} />;
           })}
 
-        <ProvincesPopup key="provinces-popup" latLng={popup} />
+        <ProvincesPopup key="provinces-popup" event={popup} />
       </div>
     </Popup>
   );

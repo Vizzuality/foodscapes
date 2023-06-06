@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { array, bool, dict, nullable, number, object, optional, string } from '@recoiljs/refine';
+import mapboxgl from 'mapbox-gl';
 import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
@@ -62,6 +63,11 @@ export const layersAtom = atom<Dataset['id'][]>({
   ],
 });
 
+export const layersInteractiveAtom = atom<string[]>({
+  key: 'layers-interactive',
+  default: [],
+});
+
 const DEFAULT_SETTINGS = {
   opacity: 1,
   visibility: true,
@@ -79,6 +85,7 @@ const SETTINGS = {
   restorations: { ...DEFAULT_SETTINGS, column: 'grassland_areas_suitable_for_restoration_area' },
   agroforestries: { ...DEFAULT_SETTINGS, column: 'cropland_areas_suitable_for_silvoarable_area' },
   'soil-healths': { ...DEFAULT_SETTINGS, column: 'areas_suitable_for_cover_cropping_area' },
+  'protected-areas': { ...DEFAULT_SETTINGS },
 } satisfies Record<LayerType, LayerSettings<LayerType>>;
 
 export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType>>>({
@@ -99,9 +106,10 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
   ],
 });
 
-export const popupAtom = atom({
+export const popupAtom = atom<mapboxgl.MapMouseEvent>({
   key: 'point',
   default: null,
+  dangerouslyAllowMutability: true,
 });
 
 export const tabAtom = atom({

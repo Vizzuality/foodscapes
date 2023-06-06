@@ -1,4 +1,5 @@
 import { Layer } from '@deck.gl/core/typed';
+import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
 import { AgroforestrySettings } from 'types/agroforestries';
 import { ClimateChangeSettings } from 'types/climate-risks';
@@ -13,12 +14,18 @@ import { SoilHealthSettings } from 'types/soil-healths';
 
 import { Settings } from 'components/map/legend/types';
 
+type OnAddProps = {
+  source: AnySourceData;
+  layers: AnyLayer[];
+};
+
 export type LayerProps<S> = {
   id?: string;
   beforeId?: string;
   settings: Partial<S>;
   zIndex?: number;
   filters?: FiltersProps;
+  onAdd?: (props: OnAddProps) => void;
 };
 
 export type LayerTypeSettings = {
@@ -32,6 +39,7 @@ export type LayerTypeSettings = {
   agroforestries: AgroforestrySettings;
   'soil-healths': SoilHealthSettings;
   locations: Settings;
+  'protected-areas': Settings;
 };
 
 export type LayerType = keyof LayerTypeSettings;

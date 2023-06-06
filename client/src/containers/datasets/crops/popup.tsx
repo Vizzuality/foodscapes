@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import cn from 'lib/classnames';
 
 import { LayerSettings } from 'types/layers';
-import { LngLat } from 'types/map';
 
 import { useCrops } from 'hooks/crops';
 import { noPointData, usePointData } from 'hooks/data';
@@ -15,15 +14,16 @@ import { Skeleton } from 'components/ui/skeleton';
 
 interface CropsPopupProps {
   settings: LayerSettings<'crops'>;
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const CropsPopup = ({ latLng, settings }: CropsPopupProps) => {
+const CropsPopup = ({ event, settings }: CropsPopupProps) => {
+  const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'crops');
   const band = `b${DATASET.layer.band}`;
 
   const f = useCrops();
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

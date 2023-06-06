@@ -1,6 +1,14 @@
-import { caseStudyAtom, filtersSelector, layersAtom, layersSettingsAtom } from 'store/explore-map';
+import { useCallback } from 'react';
 
-import { useRecoilValue } from 'recoil';
+import {
+  caseStudyAtom,
+  filtersSelector,
+  layersAtom,
+  layersInteractiveAtom,
+  layersSettingsAtom,
+} from 'store/explore-map';
+
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
 import CaseStudyLayer from 'containers/datasets/case-studies/layer';
@@ -10,12 +18,20 @@ import { MapboxOverlayProvider } from 'containers/explore-map/map/layer-manager/
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(layersAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
+  const setLayersInteractive = useSetRecoilState(layersInteractiveAtom);
 
   const filters = useRecoilValue(filtersSelector(null));
 
   const caseStudy = useRecoilValue(caseStudyAtom);
 
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
+
+  const handleLayerAdd = useCallback(
+    ({ layers: layers1 }) => {
+      setLayersInteractive(layers1.map((l) => l.id));
+    },
+    [setLayersInteractive]
+  );
 
   return (
     <MapboxOverlayProvider>
@@ -36,6 +52,7 @@ const LayerManagerContainer = () => {
             settings={layersSettings[layer]}
             beforeId={beforeId}
             zIndex={1000 - i}
+            onAdd={handleLayerAdd}
           />
         );
       })}
