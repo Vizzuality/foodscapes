@@ -20,13 +20,16 @@ const PotectedAreasLegend = (props: PotectedAreasLegendProps) => {
 
   return (
     <LegendItem {...legend} {...props}>
-      <div className="divide-y divide-navy-500/20">
-        <LegendTypeBasic
-          items={WDPA_CATEGORIES.map((w) => ({
-            value: w.id,
-            color: w.color,
-          }))}
-        />
+      <div className="space-y-2 py-2 px-4 pt-0">
+        <div className="space-y-1">
+          {/* <h4 className="text-sm">Categories:</h4> */}
+          <LegendTypeBasic
+            items={WDPA_CATEGORIES.map((w) => ({
+              value: w.id,
+              color: w.color,
+            }))}
+          />
+        </div>
       </div>
     </LegendItem>
   );
