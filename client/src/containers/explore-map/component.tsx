@@ -24,16 +24,15 @@ const ExploreMap = () => {
       <Media greaterThanOrEqual="sm">
         <Sidebar />
       </Media>
-      <Media greaterThanOrEqual="sm">
-        <a
-          href="https://www.google.es/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute bottom-1/2 -right-9 z-10 -rotate-90 rounded-md border border-navy-500 bg-white px-2 pb-4 text-sm hover:-translate-x-2 hover:transition-transform"
-        >
-          Feedback
-        </a>
-      </Media>
+
+      <a
+        href="https://www.google.es/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-1/2 -right-9 z-10 hidden -rotate-90 rounded-md border border-navy-500 bg-white px-2 pb-4 text-sm transition-transform hover:-translate-x-2 sm:block"
+      >
+        Feedback
+      </a>
     </div>
   );
 };
