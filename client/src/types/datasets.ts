@@ -19,7 +19,8 @@ export interface Dataset {
     | 'locations'
     | 'countries'
     | 'provinces'
-    | 'protected-areas';
+    | 'protected-areas'
+    | 'case-studies';
   label: string;
   labelGroup?: string;
   group: string;

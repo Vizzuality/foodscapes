@@ -21,22 +21,6 @@ export const layersOpenAtom = atom({
   default: false,
 });
 
-// Content
-export const contentAtom = atom({
-  key: 'content',
-  default: null,
-  effects: [
-    urlSyncEffect({
-      refine: nullable(
-        object({
-          id: number(),
-          type: string(),
-        })
-      ),
-    }),
-  ],
-});
-
 // Filters
 export const filtersOpenAtom = atom({
   key: 'filters-open',
@@ -219,6 +203,16 @@ export const provinceAtom = atom({
   ],
 });
 
+export const caseStudyAtom = atom({
+  key: 'caseStudy',
+  default: null,
+  effects: [
+    urlSyncEffect({
+      refine: nullable(number()),
+    }),
+  ],
+});
+
 export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps | FiltersOmitProps[]>({
   key: 'filters',
   get:
@@ -234,6 +228,7 @@ export const filtersSelector = selectorFamily<FiltersProps, FiltersOmitProps | F
         ...(!o.includes('pollutionRisk') && { pollutionRisk: get(pollutionRiskAtom) }),
         ...(!o.includes('country') && { country: get(countryAtom) }),
         ...(!o.includes('province') && { province: get(provinceAtom) }),
+        ...(!o.includes('caseStudy') && { caseStudy: get(caseStudyAtom) }),
       };
     },
 });

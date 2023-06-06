@@ -1,6 +1,12 @@
 import { useMemo } from 'react';
 
-import { provinceAtom, countryAtom, filtersSelector, tmpBboxAtom } from 'store/explore-map';
+import {
+  provinceAtom,
+  countryAtom,
+  filtersSelector,
+  tmpBboxAtom,
+  caseStudyAtom,
+} from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -21,9 +27,11 @@ const LocationRankingWidget = () => {
   const province = useRecoilValue(provinceAtom);
   const setProvince = useSetRecoilState(provinceAtom);
 
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
+
   const setTmpBbox = useSetRecoilState(tmpBboxAtom);
 
-  const filters = useRecoilValue(filtersSelector(['country', 'province']));
+  const filters = useRecoilValue(filtersSelector(['country', 'province', 'caseStudy']));
 
   const {
     data: provincesData,
@@ -91,6 +99,7 @@ const LocationRankingWidget = () => {
       setCountry(value as number);
       setTmpBbox(C.bbox);
     }
+    setCaseStudy(null);
     setProvince(null);
   };
 
@@ -102,6 +111,7 @@ const LocationRankingWidget = () => {
       setProvince(value as number);
       setTmpBbox(P.bbox);
     }
+    setCaseStudy(null);
   };
 
   return (

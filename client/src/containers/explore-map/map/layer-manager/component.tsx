@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import {
-  contentAtom,
+  caseStudyAtom,
   filtersSelector,
   layersAtom,
   layersInteractiveAtom,
@@ -22,7 +22,7 @@ const LayerManagerContainer = () => {
 
   const filters = useRecoilValue(filtersSelector(null));
 
-  const caseStudy = useRecoilValue(contentAtom);
+  const caseStudy = useRecoilValue(caseStudyAtom);
 
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
 
@@ -36,7 +36,7 @@ const LayerManagerContainer = () => {
   return (
     <MapboxOverlayProvider>
       <LocationLayer settings={layersSettings.locations} filters={filters} />
-      <CaseStudyLayer settings={{ id: caseStudy?.id }} />
+      <CaseStudyLayer settings={{ id: caseStudy }} />
 
       {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer];

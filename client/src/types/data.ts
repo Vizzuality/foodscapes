@@ -81,6 +81,7 @@ export type FiltersProps = {
   pollutionRisk?: readonly number[];
   country?: number;
   province?: number;
+  caseStudy?: number;
 };
 
 export type FiltersOmitProps =
@@ -92,6 +93,7 @@ export type FiltersOmitProps =
   | 'pollutionRisk'
   | 'country'
   | 'province'
+  | 'caseStudy'
   | null;
 
 export type SortProps = {

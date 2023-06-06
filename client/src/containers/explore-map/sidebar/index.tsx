@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import cn from 'lib/classnames';
 
-import { contentAtom, sidebarOpenAtom, tabAtom } from 'store/explore-map';
+import { caseStudyAtom, sidebarOpenAtom, tabAtom } from 'store/explore-map';
 
 import { Dialog, DialogContent, DialogTrigger } from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -32,13 +32,13 @@ const Sidebar = () => {
   const tab = useRecoilValue(tabAtom);
   const setTab = useSetRecoilState(tabAtom);
 
-  const content = useRecoilValue(contentAtom);
+  const caseStudy = useRecoilValue(caseStudyAtom);
 
   useMemo(() => {
-    if (scrollRef.current && tab && (content?.id || !content?.id)) {
+    if (scrollRef.current && tab && caseStudy) {
       scrollRef.current.scrollTop = 0;
     }
-  }, [tab, content?.id]);
+  }, [tab, caseStudy]);
 
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
@@ -110,12 +110,10 @@ const Sidebar = () => {
 
                 <TabsContent value="case-studies">
                   <AnimatePresence mode="wait">
-                    {content?.type === 'case-study' && (
-                      <CaseStudiesDetail key="case-study-detail-sidebar" id={content?.id} />
+                    {caseStudy && (
+                      <CaseStudiesDetail key="case-study-detail-sidebar" id={caseStudy} />
                     )}
-                    {content?.type !== 'case-study' && (
-                      <CaseStudiesSidebar key="case-study-sidebar" />
-                    )}
+                    {!caseStudy && <CaseStudiesSidebar key="case-study-sidebar" />}
                   </AnimatePresence>
                 </TabsContent>
               </div>
