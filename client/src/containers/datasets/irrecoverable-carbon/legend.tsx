@@ -47,7 +47,7 @@ const IrrecoverableCarbonLegend = (props: IrrecoverableCarbonLegendProps) => {
     'irrecoverable-carbon',
     filters
   );
-
+  console.log({ carbonData });
   const GROUPED_DATA = useMemo(() => {
     if (!data || !carbonData) return [];
     return (
