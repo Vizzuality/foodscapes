@@ -273,4 +273,22 @@ export const DATASETS = [
       },
     },
   },
+  {
+    id: 'irrecoverable-carbon',
+    label: 'Irrecoverable Carbon',
+    group: 'carbon',
+    layer: {
+      enabled: true,
+      visible: false,
+      band: 37,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
 ] satisfies Dataset[] as Dataset[];

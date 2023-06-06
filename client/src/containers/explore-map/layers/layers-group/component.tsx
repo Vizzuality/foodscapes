@@ -17,7 +17,7 @@ const Layers = ({ name, group }) => {
         .filter((d) => d.group === group)
     );
   }, [group]);
-
+  console.log({ FILTERED_DATASETS });
   return (
     <div className="space-y-3 pl-6 pr-7">
       <h3 className="font-display text-lg">{name}</h3>

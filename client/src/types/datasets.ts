@@ -19,7 +19,8 @@ export interface Dataset {
     | 'locations'
     | 'countries'
     | 'provinces'
-    | 'case-studies';
+    | 'case-studies'
+    | 'irrecoverable-carbon';
   label: string;
   labelGroup?: string;
   group: string;

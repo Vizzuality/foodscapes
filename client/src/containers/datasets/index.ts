@@ -1,3 +1,8 @@
+// Irrecoverable Carbon
+import IrrecoverableCarbonInfo from 'containers/datasets/irrecoverable-carbon/info.mdx';
+import IrrecoverableCarbonLayer from 'containers/datasets/irrecoverable-carbon/layer';
+import IrrecoverableCarbonLegend from 'containers/datasets/irrecoverable-carbon/legend';
+
 // Agroforestries
 import AgroforestriesInfo from './agroforestries/info.mdx';
 import AgroforestriesLayer from './agroforestries/layer';
@@ -54,6 +59,7 @@ export const LAYERS = {
   restorations: RestorationsLayer,
   agroforestries: AgroforestriesLayer,
   'soil-healths': SoilHealthsLayer,
+  'irrecoverable-carbon': IrrecoverableCarbonLayer,
 };
 
 export const LEGENDS = {
@@ -66,6 +72,7 @@ export const LEGENDS = {
   restorations: RestorationsLegend,
   agroforestries: AgroforestriesLegend,
   'soil-healths': SoilHealthsLegend,
+  'irrecoverable-carbon': IrrecoverableCarbonLegend,
 };
 
 export const POPUPS = {
@@ -90,4 +97,5 @@ export const INFO = {
   restorations: RestorationsInfo,
   agroforestries: AgroforestriesInfo,
   'soil-healths': SoilHealthsInfo,
+  'irrecoverable-carbon': IrrecoverableCarbonInfo,
 };
