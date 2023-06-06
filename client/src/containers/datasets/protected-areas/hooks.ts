@@ -5,6 +5,8 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
+import { WDPA_CATEGORIES } from 'containers/datasets/protected-areas/constants';
+
 // interface UsePotectedAreasSourceProps {
 //   filters: FiltersProps;
 //   settings?: Partial<LayerSettings<'protected-areas'>>;
@@ -34,6 +36,7 @@ export function useLayers({ settings }: UsePotectedAreasLayerProps): AnyLayer[] 
       {
         id: 'protected-areas-layer',
         paint: {
+          'fill-color': '#333',
           'fill-opacity': settings.opacity ?? 1,
         },
         source: 'protected-areas-source',
@@ -44,162 +47,43 @@ export function useLayers({ settings }: UsePotectedAreasLayerProps): AnyLayer[] 
         },
       },
       {
-        id: 'protected-areas-line-layer',
-        paint: {
-          'line-opacity': 0,
-          'line-width': 0,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
+        id: 'protected-areas-layer-outline',
         type: 'line',
+        paint: {
+          'line-color': '#333',
+          'line-width': 1,
+          'line-opacity': 0.5,
+        },
+        source: 'protected-areas-source',
+        'source-layer': 'Protected',
         layout: {
           visibility: visibility ? 'visible' : 'none',
         },
       },
-      {
-        id: 'protected-areas-layer-II',
-        filter: ['all', ['==', 'IUCN_CA', 'II']],
+      ...(WDPA_CATEGORIES.map((category) => ({
+        id: `protected-areas-layer-${category.id}`,
+        type: 'fill',
+        filter: ['all', ['==', 'IUCN_CA', category.id]],
         paint: {
-          'fill-color': '#0f3b82',
+          'fill-color': category.color,
           'fill-opacity': settings.opacity ?? 1,
         },
         source: 'protected-areas-source',
         'source-layer': 'Protected',
-        type: 'fill',
         layout: {
           visibility: visibility ? 'visible' : 'none',
         },
-      },
-      {
-        id: 'protected-areas-layer-III',
-        filter: ['all', ['==', 'IUCN_CA', 'III']],
-        paint: {
-          'fill-color': '#c9ddff',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-IV',
-        filter: ['all', ['==', 'IUCN_CA', 'IV']],
-        paint: {
-          'fill-color': '#b9b2a1',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-Ia',
-        filter: ['all', ['==', 'IUCN_CA', 'Ia']],
-        paint: {
-          'fill-color': '#5ca2d1',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-Ib',
-        filter: ['all', ['==', 'IUCN_CA', 'Ib']],
-        paint: {
-          'fill-color': '#3e7bb6',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-Not-Applicable',
-        filter: ['all', ['==', 'IUCN_CA', 'Not Applicable']],
-        paint: {
-          'fill-color': '#eed54c',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-Not-Assigned',
-        filter: ['all', ['==', 'IUCN_CA', 'Not Assigned']],
-        paint: {
-          'fill-color': '#e7ab36',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-Not-Reported',
-        filter: ['all', ['==', 'IUCN_CA', 'Not Reported']],
-        paint: {
-          'fill-color': '#fa894b',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-V',
-        filter: ['all', ['==', 'IUCN_CA', 'V']],
-        paint: {
-          'fill-color': '#ae847e',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
-      {
-        id: 'protected-areas-layer-VI',
-        filter: ['all', ['==', 'IUCN_CA', 'VI']],
-        paint: {
-          'fill-color': '#daa89b',
-          'fill-opacity': settings.opacity ?? 1,
-        },
-        source: 'protected-areas-source',
-        'source-layer': 'Protected',
-        type: 'fill',
-        layout: {
-          visibility: visibility ? 'visible' : 'none',
-        },
-      },
+      })) satisfies AnyLayer[]),
     ];
   }, [settings, visibility]);
 
   return layer;
+}
+
+export function useInteractiveLayers(): string[] {
+  const layers = useLayers({});
+
+  return layers.map((layer) => layer.id);
 }
 
 export function useLegend({ dataset, settings }: UsePotectedAreasLegendProps) {

@@ -9,6 +9,7 @@ import {
   basemapAtom,
   bboxAtom,
   layersAtom,
+  layersInteractiveAtom,
   popupAtom,
   sidebarOpenAtom,
   tmpBboxAtom,
@@ -51,6 +52,7 @@ const MapContainer = () => {
 
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
+  const layersInteractive = useRecoilValue(layersInteractiveAtom);
   const sidebarOpen = useRecoilValue(sidebarOpenAtom);
   const bbox = useRecoilValue(bboxAtom);
   const tmpBbox = useRecoilValue(tmpBboxAtom);
@@ -111,9 +113,11 @@ const MapContainer = () => {
 
   const handleClick = useCallback(
     (e) => {
-      const { lngLat } = e;
       if (layers.length) {
-        setPopup(lngLat);
+        setPopup({
+          ...e,
+          features: e?.features ?? [],
+        });
       }
     },
     [layers, setPopup]
@@ -135,6 +139,7 @@ const MapContainer = () => {
           ...(bbox && { bounds: bbox }),
         }}
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+        interactiveLayerIds={layersInteractive}
         onMapViewStateChange={handleViewState}
         onClick={handleClick}
       >

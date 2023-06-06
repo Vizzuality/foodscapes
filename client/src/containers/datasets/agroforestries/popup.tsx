@@ -4,7 +4,6 @@ import cn from 'lib/classnames';
 
 import { Agroforestry } from 'types/agroforestries';
 import { LayerSettings } from 'types/layers';
-import { LngLat } from 'types/map';
 
 import { useAgroforestries } from 'hooks/agroforestries';
 import { noPointData, usePointData } from 'hooks/data';
@@ -14,13 +13,14 @@ import { Skeleton } from 'components/ui/skeleton';
 
 interface AgroforestriesPopupProps {
   settings: LayerSettings<'agroforestries'>;
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const AgroforestriesPopup = ({ latLng, settings }: AgroforestriesPopupProps) => {
+const AgroforestriesPopup = ({ event, settings }: AgroforestriesPopupProps) => {
+  const { lngLat } = event;
   const f = useAgroforestries();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

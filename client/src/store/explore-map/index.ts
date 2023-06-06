@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { array, bool, dict, nullable, number, object, optional, string } from '@recoiljs/refine';
+import mapboxgl from 'mapbox-gl';
 import { atom, selectorFamily, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
@@ -78,6 +79,11 @@ export const layersAtom = atom<Dataset['id'][]>({
   ],
 });
 
+export const layersInteractiveAtom = atom<string[]>({
+  key: 'layers-interactive',
+  default: [],
+});
+
 const DEFAULT_SETTINGS = {
   opacity: 1,
   visibility: true,
@@ -116,9 +122,10 @@ export const layersSettingsAtom = atom<Record<LayerType, LayerSettings<LayerType
   ],
 });
 
-export const popupAtom = atom({
+export const popupAtom = atom<mapboxgl.MapMouseEvent>({
   key: 'point',
   default: null,
+  dangerouslyAllowMutability: true,
 });
 
 export const tabAtom = atom({

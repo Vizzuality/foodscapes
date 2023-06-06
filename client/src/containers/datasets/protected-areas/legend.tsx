@@ -1,7 +1,10 @@
 import { Dataset } from 'types/datasets';
 
+import { WDPA_CATEGORIES } from 'containers/datasets/protected-areas/constants';
+
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
+import LegendTypeBasic from 'components/map/legend/types/basic/component';
 
 import { useLegend } from './hooks';
 
@@ -18,7 +21,12 @@ const PotectedAreasLegend = (props: PotectedAreasLegendProps) => {
   return (
     <LegendItem {...legend} {...props}>
       <div className="divide-y divide-navy-500/20">
-        <ul className="divide-y divide-navy-500/20 pt-3 pb-4">Protected areas</ul>
+        <LegendTypeBasic
+          items={WDPA_CATEGORIES.map((w) => ({
+            value: w.id,
+            color: w.color,
+          }))}
+        />
       </div>
     </LegendItem>
   );

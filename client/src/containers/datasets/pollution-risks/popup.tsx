@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { LngLat } from 'types/map';
-
 import { noPointData, usePointData } from 'hooks/data';
 import { usePollutionRisks } from 'hooks/pollution-risks';
 import { useIsLoading } from 'hooks/utils';
@@ -13,16 +11,17 @@ import { DATASETS } from 'constants/datasets';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface PollutionRiskPopupProps {
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const PollutionRiskPopup = ({ latLng }: PollutionRiskPopupProps) => {
+const PollutionRiskPopup = ({ event }: PollutionRiskPopupProps) => {
+  const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'pollution-risks');
   const band = `b${DATASET.layer.band}`;
 
   const f = usePollutionRisks();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 
