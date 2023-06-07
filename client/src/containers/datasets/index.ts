@@ -23,6 +23,10 @@ import FoodscapesInfo from './foodscapes/info.mdx';
 import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
+// Irrecoverable Carbon
+import IrrecoverableCarbonInfo from './irrecoverable-carbon/info.mdx';
+import IrrecoverableCarbonLayer from './irrecoverable-carbon/layer';
+import IrrecoverableCarbonLegend from './irrecoverable-carbon/legend';
 // Land use risk
 import LandUseInfo from './land-use-risks/info.mdx';
 import LandUseLayer from './land-use-risks/layer';
@@ -64,6 +68,7 @@ export const LAYERS = {
   restorations: RestorationsLayer,
   agroforestries: AgroforestriesLayer,
   'soil-healths': SoilHealthsLayer,
+  'irrecoverable-carbon': IrrecoverableCarbonLayer,
   'protected-areas': ProtectedAreasLayer,
   'river-basins': RiverBasinsLayer,
 };
@@ -78,6 +83,7 @@ export const LEGENDS = {
   restorations: RestorationsLegend,
   agroforestries: AgroforestriesLegend,
   'soil-healths': SoilHealthsLegend,
+  'irrecoverable-carbon': IrrecoverableCarbonLegend,
   'protected-areas': ProtectedAreasLegend,
   'river-basins': RiverBasinsLegend,
 };
@@ -106,6 +112,7 @@ export const INFO = {
   restorations: RestorationsInfo,
   agroforestries: AgroforestriesInfo,
   'soil-healths': SoilHealthsInfo,
+  'irrecoverable-carbon': IrrecoverableCarbonInfo,
   'protected-areas': ProtectedAreasInfo,
   'river-basins': RiverBasinsInfo,
 };

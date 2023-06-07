@@ -19,6 +19,7 @@ export interface Dataset {
     | 'locations'
     | 'countries'
     | 'provinces'
+    | 'irrecoverable-carbon'
     | 'protected-areas'
     | 'river-basins'
     | 'case-studies';
