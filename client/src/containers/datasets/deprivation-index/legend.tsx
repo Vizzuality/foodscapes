@@ -4,8 +4,6 @@ import CHROMA from 'chroma-js';
 
 import { Dataset } from 'types/datasets';
 
-import { formatTperHA } from 'hooks/utils';
-
 import LegendItem from 'components/map/legend/item';
 import { LegendItemProps } from 'components/map/legend/types';
 import LegendTypeGradient from 'components/map/legend/types/gradient/component';
@@ -14,11 +12,11 @@ import { ColorHex } from 'types';
 import { BOUNDARIES, COLORS } from './constants';
 import { useLegend } from './hooks';
 
-export interface IrrecoverableCarbonLegendProps extends LegendItemProps<'irrecoverable-carbon'> {
+export interface DeprivationIndexLegendProps extends LegendItemProps<'deprivation-index'> {
   dataset: Dataset;
 }
 
-const IrrecoverableCarbonLegend = (props: IrrecoverableCarbonLegendProps) => {
+const DeprivationIndexLegend = (props: DeprivationIndexLegendProps) => {
   const { settings, dataset } = props;
 
   // DATA
@@ -37,8 +35,8 @@ const IrrecoverableCarbonLegend = (props: IrrecoverableCarbonLegendProps) => {
           return {
             color: CHROMA(color).alpha(opacity).css(),
             value: null,
-            ...(i === 0 && { value: formatTperHA(0) }),
-            ...(i === 9 && { value: formatTperHA(max) }),
+            ...(i === 0 && { value: 0 }),
+            ...(i === 9 && { value: max }),
           };
         })
     );
@@ -53,4 +51,4 @@ const IrrecoverableCarbonLegend = (props: IrrecoverableCarbonLegendProps) => {
   );
 };
 
-export default IrrecoverableCarbonLegend;
+export default DeprivationIndexLegend;

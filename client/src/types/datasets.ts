@@ -20,6 +20,7 @@ export interface Dataset {
     | 'countries'
     | 'provinces'
     | 'irrecoverable-carbon'
+    | 'deprivation-index'
     | 'protected-areas'
     | 'river-basins'
     | 'case-studies';
