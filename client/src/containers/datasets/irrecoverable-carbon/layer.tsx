@@ -6,10 +6,9 @@ import { useLayer, useSource } from './hooks';
 
 const IrrecoverableCarbonLayer = ({
   settings,
-  filters,
   beforeId,
 }: LayerProps<LayerSettings<'irrecoverable-carbon'>>) => {
-  const SOURCE = useSource({ filters, settings });
+  const SOURCE = useSource();
   const LAYER = useLayer({ settings });
 
   if (!SOURCE || !LAYER) return null;

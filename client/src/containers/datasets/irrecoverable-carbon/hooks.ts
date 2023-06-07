@@ -1,23 +1,19 @@
 import { useMemo } from 'react';
 
-import { titilerAdapter } from 'lib/adapters/titiler-adapter';
-
+import CHROMA from 'chroma-js';
 import { AnyLayer, AnySourceData } from 'mapbox-gl';
 
-import { FiltersProps } from 'types/data';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
-import { useIrrecoverableCarbon } from 'hooks/irrecoverable-carbon';
+import { convertHexToRgbaArray } from 'hooks/utils';
 
 import { DATASETS } from 'constants/datasets';
 
 import env from 'env.mjs';
+import { ColorHex } from 'types';
 
-interface UseIrrecoverableCarbonSourceProps {
-  filters: FiltersProps;
-  settings?: Partial<LayerSettings<'irrecoverable-carbon'>>;
-}
+import { BOUNDARIES, COLORS } from './constants';
 
 interface UseIrrecoverableCarbonLayerProps {
   settings?: Partial<LayerSettings<'irrecoverable-carbon'>>;
@@ -28,41 +24,51 @@ interface UseIrrecoverableCarbonLegendProps {
   settings?: LayerSettings<'irrecoverable-carbon'>;
 }
 
-export function useSource({
-  filters,
-  settings,
-}: UseIrrecoverableCarbonSourceProps): AnySourceData & { key: string } {
-  const { data: irrecoverableCarbonData } = useIrrecoverableCarbon();
-
+export function useSource(): AnySourceData & { key: string } {
   const DATASET = DATASETS.find((d) => d.id === 'irrecoverable-carbon');
 
   const band = DATASET.layer.band;
   const colormap = useMemo(() => {
-    const c = irrecoverableCarbonData.reduce((acc, v) => {
-      return {
-        ...acc,
-        [v.value]: settings.group ? v.parentColor : v.color,
-      };
-    }, {});
+    const c = [
+      [
+        [-1, 0],
+        [0, 0, 0, 0],
+      ],
+      ...CHROMA
+        //
+        .scale(COLORS)
+        .colors(20)
+        .map((color: ColorHex, i: number) => {
+          const { max } = BOUNDARIES;
+          const step = max / 20;
+          const offset = i + 1 === 20 ? 0.1 : 0;
+
+          // Clamp the opacity to min 0.25 and max 1
+          const opacity = Math.min(Math.max(0.25, (i + 1) / 3), 1);
+
+          return [[step * i, step * (i + 1) + offset], convertHexToRgbaArray(color, opacity)];
+        }),
+    ];
+
     return JSON.stringify(c);
-  }, [irrecoverableCarbonData, settings.group]);
+  }, []);
 
-  const expression = useMemo(() => {
-    const where = titilerAdapter(filters);
+  const searchParams = useMemo(() => {
+    const params = new URLSearchParams();
 
-    if (!where) return null;
+    if (colormap) params.set('colormap', colormap);
 
-    return `where(${where},b${band},-1)`;
-  }, [filters, band]);
+    return params.toString();
+  }, [colormap]);
 
   const at = window.devicePixelRatio > 1 ? '@2x' : '@1x';
 
   return {
     id: 'irrecoverable-carbon-source',
-    key: `${band}-${colormap}-${expression}`,
+    key: `${band}-${colormap}`,
     type: 'raster',
     tiles: [
-      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/irrecoverable-carbon/tiles/WebMercatorQuad/{z}/{x}/{y}${at}.png?`,
+      `${env.NEXT_PUBLIC_TITILER_API_URL}/cog/irrecoverable_carbon/tiles/WebMercatorQuad/{z}/{x}/{y}${at}.png?${searchParams}`,
     ],
   };
 }
@@ -86,25 +92,10 @@ export function useLayer({ settings }: UseIrrecoverableCarbonLayerProps): AnyLay
 }
 
 export function useLegend({ dataset, settings }: UseIrrecoverableCarbonLegendProps) {
-  const { data: irrecoverableCarbonData } = useIrrecoverableCarbon();
-  console.log({ irrecoverableCarbonData });
-  const colormap = useMemo(() => {
-    const c = irrecoverableCarbonData.reduce((acc, v) => {
-      return {
-        ...acc,
-        [v.value]: v.color,
-      };
-    }, {});
-    return encodeURIComponent(JSON.stringify(c));
-  }, [irrecoverableCarbonData]);
-
   const legend = useMemo(() => {
     return {
       id: dataset.id,
-      name: settings.group ? dataset.labelGroup : dataset.label,
-      ...((!irrecoverableCarbonData || !irrecoverableCarbonData.length) && {
-        colormap,
-      }),
+      name: dataset.label,
       settings: settings,
       settingsManager: {
         opacity: true,
@@ -113,7 +104,7 @@ export function useLegend({ dataset, settings }: UseIrrecoverableCarbonLegendPro
         info: true,
       },
     };
-  }, [dataset, colormap, settings, irrecoverableCarbonData]);
+  }, [dataset, settings]);
 
   return legend;
 }
