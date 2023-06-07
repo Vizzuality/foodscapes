@@ -43,5 +43,7 @@ export function useLayer({ id }: UseFoodscapesLayerProps): AnyLayer {
     };
   }, [id]);
 
+  if (!id) return null;
+
   return layer;
 }

@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import cn from 'lib/classnames';
 
 import { LayerSettings } from 'types/layers';
-import { LngLat } from 'types/map';
 import { Restoration } from 'types/restorations';
 
 import { noPointData, usePointData } from 'hooks/data';
@@ -14,13 +13,14 @@ import { Skeleton } from 'components/ui/skeleton';
 
 interface RestorationsPopupProps {
   settings: LayerSettings<'restorations'>;
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const RestorationsPopup = ({ latLng, settings }: RestorationsPopupProps) => {
+const RestorationsPopup = ({ event, settings }: RestorationsPopupProps) => {
+  const { lngLat } = event;
   const f = useRestorations();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

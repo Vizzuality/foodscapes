@@ -47,6 +47,7 @@ export function useCaseStudy(id, queryOptions: UseQueryOptions<CaseStudy, unknow
     placeholderData: [],
     select: (data: CaseStudy) => addInfoToCaseStudy(data),
     enabled: !!id,
+    keepPreviousData: false,
     ...queryOptions,
   });
 

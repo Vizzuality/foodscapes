@@ -1,18 +1,31 @@
-import { contentAtom, tmpBboxAtom } from 'store/explore-map';
+import {
+  caseStudyAtom,
+  countryAtom,
+  filtersSelector,
+  provinceAtom,
+  tmpBboxAtom,
+} from 'store/explore-map';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { CaseStudy } from 'types/case-studies';
 
 import { useCaseStudies } from 'hooks/case-studies';
+import { useData } from 'hooks/data';
 
 import { Skeleton } from 'components/ui/skeleton';
 
 import CaseStudiesListItem from './item/component';
 
 const CaseStudiesList = () => {
-  const setContentAtom = useSetRecoilState(contentAtom);
-  const setTmpBboxAtom = useSetRecoilState(tmpBboxAtom);
+  const setCountry = useSetRecoilState(countryAtom);
+  const setProvince = useSetRecoilState(provinceAtom);
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
+  const setTmpBbox = useSetRecoilState(tmpBboxAtom);
+
+  const filters = useRecoilValue(filtersSelector(['country', 'province', 'caseStudy']));
+
+  const { data } = useData<CaseStudy>('case-studies', filters);
 
   const {
     data: caseStudiesData,
@@ -23,12 +36,10 @@ const CaseStudiesList = () => {
   } = useCaseStudies();
 
   const handleCaseStudyClick = (caseStudy: CaseStudy) => {
-    setContentAtom({
-      id: caseStudy.id,
-      type: 'case-study',
-    });
-
-    setTmpBboxAtom(caseStudy.bbox);
+    setCountry(null);
+    setProvince(null);
+    setCaseStudy(caseStudy.id);
+    setTmpBbox(caseStudy.bbox);
   };
 
   return (
@@ -47,18 +58,22 @@ const CaseStudiesList = () => {
 
       {!caseStudiesIsPlaceholderData && !caseStudiesIsError && (
         <div className="grid grid-cols-2 gap-x-4 gap-y-8">
-          {caseStudiesData.map((caseStudy) => (
-            <div key={caseStudy.id}>
-              <button
-                type="button"
-                className="w-full"
-                aria-label={`View ${caseStudy.title} case study`}
-                onClick={() => handleCaseStudyClick(caseStudy)}
-              >
-                <CaseStudiesListItem caseStudy={caseStudy} />
-              </button>
-            </div>
-          ))}
+          {caseStudiesData.map((caseStudy) => {
+            const cardDisabled = !data.map((d) => d.id).includes(caseStudy.id);
+            return (
+              <div key={caseStudy.id}>
+                <button
+                  type="button"
+                  className="w-full"
+                  aria-label={`View ${caseStudy.title} case study`}
+                  onClick={() => handleCaseStudyClick(caseStudy)}
+                  disabled={cardDisabled}
+                >
+                  <CaseStudiesListItem caseStudy={caseStudy} disabled={cardDisabled} />
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
     </section>

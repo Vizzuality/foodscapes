@@ -10,6 +10,7 @@ export function titilerAdapter(params: FiltersProps = {}, initial = null) {
     pollutionRisk = [],
     country,
     province,
+    caseStudy,
   } = params;
 
   return [
@@ -23,6 +24,7 @@ export function titilerAdapter(params: FiltersProps = {}, initial = null) {
     ...(pollutionRisk.length ? [pollutionRisk.map((v) => `(b12==${v})`).join('|')] : []),
     ...(country ? [`(b34==${country})`] : []),
     ...(province ? [`(b35==${province})`] : []),
+    ...(caseStudy ? [`(b36==${caseStudy})`] : []),
   ]
     .map((v) => `(${v})`)
     .join('&');

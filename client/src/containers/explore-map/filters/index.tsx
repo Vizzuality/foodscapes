@@ -17,8 +17,12 @@ import {
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import CaseStudiesFilters from 'containers/explore-map/filters/case-studies';
+import CaseStudiesSelected from 'containers/explore-map/filters/case-studies/selected';
+
 import Icon from 'components/icon';
 
+import CASE_STUDIES_SVG from 'svgs/tabs/tab-casestudies.svg?sprite';
 import FOODSCAPES_SVG from 'svgs/tabs/tab-foodscapes.svg?sprite';
 import LOCATIONS_SVG from 'svgs/tabs/tab-locations.svg?sprite';
 import RISKS_SVG from 'svgs/tabs/tab-risks.svg?sprite';
@@ -122,6 +126,9 @@ const Filters = () => {
             <CountriesSelected />
             <ProvincesSelected />
 
+            {/* Case Studies */}
+            <CaseStudiesSelected />
+
             <button
               type="button"
               className="mr-3 cursor-pointer rounded-3xl bg-navy-400 py-1 px-2 text-xs font-bold uppercase transition-colors hover:bg-white"
@@ -189,6 +196,17 @@ const Filters = () => {
               <div className="space-y-4">
                 <CountriesFilters />
                 <ProvincesFilters />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-center space-x-2">
+                <Icon icon={CASE_STUDIES_SVG} className="h-6 w-6 text-white" />
+                <h3 className="font-display text-2xl">Case Studies</h3>
+              </div>
+
+              <div>
+                <CaseStudiesFilters />
               </div>
             </div>
 

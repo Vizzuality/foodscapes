@@ -22,6 +22,7 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     pollutionRisk = [],
     country,
     province,
+    caseStudy,
     sortBy,
     sortDirection,
     shape = 'array',
@@ -57,6 +58,12 @@ export function datasetteAdapter(params: DatasetteParamsProps = {}) {
     // Province
     if (!!province) {
       query.where({ province });
+    }
+
+    if (!!caseStudy) {
+      query.where({
+        case_studies: caseStudy,
+      });
     }
 
     if (!!landUseRisk?.length) {

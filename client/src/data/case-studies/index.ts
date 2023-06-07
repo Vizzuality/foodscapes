@@ -12,9 +12,9 @@ import {
 } from './chesapeake-bay-watershed';
 import { Data as PunjabHaryanaData, Content as PunjabHaryanaContent } from './punjab-haryana';
 import {
-  Data as SanJoaquinValleyData,
-  Content as SanJoaquinValleyContent,
-} from './san-joaquin-valley';
+  Data as UpperMississipiRiverBasinData,
+  Content as UpperMississipiRiverBasinContent,
+} from './upper-mississippi-river-basin';
 import {
   Data as UpperTanaRiverBasinData,
   Content as UpperTanaRiverBasinContent,
@@ -41,9 +41,9 @@ const CaseStudiesInfo = {
     data: ChesapeakeBayWatershedData,
     content: ChesapeakeBayWatershedContent,
   },
-  'san-joaquin-valley': {
-    data: SanJoaquinValleyData,
-    content: SanJoaquinValleyContent,
+  'upper-mississippi-river-basin': {
+    data: UpperMississipiRiverBasinData,
+    content: UpperMississipiRiverBasinContent,
   },
 };
 

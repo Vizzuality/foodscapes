@@ -255,4 +255,56 @@ export const DATASETS = [
       },
     },
   },
+  {
+    id: 'protected-areas',
+    label: 'Protected Areas',
+    group: 'contextual',
+    layer: {
+      enabled: true,
+      visible: true,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
+    id: 'river-basins',
+    label: 'River Basins',
+    group: 'contextual',
+    layer: {
+      enabled: true,
+      visible: true,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
+    id: 'case-studies',
+    label: 'Case Studies',
+    group: 'other',
+    layer: {
+      enabled: false,
+      visible: false,
+      band: 36,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
 ] satisfies Dataset[] as Dataset[];
