@@ -6,12 +6,12 @@ import { LayerProps, LayerSettings } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
 
-const PotectedAreasLayer = ({
+const RiverBasinsLayer = ({
   settings,
   beforeId,
   onAdd,
   onRemove,
-}: LayerProps<LayerSettings<'protected-areas'>>) => {
+}: LayerProps<LayerSettings<'river-basins'>>) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({ settings });
 
@@ -44,4 +44,4 @@ const PotectedAreasLayer = ({
   );
 };
 
-export default PotectedAreasLayer;
+export default RiverBasinsLayer;

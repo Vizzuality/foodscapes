@@ -20,6 +20,7 @@ export interface Dataset {
     | 'countries'
     | 'provinces'
     | 'protected-areas'
+    | 'river-basins'
     | 'case-studies';
   label: string;
   labelGroup?: string;

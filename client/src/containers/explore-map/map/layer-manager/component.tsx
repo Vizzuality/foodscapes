@@ -28,7 +28,22 @@ const LayerManagerContainer = () => {
 
   const handleLayerAdd = useCallback(
     ({ layers: layers1 }) => {
-      setLayersInteractive(layers1.map((l) => l.id));
+      setLayersInteractive((prev) => {
+        // only add the layers that are not already in the list
+        const newLayers = layers1.filter((l) => !prev.includes(l.id));
+        return [...prev, ...newLayers.map((l) => l.id)];
+      });
+    },
+    [setLayersInteractive]
+  );
+
+  const handleLayerRemove = useCallback(
+    ({ layers: layers1 }) => {
+      setLayersInteractive((prev) => {
+        // remove the layers that are in the list
+        const newLayers = prev.filter((l) => !layers1.map((l1) => l1.id).includes(l));
+        return [...newLayers];
+      });
     },
     [setLayersInteractive]
   );
@@ -53,6 +68,7 @@ const LayerManagerContainer = () => {
             beforeId={beforeId}
             zIndex={1000 - i}
             onAdd={handleLayerAdd}
+            onRemove={handleLayerRemove}
           />
         );
       })}
