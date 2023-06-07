@@ -3,8 +3,6 @@ name: Build and publish container images to AWS ECR and deploy on ECS
 on:
   push:
     branches:
-      - 'main'
-      - 'develop'
       - 'staging'
       - 'production'
     paths:
