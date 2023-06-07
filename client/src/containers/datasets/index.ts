@@ -43,6 +43,11 @@ import RestorationsInfo from './restorations/info.mdx';
 import RestorationsLayer from './restorations/layer';
 import RestorationsLegend from './restorations/legend';
 import RestorationsPopup from './restorations/popup';
+// RiverBasins
+import RiverBasinsInfo from './river-basins/info.mdx';
+import RiverBasinsLayer from './river-basins/layer';
+import RiverBasinsLegend from './river-basins/legend';
+import RiverBasinsPopup from './river-basins/popup';
 // Soil health
 import SoilHealthsInfo from './soil-healths/info.mdx';
 import SoilHealthsLayer from './soil-healths/layer';
@@ -60,6 +65,7 @@ export const LAYERS = {
   agroforestries: AgroforestriesLayer,
   'soil-healths': SoilHealthsLayer,
   'protected-areas': ProtectedAreasLayer,
+  'river-basins': RiverBasinsLayer,
 };
 
 export const LEGENDS = {
@@ -73,6 +79,7 @@ export const LEGENDS = {
   agroforestries: AgroforestriesLegend,
   'soil-healths': SoilHealthsLegend,
   'protected-areas': ProtectedAreasLegend,
+  'river-basins': RiverBasinsLegend,
 };
 
 export const POPUPS = {
@@ -86,6 +93,7 @@ export const POPUPS = {
   agroforestries: AgroforestriesPopup,
   'soil-healths': SoilHealthsPopup,
   'protected-areas': ProtectedAreasPopup,
+  'river-basins': RiverBasinsPopup,
 };
 
 export const INFO = {
@@ -99,4 +107,5 @@ export const INFO = {
   agroforestries: AgroforestriesInfo,
   'soil-healths': SoilHealthsInfo,
   'protected-areas': ProtectedAreasInfo,
+  'river-basins': RiverBasinsInfo,
 };

@@ -14,7 +14,7 @@ import { SoilHealthSettings } from 'types/soil-healths';
 
 import { Settings } from 'components/map/legend/types';
 
-type OnAddProps = {
+type OnAddRemoveProps = {
   source: AnySourceData;
   layers: AnyLayer[];
 };
@@ -25,7 +25,8 @@ export type LayerProps<S> = {
   settings: Partial<S>;
   zIndex?: number;
   filters?: FiltersProps;
-  onAdd?: (props: OnAddProps) => void;
+  onAdd?: (props: OnAddRemoveProps) => void;
+  onRemove?: (props: OnAddRemoveProps) => void;
 };
 
 export type LayerTypeSettings = {
@@ -40,6 +41,7 @@ export type LayerTypeSettings = {
   'soil-healths': SoilHealthSettings;
   locations: Settings;
   'protected-areas': Settings;
+  'river-basins': Settings;
 };
 
 export type LayerType = keyof LayerTypeSettings;
