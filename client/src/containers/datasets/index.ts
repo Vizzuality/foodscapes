@@ -1,8 +1,3 @@
-// Irrecoverable Carbon
-import IrrecoverableCarbonInfo from 'containers/datasets/irrecoverable-carbon/info.mdx';
-import IrrecoverableCarbonLayer from 'containers/datasets/irrecoverable-carbon/layer';
-import IrrecoverableCarbonLegend from 'containers/datasets/irrecoverable-carbon/legend';
-
 // Agroforestries
 import AgroforestriesInfo from './agroforestries/info.mdx';
 import AgroforestriesLayer from './agroforestries/layer';
@@ -28,6 +23,10 @@ import FoodscapesInfo from './foodscapes/info.mdx';
 import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
+// Irrecoverable Carbon
+import IrrecoverableCarbonInfo from './irrecoverable-carbon/info.mdx';
+import IrrecoverableCarbonLayer from './irrecoverable-carbon/layer';
+import IrrecoverableCarbonLegend from './irrecoverable-carbon/legend';
 // Land use risk
 import LandUseInfo from './land-use-risks/info.mdx';
 import LandUseLayer from './land-use-risks/layer';
@@ -38,11 +37,21 @@ import PollutionRiskInfo from './pollution-risks/info.mdx';
 import PollutionRiskLayer from './pollution-risks/layer';
 import PollutionRiskLegend from './pollution-risks/legend';
 import PollutionRiskPopup from './pollution-risks/popup';
+// Protected areas
+import ProtectedAreasInfo from './protected-areas/info.mdx';
+import ProtectedAreasLayer from './protected-areas/layer';
+import ProtectedAreasLegend from './protected-areas/legend';
+import ProtectedAreasPopup from './protected-areas/popup';
 // Restorations
 import RestorationsInfo from './restorations/info.mdx';
 import RestorationsLayer from './restorations/layer';
 import RestorationsLegend from './restorations/legend';
 import RestorationsPopup from './restorations/popup';
+// RiverBasins
+import RiverBasinsInfo from './river-basins/info.mdx';
+import RiverBasinsLayer from './river-basins/layer';
+import RiverBasinsLegend from './river-basins/legend';
+import RiverBasinsPopup from './river-basins/popup';
 // Soil health
 import SoilHealthsInfo from './soil-healths/info.mdx';
 import SoilHealthsLayer from './soil-healths/layer';
@@ -60,6 +69,8 @@ export const LAYERS = {
   agroforestries: AgroforestriesLayer,
   'soil-healths': SoilHealthsLayer,
   'irrecoverable-carbon': IrrecoverableCarbonLayer,
+  'protected-areas': ProtectedAreasLayer,
+  'river-basins': RiverBasinsLayer,
 };
 
 export const LEGENDS = {
@@ -73,6 +84,8 @@ export const LEGENDS = {
   agroforestries: AgroforestriesLegend,
   'soil-healths': SoilHealthsLegend,
   'irrecoverable-carbon': IrrecoverableCarbonLegend,
+  'protected-areas': ProtectedAreasLegend,
+  'river-basins': RiverBasinsLegend,
 };
 
 export const POPUPS = {
@@ -85,6 +98,8 @@ export const POPUPS = {
   restorations: RestorationsPopup,
   agroforestries: AgroforestriesPopup,
   'soil-healths': SoilHealthsPopup,
+  'protected-areas': ProtectedAreasPopup,
+  'river-basins': RiverBasinsPopup,
 };
 
 export const INFO = {
@@ -98,4 +113,6 @@ export const INFO = {
   agroforestries: AgroforestriesInfo,
   'soil-healths': SoilHealthsInfo,
   'irrecoverable-carbon': IrrecoverableCarbonInfo,
+  'protected-areas': ProtectedAreasInfo,
+  'river-basins': RiverBasinsInfo,
 };

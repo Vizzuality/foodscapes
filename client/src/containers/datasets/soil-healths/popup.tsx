@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import cn from 'lib/classnames';
 
 import { LayerSettings } from 'types/layers';
-import { LngLat } from 'types/map';
 import { SoilHealth } from 'types/soil-healths';
 
 import { noPointData, usePointData } from 'hooks/data';
@@ -14,13 +13,14 @@ import { Skeleton } from 'components/ui/skeleton';
 
 interface SoilHealthsPopupProps {
   settings: LayerSettings<'soil-healths'>;
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const SoilHealthsPopup = ({ latLng, settings }: SoilHealthsPopupProps) => {
+const SoilHealthsPopup = ({ event, settings }: SoilHealthsPopupProps) => {
+  const { lngLat } = event;
   const f = useSoilHealths();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

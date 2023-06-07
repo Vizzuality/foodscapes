@@ -93,7 +93,7 @@ const Layers = () => {
             <LayersGroup name="Foodscapes" group="foodscapes" />
             <LayersGroup name="Risks" group="risks" />
             <LayersGroup name="Opportunities" group="opportunities" />
-            <LayersGroup name="Carbon" group="carbon" />
+            <LayersGroup name="Contextual" group="contextual" />
           </div>
         </motion.div>
       )}

@@ -19,8 +19,10 @@ export interface Dataset {
     | 'locations'
     | 'countries'
     | 'provinces'
-    | 'case-studies'
-    | 'irrecoverable-carbon';
+    | 'irrecoverable-carbon'
+    | 'protected-areas'
+    | 'river-basins'
+    | 'case-studies';
   label: string;
   labelGroup?: string;
   group: string;
