@@ -256,6 +256,23 @@ export const DATASETS = [
     },
   },
   {
+    id: 'irrecoverable-carbon',
+    label: 'Irrecoverable Carbon',
+    group: 'contextual',
+    layer: {
+      enabled: true,
+      visible: true,
+    },
+    widget: {
+      enabled: false,
+      toolbar: {
+        download: false,
+        info: false,
+        layer: false,
+      },
+    },
+  },
+  {
     id: 'protected-areas',
     label: 'Protected Areas',
     group: 'contextual',

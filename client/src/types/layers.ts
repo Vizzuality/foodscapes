@@ -40,6 +40,7 @@ export type LayerTypeSettings = {
   agroforestries: AgroforestrySettings;
   'soil-healths': SoilHealthSettings;
   locations: Settings;
+  'irrecoverable-carbon': Settings;
   'protected-areas': Settings;
   'river-basins': Settings;
 };
