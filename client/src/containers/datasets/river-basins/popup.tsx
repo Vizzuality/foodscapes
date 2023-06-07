@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
+import { formatHA } from 'hooks/utils';
+
 interface RiverBasinsPopupProps {
   event: mapboxgl.MapLayerMouseEvent;
 }
@@ -18,12 +20,7 @@ const RiverBasinsPopup = ({ event }: RiverBasinsPopupProps) => {
   return (
     <div>
       <header className="flex items-center space-x-2">
-        <div
-          className="h-4 w-4 border"
-          style={{
-            borderColor: 'var(--color-navy-500)',
-          }}
-        />
+        <div className="h-4 w-4 border-2 border-[#1E40AF]" />
         <h2 className="text-base font-semibold">River basins</h2>
       </header>
 
@@ -38,7 +35,7 @@ const RiverBasinsPopup = ({ event }: RiverBasinsPopupProps) => {
               </div>
               <div>
                 <dt className="underline">Area:</dt>
-                <dd>{properties.SUB_AREA}</dd>
+                <dd>{formatHA(properties.SUB_AREA)}</dd>
               </div>
             </dl>
           )}
