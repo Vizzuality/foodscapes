@@ -10,7 +10,6 @@ on:
       - 'datasette/**'
       - 'tiler/**'
       - '.github/**'
-  pull_request:
   workflow_dispatch:
 
 env:
