@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { DatasetteParamsProps } from 'lib/adapters/datasette-adapter';
 import { titilerAdapter } from 'lib/adapters/titiler-adapter';
 
-import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useMutation, useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 import { FiltersProps, PointData } from 'types/data';
 import { Dataset } from 'types/datasets';
@@ -56,7 +56,7 @@ export const downloadData = (id: Dataset['id']) => {
 export const fetchBandData = (band: number) => {
   return TITILER_API.request({
     method: 'GET',
-    url: `/cog/info`,
+    url: `/cog/foodscapes/info`,
   }).then((response) => {
     const { band_metadata: metadatas } = response.data;
 
@@ -76,7 +76,7 @@ export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
 
   return TITILER_API.request({
     method: 'GET',
-    url: `/cog/statistics`,
+    url: `/cog/foodscapes/statistics`,
     params: {
       bidx: band,
       expression: expression(),
@@ -86,10 +86,14 @@ export const fetchStatisticsData = (band: number, filters: FiltersProps) => {
   }).then((response) => response.data[`b${band}`]);
 };
 
-export const fetchPointData = ({ lng, lat }: LngLat) => {
+export const fetchPointData = ({
+  lng,
+  lat,
+  cog = '/cog/foodscapes',
+}: { cog?: string } & LngLat) => {
   return TITILER_API.request({
     method: 'GET',
-    url: `/cog/point/${lng},${lat}`,
+    url: `${cog}/point/${lng},${lat}`,
   }).then((response) => response.data);
 };
 
@@ -151,7 +155,7 @@ export function useStatisticsData(
 
 // Point data
 export function usePointData(
-  params: LngLat,
+  params: { cog?: string } & LngLat,
   queryOptions: UseQueryOptions<PointData, unknown> = {}
 ) {
   const fetch = () => fetchPointData(params);
@@ -176,11 +180,11 @@ export function usePointData(
     return {
       ...query,
       data: DATA,
-    } as typeof query;
+    } as UseQueryResult<Record<string, any>, unknown>;
   }, [query, DATA]);
 }
 
-export const noPointData = (pointData: PointData) => {
+export const noPointData = (pointData: Record<string, any>) => {
   return Object.keys(pointData).every((p) => {
     return pointData[p] === 0;
   });

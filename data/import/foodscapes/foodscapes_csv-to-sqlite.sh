@@ -23,7 +23,7 @@ done
 # exit with error if DATE or REVISION are not set
 if [ -z "$DATE" ] || [ -z "$REVISION" ]
 then
-  echo "Please specify both a date (YYYYMMDD) and revision number (XY)"
+  echo "Please specify both a date (-d YYYYMMDD) and revision number (-r XY)"
   exit 1
 fi
 
@@ -49,5 +49,7 @@ cat source/metadata/layers_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscape
 
 cat source/metadata/countries_legend_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' countries"
 cat source/metadata/provinces_legend_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' provinces"
+
+cat source/metadata/case_studies_${DATE}_${REVISION}.csv | sqlite3 -csv dest/foodscapes.db ".import --skip 1 '| cat -' case_studies"
 
 sqlite3 dest/foodscapes.db < foodscapes_metadata-cleanup.sql

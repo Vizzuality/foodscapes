@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import dynamic from 'next/dynamic';
 
 import { pollutionRiskAtom, filtersSelector } from 'store/explore-map';
@@ -34,17 +36,26 @@ const PollutionRiskWidget = () => {
     isError: pollutionIsError,
   } = usePollutionRisks();
 
-  const { isPlaceholderData, isFetching, isFetched, isError } = useData<PollutionRiskData>(
+  const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<PollutionRiskData>(
     'pollution-risks',
     filters
   );
 
-  const handleChartClick = (data) => {
-    if (pollution.includes(data.id)) {
+  const OPTIONS = useMemo(() => {
+    if (!data || !pollutionData) return [];
+
+    return pollutionData.map((c) => ({
+      ...c,
+      disabled: !data.find((d) => d.id === c.id)?.value,
+    }));
+  }, [data, pollutionData]);
+
+  const handleChartClick = (d) => {
+    if (pollution.includes(d.id)) {
       return setPollution([]);
     }
 
-    setPollution([data.id]);
+    setPollution([d.id]);
   };
 
   return (
@@ -69,7 +80,7 @@ const PollutionRiskWidget = () => {
             size="s"
             theme="light"
             placeholder="Filter risk"
-            options={pollutionData}
+            options={OPTIONS}
             value={pollution[0] ?? null}
             onChange={(value) => {
               if (value === null) {
@@ -89,7 +100,7 @@ const PollutionRiskWidget = () => {
             </div>
           </div>
 
-          <WidgetTop label="See top affected foodscapes by pollution">
+          <WidgetTop label="Top affected foodscapes by pollution">
             <TopChart />
           </WidgetTop>
         </div>

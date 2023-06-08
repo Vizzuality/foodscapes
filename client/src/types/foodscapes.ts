@@ -11,7 +11,7 @@ export interface Foodscape {
 }
 
 export interface FoodscapeGroup {
-  key: number;
+  id: number;
   value: number;
   values: Foodscape[];
   label: string;

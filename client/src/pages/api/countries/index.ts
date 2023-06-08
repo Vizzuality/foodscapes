@@ -16,7 +16,9 @@ const fetch = async () => {
   const SQL = KNEX
     //
     .select('f.value AS id', 'f.value', 'f.label', 'f.iso', 'f.bbox')
-    .from('countries AS f');
+    .from('countries AS f')
+    .join('data AS d', 'f.value', 'd.country')
+    .distinct('f.value');
 
   return API.request<Country[]>({
     method: 'GET',

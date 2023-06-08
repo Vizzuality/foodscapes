@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS "data" (
 [forest_ecoregions_suitable_for_silvopastoral_fraq] float,
 [forest_ecoregions_suitable_for_silvopastoral_area] float,
 [forest_ecoregions_suitable_for_silvopastoral_Cseq] float,
+[tropical_grassland_ecoregions_suitable_for_silvopastoral_fraq] float,
 [tropical_grassland_ecoregions_suitable_for_silvopastoral_area] float,
 [tropical_grassland_ecoregions_suitable_for_silvopastoral_Cseq] float,
-[tropical_grassland_ecoregions_suitable_for_silvopastoral_fraq] float,
 [areas_suitable_for_cover_cropping_fraq] float,
 [areas_suitable_for_cover_cropping_area] float,
 [areas_suitable_for_cover_cropping_Cseq] float,
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS "data" (
 [areas_suitable_for_minimum_tillage_Cseq] float,
 [country] integer,
 [province] integer,
+[case_studies] integer,
 [pixel_count] integer
 );
 

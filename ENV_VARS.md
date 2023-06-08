@@ -21,13 +21,30 @@ file.
   FastAPI process for TiTiler will always be listening on port 3000 internally,
   and this is mapped to `TILER_SERVICE_PORT` when exposed outside of the
   container.
-- `TILER_FOODSCAPES_COG_FILENAME` (string, optional, default is
-  `foodscapes_stack_cog_lzw.tif`): the filename part of the absolute file path
-  where the core Cloud-Optimized GeoTIFF (COG) file used by the tiler service
-  can be read from; the full path is assembled by prepending the path of the
-  folder on the container's local filesystem where the file will be `ADD`-ed
-  during the build of the container image and where TiTiler will read it when
-  processing requests.
+
+- Filenames of the core and contextual layer COG files
+
+  These are the filename parts of the absolute file paths where the core
+  Cloud-Optimized GeoTIFF (COG) files used by the tiler service can be read
+  from; the full path is assembled by prepending the path of the folder on the
+  container's local filesystem where the file will be `ADD`-ed during the build
+  of the container image and where TiTiler will read it when processing
+  requests.
+
+  Please note that these filenames are configurable _only_ so that developers
+  can easily use specific COG files placed in the Compose-configured Docker
+  mount, while developing locally. The default should never need to be
+  overridden in any other case.
+
+  - `TILER_FOODSCAPES_COG_FILENAME` (string, optional, the default is set in the
+    `Dockerfile` for the Tiler service)
+
+  - `TILER_IRRECOVERABLE_CARBON_COG_FILENAME` (string, optional, the default is
+    set in the `Dockerfile` for the Tiler service)
+
+  - `TILER_DEPRIVATION_INDEX_COG_FILENAME` (string, optional, the default is set
+    in the `Dockerfile` for the Tiler service)
+
 - `TILER_ROOT_PATH` (string, optional, default is None): when the tiler service
   is behind a reverse proxy configured to use a path prefix for the tiler URLs
   (for example `/tiler`), the same prefix _must_ also be set through this
@@ -122,13 +139,42 @@ to familiarise yourself with it.
 
 ## Source data
 
-- `DATA_CORE_COG_SOURCE_URL` (URL, required): the URL from which the Docker
-  image build process can fetch the source COG file for the TiTiler service;
-  this needs to be an HTTPS source with no authentication required, such as an
-  URL for an asset on a public S3 bucket.
-- `DATA_CORE_COG_CHECKSUM` (string, required): the checksum (see
+- Source COG files
+
+  For each of the COG files used in the platform (core data, irrecoverable
+  carbon, deprivation index), a source URL and a file checksum need to be
+  provided, in order for the container image build process to fetch and validate
+  the source file to bake into the container image.
+
+  The `DATA_<TYPE>_COG_SOURCE_URL` variables point to the URL from which the
+  container image build process can fetch the relevant source COG file for the
+  TiTiler service; this needs to be an HTTPS source with no authentication
+  required, such as an URL for an asset on a public S3 bucket.
+
+  The `DATA_<TYPE>_COG_CHECKSUM` variables hold sha256sum checksum (see
   [Checksums for source data](#checksums-for-source-data) section below for
-  details) of the file above.
+  details) of the relevant COG file.
+
+  - _Foodscapes core_ COG file
+
+    - `DATA_CORE_COG_SOURCE_URL` (URL, required): see general description above.
+    - `DATA_CORE_COG_CHECKSUM` (string, required): see general description
+      above.
+
+  - Contextual layer: _irrecoverable carbon_ COG file
+
+    - `DATA_IRRECOVERABLE_CARBON_COG_SOURCE_URL` (URL, required): see general
+      description above.
+    - `DATA_IRRECOVERABLE_CARBON_COG_CHECKSUM` (string, required): see general
+      description above.
+
+  - Contextual layer: _deprivation index_ COG file
+
+    - `DATA_DEPRIVATION_INDEX_COG_SOURCE_URL` (URL, required): see general
+      description above.
+    - `DATA_DEPRIVATION_INDEX_COG_CHECKSUM` (string, required): see general
+      description above.
+
 - `DATA_CORE_SQLITE_DB_SOURCE_URL` (URL, required):t he URL from which the
   Docker image build process can fetch the source SQLite file for the Foodscapes
   tabular data served by the Datasette service; this needs to be an HTTPS source

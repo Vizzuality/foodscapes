@@ -7,11 +7,12 @@ import { Listbox } from '@headlessui/react';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import { Checkbox } from 'components/ui/checkbox';
 import THEME from 'components/ui/select/constants/theme';
+import { Option } from 'components/ui/select/multi/option/component';
 
 import CHEVRON_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 import CHEVRON_UP_SVG from 'svgs/ui/arrow-up.svg?sprite';
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import type { MultiSelectProps } from './types';
 
@@ -23,6 +24,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     clearSelectionLabel = 'Clear all',
     disabled = false,
     options,
+    groups,
     placeholder = 'Select...',
     loading,
     size = 'base',
@@ -35,8 +37,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   const initialValues = values || [];
   const [selected, setSelected] = useState(initialValues);
 
+  const OPTIONS_ENABLED = useMemo(() => {
+    if (!options) return [];
+    return options.filter((o) => !o.disabled);
+  }, [options]);
+
   const SELECTED = useMemo(() => {
-    if (loading) return 'Loading...';
+    // if (loading) return 'Loading...';
 
     if (!selected.length) return placeholder || 'Select items';
 
@@ -48,12 +55,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
       return null;
     }
 
-    if (selected.length === options.length) return `All items selected`;
+    if (selected.length === OPTIONS_ENABLED.length || selected.length > OPTIONS_ENABLED.length)
+      return `All items selected`;
 
     if (selected.length > 1) return `Selected items (${selected.length})`;
 
     return null;
-  }, [loading, options, placeholder, selected]);
+  }, [options, placeholder, selected, OPTIONS_ENABLED]);
 
   useEffect(() => {
     if (values) {
@@ -71,20 +79,28 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     [onChange]
   );
 
-  const handleSelectAll = useCallback(() => {
-    const allOptions = options.map((o) => o.value);
-    setSelected(allOptions);
-    if (onChange) {
-      onChange(allOptions);
-    }
-  }, [onChange, options]);
+  const handleSelectAll = useCallback(
+    (e) => {
+      e.stopPropagation();
+      const allOptions = OPTIONS_ENABLED.map((o) => o.value);
+      setSelected(allOptions);
+      if (onChange) {
+        onChange(allOptions);
+      }
+    },
+    [onChange, OPTIONS_ENABLED]
+  );
 
-  const handleClearAll = useCallback(() => {
-    setSelected([]);
-    if (onChange) {
-      onChange([]);
-    }
-  }, [onChange]);
+  const handleClearAll = useCallback(
+    (e) => {
+      e.stopPropagation();
+      setSelected([]);
+      if (onChange) {
+        onChange([]);
+      }
+    },
+    [onChange]
+  );
 
   return (
     <div
@@ -125,22 +141,38 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   [THEME[theme].button.states.error]: state === 'error',
                 })}
               >
-                <span className="block truncate">{SELECTED}</span>
-                <span className="pointer-events-none relative inset-y-0.5 flex items-center">
+                <span
+                  className={cx({
+                    'block truncate': true,
+                    [THEME[theme].selected]: !!selected.length,
+                  })}
+                >
+                  {SELECTED}
+                </span>
+                <span className="pointer-events-none relative flex items-center space-x-2">
                   <Loading
                     visible={loading}
                     className={THEME[theme].loading}
-                    iconClassName="w-3 h-3"
+                    iconClassName="w-3 h-3 shrink-0"
                   />
 
-                  {!loading && (
-                    <Icon
-                      icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                      className={cx({
-                        'h-3 w-3': true,
-                      })}
-                    />
+                  {!!selected.length && clearSelectionActive && (
+                    <span className="pointer-events-auto" onClick={handleClearAll}>
+                      <Icon
+                        icon={CLOSE_SVG}
+                        className={cx({
+                          'h-3.5 w-3.5 shrink-0': true,
+                        })}
+                      />
+                    </span>
                   )}
+
+                  <Icon
+                    icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
+                    className={cx({
+                      'h-3 w-3 shrink-0': true,
+                    })}
+                  />
                 </span>
               </Listbox.Button>
 
@@ -175,45 +207,34 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                     >
                       {selected.length < 1 && clearSelectionLabel}
                       {selected.length >= 1 &&
-                        selected.length !== options.length &&
+                        selected.length !== OPTIONS_ENABLED.length &&
+                        selected.length < OPTIONS_ENABLED.length &&
                         `${clearSelectionLabel} (${selected.length} Selected)`}
-                      {selected.length === options.length &&
+                      {(selected.length === OPTIONS_ENABLED.length ||
+                        selected.length > OPTIONS_ENABLED.length) &&
                         `${clearSelectionLabel} (All selected)`}
                     </button>
                   )}
                 </div>
 
-                {options.map((opt) => {
-                  return (
-                    <Listbox.Option key={opt.value} value={opt.value}>
-                      {({ active: a, selected: s, disabled: d }) => (
-                        <div
-                          className={cx({
-                            'flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4':
-                              true,
-                            [THEME[theme].item.base]: true,
-                            [THEME[theme].item.active]: a,
-                            [THEME[theme].item.selected]: s,
-                            [THEME[theme].item.disabled]: d,
-                          })}
-                        >
-                          <Checkbox
-                            className="cursor-pointer checked:bg-black focus:text-black focus:ring-black"
-                            checked={s}
-                          />
+                {groups &&
+                  groups.map((g) => {
+                    const groupOptions = options.filter((o) => o.group === g.value);
 
-                          <span
-                            className={cx({
-                              'block line-clamp-2': true,
-                            })}
-                          >
-                            {opt.label}
-                          </span>
-                        </div>
-                      )}
-                    </Listbox.Option>
-                  );
-                })}
+                    return (
+                      <div key={g.value}>
+                        <h3 className="py-2 pl-5 text-xs font-bold">{g.label}</h3>
+                        {groupOptions.map((opt) => {
+                          return <Option key={opt.value} opt={opt} theme={theme} />;
+                        })}
+                      </div>
+                    );
+                  })}
+
+                {!groups &&
+                  options.map((opt) => {
+                    return <Option key={opt.value} opt={opt} theme={theme} />;
+                  })}
               </Listbox.Options>
             </Float>
           </>

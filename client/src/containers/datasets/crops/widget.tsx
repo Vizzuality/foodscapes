@@ -45,6 +45,7 @@ const CropsWidget = () => {
     isFetched: cropsIsFetched,
     isError: cropsIsError,
   } = useCrops();
+
   const {
     data: cropsGroupData,
     isPlaceholderData: cropsGroupIsPlaceholderData,
@@ -52,6 +53,7 @@ const CropsWidget = () => {
     isFetched: cropsGroupIsFetched,
     isError: cropsGroupIsError,
   } = useCropsGroups();
+
   const { data, isPlaceholderData, isFetching, isFetched, isError } = useData<CropData>(
     'crops',
     filters
@@ -73,12 +75,20 @@ const CropsWidget = () => {
   }, [data, cropsGroupData, crops]);
 
   const OPTIONS = useMemo(() => {
-    return cropsData.filter((c) => data.map((d) => d.id).includes(c.value));
+    return cropsData.map((c) => ({
+      ...c,
+      group: c.parentId,
+      disabled: !data.map((d) => d.id).includes(c.value),
+    }));
   }, [data, cropsData]);
 
   const GROUPED_OPTIONS = useMemo(() => {
     if (!data || !cropsGroupData) return [];
-    return cropsGroupData.filter((c) => data.map((d) => d.parent_id).includes(c.value));
+
+    return cropsGroupData.map((c) => ({
+      ...c,
+      disabled: !data.map((d) => d.parent_id).includes(c.value),
+    }));
   }, [data, cropsGroupData]);
 
   const handleBarClick = (key: number) => {
@@ -173,6 +183,7 @@ const CropsWidget = () => {
                 theme="light"
                 placeholder="Filter crops"
                 options={OPTIONS}
+                groups={GROUPED_OPTIONS}
                 values={crops as number[]}
                 batchSelectionActive
                 clearSelectionActive
@@ -189,8 +200,8 @@ const CropsWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest crops">
-                <ChartTop onBarClick={handleBarClick} />
+              <WidgetTop label="Top largest crops">
+                <ChartTop settings={settings} onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>
@@ -218,8 +229,8 @@ const CropsWidget = () => {
                 />
               </div>
 
-              <WidgetTop label="See top largest crops">
-                <ChartTop onBarClick={handleBarClick} />
+              <WidgetTop label="Top largest crop groups">
+                <ChartTop settings={settings} onBarClick={handleBarClick} />
               </WidgetTop>
             </div>
           </TabsContent>

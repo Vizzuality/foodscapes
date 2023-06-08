@@ -58,6 +58,11 @@ resource "aws_ecs_service" "service" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "service" {
+  name              = var.name
+  retention_in_days = 90
+}
+
 resource "aws_lb_target_group" "service" {
   name_prefix = "${substr(var.name, 0, 3)}-"
   target_type = "ip"

@@ -10,6 +10,18 @@ export interface MetaTagsProps {
   imageURL?: string;
 }
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+
+  if (process.env.NEXT_PUBLIC_URL) {
+    return process.env.NEXT_PUBLIC_URL;
+  }
+
+  return 'http://localhost:3000';
+};
+
 const MetaTags: React.FC<MetaTagsProps> = ({
   title,
   description,
@@ -17,6 +29,8 @@ const MetaTags: React.FC<MetaTagsProps> = ({
   imageURL,
 }: MetaTagsProps) => {
   const { asPath } = useRouter();
+
+  const BASE_URL = getBaseUrl();
 
   return (
     <Head>
@@ -28,14 +42,8 @@ const MetaTags: React.FC<MetaTagsProps> = ({
       <meta name="og:title" content={title} />
       <meta name="og:description" content={description} />
       <meta name="og:type" content={type} />
-      <meta
-        name="og:url"
-        content={`${process.env.NEXT_PUBLIC_VERCEL_URL || process.env.NEXT_PUBLIC_URL}${asPath}`}
-      />
-      <meta
-        name="og:image"
-        content={`${process.env.NEXT_PUBLIC_VERCEL_URL || process.env.NEXT_PUBLIC_URL}/${imageURL}`}
-      />
+      <meta name="og:url" content={`${BASE_URL}${asPath}`} />
+      <meta name="og:image" content={`${BASE_URL}/${imageURL}`} />
     </Head>
   );
 };

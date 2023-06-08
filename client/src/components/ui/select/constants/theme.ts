@@ -2,7 +2,7 @@ const THEME = {
   dark: {
     container: 'text-white text-sm',
     button: {
-      base: 'flex justify-between items-center italic w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-gray-700 px-4',
+      base: 'flex justify-between items-center italic w-full text-left transition duration-150 ease-in-out cursor-pointer border bg-navy-500 pl-4 pr-2 space-x-4',
       states: {
         none: 'border-white',
         error: 'border-red-500',
@@ -10,13 +10,14 @@ const THEME = {
         disabled: 'opacity-50',
       },
     },
+    selected: 'bg-white text-navy-500 px-2 rounded-full not-italic font-semibold',
     menu: 'bg-white border border-navy-400/50',
     menuHeader: 'bg-white',
     item: {
-      base: 'text-xs text-navy-500 uppercase',
+      base: 'text-xs text-navy-500',
       active: 'bg-white font-bold',
       selected: 'bg-white font-semibold',
-      disabled: 'font-normal',
+      disabled: 'opacity-50',
     },
     loading: 'relative flex items-center w-full h-full',
   },
@@ -24,14 +25,15 @@ const THEME = {
   light: {
     container: 'text-gray-600 text-sm',
     button: {
-      base: 'flex justify-between items-center w-full text-left transition duration-150 ease-in-out cursor-pointer border-b border-dashed bg-white',
+      base: 'flex justify-between items-center w-full text-left transition duration-150 ease-in-out cursor-pointer border-b border-dashed bg-white space-x-4',
       states: {
         none: 'border-gray-800',
         error: 'border-red-500',
         valid: 'border-green-500',
-        disabled: 'opacity-50',
+        disabled: 'opacity-40',
       },
     },
+    selected: 'bg-navy-500 text-white px-2 rounded-full not-italic font-semibold',
     menu: 'bg-white border border-gray-800',
     menuHeader: 'bg-white',
     item: {
@@ -54,6 +56,7 @@ const THEME = {
         disabled: 'opacity-50',
       },
     },
+    selected: '',
     menu: 'bg-white text-gray-700',
     menuHeader: 'bg-white',
     item: {
@@ -66,8 +69,8 @@ const THEME = {
   },
 
   sizes: {
-    base: 'px-1 py-3 text-sm',
-    s: 'px-1 py-1.5 text-sm',
+    base: 'px-0 py-3 text-sm',
+    s: 'px-0 py-1.5 text-sm',
     none: 'pr-10',
   },
 };

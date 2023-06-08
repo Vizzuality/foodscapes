@@ -2,10 +2,14 @@ import { useCallback, useMemo, useRef } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import Image from 'next/image';
+import Link from 'next/link';
+
 import {
   basemapAtom,
   bboxAtom,
   layersAtom,
+  layersInteractiveAtom,
   popupAtom,
   sidebarOpenAtom,
   tmpBboxAtom,
@@ -48,6 +52,7 @@ const MapContainer = () => {
 
   const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
+  const layersInteractive = useRecoilValue(layersInteractiveAtom);
   const sidebarOpen = useRecoilValue(sidebarOpenAtom);
   const bbox = useRecoilValue(bboxAtom);
   const tmpBbox = useRecoilValue(tmpBboxAtom);
@@ -108,16 +113,21 @@ const MapContainer = () => {
 
   const handleClick = useCallback(
     (e) => {
-      const { lngLat } = e;
       if (layers.length) {
-        setPopup(lngLat);
+        setPopup({
+          ...e,
+          features: e?.features ?? [],
+        });
       }
     },
     [layers, setPopup]
   );
 
   return (
-    <div className="absolute right-0 h-screen w-full">
+    <div className="absolute right-0 z-0 h-screen w-full">
+      <Link href="/" className="absolute top-5 left-5 z-10">
+        <Image src="/images/logo-map.svg" alt="Logo" width={151} height={29} />
+      </Link>
       <Map
         id={id}
         mapStyle={MAP_STYLE}
@@ -129,6 +139,7 @@ const MapContainer = () => {
           ...(bbox && { bounds: bbox }),
         }}
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+        interactiveLayerIds={layersInteractive}
         onMapViewStateChange={handleViewState}
         onClick={handleClick}
       >

@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { LngLat } from 'types/map';
-
 import { noPointData, usePointData } from 'hooks/data';
 import { useProvince } from 'hooks/provinces';
 import { useIsLoading } from 'hooks/utils';
@@ -16,14 +14,15 @@ import { Skeleton } from 'components/ui/skeleton';
 import PIN_SVG from 'svgs/map/pin.svg?sprite';
 
 interface ProvincesPopupProps {
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const ProvincesPopup = ({ latLng }: ProvincesPopupProps) => {
+const ProvincesPopup = ({ event }: ProvincesPopupProps) => {
+  const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'provinces');
   const band = `b${DATASET.layer.band}`;
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

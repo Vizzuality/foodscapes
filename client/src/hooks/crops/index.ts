@@ -65,10 +65,10 @@ export function useCropsGroups(queryOptions: UseQueryOptions<Crop[], unknown> = 
         data.sort((a, b) => a.label.localeCompare(b.label)),
         (d) => d.parentId
       ),
-      ([key, value]) =>
+      ([id, value]) =>
         ({
-          key,
-          value: key,
+          id,
+          value: id,
           values: value,
           label: value.map((v) => v.parentLabel).reduce((_, v) => v, ''),
           color: value.map((v) => v.parentColor).reduce((_, v) => v, ''),

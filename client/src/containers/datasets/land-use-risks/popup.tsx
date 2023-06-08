@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { LngLat } from 'types/map';
-
 import { noPointData, usePointData } from 'hooks/data';
 import { useLandUseRisks } from 'hooks/land-use-risks';
 import { useIsLoading } from 'hooks/utils';
@@ -11,13 +9,14 @@ import { useIsLoading } from 'hooks/utils';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface LandUseRiskPopupProps {
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const LandUseRiskPopup = ({ latLng }: LandUseRiskPopupProps) => {
+const LandUseRiskPopup = ({ event }: LandUseRiskPopupProps) => {
+  const { lngLat } = event;
   const f = useLandUseRisks();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { LngLat } from 'types/map';
-
 import { noPointData, usePointData } from 'hooks/data';
 import { useFoodscapesIntensities } from 'hooks/foodscapes-intensities';
 import { useIsLoading } from 'hooks/utils';
@@ -13,15 +11,16 @@ import { DATASETS } from 'constants/datasets';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface FoodscapesIntensitiesPopupProps {
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const FoodscapesIntensitiesPopup = ({ latLng }: FoodscapesIntensitiesPopupProps) => {
+const FoodscapesIntensitiesPopup = ({ event }: FoodscapesIntensitiesPopupProps) => {
+  const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes-intensities');
   const band = `b${DATASET.layer.band}`;
 
   const f = useFoodscapesIntensities();
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

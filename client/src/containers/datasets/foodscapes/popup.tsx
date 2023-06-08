@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import cn from 'lib/classnames';
 
 import { LayerSettings } from 'types/layers';
-import { LngLat } from 'types/map';
 
 import { noPointData, usePointData } from 'hooks/data';
 import { useFoodscapes } from 'hooks/foodscapes';
@@ -15,15 +14,16 @@ import { Skeleton } from 'components/ui/skeleton';
 
 interface FoodscapesPopupProps {
   settings: LayerSettings<'foodscapes'>;
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const FoodscapesPopup = ({ latLng, settings }: FoodscapesPopupProps) => {
+const FoodscapesPopup = ({ event, settings }: FoodscapesPopupProps) => {
+  const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
   const band = `b${DATASET.layer.band}`;
 
   const f = useFoodscapes();
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 

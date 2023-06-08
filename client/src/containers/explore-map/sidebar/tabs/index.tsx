@@ -113,8 +113,7 @@ const TabsContent = React.forwardRef<
     <TabsPrimitive.Content
       className={cn({
         'group relative': true,
-        'data-[state=active]:flex data-[state=active]:grow data-[state=active]:flex-col data-[state=active]:overflow-hidden':
-          true,
+        'data-[state=active]:flex data-[state=active]:grow data-[state=active]:flex-col': true,
         [className]: !!className,
       })}
       {...props}
@@ -122,7 +121,7 @@ const TabsContent = React.forwardRef<
     >
       <div
         className={cn({
-          'relative z-10 flex grow flex-col overflow-y-auto overflow-x-hidden transition-all animate-in duration-300 group-data-[state=active]:slide-in-from-top-4':
+          'relative z-10 flex grow flex-col transition-all animate-in duration-500 group-data-[state=active]:slide-in-from-left-4':
             true,
         })}
       >

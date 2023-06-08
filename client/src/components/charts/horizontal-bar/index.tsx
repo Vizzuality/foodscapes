@@ -16,7 +16,7 @@ interface HorizontalBarProps<D extends DataProps> {
   colorScale: ScaleOrdinal<string, string, never>;
   selected?: readonly number[];
   interactive?: boolean;
-  format: (value: number) => string;
+  format: (value: D) => string;
   onBarClick?: (bar: D) => void;
 }
 
@@ -40,17 +40,18 @@ const HorizontalBar = <D extends DataProps>({
             <li
               key={label + i}
               className={cn({
-                'group cursor-pointer': interactive,
+                'group cursor-pointer': interactive && value > 0,
               })}
-              {...(interactive && {
-                onMouseEnter: () => {
-                  setHover(id);
-                },
-                onMouseLeave: () => {
-                  setHover(null);
-                },
-                onClick: () => onBarClick(d),
-              })}
+              {...(interactive &&
+                value > 0 && {
+                  onMouseEnter: () => {
+                    setHover(id);
+                  },
+                  onMouseLeave: () => {
+                    setHover(null);
+                  },
+                  onClick: () => onBarClick(d),
+                })}
             >
               <div
                 style={{
@@ -69,7 +70,7 @@ const HorizontalBar = <D extends DataProps>({
                 />
 
                 <div className="shrink-0 whitespace-nowrap text-[8px] font-bold text-navy-500">
-                  {format(value)}
+                  {format(d)}
                 </div>
               </div>
 

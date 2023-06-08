@@ -4,30 +4,23 @@ import cn from 'lib/classnames';
 
 import { Agroforestry } from 'types/agroforestries';
 import { LayerSettings } from 'types/layers';
-import { LngLat } from 'types/map';
 
 import { useAgroforestries } from 'hooks/agroforestries';
 import { noPointData, usePointData } from 'hooks/data';
-import { useIsLoading } from 'hooks/utils';
+import { formatHA, formatPercentage, useIsLoading } from 'hooks/utils';
 
 import { Skeleton } from 'components/ui/skeleton';
 
 interface AgroforestriesPopupProps {
   settings: LayerSettings<'agroforestries'>;
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const AgroforestriesPopup = ({ latLng, settings }: AgroforestriesPopupProps) => {
-  const { format } = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-    minimumSignificantDigits: 1,
-    maximumSignificantDigits: 3,
-  });
-
+const AgroforestriesPopup = ({ event, settings }: AgroforestriesPopupProps) => {
+  const { lngLat } = event;
   const f = useAgroforestries();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 
@@ -71,7 +64,21 @@ const AgroforestriesPopup = ({ latLng, settings }: AgroforestriesPopupProps) => 
         {isFetched && (
           <>
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
-            {!!DATA && DATA > 1 && <h3 className="text-sm font-light">{format(DATA)} ha</h3>}
+            {!!DATA && DATA > 1 && (
+              <h3 className="text-sm font-light">
+                {`
+                ${formatHA(DATA, {
+                  notation: 'standard',
+                  maximumFractionDigits: 0,
+                })}
+                |
+                ${formatPercentage(DATA / 3086.9136, {
+                  notation: 'standard',
+                  maximumFractionDigits: 2,
+                })}
+                `}
+              </h3>
+            )}
             {!!DATA && DATA < 1 && <h3 className="text-sm font-light">{'< 1 ha'}</h3>}
           </>
         )}

@@ -18,7 +18,12 @@ export interface Dataset {
     | 'soil-healths'
     | 'locations'
     | 'countries'
-    | 'provinces';
+    | 'provinces'
+    | 'irrecoverable-carbon'
+    | 'deprivation-index'
+    | 'protected-areas'
+    | 'river-basins'
+    | 'case-studies';
   label: string;
   labelGroup?: string;
   group: string;

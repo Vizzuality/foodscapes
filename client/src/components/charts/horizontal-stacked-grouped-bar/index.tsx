@@ -17,7 +17,7 @@ type DataProps = {
 };
 
 type GroupProps = {
-  key: number;
+  id: number;
   values: any[];
 };
 
@@ -109,7 +109,7 @@ const HorizontalStackedGroupedBar = <
           .filter((v) => data.map((d) => d.id).includes(v.value))
           .every((v) => selected.includes(v.value));
       })
-      .map((s) => s.key);
+      .map((s) => s.id);
   }, [data, selected, groupedData]);
 
   const PARTIAL_SELECTED = useMemo(() => {
@@ -135,7 +135,7 @@ const HorizontalStackedGroupedBar = <
         }, 0);
 
         return {
-          key: s.key,
+          key: s.id,
           relativePercentage: totalSelected / total,
           absolutePercentage: totalSelected / TOTAL,
         };
@@ -190,7 +190,7 @@ const HorizontalStackedGroupedBar = <
                       opacity = 0.75;
                     }
 
-                    const g = groupedData.find((s) => s.key === bar.key);
+                    const g = groupedData.find((s) => s.id === bar.key);
 
                     return (
                       <g key={`bar-stack-${barStack.index}-${bar.index}`}>

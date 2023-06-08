@@ -5,13 +5,13 @@ import { ClimateRisk } from 'types/climate-risks';
 export const DATA_JSON = [
   {
     id: 'not_risk',
-    label: 'No risk',
+    label: 'No pollution risk',
     value: -1,
     color: '#7B544700',
   },
   {
     id: 'risk',
-    label: 'Risk',
+    label: 'Pesticide Risk',
     value: 1,
     color: '#7B5447',
   },

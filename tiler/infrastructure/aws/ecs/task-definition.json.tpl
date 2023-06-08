@@ -13,8 +13,7 @@
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
                 "awslogs-group": "tiler",
-                "awslogs-stream-prefix": "tiler",
-                "awslogs-create-group": "true"
+                "awslogs-stream-prefix": "tiler"
                 }
             },
             "portMappings": [

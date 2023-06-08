@@ -23,6 +23,11 @@ const fetch = async (filters: FiltersProps) => {
           'SUM(CASE WHEN d.critically_endangered_ecosystems = 1 THEN d.pixel_count ELSE 0 END) AS value'
         )
       )
+      .select(
+        KNEX.raw(
+          '(SUM(CASE WHEN d.critically_endangered_ecosystems = 1 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
+        )
+      )
       .from('data AS d')
       .whereNotIn('d.foodscapes', [1, 2, 3]),
     KNEX
@@ -31,6 +36,11 @@ const fetch = async (filters: FiltersProps) => {
       .select(
         KNEX.raw(
           'SUM(CASE WHEN d.area_with_high_conservation_value = 1 THEN d.pixel_count ELSE 0 END) AS value'
+        )
+      )
+      .select(
+        KNEX.raw(
+          '(SUM(CASE WHEN d.area_with_high_conservation_value = 1 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
         )
       )
       .from('data AS d')
@@ -43,12 +53,22 @@ const fetch = async (filters: FiltersProps) => {
           'SUM(CASE WHEN d.agricultural_frontier_zones = 1 THEN d.pixel_count ELSE 0 END) AS value'
         )
       )
+      .select(
+        KNEX.raw(
+          '(SUM(CASE WHEN d.agricultural_frontier_zones = 1 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
+        )
+      )
       .from('data AS d')
       .whereNotIn('d.foodscapes', [1, 2, 3]),
     KNEX
       //
       .select(KNEX.raw("'soil_erosion' AS id"))
       .select(KNEX.raw('SUM(CASE WHEN d.soil_erosion = 1 THEN d.pixel_count ELSE 0 END) AS value'))
+      .select(
+        KNEX.raw(
+          '(SUM(CASE WHEN d.soil_erosion = 1 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
+        )
+      )
       .from('data AS d')
       .whereNotIn('d.foodscapes', [1, 2, 3]),
     KNEX
@@ -56,6 +76,11 @@ const fetch = async (filters: FiltersProps) => {
       .select(KNEX.raw("'water_scarcity' AS id"))
       .select(
         KNEX.raw('SUM(CASE WHEN d.water_scarcity = 1 THEN d.pixel_count ELSE 0 END) AS value')
+      )
+      .select(
+        KNEX.raw(
+          '(SUM(CASE WHEN d.water_scarcity = 1 THEN d.pixel_count ELSE 0 END) / (SELECT SUM(d.pixel_count) * 1.0)) * 100 as percentage'
+        )
       )
       .from('data AS d')
       .whereNotIn('d.foodscapes', [1, 2, 3]),
@@ -74,7 +99,7 @@ const fetch = async (filters: FiltersProps) => {
 
 const LandUseRisksData = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const filters = qs.parseUrl(req.url, {
+    const filters = qs.parseUrl(decodeURIComponent(req.url), {
       parseNumbers: true,
       parseBooleans: true,
       arrayFormat: 'bracket-separator',

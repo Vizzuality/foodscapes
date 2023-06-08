@@ -13,8 +13,7 @@
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
                 "awslogs-group": "datasette",
-                "awslogs-stream-prefix": "datasette",
-                "awslogs-create-group": "true"
+                "awslogs-stream-prefix": "datasette"
                 }
             },
             "portMappings": [

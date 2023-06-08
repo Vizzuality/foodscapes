@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { LngLat } from 'types/map';
-
 import { useClimateRisks } from 'hooks/climate-risks';
 import { noPointData, usePointData } from 'hooks/data';
 import { useIsLoading } from 'hooks/utils';
@@ -13,16 +11,17 @@ import { DATASETS } from 'constants/datasets';
 import { Skeleton } from 'components/ui/skeleton';
 
 interface ClimateRiskPopupProps {
-  latLng: LngLat;
+  event: mapboxgl.MapLayerMouseEvent;
 }
 
-const ClimateRiskPopup = ({ latLng }: ClimateRiskPopupProps) => {
+const ClimateRiskPopup = ({ event }: ClimateRiskPopupProps) => {
+  const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'climate-risks');
   const band = `b${DATASET.layer.band}`;
 
   const f = useClimateRisks();
 
-  const p = usePointData(latLng, {
+  const p = usePointData(lngLat, {
     keepPreviousData: false,
   });
 
