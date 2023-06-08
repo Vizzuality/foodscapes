@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'layouts/stories';
 
 import Image from 'containers/case-studies/detail/image'
 
@@ -16,7 +16,7 @@ Adoption of nature-based and other relevant solutions can be accelerated by prov
 The range of techniques necessary to improve soil health are well-known: cover cropping and mulching, crop rotation and minimizing soil disturbance through minimum tillage, rotational grazing and the seeding of legumes, among others. The combination of such practices improves soil structure and stores carbon, which in turn helps to reduce erosion, improve soil moisture and provide other ecosystem services, such as nutrient recycling. Almost all terrestrial foodscapes have room to improve soil health; the more intensive the foodscape, the greater the opportunity.
 
 export default ({ children, ...props }) => (
-  <LayoutMdx {...props} type="case-study">
+  <LayoutMdx {...props}>
     {children}
   </LayoutMdx>
 );

@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'layouts/stories';
 
 import Image from 'containers/case-studies/detail/image'
 
@@ -18,7 +18,7 @@ Water is critical to all life and is one of the foundational elements to agricul
 Opportunities for improved water management are many, and we’ve chosen to focus on: improved rainwater harvesting; increasing irrigation efficiency; replacing crops with high water requirements such as cotton and rice with crops with lower water requirements, such as sorghum or millet; direct seeding and alternate wetting and drying; and investments in source water protection, such as locally-managed water funds.
 
 export default ({ children, ...props }) => (
-  <LayoutMdx {...props} type="case-study">
+  <LayoutMdx {...props}>
     {children}
   </LayoutMdx>
 );
