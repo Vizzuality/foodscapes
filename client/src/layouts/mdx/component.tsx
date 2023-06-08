@@ -11,7 +11,7 @@ const LayoutMdx: React.FC<LayoutMdxProps> = (props: LayoutMdxProps) => {
   return (
     <article
       className={cn({
-        'prose flex grow flex-col prose-headings:font-display prose-p:mb-0': true,
+        'prose-sm flex grow flex-col prose-headings:font-display prose-h1:mb-0 prose-p:mb-0': true,
         'overflow-auto p-6': type === 'default',
         'overflow-visible': type === 'case-study',
       })}
