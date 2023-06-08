@@ -68,8 +68,12 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
               <Skeleton className="h-full w-full" />
             </div>
             <div className="w-full space-y-2 rounded-md">
-              <Skeleton className="h-14 w-full" />
-              <Skeleton className="h-14 w-full" />
+              <div className="h-14 w-full rounded-md bg-gray-50">
+                <Skeleton className="h-full w-full" />
+              </div>
+              <div className="h-14 w-full rounded-md bg-gray-50">
+                <Skeleton className="h-full w-full" />
+              </div>
             </div>
           </div>
         )}
