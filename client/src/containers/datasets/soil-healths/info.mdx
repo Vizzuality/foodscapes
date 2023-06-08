@@ -1,13 +1,107 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 
-A foodscape is a terrestrial or aquatic food production area defined by a series of distinct
-biophysical attributes and management patterns, which can be mapped. They cover all parts of
-the globe where food is produced.
+## Areas suitable for minimum tillage
 
-*Copyright © 2021 The Nature Conservancy; International Institute for Applied Systems
-Analysis; SYSTEMIQ*
+#### Geographic coverage
+Global
+
+#### Spatial resolution
+~5km
+
+#### Date of content
+November 2022
+
+### Description
+Minimum tillage aims at least soil disturbance feasible without compromising crop productivity.
+By avoiding soil inversion and residue removal, it minimizes soil organic carbon mineralization
+while adding organic matter to the soil.
+
+### Methodology
+Suitability for minimum tillage was based on merging two datasets for conservation agriculture
+potential (Porwollik et al., 2019; Prestele et al., 2018) . Thereby, each pixel that was determined
+as suitable according to either one of the two datasets and their underlying assumptions was
+considered as suitable herein.
+
+Carbon sequestration per pixel was determined based Tier 1 methodology of the IPCC
+Guidelines 2019 Refinement (Buendia et al., 2019) for a no-till (minimum tillage) scenario
+following the same methods as in (Woolf et al., 2020) .
+
+### Citation
+NA
+
+### Sources
+Buendia, E.C., Tanabe, K., Kranjc, A., Jamsranjav, B., Fukuda, M., Ngarize, S., Osako, A.,
+Pyrozhenko, Y., Shermanau, P., Federici, S., 2019. 2019 Refinement to the 2006 IPCC
+Guidelines for National Greenhouse Gas Inventories. IPCC 7.
+
+Porwollik, V., Rolinski, S., Heinke, J., Müller, C., 2019. Generating a rule-based global gridded
+tillage dataset. Earth System Science Data 11, 823–843. https://doi.org/10.5194/essd-11-823-2019
+
+Prestele, R., Hirsch, A.L., Davin, E.L., Seneviratne, S.I., Verburg, P.H., 2018. A spatially explicit
+representation of conservation agriculture for application in global change studies. Glob
+Change Biol 24, 4038–4053. https://doi.org/10.1111/gcb.14307
+
+Woolf, D., Sanderman, J., Lehmann, J., Rivard, C., 2020. Soil Carbon Futures Final Report.
+https://doi.org/10.7910/DVN/HA17D3
+
+### License
+CC-BY 4.0
+
+-------------------------------------------------------
+
+## Areas suitable for cover cropping
+
+#### Geographic coverage
+Global
+
+#### Spatial resolution
+~5km
+
+#### Date of content
+November 2022
+
+### Description
+Cover crops provide soil cover outside the main growing season, protecting the soil from
+erosion besides other benefits. If not harvested, they also contribute to soil organic carbon
+sequestration, which is quantified herein.
+
+### Methodology
+Suitability for cover crops was determined by (a) aridity index (AI; (Trabucco and Zomer, 2019) )
+&gt; 0.3 and (b) cultivation of annual crops as well as cropping intensity according to SPAM2010
+(Yu et al., 2020) . The first constraint was determined by the distribution of the 90 th percentile of
+cover cropping experiments in an extensive database (n=317) on soil conservation practice
+trials (Jian et al., 2020) . The second rule (b) is based on general capacity for cover cropping.
+
+Carbon sequestration per pixel was determined based Tier 1 methodology of the IPCC
+Guidelines 2019 Refinement (Buendia et al., 2019) for a high organic inputs without manure
+(cover crops) scenario following the same methods as in (Woolf et al., 2020) .
+
+### Citation
+NA
+
+### Sources
+Buendia, E.C., Tanabe, K., Kranjc, A., Jamsranjav, B., Fukuda, M., Ngarize, S., Osako, A.,
+Pyrozhenko, Y., Shermanau, P., Federici, S., 2019. 2019 Refinement to the 2006 IPCC
+Guidelines for National Greenhouse Gas Inventories. IPCC 7.
+
+Jian, J., Du, X., Stewart, R.D., 2020. A database for global soil health assessment. Scientific
+Data 7. https://doi.org/10.1038/s41597-020-0356-3
+
+Trabucco, A., Zomer, R., 2019. Global Aridity Index and Potential Evapotranspiration (ET0)
+Climate Database v2. https://doi.org/10.6084/m9.figshare.7504448.v3
+
+Woolf, D., Sanderman, J., Lehmann, J., Rivard, C., 2020. Soil Carbon Futures Final Report.
+https://doi.org/10.7910/DVN/HA17D3
+
+Yu, Q., You, L., Wood-Sichra, U., Ru, Y., Joglekar, A.K.B., Fritz, S., Xiong, W., Lu, M., Wu, W.,
+Yang, P., 2020. A cultivated planet in 2010 – Part 2: The global gridded agricultural-
+production maps. Earth System Science Data 12, 3545–3572.
+https://doi.org/10.5194/essd-12-3545-2020
+
+### License
+CC-BY 4.0
 
 export default ({ children, ...props }) => (
   <LayoutMdx {...props}>

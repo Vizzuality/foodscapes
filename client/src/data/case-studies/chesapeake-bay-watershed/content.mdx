@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'layouts/stories';
 
 import Image from 'containers/case-studies/detail/image'
 
@@ -23,7 +23,7 @@ Meeting nutrient needs is a central challenge of farming and grazing, but nutrie
 There are many well-known ways to strike a balance: targeting fertilizer application more precisely, integrating nutrient-fixing legumes into crop rotations, optimizing the reuse of animal manure and diverting human manure from urban areas back to farmland.
 
 export default ({ children, ...props }) => (
-  <LayoutMdx {...props} type="case-study">
+  <LayoutMdx {...props}>
     {children}
   </LayoutMdx>
 );

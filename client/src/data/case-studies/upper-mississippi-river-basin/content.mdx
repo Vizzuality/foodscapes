@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'layouts/stories';
 
 import Image from 'containers/case-studies/detail/image'
 
@@ -18,7 +18,7 @@ Some land will need to be taken out of production. Even in highly productive foo
 
 
 export default ({ children, ...props }) => (
-  <LayoutMdx {...props} type="case-study">
+  <LayoutMdx {...props}>
     {children}
   </LayoutMdx>
 );

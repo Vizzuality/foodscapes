@@ -1,13 +1,55 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 
-A foodscape is a terrestrial or aquatic food production area defined by a series of distinct
-biophysical attributes and management patterns, which can be mapped. They cover all parts of
-the globe where food is produced.
+## Areas of high climatic risk from climate variability
 
-*Copyright © 2021 The Nature Conservancy; International Institute for Applied Systems
-Analysis; SYSTEMIQ*
+#### Geographic coverage
+Global
+
+#### Spatial resolution
+Resampled to 5 km
+
+#### Date of content
+Undefined
+
+### Description
+The framework of climate-related risk from IPCC (2014)
+focuses on assessing the risk of specific consequences or impacts that may harm a system.
+The vulnerability of the system is one of three components of the risk,
+with exposure and hazard being the other two components.
+Despite the uncertainties concerning development and greenhouse gas emission pathways into the future,
+there is a considerable and growing amount of information on the spatial variation of climate change impacts on farming systems around the world,
+and on the populations who may be most at risk.
+
+### Methodology
+For current climate hazards and climate variability, we used areas where the coefficient of variation of annual rainfall
+(the standard deviation divided by the mean, expressed as a percentage)
+is currently greater than the median value for the global tropics (24%).
+In lower latitudes, climate change is projected to increase this variability,
+making both cropping and rangeland production more risky.
+Because we have little information on the nature of this variability change,
+we used current variability as a proxy for future variability.
+
+Areas of high climatic variability and droughts were identified through a percentile threshold.
+For further details on the original layer contact Phil K. Thornton, CCAFS
+
+### Citation
+Phil Thornton (in prep) “Climate risks in agriculture” Annex to the “Agriculture and Food Security Sectoral Guide”, GCF,
+
+### Sources
+Ericksen PJ, Thornton PK, Notenbaert A, Cramer L, Jones PG, Herrero M, 2011. Mapping hotspots of climate change and food insecurity in the global tropics. CCAFS Report no. 5. CGIAR Research Program on Climate Change, Agriculture and Food Security (CCAFS). Copenhagen, Denmark. Available online at: www.ccafs.cgiar.org.
+Jones PG, Thornton PK, 2013. Generating downscaled weather data from a suite of climate models for agricultural modelling applications. Agricultural Systems 114, 1-5.
+
+Nachtergaele FO, Zanetti M, Bloise M, Ataman E, 2002. TERRASTAT Global Land Resources GIS Models and Databases. FAO Land and Water Digital Media Series #20, Rome, Italy.
+
+Prasad P V V, Staggenborg S A, Ristic Z, 2008. Impacts of drought and/or heat stress on physiological, developmental, growth, and yield processes of crop plants. In: Ajuha LR, Reddy VR, Saseendran SA, Yu Q (eds) Response of crops to limited water: understanding and modeling water stress effects on plant growth processes. American Society of Agronomy/ Crop Science Society of America / Soil Science Society of America, Madison, WI, p 301–356.
+
+Thornton PK, Rosenstock T, Förch W, Lamanna C, Bell P, Henderson B, Herrero M, 2017. A qualitative evaluation of CSA options in mixed crop-livestock systems in developing countries. In: Climate Smart Agriculture: Building Resilience to Climate Change (eds L Lipper et al.), pp 385-423. FAO, Springer.
+
+### License
+Rights reserved, available on request
+
 
 export default ({ children, ...props }) => (
   <LayoutMdx {...props}>
