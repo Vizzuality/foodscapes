@@ -63,8 +63,18 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
         />
 
         {caseStudyIsPlaceholderData && (
-          <div className="relative z-10 mt-8 h-72 w-full rounded-md bg-gray-50">
-            <Skeleton className="h-full w-full" />
+          <div className="relative z-10 mt-8 space-y-6">
+            <div className="h-72 w-full rounded-md bg-gray-50">
+              <Skeleton className="h-full w-full" />
+            </div>
+            <div className="w-full space-y-2 rounded-md">
+              <div className="h-14 w-full rounded-md bg-gray-50">
+                <Skeleton className="h-full w-full" />
+              </div>
+              <div className="h-14 w-full rounded-md bg-gray-50">
+                <Skeleton className="h-full w-full" />
+              </div>
+            </div>
           </div>
         )}
 
@@ -93,7 +103,7 @@ const CaseStudyDetail = ({ id }: { id: number }) => {
       </header>
 
       {!caseStudyIsPlaceholderData && !caseStudyIsError && (
-        <div className="mt-10 w-full overflow-hidden border-t px-20 pt-10 pb-10">
+        <div className="mt-10 w-full overflow-hidden px-20 pt-10 pb-10">
           <CaseStudyContent />
         </div>
       )}

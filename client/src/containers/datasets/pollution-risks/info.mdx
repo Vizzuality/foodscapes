@@ -1,13 +1,39 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 
-A foodscape is a terrestrial or aquatic food production area defined by a series of distinct
-biophysical attributes and management patterns, which can be mapped. They cover all parts of
-the globe where food is produced.
+## Pesticide Risk
+Risk of excessive exposure to pesticides
 
-*Copyright © 2021 The Nature Conservancy; International Institute for Applied Systems
-Analysis; SYSTEMIQ*
+#### Geographic coverage
+Global
+
+#### Spatial resolution
+10km resampled to ~5km for display
+
+#### Date of content
+Undefined
+
+### Description
+Pesticides are commonly applied in most areas with intensively produced crops globally.
+However, their use also has consequences for plant and soil heath as well as beneficial ecosystem services and water quality.
+We make use of a global mask of pesticide application to identify those areas where pesticides are excessively applied.
+
+### Methodology
+Data originates from Tang et al. (2021)
+who uses a global database of pesticide applications and a spatially explicit environmental model
+to estimate the world geography of environmental pollution risk caused by 92 active ingredients in 168 countries.
+The resulting layers are gridded and were utilized to create masks of those areas with the largest 5%
+(e.g. Largest 5% (e.g. 95% percentile) of exposed grid cells globally.
+
+
+### Citation
+Tang F. H.M, Lenzen M., McBratney A., and Maggi F. (2021). Risk of pesticide pollution at the global scale, Nature Geoscience. https://www.nature.com/articles/s41561-021-00712-5
+
+### Sources
+
+### License
+CC-BY 4.0
 
 export default ({ children, ...props }) => (
   <LayoutMdx {...props}>

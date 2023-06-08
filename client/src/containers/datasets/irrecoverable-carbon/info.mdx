@@ -1,16 +1,12 @@
 import LayoutMdx from 'layouts/mdx';
 
-# {props.label}
-
-## Foodscapes
-
-Distribution of terrestrial foodscapes
+## {props.label}
 
 #### Geographic coverage
 Global
 
 #### Spatial resolution
-~5 km
+~5km
 
 #### Date of content
 November 2022
@@ -41,41 +37,6 @@ And many others. See Supplementary Materials of Jung et al. (2022).
 
 ### License
 CC BY 4.0
-
-
----------------------------------------------
-
-
-## Soil groups
-Distribution of recategorized USDA soil groups
-
-#### Geographic coverage
-Global
-
-#### Spatial resolution
-~5km aggregated the original 250m
-
-#### Date of content
-period 1950-2017
-
-### Description
-Predicted classes following the United States Department of Agriculture classification system. Classes shown were aggregated to greater groups of soil types.
-
-### Methodology
-Distribution of the USDA soil great groups based on machine learning predictions from global compilation of soil profiles (>350,000 training points).
-To learn more about soil great groups, please refer to the
-[Illustrated Guide to Soil Taxonomy - NRCS - USDA](https://www.nrcs.usda.gov/wps/PA_NRCSConsumption/download/?cid=stelprdb1247203.pdf).
-Antarctica is not included.
-
-Data made openly available by Hengl & Neumann (2018). Processing steps are outlined here
-https://gitlab.com/openlandmap/global-layers/tree/master/soil
-
-### Citation
-Tomislav Hengl, & Travis Nauman. (2018). Predicted USDA soil great groups at 250 m (probabilities) (v0.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.3528062
-
-### License
-CC-BY-SA 4.0
-
 
 export default ({ children, ...props }) => (
   <LayoutMdx {...props}>

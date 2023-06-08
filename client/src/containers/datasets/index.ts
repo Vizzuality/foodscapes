@@ -13,6 +13,11 @@ import CropsInfo from './crops/info.mdx';
 import CropsLayer from './crops/layer';
 import CropsLegend from './crops/legend';
 import CropsPopup from './crops/popup';
+// Deprivation index
+import DeprivationIndexInfo from './deprivation-index/info.mdx';
+import DeprivationIndexLayer from './deprivation-index/layer';
+import DeprivationIndexLegend from './deprivation-index/legend';
+import DeprivationIndexPopup from './deprivation-index/popup';
 // Foodscapes intensity groups
 import FoodscapesIntensitiesInfo from './foodscapes-intensities/info.mdx';
 import FoodscapesIntensitiesLayer from './foodscapes-intensities/layer';
@@ -23,6 +28,11 @@ import FoodscapesInfo from './foodscapes/info.mdx';
 import FoodscapesLayer from './foodscapes/layer';
 import FoodscapesLegend from './foodscapes/legend';
 import FoodscapesPopup from './foodscapes/popup';
+// Irrecoverable Carbon
+import IrrecoverableCarbonInfo from './irrecoverable-carbon/info.mdx';
+import IrrecoverableCarbonLayer from './irrecoverable-carbon/layer';
+import IrrecoverableCarbonLegend from './irrecoverable-carbon/legend';
+import IrrecoverableCarbonPopup from './irrecoverable-carbon/popup';
 // Land use risk
 import LandUseInfo from './land-use-risks/info.mdx';
 import LandUseLayer from './land-use-risks/layer';
@@ -64,6 +74,8 @@ export const LAYERS = {
   restorations: RestorationsLayer,
   agroforestries: AgroforestriesLayer,
   'soil-healths': SoilHealthsLayer,
+  'irrecoverable-carbon': IrrecoverableCarbonLayer,
+  'deprivation-index': DeprivationIndexLayer,
   'protected-areas': ProtectedAreasLayer,
   'river-basins': RiverBasinsLayer,
 };
@@ -78,6 +90,8 @@ export const LEGENDS = {
   restorations: RestorationsLegend,
   agroforestries: AgroforestriesLegend,
   'soil-healths': SoilHealthsLegend,
+  'irrecoverable-carbon': IrrecoverableCarbonLegend,
+  'deprivation-index': DeprivationIndexLegend,
   'protected-areas': ProtectedAreasLegend,
   'river-basins': RiverBasinsLegend,
 };
@@ -92,6 +106,8 @@ export const POPUPS = {
   restorations: RestorationsPopup,
   agroforestries: AgroforestriesPopup,
   'soil-healths': SoilHealthsPopup,
+  'irrecoverable-carbon': IrrecoverableCarbonPopup,
+  'deprivation-index': DeprivationIndexPopup,
   'protected-areas': ProtectedAreasPopup,
   'river-basins': RiverBasinsPopup,
 };
@@ -106,6 +122,8 @@ export const INFO = {
   restorations: RestorationsInfo,
   agroforestries: AgroforestriesInfo,
   'soil-healths': SoilHealthsInfo,
+  'irrecoverable-carbon': IrrecoverableCarbonInfo,
+  'deprivation-index': DeprivationIndexInfo,
   'protected-areas': ProtectedAreasInfo,
   'river-basins': RiverBasinsInfo,
 };

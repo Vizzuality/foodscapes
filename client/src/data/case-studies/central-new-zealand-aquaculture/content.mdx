@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'layouts/stories';
 
 import Image from 'containers/case-studies/detail/image'
 
@@ -15,7 +15,7 @@ In terms of infrastructure development, emergent programs already highlight the 
 Improved fisheries management and extending aquaculture production can significantly increase output from freshwater and marine foodscapes while also delivering environmental co-benefits in the form of reduced water pollution and greenhouse gas emissions.
 
 export default ({ children, ...props }) => (
-  <LayoutMdx {...props} type="case-study">
+  <LayoutMdx {...props}>
     {children}
   </LayoutMdx>
 );

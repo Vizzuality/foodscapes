@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'layouts/stories';
 
 import Image from 'containers/case-studies/detail/image'
 
@@ -19,7 +19,7 @@ Many crop and grazing systems in foodscapes across the world can accommodate man
 The best agroforestry opportunities in croplands are in intensive production foodscapes, especially western Europe, eastern China and the US Great Plains, but there are also opportunities to expand agroforestry in mixed foodscapes where it is already well established, such as much of sub-Saharan Africa and the southern half of South America.
 
 export default ({ children, ...props }) => (
-  <LayoutMdx {...props} type="case-study">
+  <LayoutMdx {...props}>
     {children}
   </LayoutMdx>
 );
