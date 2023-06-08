@@ -36,6 +36,18 @@ export function formatHA(value: number, options?: Intl.NumberFormatOptions) {
   return v.format(value).replace(/(\d+)([A-Za-z]+)/, '$1 $2');
 }
 
+export function formatTperHA(value: number, options?: Intl.NumberFormatOptions) {
+  const v = Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    ...options,
+  });
+
+  return `${v.format(value)} t/ha`;
+}
+
 export function convertPixelCountToHA(value: number, options?: Intl.NumberFormatOptions) {
   return formatHA(value * 3086.9136, options);
 }
