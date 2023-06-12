@@ -1,14 +1,14 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import Image from 'next/image';
 
 import cn from 'lib/classnames';
+import { ScrollProvider } from 'lib/scroll';
 
 import { lastStepAtom, stepAtom } from 'store/home';
 
 import { AnimatePresence } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useDebouncedCallback } from 'use-debounce';
 
 import FadeY from 'containers/animations/fadeY';
 import Wrapper from 'containers/wrapper';
@@ -49,139 +49,146 @@ const Home = () => {
     return 'exit';
   }, [step]);
 
-  const onChange = useDebouncedCallback((id: number) => {
-    setLastStep(step);
-    setStep(id);
-  }, 100);
+  const onChange = useCallback(
+    (s) => {
+      if (s.data.step !== step) {
+        setLastStep(step);
+        setStep(s.data.step);
+      }
+    },
+    [setLastStep, setStep, step]
+  );
 
   return (
-    <div
-      className={cn({
-        'w-full overflow-hidden lg:overflow-visible': true,
-        'bg-white transition-colors lg:bg-white': true,
-        'bg-green-500': step === 3,
-        'bg-red-500': step === 4,
-        'bg-yellow-500': step === 5,
-      })}
-    >
-      <ScrollItem step={0} onChange={onChange}>
-        <Hero />
-      </ScrollItem>
+    <ScrollProvider onStepChange={onChange}>
+      <div
+        className={cn({
+          'w-full overflow-hidden lg:overflow-visible': true,
+          'bg-white transition-colors lg:bg-white': true,
+          'bg-green-500': step === 3,
+          'bg-red-500': step === 4,
+          'bg-yellow-500': step === 5,
+        })}
+      >
+        <ScrollItem step={0}>
+          <Hero />
+        </ScrollItem>
 
-      <ScrollItem step={1} onChange={onChange}>
-        <How />
-      </ScrollItem>
+        <ScrollItem step={1}>
+          <How />
+        </ScrollItem>
 
-      <Media lessThan="sm" className="px-10">
-        <ScrollItem step={2} onChange={onChange}>
-          <LayersText1 />
-          <LayersChart initialStep={2} currentStep={2} />
-        </ScrollItem>
-        <ScrollItem step={3} onChange={onChange}>
-          <LayersText2 />
-          <LayersChart initialStep={2} currentStep={3} />
-        </ScrollItem>
-        <ScrollItem step={4} onChange={onChange}>
-          <LayersText3 />
-          <LayersChart initialStep={2} currentStep={4} />
-        </ScrollItem>
-        <ScrollItem step={5} onChange={onChange}>
-          <LayersText4 />
-          <LayersChart initialStep={2} currentStep={5} />
-        </ScrollItem>
-        <ScrollItem step={6} onChange={onChange}>
-          <CirclesText1 />
-          <LayersChart initialStep={2} currentStep={6} />
-        </ScrollItem>
-        <ScrollItem step={7} onChange={onChange}>
-          <CirclesText2 />
-          <CirclesChart initialStep={6} currentStep={7} />
-        </ScrollItem>
-        <ScrollItem step={8} onChange={onChange}>
-          <CirclesText3 />
-          <CirclesChart initialStep={6} currentStep={8} />
-        </ScrollItem>
-        <ScrollItem step={9} onChange={onChange}>
-          <CirclesText4 />
-          <CirclesChart initialStep={6} currentStep={9} />
-        </ScrollItem>
-        <ScrollItem step={10} onChange={onChange}>
-          <div className="flex flex-col">
-            <GlobeText />
-            <div className="-mx-10">
-              <Image
-                width={414}
-                height={317}
-                src="/images/globe/globe-mobile.jpg"
-                alt="Globe with Foodscapes image"
-                className="object-fill"
-              />
+        <Media lessThan="sm" className="px-10">
+          <ScrollItem step={2}>
+            <LayersText1 />
+            <LayersChart initialStep={2} currentStep={2} />
+          </ScrollItem>
+          <ScrollItem step={3}>
+            <LayersText2 />
+            <LayersChart initialStep={2} currentStep={3} />
+          </ScrollItem>
+          <ScrollItem step={4}>
+            <LayersText3 />
+            <LayersChart initialStep={2} currentStep={4} />
+          </ScrollItem>
+          <ScrollItem step={5}>
+            <LayersText4 />
+            <LayersChart initialStep={2} currentStep={5} />
+          </ScrollItem>
+          <ScrollItem step={6}>
+            <CirclesText1 />
+            <LayersChart initialStep={2} currentStep={6} />
+          </ScrollItem>
+          <ScrollItem step={7}>
+            <CirclesText2 />
+            <CirclesChart initialStep={6} currentStep={7} />
+          </ScrollItem>
+          <ScrollItem step={8}>
+            <CirclesText3 />
+            <CirclesChart initialStep={6} currentStep={8} />
+          </ScrollItem>
+          <ScrollItem step={9}>
+            <CirclesText4 />
+            <CirclesChart initialStep={6} currentStep={9} />
+          </ScrollItem>
+          <ScrollItem step={10}>
+            <div className="flex flex-col">
+              <GlobeText />
+              <div className="-mx-10">
+                <Image
+                  width={414}
+                  height={317}
+                  src="/images/globe/globe-mobile.jpg"
+                  alt="Globe with Foodscapes image"
+                  className="object-fill"
+                />
+              </div>
             </div>
-          </div>
-        </ScrollItem>
-      </Media>
+          </ScrollItem>
+        </Media>
 
-      <Media greaterThanOrEqual="sm">
-        <Wrapper>
-          <div className="grid grid-cols-12 gap-6">
-            <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
-              <ScrollItem step={2} onChange={onChange}>
-                <LayersText1 />
-              </ScrollItem>
-              <ScrollItem step={3} onChange={onChange}>
-                <LayersText2 />
-              </ScrollItem>
-              <ScrollItem step={4} onChange={onChange}>
-                <LayersText3 />
-              </ScrollItem>
-              <ScrollItem step={5} onChange={onChange}>
-                <LayersText4 />
-              </ScrollItem>
-              <ScrollItem step={6} onChange={onChange}>
-                <CirclesText1 />
-              </ScrollItem>
-              <ScrollItem step={7} onChange={onChange}>
-                <CirclesText2 />
-              </ScrollItem>
-              <ScrollItem step={8} onChange={onChange}>
-                <CirclesText3 />
-              </ScrollItem>
-              <ScrollItem step={9} onChange={onChange}>
-                <CirclesText4 />
-              </ScrollItem>
-              <ScrollItem step={10} onChange={onChange}>
-                <GlobeText />
-              </ScrollItem>
-            </div>
+        <Media greaterThanOrEqual="sm">
+          <Wrapper>
+            <div className="grid grid-cols-12 gap-6">
+              <div className="relative z-10 col-span-5 xl:col-span-4 xl:col-start-2">
+                <ScrollItem step={2}>
+                  <LayersText1 />
+                </ScrollItem>
+                <ScrollItem step={3}>
+                  <LayersText2 />
+                </ScrollItem>
+                <ScrollItem step={4}>
+                  <LayersText3 />
+                </ScrollItem>
+                <ScrollItem step={5}>
+                  <LayersText4 />
+                </ScrollItem>
+                <ScrollItem step={6}>
+                  <CirclesText1 />
+                </ScrollItem>
+                <ScrollItem step={7}>
+                  <CirclesText2 />
+                </ScrollItem>
+                <ScrollItem step={8}>
+                  <CirclesText3 />
+                </ScrollItem>
+                <ScrollItem step={9}>
+                  <CirclesText4 />
+                </ScrollItem>
+                <ScrollItem step={10}>
+                  <GlobeText />
+                </ScrollItem>
+              </div>
 
-            <div className="sticky top-0 z-0 h-96 lg:col-span-5 lg:col-start-7 lg:h-small-screen">
-              <AnimatePresence>
-                {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
-                  <FadeY key="layers-chart">
-                    <div className="flex h-full flex-col items-center justify-center">
-                      <LayersChart initialStep={2} />
-                      <CirclesChart initialStep={6} />
-                    </div>
+              <div className="sticky top-0 z-0 h-96 lg:col-span-5 lg:col-start-7 lg:h-small-screen">
+                <AnimatePresence>
+                  {[2, 3, 4, 5, 6, 7, 8, 9].includes(step) && (
+                    <FadeY key="layers-chart">
+                      <div className="flex h-full flex-col items-center justify-center">
+                        <LayersChart initialStep={2} />
+                        <CirclesChart initialStep={6} />
+                      </div>
+                    </FadeY>
+                  )}
+
+                  <FadeY animate={ANIMATE_GLOBE}>
+                    <GlobeMap currentId="desktop-globe" />
                   </FadeY>
-                )}
-
-                <FadeY animate={ANIMATE_GLOBE}>
-                  <GlobeMap currentId="desktop-globe" />
-                </FadeY>
-              </AnimatePresence>
+                </AnimatePresence>
+              </div>
             </div>
-          </div>
-        </Wrapper>
-      </Media>
+          </Wrapper>
+        </Media>
 
-      <ScrollItem step={11} onChange={onChange}>
-        <Outro />
-      </ScrollItem>
+        <ScrollItem step={11}>
+          <Outro />
+        </ScrollItem>
 
-      {/* <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
+        {/* <div className="sticky top-0 left-0 z-0 h-small-screen w-full">
 
-      </div> */}
-    </div>
+        </div> */}
+      </div>
+    </ScrollProvider>
   );
 };
 
