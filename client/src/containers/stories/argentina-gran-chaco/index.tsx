@@ -46,7 +46,6 @@ const GranChaco = () => {
   const onChange = useCallback(
     (s) => {
       if (s.data.step !== step) {
-        console.log(s);
         setLastStep(step);
         setStep(s.data.step);
       }
