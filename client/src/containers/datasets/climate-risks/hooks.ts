@@ -85,6 +85,7 @@ export function useLayer({ settings }: UseClimateRiskLayerProps): AnyLayer {
       type: 'raster',
       paint: {
         'raster-opacity': settings.opacity ?? 1,
+        'raster-resampling': 'nearest',
       },
       layout: {
         visibility: visibility ? 'visible' : 'none',
