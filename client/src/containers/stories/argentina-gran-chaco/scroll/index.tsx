@@ -1,23 +1,21 @@
-import { PropsWithChildren, useEffect, useRef } from 'react';
+import { PropsWithChildren, useRef } from 'react';
 
 import cn from 'lib/classnames';
 import { useAddScrollItem } from 'lib/scroll';
 
-import { useInView, useScroll } from 'framer-motion';
+import { useScroll } from 'framer-motion';
 
 import { SCROLL_ITEMS_METADATA } from './constants';
 
 interface ScrollItemProps extends PropsWithChildren {
   className?: string;
   step: number;
-  onChange: (step: number) => void;
 }
 
-const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) => {
-  const { inViewProps, useScrollProps } = SCROLL_ITEMS_METADATA[step];
+const ScrollItem = ({ children, className, step }: ScrollItemProps) => {
+  const { useScrollProps } = SCROLL_ITEMS_METADATA[step];
 
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, inViewProps);
 
   const scrollMotionValue = useScroll({
     target: ref,
@@ -25,15 +23,13 @@ const ScrollItem = ({ children, className, step, onChange }: ScrollItemProps) =>
   });
 
   useAddScrollItem({
+    ref,
     key: `scroll-${step}`,
+    data: {
+      step,
+    },
     ...scrollMotionValue,
   });
-
-  useEffect(() => {
-    if (inView) {
-      onChange(step);
-    }
-  }, [inView, onChange]); // eslint-disable-line
 
   return (
     <section

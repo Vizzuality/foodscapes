@@ -1,12 +1,12 @@
 import { atom } from 'recoil';
 
 export const stepAtom = atom({
-  key: 'step',
+  key: 'a-step',
   default: 0,
 });
 
 export const lastStepAtom = atom({
-  key: 'lastStep',
+  key: 'a-lastStep',
   default: 0,
 });
 
