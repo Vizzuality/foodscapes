@@ -10,7 +10,7 @@ import { AnyLayerWithMetadata } from 'types/map';
 
 const MapSettings = ({ id }) => {
   const { [id]: mapRef } = useMap();
-  const { basemap, labels } = useRecoilValue(mapSettingsAtom);
+  const { basemap, labels, boundaries, roads } = useRecoilValue(mapSettingsAtom);
 
   const handleBasemap = useCallback(
     (b) => {
@@ -94,11 +94,77 @@ const MapSettings = ({ id }) => {
     [mapRef]
   );
 
+  const handleBoundaries = useCallback(
+    (b: boolean) => {
+      if (!mapRef) return;
+      const BOUNDARIES_GROUP = ['boundaries'];
+      const map = mapRef.getMap();
+      const { layers, metadata } = mapRef.getStyle();
+
+      const lys = layers as AnyLayerWithMetadata[];
+
+      const boundariesGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
+        const { name } = metadata['mapbox:groups'][k];
+
+        const boundariesGroup = BOUNDARIES_GROUP.map((rgr) => name.toLowerCase().includes(rgr));
+
+        return boundariesGroup.some((bool) => bool);
+      });
+
+      const boundariesLayers = lys.filter((l) => {
+        const { metadata: layerMetadata } = l;
+        if (!layerMetadata) return false;
+
+        const gr = layerMetadata['mapbox:group'];
+        return boundariesGroups.includes(gr);
+      });
+
+      boundariesLayers.forEach((l) => {
+        map.setLayoutProperty(l.id, 'visibility', b ? 'visible' : 'none');
+      });
+    },
+    [mapRef]
+  );
+
+  const handleRoads = useCallback(
+    (b: boolean) => {
+      if (!mapRef) return;
+      const ROADS_GROUP = ['boundaries'];
+      const map = mapRef.getMap();
+      const { layers, metadata } = mapRef.getStyle();
+
+      const lys = layers as AnyLayerWithMetadata[];
+
+      const boundariesGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
+        const { name } = metadata['mapbox:groups'][k];
+
+        const roadsGroup = ROADS_GROUP.map((rgr) => name.toLowerCase().includes(rgr));
+
+        return roadsGroup.some((bool) => bool);
+      });
+
+      const boundariesLayers = lys.filter((l) => {
+        const { metadata: layerMetadata } = l;
+        if (!layerMetadata) return false;
+
+        const gr = layerMetadata['mapbox:group'];
+        return boundariesGroups.includes(gr);
+      });
+
+      boundariesLayers.forEach((l) => {
+        map.setLayoutProperty(l.id, 'visibility', b ? 'visible' : 'none');
+      });
+    },
+    [mapRef]
+  );
+
   const handleStyleLoad = useCallback(() => {
     handleBasemap(basemap);
     handleLabels(labels);
-  }, [basemap, labels, handleBasemap, handleLabels]);
+    handleBoundaries(boundaries);
+  }, [basemap, labels, boundaries, handleBasemap, handleLabels, handleBoundaries]);
 
+  // * handle style load
   useEffect(() => {
     if (!mapRef) return;
     mapRef.on('style.load', handleStyleLoad);
@@ -108,6 +174,7 @@ const MapSettings = ({ id }) => {
     };
   }, [mapRef, handleStyleLoad]);
 
+  // * handle basemap, labels, boundaries, roads
   useEffect(() => {
     if (!!mapRef && mapRef.loaded()) {
       handleBasemap(basemap);
@@ -120,9 +187,17 @@ const MapSettings = ({ id }) => {
     }
   }, [mapRef, labels, handleLabels]);
 
-  // useEffect(() => {
-  //   handleBoundaries(boundaries);
-  // }, [boundaries, handleBoundaries]);
+  useEffect(() => {
+    if (!!mapRef && mapRef.loaded()) {
+      handleBoundaries(boundaries);
+    }
+  }, [mapRef, boundaries, handleBoundaries]);
+
+  useEffect(() => {
+    if (!!mapRef && mapRef.loaded()) {
+      handleRoads(roads);
+    }
+  }, [mapRef, roads, handleRoads]);
 
   return null;
 };

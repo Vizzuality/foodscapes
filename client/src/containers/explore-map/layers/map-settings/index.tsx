@@ -1,4 +1,5 @@
 import Basemaps from './basemaps';
+import Boundaries from './boundaries';
 import Labels from './labels';
 
 const MapSettings = () => {
@@ -11,6 +12,10 @@ const MapSettings = () => {
 
         <div className="flex justify-between">
           <Labels />
+
+          <div className="space-y-1">
+            <Boundaries />
+          </div>
         </div>
       </div>
     </div>
