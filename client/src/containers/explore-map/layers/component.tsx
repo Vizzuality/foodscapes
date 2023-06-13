@@ -11,8 +11,8 @@ import Icon from 'components/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
-import Basemaps from './basemaps';
 import LayersGroup from './layers-group';
+import MapSettings from './map-settings';
 
 const Layers = () => {
   const layersOpen = useRecoilValue(layersOpenAtom);
@@ -89,7 +89,7 @@ const Layers = () => {
           </div>
 
           <div className="space-y-8">
-            <Basemaps />
+            <MapSettings />
             <LayersGroup name="Foodscapes" group="foodscapes" />
             <LayersGroup name="Risks" group="risks" />
             <LayersGroup name="Opportunities" group="opportunities" />
