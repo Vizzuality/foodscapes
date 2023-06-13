@@ -8,43 +8,44 @@ import { useRecoilValue } from 'recoil';
 
 import { AnyLayerWithMetadata } from 'types/map';
 
+import { BASEMAPS } from 'constants/basemaps';
+
 const MapSettings = ({ id }) => {
   const { [id]: mapRef } = useMap();
   const { basemap, labels, boundaries, roads } = useRecoilValue(mapSettingsAtom);
 
-  const handleBasemap = useCallback(
-    (b) => {
+  const handleGroup = useCallback(
+    (groups, groupId, visible = true) => {
       if (!mapRef) return;
-      const BASEMAP_GROUPS = ['basemap'];
       const map = mapRef.getMap();
       const { layers, metadata } = mapRef.getStyle();
 
       const lys = layers as AnyLayerWithMetadata[];
 
-      const basemapGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
+      const GROUPS = Object.keys(metadata['mapbox:groups']).filter((k) => {
         const { name } = metadata['mapbox:groups'][k];
 
-        const matchedGroups = BASEMAP_GROUPS.map((rgr) => name.toLowerCase().includes(rgr));
+        const matchedGroups = groups.map((rgr) => name.toLowerCase().includes(rgr));
 
         return matchedGroups.some((bool) => bool);
       });
 
-      const basemapsWithMeta = basemapGroups.map((groupId) => ({
-        ...metadata['mapbox:groups'][groupId],
-        id: groupId,
+      const GROUPS_META = GROUPS.map((gId) => ({
+        ...metadata['mapbox:groups'][gId],
+        id: gId,
       }));
-      const basemapToDisplay = basemapsWithMeta.find((_basemap) => _basemap.name.includes(b));
+      const GROUP_TO_DISPLAY = GROUPS_META.find((_group) => _group.name.includes(groupId)) || {};
 
-      const basemapLayers = lys.filter((l) => {
+      const GROUPS_LAYERS = lys.filter((l) => {
         const { metadata: layerMetadata } = l;
         if (!layerMetadata) return false;
 
         const gr = layerMetadata['mapbox:group'];
-        return basemapGroups.includes(gr);
+        return GROUPS.includes(gr);
       });
 
-      basemapLayers.forEach((_layer) => {
-        const match = _layer.metadata['mapbox:group'] === basemapToDisplay.id;
+      GROUPS_LAYERS.forEach((_layer) => {
+        const match = _layer.metadata['mapbox:group'] === GROUP_TO_DISPLAY.id && visible;
         if (!match) {
           map.setLayoutProperty(_layer.id, 'visibility', 'none');
         } else {
@@ -55,124 +56,14 @@ const MapSettings = ({ id }) => {
     [mapRef]
   );
 
-  const handleLabels = useCallback(
-    (lbs) => {
-      if (!mapRef) return;
-      const LABELS_GROUP = ['labels'];
-      const map = mapRef.getMap();
-      const { layers, metadata } = mapRef.getStyle();
-
-      const lys = layers as AnyLayerWithMetadata[];
-
-      const labelGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
-        const { name } = metadata['mapbox:groups'][k];
-
-        const matchedGroups = LABELS_GROUP.filter((rgr) => name.toLowerCase().includes(rgr));
-
-        return matchedGroups.some((bool) => bool);
-      });
-
-      const labelsWithMeta = labelGroups.map((_groupId) => ({
-        ...metadata['mapbox:groups'][_groupId],
-        id: _groupId,
-      }));
-      const labelsToDisplay = labelsWithMeta.find((_basemap) => _basemap.name.includes(lbs)) || {};
-
-      const labelLayers = lys.filter((l) => {
-        const { metadata: layerMetadata } = l;
-        if (!layerMetadata) return false;
-
-        const gr = layerMetadata['mapbox:group'];
-        return labelGroups.includes(gr);
-      });
-
-      labelLayers.forEach((_layer) => {
-        const match = _layer.metadata['mapbox:group'] === labelsToDisplay.id;
-        map.setLayoutProperty(_layer.id, 'visibility', match ? 'visible' : 'none');
-      });
-    },
-    [mapRef]
-  );
-
-  const handleBoundaries = useCallback(
-    (b: boolean) => {
-      if (!mapRef) return;
-      const BOUNDARIES_GROUP = ['boundaries'];
-      const map = mapRef.getMap();
-      const { layers, metadata } = mapRef.getStyle();
-
-      const lys = layers as AnyLayerWithMetadata[];
-
-      const boundariesGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
-        const { name } = metadata['mapbox:groups'][k];
-
-        const boundariesGroup = BOUNDARIES_GROUP.map((rgr) => name.toLowerCase().includes(rgr));
-
-        return boundariesGroup.some((bool) => bool);
-      });
-
-      const boundariesLayers = lys.filter((l) => {
-        const { metadata: layerMetadata } = l;
-        if (!layerMetadata) return false;
-
-        const gr = layerMetadata['mapbox:group'];
-        return boundariesGroups.includes(gr);
-      });
-
-      boundariesLayers.forEach((l) => {
-        map.setLayoutProperty(l.id, 'visibility', b ? 'visible' : 'none');
-      });
-    },
-    [mapRef]
-  );
-
-  const handleRoads = useCallback(
-    (b: boolean) => {
-      if (!mapRef) return;
-      const ROADS_GROUP = ['roads'];
-      const map = mapRef.getMap();
-      const { layers, metadata } = mapRef.getStyle();
-
-      const lys = layers as AnyLayerWithMetadata[];
-
-      const boundariesGroups = Object.keys(metadata['mapbox:groups']).filter((k) => {
-        const { name } = metadata['mapbox:groups'][k];
-
-        const roadsGroup = ROADS_GROUP.map((rgr) => name.toLowerCase().includes(rgr));
-
-        return roadsGroup.some((bool) => bool);
-      });
-
-      const boundariesLayers = lys.filter((l) => {
-        const { metadata: layerMetadata } = l;
-        if (!layerMetadata) return false;
-
-        const gr = layerMetadata['mapbox:group'];
-        return boundariesGroups.includes(gr);
-      });
-
-      boundariesLayers.forEach((l) => {
-        map.setLayoutProperty(l.id, 'visibility', b ? 'visible' : 'none');
-      });
-    },
-    [mapRef]
-  );
-
   const handleStyleLoad = useCallback(() => {
-    handleBasemap(basemap);
-    handleLabels(labels);
-    handleBoundaries(boundaries);
-    handleRoads(roads);
-  }, [
-    basemap,
-    labels,
-    boundaries,
-    roads,
-    handleBasemap,
-    handleLabels,
-    handleBoundaries,
-    handleRoads,
-  ]);
+    const B = BASEMAPS.find((b) => b.value === basemap);
+
+    handleGroup(['basemap'], basemap);
+    handleGroup(['labels'], labels);
+    handleGroup(['boundaries'], B.settings.boundaries, boundaries);
+    handleGroup(['roads'], B.settings.roads, roads);
+  }, [basemap, labels, boundaries, roads, handleGroup]);
 
   // * handle style load
   useEffect(() => {
@@ -187,27 +78,14 @@ const MapSettings = ({ id }) => {
   // * handle basemap, labels, boundaries, roads
   useEffect(() => {
     if (!!mapRef && mapRef.loaded()) {
-      handleBasemap(basemap);
-    }
-  }, [mapRef, basemap, handleBasemap]);
+      const B = BASEMAPS.find((b) => b.value === basemap);
 
-  useEffect(() => {
-    if (!!mapRef && mapRef.loaded()) {
-      handleLabels(labels);
+      handleGroup(['basemap'], basemap);
+      handleGroup(['labels'], labels);
+      handleGroup(['boundaries'], B.settings.boundaries, boundaries);
+      handleGroup(['roads'], B.settings.roads, roads);
     }
-  }, [mapRef, labels, handleLabels]);
-
-  useEffect(() => {
-    if (!!mapRef && mapRef.loaded()) {
-      handleBoundaries(boundaries);
-    }
-  }, [mapRef, boundaries, handleBoundaries]);
-
-  useEffect(() => {
-    if (!!mapRef && mapRef.loaded()) {
-      handleRoads(roads);
-    }
-  }, [mapRef, roads, handleRoads]);
+  }, [mapRef, basemap, labels, boundaries, roads, handleGroup]);
 
   return null;
 };
