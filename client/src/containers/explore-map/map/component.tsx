@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import {
-  basemapAtom,
   bboxAtom,
   layersAtom,
   layersInteractiveAtom,
@@ -19,8 +18,6 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { Bbox } from 'types/map';
 
-import { BASEMAPS } from 'constants/basemaps';
-
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
 import env from 'env.mjs';
@@ -28,6 +25,7 @@ import env from 'env.mjs';
 import Controls from './controls';
 import LayerManager from './layer-manager';
 import Popup from './popup';
+import MapSettings from './settings';
 
 const DEFAULT_PROPS: CustomMapProps = {
   id: 'default',
@@ -44,13 +42,12 @@ const DEFAULT_PROPS: CustomMapProps = {
 };
 
 const MapContainer = () => {
-  const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
+  const { id, initialViewState, minZoom, maxZoom } = DEFAULT_PROPS;
 
   const { [id]: map } = useMap();
 
   const mapResizerIntervalRef = useRef<number>();
 
-  const basemap = useRecoilValue(basemapAtom);
   const layers = useRecoilValue(layersAtom);
   const layersInteractive = useRecoilValue(layersInteractiveAtom);
   const sidebarOpen = useRecoilValue(sidebarOpenAtom);
@@ -79,10 +76,6 @@ const MapContainer = () => {
   }, [tmpBbox]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setPopup = useSetRecoilState(popupAtom);
-
-  const MAP_STYLE = useMemo(() => {
-    return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
-  }, [basemap, mapStyle]);
 
   const handleResize = useCallback(() => {
     // Prevent map flickering by ruunning the resize after aa timeout of 0
@@ -130,7 +123,7 @@ const MapContainer = () => {
       </Link>
       <Map
         id={id}
-        mapStyle={MAP_STYLE}
+        mapStyle="mapbox://styles/foodscapes/clisymb78003t01pncx558l3i"
         minZoom={minZoom}
         maxZoom={maxZoom}
         bounds={bounds}
@@ -145,6 +138,8 @@ const MapContainer = () => {
       >
         {() => (
           <>
+            <MapSettings />
+
             <LayerManager />
 
             <Controls />

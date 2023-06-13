@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import cn from 'lib/classnames';
 
-import { basemapAtom } from 'store/explore-map';
+import { mapSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -16,12 +16,15 @@ export interface BasemapItemProps {
 }
 
 const BasemapItem = ({ label, value, preview }) => {
-  const basemap = useRecoilValue(basemapAtom);
-  const setBasemap = useSetRecoilState(basemapAtom);
+  const { basemap } = useRecoilValue(mapSettingsAtom);
+  const setMapSettings = useSetRecoilState(mapSettingsAtom);
 
   const handleToggleBasemap = useCallback(() => {
-    setBasemap(value);
-  }, [value, setBasemap]);
+    setMapSettings((prev) => ({
+      ...prev,
+      basemap: value,
+    }));
+  }, [value, setMapSettings]);
 
   return (
     <div className="flex items-center justify-between space-x-8 pr-1">
