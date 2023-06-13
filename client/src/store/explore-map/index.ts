@@ -58,16 +58,16 @@ export const mapSettingsAtom = atom({
   default: {
     basemap: 'basemap-light',
     labels: 'labels-dark',
-    boundaries: 'boundaries-dark',
-    roads: 'roads-dark',
+    boundaries: false,
+    roads: false,
   },
   effects: [
     urlSyncEffect({
       refine: object({
         basemap: string(),
         labels: string(),
-        boundaries: string(),
-        roads: string(),
+        boundaries: bool(),
+        roads: bool(),
       }),
     }),
   ],

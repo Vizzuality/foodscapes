@@ -121,6 +121,7 @@ const MapContainer = () => {
       <Link href="/" className="absolute top-5 left-5 z-10">
         <Image src="/images/logo-map.svg" alt="Logo" width={151} height={29} />
       </Link>
+
       <Map
         id={id}
         mapStyle="mapbox://styles/foodscapes/clisymb78003t01pncx558l3i"
@@ -138,8 +139,6 @@ const MapContainer = () => {
       >
         {() => (
           <>
-            <MapSettings />
-
             <LayerManager />
 
             <Controls />
@@ -148,6 +147,8 @@ const MapContainer = () => {
           </>
         )}
       </Map>
+
+      <MapSettings id={id} />
     </div>
   );
 };

@@ -26,6 +26,11 @@ export const LABELS = [
     label: 'Light labels',
     slug: 'labels-light',
   },
+  {
+    id: 'asdfasdfasdfasdf',
+    label: 'No labels',
+    slug: 'labels-none',
+  },
 ];
 
 export const BOUNDARIES = [

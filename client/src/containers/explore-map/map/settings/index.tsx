@@ -8,15 +8,16 @@ import { useRecoilValue } from 'recoil';
 
 import { AnyLayerWithMetadata } from 'types/map';
 
-const MapSettings = () => {
-  const { default: mapRef } = useMap();
+const MapSettings = ({ id }) => {
+  const { [id]: mapRef } = useMap();
   const { basemap, labels } = useRecoilValue(mapSettingsAtom);
 
   const handleBasemap = useCallback(
     (b) => {
+      if (!mapRef) return;
       const BASEMAP_GROUPS = ['basemap'];
       const map = mapRef.getMap();
-      const { layers, metadata } = map.getStyle();
+      const { layers, metadata } = mapRef.getStyle();
 
       const lys = layers as AnyLayerWithMetadata[];
 
@@ -56,9 +57,10 @@ const MapSettings = () => {
 
   const handleLabels = useCallback(
     (lbs) => {
+      if (!mapRef) return;
       const LABELS_GROUP = ['labels'];
       const map = mapRef.getMap();
-      const { layers, metadata } = map.getStyle();
+      const { layers, metadata } = mapRef.getStyle();
 
       const lys = layers as AnyLayerWithMetadata[];
 
@@ -92,13 +94,31 @@ const MapSettings = () => {
     [mapRef]
   );
 
-  useEffect(() => {
+  const handleStyleLoad = useCallback(() => {
     handleBasemap(basemap);
-  }, [basemap, handleBasemap]);
+    handleLabels(labels);
+  }, [basemap, labels, handleBasemap, handleLabels]);
 
   useEffect(() => {
-    handleLabels(labels);
-  }, [labels, handleLabels]);
+    if (!mapRef) return;
+    mapRef.on('style.load', handleStyleLoad);
+
+    return () => {
+      mapRef.off('style.load', handleStyleLoad);
+    };
+  }, [mapRef, handleStyleLoad]);
+
+  useEffect(() => {
+    if (!!mapRef && mapRef.loaded()) {
+      handleBasemap(basemap);
+    }
+  }, [mapRef, basemap, handleBasemap]);
+
+  useEffect(() => {
+    if (!!mapRef && mapRef.loaded()) {
+      handleLabels(labels);
+    }
+  }, [mapRef, labels, handleLabels]);
 
   // useEffect(() => {
   //   handleBoundaries(boundaries);
