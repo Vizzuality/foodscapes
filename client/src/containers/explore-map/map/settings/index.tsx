@@ -129,7 +129,7 @@ const MapSettings = ({ id }) => {
   const handleRoads = useCallback(
     (b: boolean) => {
       if (!mapRef) return;
-      const ROADS_GROUP = ['boundaries'];
+      const ROADS_GROUP = ['roads'];
       const map = mapRef.getMap();
       const { layers, metadata } = mapRef.getStyle();
 
@@ -162,7 +162,17 @@ const MapSettings = ({ id }) => {
     handleBasemap(basemap);
     handleLabels(labels);
     handleBoundaries(boundaries);
-  }, [basemap, labels, boundaries, handleBasemap, handleLabels, handleBoundaries]);
+    handleRoads(roads);
+  }, [
+    basemap,
+    labels,
+    boundaries,
+    roads,
+    handleBasemap,
+    handleLabels,
+    handleBoundaries,
+    handleRoads,
+  ]);
 
   // * handle style load
   useEffect(() => {

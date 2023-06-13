@@ -68,7 +68,7 @@ const Layers = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="absolute top-0 right-0 z-20 h-full min-w-[300px] overflow-y-auto overflow-x-hidden bg-white shadow-lg"
+          className="absolute top-0 right-0 z-20 h-full min-w-[400px] overflow-y-auto overflow-x-hidden bg-white shadow-lg"
           variants={sidebarVariants}
         >
           <div className="flex items-center justify-between p-6">

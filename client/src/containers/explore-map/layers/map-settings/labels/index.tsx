@@ -24,7 +24,7 @@ const Labels = () => {
   );
 
   return (
-    <RadioGroup value={labels} onValueChange={handleChange} className="space-y-1">
+    <RadioGroup value={labels} onValueChange={handleChange} className="gap-3">
       {LABELS.map((l) => (
         <div key={l.slug} className="group flex cursor-pointer items-center space-x-2">
           <RadioGroupItem value={l.slug} id={l.slug} />
