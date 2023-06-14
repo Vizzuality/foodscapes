@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import cn from 'lib/classnames';
 import { ScrollProvider } from 'lib/scroll';
 
@@ -5,7 +7,6 @@ import { lastStepAtom, stepAtom } from 'store/stories/gran-chaco';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useDebouncedCallback } from 'use-debounce';
 
 import { Media } from 'components/media-query';
 
@@ -42,10 +43,15 @@ const GranChaco = () => {
   const setStep = useSetRecoilState(stepAtom);
   const setLastStep = useSetRecoilState(lastStepAtom);
 
-  const onChange = useDebouncedCallback((id: number) => {
-    setLastStep(step);
-    setStep(id);
-  }, 100);
+  const onChange = useCallback(
+    (s) => {
+      if (s.data.step !== step) {
+        setLastStep(step);
+        setStep(s.data.step);
+      }
+    },
+    [setLastStep, setStep, step]
+  );
 
   return (
     <>
@@ -55,41 +61,23 @@ const GranChaco = () => {
             'w-full overflow-hidden': true,
           })}
         >
-          <ScrollItem step={0} onChange={onChange}>
-            <IntroHeroMobile />
-          </ScrollItem>
+          <IntroHeroMobile />
 
-          <ScrollItem step={1} onChange={onChange}>
-            <IntroHowMobile />
-          </ScrollItem>
+          <IntroHowMobile />
 
-          <ScrollItem step={2} onChange={onChange}>
-            <IntroRiskMobile />
-          </ScrollItem>
+          <IntroRiskMobile />
 
-          <ScrollItem step={3} onChange={onChange}>
-            <NatureBasedHeroMobile />
-          </ScrollItem>
+          <NatureBasedHeroMobile />
 
-          <ScrollItem step={4} onChange={onChange}>
-            <NatureBasedChart1Mobile />
-          </ScrollItem>
+          <NatureBasedChart1Mobile />
 
-          <ScrollItem step={5} onChange={onChange}>
-            <NatureBasedChart2Mobile />
-          </ScrollItem>
+          <NatureBasedChart2Mobile />
 
-          <ScrollItem step={6} onChange={onChange}>
-            <NatureBasedChart3Mobile />
-          </ScrollItem>
+          <NatureBasedChart3Mobile />
 
-          <ScrollItem step={7} onChange={onChange}>
-            <NatureBasedChart4Mobile />
-          </ScrollItem>
+          <NatureBasedChart4Mobile />
 
-          <ScrollItem step={8} onChange={onChange}>
-            <Outro />
-          </ScrollItem>
+          <Outro />
 
           <div className="fixed top-0 left-0 z-0 h-full w-full">
             <BackgroundMobile
@@ -160,40 +148,40 @@ const GranChaco = () => {
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        <ScrollProvider>
-          <ScrollItem step={0} onChange={onChange}>
+        <ScrollProvider onStepChange={onChange}>
+          <ScrollItem step={0}>
             <IntroHero />
           </ScrollItem>
 
-          <ScrollItem step={1} onChange={onChange}>
+          <ScrollItem step={1}>
             <IntroHow />
           </ScrollItem>
 
-          <ScrollItem step={2} onChange={onChange}>
+          <ScrollItem step={2}>
             <IntroRisk />
           </ScrollItem>
 
-          <ScrollItem step={3} onChange={onChange}>
+          <ScrollItem step={3}>
             <NatureBasedHero />
           </ScrollItem>
 
-          <ScrollItem step={4} onChange={onChange}>
+          <ScrollItem step={4}>
             <NatureBasedChart1 />
           </ScrollItem>
 
-          <ScrollItem step={5} onChange={onChange}>
+          <ScrollItem step={5}>
             <NatureBasedChart2 />
           </ScrollItem>
 
-          <ScrollItem step={6} onChange={onChange}>
+          <ScrollItem step={6}>
             <NatureBasedChart3 />
           </ScrollItem>
 
-          <ScrollItem step={7} onChange={onChange}>
+          <ScrollItem step={7}>
             <NatureBasedChart4 />
           </ScrollItem>
 
-          <ScrollItem step={8} onChange={onChange}>
+          <ScrollItem step={8}>
             <Outro />
           </ScrollItem>
 

@@ -12,7 +12,7 @@ const IMAGE_URL = 'images/meta/about.jpg';
 
 const HomePage = () => {
   return (
-    <RecoilRoot override={false}>
+    <RecoilRoot>
       <RecoilDevTools />
 
       <MetaTags
