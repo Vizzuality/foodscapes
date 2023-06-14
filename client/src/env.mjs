@@ -24,7 +24,7 @@ export const env = createEnv({
    * 💡 You'll get typeerrors if these are not prefixed with NEXT_PUBLIC_.
    */
   client: {
-    NEXT_PUBLIC_URL: z.string().url(),
+    NEXT_PUBLIC_URL: z.string().url().optional(),
     NEXT_PUBLIC_API_URL: z.string().url(),
     NEXT_PUBLIC_TITILER_API_URL: z.string().url(),
     NEXT_PUBLIC_MAPBOX_API_TOKEN: z.string(),
