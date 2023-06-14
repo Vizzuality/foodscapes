@@ -19,30 +19,7 @@ const DEFAULT_PROPS: CustomMapProps = {
   },
   minZoom: 0,
   maxZoom: 5,
-  mapStyle: 'mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz',
-  // mapStyle: {
-  //   version: 8,
-  //   name: 'Custom',
-  //   sources: {},
-  //   layers: [
-  //     {
-  //       id: 'custom-layers',
-  //       type: 'background',
-  //       paint: {
-  //         'background-color': '#000',
-  //         'background-opacity': 0,
-  //       },
-  //     },
-  //     {
-  //       id: 'background',
-  //       type: 'background',
-  //       paint: {
-  //         'background-color': '#000',
-  //         'background-opacity': 0.1,
-  //       },
-  //     },
-  //   ],
-  // },
+  mapStyle: 'mapbox://styles/foodscapes/clivj2bff00be01qyfvuq31hr',
 };
 
 const MapContainer = ({ currentId }) => {
