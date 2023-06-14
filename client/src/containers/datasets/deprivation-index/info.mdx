@@ -1,39 +1,42 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
+Relative Deprivation Index
 
 #### Geographic coverage
 Global
 
 #### Spatial resolution
-~5km
+~1 km
+
 
 #### Date of content
 November 2022
 
 ### Description
-The production of food is at the heart of global sustainability challenges, with unsustainable practices being a major driver of biodiversity loss, green-house gas emissions and land degradation. The concept of foodscapes, defined as the characteristics of food production along biophysical and socio-economic gradients, could provide an entry point into navigating this nexus. Here we provide a globally consistent approximation of the world’s foodscape classes through the integration of best available global data on biophysical and socio-economic factors so as to identify a minimum set of emergent clusters.
+The Global Gridded Relative Deprivation Index (GRDI), Version 1 (GRDIv1) data set characterizes the relative levels of multidimensional deprivation and poverty in each 30 arc-second (~1 km) pixel, where a value of 100 represents the highest level of deprivation and a value of 0 the lowest. GRDIv1 is built from sociodemographic and satellite data inputs that were spatially harmonized, indexed, and weighted into six main components to produce the final index raster. Inputs were selected from the best-available data that either continuously vary across space or have at least administrative level 1 (provincial/state) resolution, and which have global spatial coverage.
 
 ### Methodology
-Currently best available global spatial datasets on the biophysical and management properties of terrestrial food production systems were collated, harmonized and integrated. We then - in an unsupervised classification approach using self-organizing maps - used those datasets to identify global clusters or archetypes of units with similar properties of food production, coined ‘foodscapes’. We then labelled in expert-based assessment the obtained classes to identify broad classes of foodscapes that are comparable and consistent across biogeographic regions. Different clusters were produced for biophysical and management properties, which were finally intersected to produce the global foodscape layer with a total of 86 classes. More details on the methodology can be found in Jung et al. (2022).
+GRDIv1 has six input components, or dimensions, that are combined to determine the degree of relative deprivation.
+
+First, the Child Dependency Ratio (CDR) is defined as the ratio between the population of children (ages 0 to 14) to the working-age population (ages 15 to 64) where a higher ratio implies a higher dependency on the working population (UN DESA, 2006). CDR is interpreted as a dimension where higher dependency ratios, generally associated with younger age structures, imply higher relative deprivation.
+
+Second, Infant Mortality Rates (IMR), defined as the number of deaths in children under 1 year of age per 1,000 live births in the same year, is a common indicator of population health (Reidpath and Allotey, 2003; Schell et al., 2007). Higher IMRs imply higher deprivation.
+
+Third, the Subnational Human Development Index (SHDI) attempts to assess human well-being through a combination of three dimensions: education, health, and standard of living (Smits and Permanyer, 2019). Lower SHDIs imply higher deprivation.
+
+Fourth, global rural populations are more likely to experience a higher degree of multidimensional poverty when compared to urban populations, other things being equal (Castañeda et al., 2018; Laborde Debucquet and Martin, 2018; Lee and Kind, 2021; UN DESA, 2021; UNDP and OPHI, 2020). Therefore, the ratio of built-up area to non-built-up area (BUILT) is considered a dimension where low values imply higher deprivation. The final two dimensions relate to the intensity of nighttime lights, which is closely associated with anthropogenic activities, economic output, and infrastructure development (Elvidge et al., 2007; Ghosh et al., 2013; Lu et al., 2021; Small et al., 2013).
+
+For the fifth component, the average intensity of nighttime lights for the year 2020 (Visible Infrared Imaging Radiometer Suite [VIIRS] Night Lights (VNL) 2020) is interpreted as a dimension where lower values imply higher deprivation. And for the sixth component, the slope of linear regression was calculated from annual VNL data between 2012 and 2020 (VNL slope) where higher values (increasing brightness) imply decreasing deprivation and lower values (decreasing brightness) imply increasing deprivation.
 
 ### Citation
-Jung, Martin, Timothy M. Boucher, Stephen Wood, Christian Folberth, Michael Wironen, Philip Thornton, Deborah Bossio & Michael Obersteiner 2022. “A Global Clustering of Terrestrial Food Production Systems.” OSF Preprints. November 1. https://dx.doi.org/10.31219/osf.io/puyzw
+Center for International Earth Science Information Network (CIESIN), Columbia University. 2022. Global Gridded Relative Deprivation Index (GRDI), Version 1. Palisades, New York: NASA Socioeconomic Data and Applications Center (SEDAC). https://doi.org/10.7927/3xxe-ap97.
 
 ### Sources
-M. Buchhorn, M. Lesiv, N. Tsendbazar, M. Herold, L. Bertels, B. Smets, Copernicus Global Land Cover Layers—Collection 2. Remote Sensing. 12, 1044 (2020)
+National Aeronautics and Space Administration (NASA)
+Socioeconomic Data and Applications Center (SEDAC)
+Center for International Earth Science Information Network (CIESIN)
 
-T. Hengl, T. Nauman, Predicted USDA soil orders at 250 m (probabilities) (2019), , doi:10.5281/zenodo.2658183.
-
-M. Lesiv, D. Schepaschenko, M. Buchhorn, L. See, M. Dürauer, I. Georgieva, M. Jung, F. Hofhansl, K. Schulze, A. Bilous, V. Blyshchyk, L. Mukhortova, C. L. M. Brenes, L. Krivobokov, S. Ntie, K. Tsogt, S. A. Pietsch, E. Tikhonova, M. Kim, F. Di Fulvio, Y.-F. Su, R. Zadorozhniuk, F. S. Sirbu, K. Panging, S. Bilous, S. B. Kovalevskii, F. Kraxner, A. H. Rabia, R. Vasylyshyn, R. Ahmed, P. Diachuk, S. S. Kovalevskyi, K. Bungnamei, K. Bordoloi, A. Churilov, O. Vasylyshyn, D. Sahariah, A. P. Tertyshnyi, A. Saikia, Ž. Malek, K. Singha, R. Feshchenko, R. Prestele, I. ul H. Akhtar, K. Sharma, G. Domashovets, S. A. Spawn-Lee, O. Blyshchyk, O. Slyva, M. Ilkiv, O. Melnyk, V. Sliusarchuk, A. Karpuk, A. Terentiev, V. Bilous, K. Blyshchyk, M. Bilous, N. Bogovyk, I. Blyshchyk, S. Bartalev, M. Yatskov, B. Smets, P. Visconti, I. Mccallum, M. Obersteiner, S. Fritz, Global forest management data for 2015 at a 100 m resolution. Scientific Data. 9, 199 (2022).
-
-S. Fritz, L. See, I. a N. Mccallum, L. You, A. Bun, E. Moltchanova, M. Duerauer, F. Albrecht, C. Schill, C. Perger, P. Havlik, A. Mosnier, P. Thornton, U. Wood-Sichra, M. Herrero, I. Becker-, I. Becker-Reshef, C. Justice, M. Hansen, P. Gong, S. Abdel Aziz, A. Cipriani, R. Cumani, G. Cecchi, G. Conchedda, S. Ferreira, A. Gomez, M. Haffani, F. Kayitakire, J. Malanding, R. Mueller, T. Newby, A. Nonguierma, A. Olusegun, S. Ortner, D. R. Rajak, J. Rocha, D. Schepaschenko, M. Schepaschenko, A. Terekhov, A. Tiangwa, C. Vancutsem, E. Vintrou, W. Wenbin, M. van der Velde, A. Dunwoody, F. Kraxner, M. Obersteiner, Mapping global cropland and field size. Global Change Biology. 21, 1980–1992 (2015).
-
-M. Gilbert, G. Nicolas, G. Cinardi, T. P. Van Boeckel, S. O. Vanwambeke, G. R. W. Wint, T. P. Robinson, Global distribution data for cattle, buffaloes, horses, sheep, goats, pigs, chickens and ducks in 2010. Scientific Data. 5, 180227 (2018).
-
-V. Porwollik, S. Rolinski, C. Müller, A global gridded data set on tillage (V. 1.1). GFZ Data Services. 10 (2018).
-
-And many others. See Supplementary Materials of Jung et al. (2022).
 
 ### License
 CC BY 4.0

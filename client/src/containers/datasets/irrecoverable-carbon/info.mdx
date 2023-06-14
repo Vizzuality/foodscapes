@@ -1,39 +1,34 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 
 #### Geographic coverage
 Global
 
 #### Spatial resolution
-~5km
+300 m resampled to ~600 m for display purposes
 
 #### Date of content
-November 2022
+2018
 
 ### Description
-The production of food is at the heart of global sustainability challenges, with unsustainable practices being a major driver of biodiversity loss, green-house gas emissions and land degradation. The concept of foodscapes, defined as the characteristics of food production along biophysical and socio-economic gradients, could provide an entry point into navigating this nexus. Here we provide a globally consistent approximation of the world’s foodscape classes through the integration of best available global data on biophysical and socio-economic factors so as to identify a minimum set of emergent clusters.
+Irrecoverable Carbon 2018 (t/ha) (v1.0) Irrecoverable carbon refers to the vast stores of carbon in nature that are vulnerable to release from human activity and, if lost, could not be restored by 2050 — when the world must reach net-zero emissions to avoid the worst impacts of climate change. This layer shows tonnes of irrecoverable carbon per hectare in both biomass and soils.
 
 ### Methodology
-Currently best available global spatial datasets on the biophysical and management properties of terrestrial food production systems were collated, harmonized and integrated. We then - in an unsupervised classification approach using self-organizing maps - used those datasets to identify global clusters or archetypes of units with similar properties of food production, coined ‘foodscapes’. We then labelled in expert-based assessment the obtained classes to identify broad classes of foodscapes that are comparable and consistent across biogeographic regions. Different clusters were produced for biophysical and management properties, which were finally intersected to produce the global foodscape layer with a total of 86 classes. More details on the methodology can be found in Jung et al. (2022).
+Irrecoverable carbon in ecosystems is defined by three criteria: (1) it can be influenced by direct and local human action (‘manageability’), (2) it is potentially vulnerable to lose during land-use conversion (‘vulnerability’) and (3) if lost, it could not be recovered within a specified timeframe (‘recoverability’). Here, we consider recoverability over 30 yr given the IPCC assessment that global emissions must reach net-zero by 2050 to limit global warming to 1.5 °C above pre-industrial levels.
+To create the irrecoverable carbon map, were:
+1. Defined relevant ecosystems that meet criteria 1, manageability.
+2. Created a ‘total manageable carbon’ map for terrestrial and coastal ecosystems. This includes aboveground biomass carbon (AGC), belowground biomass carbon (BGC) and soil organic carbon (SOC) stocks.
+3. Created a ‘vulnerable carbon’ map that considers the portion of biomass carbon (AGC + BGC) and SOC, respectively, that would be released in a typical land-use conversion. The most common drivers of recent destruction/loss in each major ecosystem were used.
+4. Determined the amount of lost carbon that could be recovered within 30 yr following a conversion, assuming land abandonment and natural regeneration. Recoverability was based on biomass and SOC sequestration rates by ecosystem.
+5. Subtracted ‘recoverable carbon’ from the ‘vulnerable carbon’ map. The balance was the ‘irrecoverable carbon’ map.
 
 ### Citation
-Jung, Martin, Timothy M. Boucher, Stephen Wood, Christian Folberth, Michael Wironen, Philip Thornton, Deborah Bossio & Michael Obersteiner 2022. “A Global Clustering of Terrestrial Food Production Systems.” OSF Preprints. November 1. https://dx.doi.org/10.31219/osf.io/puyzw
+Noon, M.L., Goldstein, A., Ledezma, J.C. et al. Mapping the irrecoverable carbon in Earth’s ecosystems. Nat Sustain 5, 37–46 (2022). https://doi.org/10.1038/s41893-021-00803-6
 
 ### Sources
-M. Buchhorn, M. Lesiv, N. Tsendbazar, M. Herold, L. Bertels, B. Smets, Copernicus Global Land Cover Layers—Collection 2. Remote Sensing. 12, 1044 (2020)
+Conservation International
 
-T. Hengl, T. Nauman, Predicted USDA soil orders at 250 m (probabilities) (2019), , doi:10.5281/zenodo.2658183.
-
-M. Lesiv, D. Schepaschenko, M. Buchhorn, L. See, M. Dürauer, I. Georgieva, M. Jung, F. Hofhansl, K. Schulze, A. Bilous, V. Blyshchyk, L. Mukhortova, C. L. M. Brenes, L. Krivobokov, S. Ntie, K. Tsogt, S. A. Pietsch, E. Tikhonova, M. Kim, F. Di Fulvio, Y.-F. Su, R. Zadorozhniuk, F. S. Sirbu, K. Panging, S. Bilous, S. B. Kovalevskii, F. Kraxner, A. H. Rabia, R. Vasylyshyn, R. Ahmed, P. Diachuk, S. S. Kovalevskyi, K. Bungnamei, K. Bordoloi, A. Churilov, O. Vasylyshyn, D. Sahariah, A. P. Tertyshnyi, A. Saikia, Ž. Malek, K. Singha, R. Feshchenko, R. Prestele, I. ul H. Akhtar, K. Sharma, G. Domashovets, S. A. Spawn-Lee, O. Blyshchyk, O. Slyva, M. Ilkiv, O. Melnyk, V. Sliusarchuk, A. Karpuk, A. Terentiev, V. Bilous, K. Blyshchyk, M. Bilous, N. Bogovyk, I. Blyshchyk, S. Bartalev, M. Yatskov, B. Smets, P. Visconti, I. Mccallum, M. Obersteiner, S. Fritz, Global forest management data for 2015 at a 100 m resolution. Scientific Data. 9, 199 (2022).
-
-S. Fritz, L. See, I. a N. Mccallum, L. You, A. Bun, E. Moltchanova, M. Duerauer, F. Albrecht, C. Schill, C. Perger, P. Havlik, A. Mosnier, P. Thornton, U. Wood-Sichra, M. Herrero, I. Becker-, I. Becker-Reshef, C. Justice, M. Hansen, P. Gong, S. Abdel Aziz, A. Cipriani, R. Cumani, G. Cecchi, G. Conchedda, S. Ferreira, A. Gomez, M. Haffani, F. Kayitakire, J. Malanding, R. Mueller, T. Newby, A. Nonguierma, A. Olusegun, S. Ortner, D. R. Rajak, J. Rocha, D. Schepaschenko, M. Schepaschenko, A. Terekhov, A. Tiangwa, C. Vancutsem, E. Vintrou, W. Wenbin, M. van der Velde, A. Dunwoody, F. Kraxner, M. Obersteiner, Mapping global cropland and field size. Global Change Biology. 21, 1980–1992 (2015).
-
-M. Gilbert, G. Nicolas, G. Cinardi, T. P. Van Boeckel, S. O. Vanwambeke, G. R. W. Wint, T. P. Robinson, Global distribution data for cattle, buffaloes, horses, sheep, goats, pigs, chickens and ducks in 2010. Scientific Data. 5, 180227 (2018).
-
-V. Porwollik, S. Rolinski, C. Müller, A global gridded data set on tillage (V. 1.1). GFZ Data Services. 10 (2018).
-
-And many others. See Supplementary Materials of Jung et al. (2022).
 
 ### License
 CC BY 4.0
