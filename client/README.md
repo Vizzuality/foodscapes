@@ -80,6 +80,7 @@ Here's a step by step guide on how to address vulnerabilities found in productio
 
 | Variable name           | Description                                                             |  Default value                      |
 |-------------------------|-------------------------------------------------------------------------|------------------------------------:|
+| NEXT_PUBLIC_URL  | URL of the frontend app. | http://localhost:3200 when running in Docker Compose   |
 | NEXT_PUBLIC_API_URL  | URL of the API. | http://localhost:5000   |
 | NEXT_PUBLIC_TITILER_API_URL  | URL of the titiler API. | http://localhost:5001   |
 | NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. |    |
