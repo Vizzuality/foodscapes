@@ -64,7 +64,8 @@ resource "aws_cloudwatch_log_group" "service" {
 }
 
 resource "aws_lb_target_group" "service" {
-  name_prefix = "${substr(var.name, 0, 3)}-"
+  # prepend "p-" when environment is production
+  name_prefix = var.environment == "production" ? "p-${substr(var.name, 0, 3)}-" : "${substr(var.name, 0, 3)}-"
   target_type = "ip"
   port        = 3000
   protocol    = "HTTP"

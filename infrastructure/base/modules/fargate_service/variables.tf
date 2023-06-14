@@ -3,6 +3,11 @@ variable "name" {
   description = "The name of the Fargate service"
 }
 
+variable "environment" {
+  type        = string
+  description = "The environment to deploy to (staging or production)"
+}
+
 variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the execution role for the Fargate service"
