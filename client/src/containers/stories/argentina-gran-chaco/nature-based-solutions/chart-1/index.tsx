@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-import { stepAtom } from 'store/home';
+import { stepAtom } from 'store/stories/gran-chaco';
 
 import { ParentSize } from '@visx/responsive';
 import { motion, AnimatePresence } from 'framer-motion';

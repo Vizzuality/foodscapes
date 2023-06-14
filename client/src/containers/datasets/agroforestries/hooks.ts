@@ -109,6 +109,7 @@ export function useLayer({ settings }: UseAgroforestriesLayerProps): AnyLayer {
       type: 'raster',
       paint: {
         'raster-opacity': settings.opacity ?? 1,
+        'raster-resampling': 'nearest',
       },
       layout: {
         visibility: visibility ? 'visible' : 'none',
