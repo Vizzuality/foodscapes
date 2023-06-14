@@ -53,6 +53,26 @@ export const basemapAtom = atom({
   ],
 });
 
+export const mapSettingsAtom = atom({
+  key: 'map-settings',
+  default: {
+    basemap: 'basemap-light',
+    labels: 'labels-dark',
+    boundaries: false,
+    roads: false,
+  },
+  effects: [
+    urlSyncEffect({
+      refine: object({
+        basemap: string(),
+        labels: string(),
+        boundaries: bool(),
+        roads: bool(),
+      }),
+    }),
+  ],
+});
+
 export const layersAtom = atom<Dataset['id'][]>({
   key: 'layers',
   default: ['foodscapes'],

@@ -72,7 +72,7 @@ const Menu = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="fixed top-0 right-0 z-40 h-full w-full max-w-[300px] bg-white shadow-lg"
+          className="fixed top-0 right-0 z-40 h-full w-full max-w-[400px] bg-white shadow-lg"
           variants={sidebarVariants}
         >
           <div className="flex h-full flex-col justify-between space-y-10">

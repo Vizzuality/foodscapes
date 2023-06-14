@@ -11,8 +11,8 @@ import Icon from 'components/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
-import Basemaps from './basemaps';
 import LayersGroup from './layers-group';
+import MapSettings from './map-settings';
 
 const Layers = () => {
   const layersOpen = useRecoilValue(layersOpenAtom);
@@ -68,7 +68,7 @@ const Layers = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="absolute top-0 right-0 z-20 h-full min-w-[300px] overflow-y-auto overflow-x-hidden bg-white shadow-lg"
+          className="absolute top-0 right-0 z-20 h-full min-w-[400px] overflow-y-auto overflow-x-hidden bg-white shadow-lg"
           variants={sidebarVariants}
         >
           <div className="flex items-center justify-between p-6">
@@ -89,7 +89,7 @@ const Layers = () => {
           </div>
 
           <div className="space-y-8">
-            <Basemaps />
+            <MapSettings />
             <LayersGroup name="Foodscapes" group="foodscapes" />
             <LayersGroup name="Risks" group="risks" />
             <LayersGroup name="Opportunities" group="opportunities" />

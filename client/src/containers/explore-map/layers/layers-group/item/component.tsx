@@ -45,7 +45,7 @@ const LayerItem = (props: Dataset) => {
         'pointer-events-none opacity-25': !layer.enabled,
       })}
     >
-      <div className="flex grow">
+      <div className="flex grow space-x-2">
         <Checkbox
           id={id}
           checked={layers.includes(id)}
@@ -57,7 +57,7 @@ const LayerItem = (props: Dataset) => {
         <label
           htmlFor={id}
           className={cn({
-            'cursor-pointer pl-3 text-sm font-light text-navy-500 transition-colors': true,
+            'cursor-pointer text-sm font-light text-navy-500 transition-colors': true,
             'group-hover:text-navy-400': true,
           })}
         >
