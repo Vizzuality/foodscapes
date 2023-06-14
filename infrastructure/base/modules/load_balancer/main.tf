@@ -47,7 +47,7 @@ resource "aws_security_group" "ecs_tasks" {
 }
 
 resource "aws_lb" "load_balancer" {
-  name               = "alb"
+  name               = "alb-${var.environment}"
   subnets            = var.vpc_public_subnet_ids
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]
