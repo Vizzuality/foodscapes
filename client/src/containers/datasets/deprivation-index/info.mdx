@@ -1,6 +1,6 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 Relative Deprivation Index
 
 #### Geographic coverage
@@ -15,11 +15,23 @@ November 2022
 
 ### Description
 The Global Gridded Relative Deprivation Index (GRDI), Version 1 (GRDIv1) data set characterizes the relative levels of multidimensional deprivation and poverty in each 30 arc-second (~1 km) pixel, where a value of 100 represents the highest level of deprivation and a value of 0 the lowest. GRDIv1 is built from sociodemographic and satellite data inputs that were spatially harmonized, indexed, and weighted into six main components to produce the final index raster. Inputs were selected from the best-available data that either continuously vary across space or have at least administrative level 1 (provincial/state) resolution, and which have global spatial coverage.
+
 ### Methodology
-GRDIv1 has six input components, or dimensions, that are combined to determine the degree of relative deprivation. First, the Child Dependency Ratio (CDR) is defined as the ratio between the population of children (ages 0 to 14) to the working-age population (ages 15 to 64) where a higher ratio implies a higher dependency on the working population (UN DESA, 2006). CDR is interpreted as a dimension where higher dependency ratios, generally associated with younger age structures, imply higher relative deprivation. Second, Infant Mortality Rates (IMR), defined as the number of deaths in children under 1 year of age per 1,000 live births in the same year, is a common indicator of population health (Reidpath and Allotey, 2003; Schell et al., 2007). Higher IMRs imply higher deprivation. Third, the Subnational Human Development Index (SHDI) attempts to assess human well-being through a combination of three dimensions: education, health, and standard of living (Smits and Permanyer, 2019). Lower SHDIs imply higher deprivation. Fourth, global rural populations are more likely to experience a higher degree of multidimensional poverty when compared to urban populations, other things being equal (Castañeda et al., 2018; Laborde Debucquet and Martin, 2018; Lee and Kind, 2021; UN DESA, 2021; UNDP and OPHI, 2020). Therefore, the ratio of built-up area to non-built-up area (BUILT) is considered a dimension where low values imply higher deprivation. The final two dimensions relate to the intensity of nighttime lights, which is closely associated with anthropogenic activities, economic output, and infrastructure development (Elvidge et al., 2007; Ghosh et al., 2013; Lu et al., 2021; Small et al., 2013). For the fifth component, the average intensity of nighttime lights for the year 2020 (Visible Infrared Imaging Radiometer Suite [VIIRS] Night Lights (VNL) 2020) is interpreted as a dimension where lower values imply higher deprivation. And for the sixth component, the slope of linear regression was calculated from annual VNL data between 2012 and 2020 (VNL slope) where higher values (increasing brightness) imply decreasing deprivation and lower values (decreasing brightness) imply increasing deprivation.
+GRDIv1 has six input components, or dimensions, that are combined to determine the degree of relative deprivation.
+
+First, the Child Dependency Ratio (CDR) is defined as the ratio between the population of children (ages 0 to 14) to the working-age population (ages 15 to 64) where a higher ratio implies a higher dependency on the working population (UN DESA, 2006). CDR is interpreted as a dimension where higher dependency ratios, generally associated with younger age structures, imply higher relative deprivation.
+
+Second, Infant Mortality Rates (IMR), defined as the number of deaths in children under 1 year of age per 1,000 live births in the same year, is a common indicator of population health (Reidpath and Allotey, 2003; Schell et al., 2007). Higher IMRs imply higher deprivation.
+
+Third, the Subnational Human Development Index (SHDI) attempts to assess human well-being through a combination of three dimensions: education, health, and standard of living (Smits and Permanyer, 2019). Lower SHDIs imply higher deprivation.
+
+Fourth, global rural populations are more likely to experience a higher degree of multidimensional poverty when compared to urban populations, other things being equal (Castañeda et al., 2018; Laborde Debucquet and Martin, 2018; Lee and Kind, 2021; UN DESA, 2021; UNDP and OPHI, 2020). Therefore, the ratio of built-up area to non-built-up area (BUILT) is considered a dimension where low values imply higher deprivation. The final two dimensions relate to the intensity of nighttime lights, which is closely associated with anthropogenic activities, economic output, and infrastructure development (Elvidge et al., 2007; Ghosh et al., 2013; Lu et al., 2021; Small et al., 2013).
+
+For the fifth component, the average intensity of nighttime lights for the year 2020 (Visible Infrared Imaging Radiometer Suite [VIIRS] Night Lights (VNL) 2020) is interpreted as a dimension where lower values imply higher deprivation. And for the sixth component, the slope of linear regression was calculated from annual VNL data between 2012 and 2020 (VNL slope) where higher values (increasing brightness) imply decreasing deprivation and lower values (decreasing brightness) imply increasing deprivation.
 
 ### Citation
 Center for International Earth Science Information Network (CIESIN), Columbia University. 2022. Global Gridded Relative Deprivation Index (GRDI), Version 1. Palisades, New York: NASA Socioeconomic Data and Applications Center (SEDAC). https://doi.org/10.7927/3xxe-ap97.
+
 ### Sources
 National Aeronautics and Space Administration (NASA)
 Socioeconomic Data and Applications Center (SEDAC)

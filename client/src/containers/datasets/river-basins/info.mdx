@@ -1,6 +1,6 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# {props.label}
 Hydrological basins of the world
 
 #### Geographic coverage
@@ -11,15 +11,16 @@ NA
 
 #### Date of content
 2013
+
 ### Description
 The HydroBASINS dataset depicts watershed boundaries and sub-basin delineations at a global scale.
 A watershed is an area of land that drains all surface and groundwater to a common body of water.
+
 The boundaries of watersheds provide important geospatial units for many applications,
 but at a global scale there is a lack of high-quality sources for watershed mapping and analysis.
-The HydroBasins dataset is part of the HydroSHEDS database
-([Hydrological data and maps based on SHuttle Elevation Derivatives](http://www.hydrosheds.org/))
-which provides hydrographic data layers
-that allow for the derivation of watershed boundaries for any given location based on the near-global,
+
+The HydroBasins dataset is part of the HydroSHEDS database ([Hydrological data and maps based on SHuttle Elevation Derivatives](http://www.hydrosheds.org/))
+which provides hydrographic data layers that allow for the derivation of watershed boundaries for any given location based on the near-global,
 high-resolution [Shuttle Radar Topology Mission](https://www2.jpl.nasa.gov/srtm/) digital elevation model.
 
 Foodscapes shows only a subset of the data set.
@@ -29,17 +30,21 @@ All HydroBASINS layers were derived from World Wildlife Fund’s HydroSHEDS data
 (approximately 500 m x 500 m at the equator but changes with distance from the equator.).
 An important characteristic of any sub-basin delineation is the sub-basin breakdown,
 i.e. the decision of when and how to subdivide a larger basin into multiple tributary basins.
+
 Standard GIS tools offer the possibility to break out sub-watersheds at any confluence where the inflowing branches
 (i.e., a tributary and its main stem) exceed a certain size threshold,
 typically measured by the number of upstream pixels or the upstream catchment area.
+
 HydroBASINS divides a basin into two sub-basins at every location where two river branches meet which each have an individual upstream area of at least 100 km².
 A second critical feature of sub-basin delineations is the way the sub-basins are grouped or coded
 to allow for the breakout of nested sub-basins at different scales,
 or to navigate within the sub-basin network from up- to downstream.
+
 One of the easiest methods for navigation is to provide the ID of the next downstream object,
 which allows for moving from object to object in order to traverse the network.
 As for nesting and topological concepts, the ‘Pfafstetter’
 coding system is frequently used due to its relative simplicity and ease of application.
+
 The basic principle of the Pfafstetter coding is that a larger basin is sequentially subdivided into 9 smaller units
 (the 4 largest tributaries, coded with even numbers, and the 5 inter-basins, coded with odd numbers).
 Thus,
