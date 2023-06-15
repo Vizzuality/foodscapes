@@ -5,14 +5,14 @@
     "family": "client",
     "containerDefinitions": [
         {
-            "name": "client",
+            "name": "${CONTAINER_NAME}",
             "image": "",
             "essential": true,
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
-                "awslogs-group": "client",
+                "awslogs-group": "${CONTAINER_NAME}",
                 "awslogs-stream-prefix": "client"
                 }
             },

@@ -5,14 +5,14 @@
     "family": "datasette",
     "containerDefinitions": [
         {
-            "name": "datasette",
+            "name": "${CONTAINER_NAME}",
             "image": "",
             "essential": true,
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
-                "awslogs-group": "datasette",
+                "awslogs-group": "${CONTAINER_NAME}",
                 "awslogs-stream-prefix": "datasette"
                 }
             },

@@ -50,6 +50,7 @@ jobs:
         env:
           AWS_ECS_EXECUTION_ROLE_ARN: ${{ vars.AWS_ECS_EXECUTION_ROLE_ARN }}
           AWS_REGION: ${{ env.AWS_REGION }}
+          CONTAINER_NAME: ${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
         run: |
           envsubst < ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json.tpl > ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
 
@@ -105,8 +106,8 @@ jobs:
           CONTAINER_NAME: ${{ env.REPOSITORY }}
         with:
           task-definition: ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.REPOSITORY }}:edge
+          container-name: ${{ env.CONTAINER_NAME }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}:edge
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
