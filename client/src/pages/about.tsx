@@ -1,4 +1,5 @@
 import About from 'containers/about';
+import MetaIcons from 'containers/meta-icons';
 import MetaTags from 'containers/meta-tags';
 
 const TITLE_TEXT = 'About Foodscapes | Regenerative Food Systems for People and Nature';
@@ -15,6 +16,7 @@ const AboutPage: React.FC = () => {
         type="website"
         imageURL={IMAGE_URL}
       />
+      <MetaIcons />
 
       <About />
     </div>
