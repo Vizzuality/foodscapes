@@ -61,7 +61,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{env.ECR_REGISTRY}}/${{env.REPOSITORY}}
+            ${{env.ECR_REGISTRY}}/${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
@@ -92,9 +92,9 @@ jobs:
             DATA_DEPRIVATION_INDEX_COG_CHECKSUM=${{ vars.DATA_DEPRIVATION_INDEX_COG_CHECKSUM }}
             TILER_ROOT_PATH=${{ vars.TILER_ROOT_PATH }}
             TILER_CORS_ORIGINS_REGEX=${{ vars.TILER_CORS_ORIGINS_REGEX }}
-            APP_NEXT_PUBLIC_URL=${{ github.ref != 'refs/heads/production' && vars.APP_NEXT_PUBLIC_URL_STAGING || vars.APP_NEXT_PUBLIC_URL_PRODUCTION }}
-            APP_NEXT_PUBLIC_API_URL=${{ vars.APP_NEXT_PUBLIC_API_URL }}
-            APP_NEXT_PUBLIC_TITILER_API_URL=${{ vars.APP_NEXT_PUBLIC_TITILER_API_URL }}
+            APP_NEXT_PUBLIC_URL=${{ github.ref != 'refs/heads/production' && vars.APP_STAGING_NEXT_PUBLIC_URL || vars.APP_PRODUCTION_NEXT_PUBLIC_URL }}
+            APP_NEXT_PUBLIC_API_URL=${{ github.ref != 'refs/heads/production' && vars.APP_STAGING_NEXT_PUBLIC_API_URL || vars.APP_PRODUCTION_NEXT_PUBLIC_API_URL }}
+            APP_NEXT_PUBLIC_TITILER_API_URL=${{ github.ref != 'refs/heads/production' && vars.APP_STAGING_NEXT_PUBLIC_TITILER_API_URL || vars.APP_PRODUCTION_NEXT_PUBLIC_TITILER_API_URL }}
             APP_NEXT_PUBLIC_MAPBOX_API_TOKEN=${{ vars.APP_NEXT_PUBLIC_MAPBOX_API_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
 
@@ -112,6 +112,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.REPOSITORY }}
-          cluster: ${{ env.AWS_ECS_CLUSTER }}
+          service: ${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
+          cluster: ${{ env.AWS_ECS_CLUSTER }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
           wait-for-service-stability: true
