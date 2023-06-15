@@ -3,6 +3,7 @@ import RecoilDevTools from 'lib/recoil/devtools';
 import { RecoilRoot } from 'recoil';
 
 import Home from 'containers/home';
+import MetaIcons from 'containers/meta-icons';
 import MetaTags from 'containers/meta-tags';
 
 const TITLE_TEXT = 'Foodscapes | Regenerative Food Systems for People and Nature';
@@ -22,6 +23,8 @@ const HomePage = () => {
         type="website"
         imageURL={IMAGE_URL}
       />
+
+      <MetaIcons />
 
       <Home />
     </RecoilRoot>

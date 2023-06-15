@@ -1,3 +1,4 @@
+import MetaIcons from 'containers/meta-icons';
 import MetaTags from 'containers/meta-tags';
 
 const TITLE_TEXT = 'Privacy Policy | Regenerative Food Systems for People and Nature';
@@ -13,6 +14,7 @@ const Home: React.FC = () => (
       type="website"
       imageURL={IMAGE_URL}
     />
+    <MetaIcons />
     <h1>Privacy policy</h1>
   </div>
 );

@@ -3,6 +3,7 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import env from 'env.mjs';
 export interface MetaTagsProps {
   title: string;
   description: string;
@@ -15,8 +16,8 @@ const getBaseUrl = () => {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
 
-  if (process.env.NEXT_PUBLIC_URL) {
-    return process.env.NEXT_PUBLIC_URL;
+  if (env.NEXT_PUBLIC_URL) {
+    return env.NEXT_PUBLIC_URL;
   }
 
   return 'http://localhost:3000';

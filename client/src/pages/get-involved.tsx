@@ -1,5 +1,6 @@
 // import GetInvolved from 'containers/about';
 
+import MetaIcons from 'containers/meta-icons';
 import MetaTags from 'containers/meta-tags';
 
 const TITLE_TEXT = 'Get Involved | Regenerative Food Systems for People and Nature';
@@ -16,6 +17,7 @@ const GetInvolvedPage: React.FC = () => {
         type="website"
         imageURL={IMAGE_URL}
       />
+      <MetaIcons />
       <h1 className="text-6xl">Get Involved</h1>
     </div>
   );
