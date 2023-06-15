@@ -2,6 +2,7 @@ import RecoilDevTools from 'lib/recoil/devtools';
 
 import { RecoilRoot } from 'recoil';
 
+import MetaIcons from 'containers/meta-icons';
 import MetaTags from 'containers/meta-tags/component';
 import Home from 'containers/stories/argentina-gran-chaco';
 
@@ -21,6 +22,7 @@ const HomePage = () => {
         type="website"
         imageURL={IMAGE_URL}
       />
+      <MetaIcons />
 
       <Home />
     </RecoilRoot>

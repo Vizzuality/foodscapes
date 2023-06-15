@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil';
 import LayoutMap from 'layouts/map';
 
 import ExploreMap from 'containers/explore-map';
+import MetaIcons from 'containers/meta-icons';
 import MetaTags from 'containers/meta-tags';
 
 const TITLE_TEXT = 'Foodscapes Map | Regenerative Food Systems for People and Nature';
@@ -46,6 +47,7 @@ const ExploreMapPage = () => {
           type="website"
           imageURL={IMAGE_URL}
         />
+        <MetaIcons />
 
         <ExploreMap />
       </RecoilURLSyncNext>
