@@ -72,6 +72,6 @@ resource "aws_lb_target_group" "service" {
   vpc_id      = var.vpc_id
 
   health_check {
-    path = var.name == "tiler" ? "/healthz" : "/"
+    path = startswith(var.name, "tiler") ? "/healthz" : "/"
   }
 }
