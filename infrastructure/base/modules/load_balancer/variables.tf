@@ -4,6 +4,11 @@ variable "tags" {
   description = "A mapping of keys and values to apply as tags to all resources that support them."
 }
 
+variable "environment" {
+  type        = string
+  description = "The environment to deploy to (staging or production)"
+}
+
 variable "vpc_id" {
   type = string
   description = "The ID of the VPC."

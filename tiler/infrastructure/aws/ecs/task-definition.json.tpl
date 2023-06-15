@@ -5,14 +5,14 @@
     "family": "tiler",
     "containerDefinitions": [
         {
-            "name": "tiler",
+            "name": "${CONTAINER_NAME}",
             "image": "",
             "essential": true,
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
                 "awslogs-region": "${AWS_REGION}",
-                "awslogs-group": "tiler",
+                "awslogs-group": "${CONTAINER_NAME}",
                 "awslogs-stream-prefix": "tiler"
                 }
             },
