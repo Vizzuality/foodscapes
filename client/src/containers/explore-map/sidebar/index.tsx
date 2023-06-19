@@ -2,6 +2,7 @@ import { useMemo, useRef } from 'react';
 
 import Link from 'next/link';
 
+import { GAEvent } from 'lib/analytics/ga';
 import cn from 'lib/classnames';
 
 import { caseStudyAtom, sidebarOpenAtom, tabAtom } from 'store/explore-map';
@@ -40,6 +41,17 @@ const Sidebar = () => {
     }
   }, [tab, caseStudy]);
 
+  const handleTabChange = (value: string) => {
+    setTab(value);
+
+    GAEvent({
+      action: 'tab_selected',
+      params: {
+        type: value,
+      },
+    });
+  };
+
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -67,7 +79,7 @@ const Sidebar = () => {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className="pointer-events-auto fixed left-0 top-0 h-full w-full max-w-[640px] bg-white"
         >
-          <Tabs value={tab} onValueChange={setTab} asChild>
+          <Tabs value={tab} onValueChange={handleTabChange} asChild>
             <div
               ref={scrollRef}
               className="flex h-full grow flex-col overflow-y-auto overflow-x-hidden"
