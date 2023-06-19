@@ -86,6 +86,8 @@ Here's a step by step guide on how to address vulnerabilities found in productio
 | NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. |    |
 | NEXT_PUBLIC_GA_TRACKING_ID  | Google Analytics tracking ID. If you're working with an Google Analytics 4 property, you have a Measurement ID instead of a Tracking ID. |    |
 | RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED  | Boolean for development. | false   |
+| BASICAUTH_USERNAME | username for staging environments |    |
+| BASICAUTH_PASSWORD | password for staging environments |    |
 
 
 

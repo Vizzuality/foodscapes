@@ -16,6 +16,8 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
+    BASICAUTH_USERNAME: z.string().optional(),
+    BASICAUTH_PASSWORD: z.string().optional(),
     RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED: z.preprocess(castToBoolean, z.boolean()),
   },
   /*
@@ -44,6 +46,8 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_TRACKING_ID: process.env.NEXT_PUBLIC_GA_TRACKING_ID,
     RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED:
       process.env.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED,
+    BASICAUTH_USERNAME: process.env.BASICAUTH_USERNAME,
+    BASICAUTH_PASSWORD: process.env.BASICAUTH_PASSWORD,
   },
 });
 
