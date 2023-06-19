@@ -41,3 +41,9 @@ variable "aws_cli_profile" {
   type        = string
   description = "Named profile to use when interfacing with the AWS API"
 }
+
+variable "deploy_production" {
+  default     = false
+  type        = bool
+  description = "Whether to deploy the production environment"
+}
