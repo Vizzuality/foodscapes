@@ -40,6 +40,10 @@ const MetaTags: React.FC<MetaTagsProps> = ({
       <meta name="viewport" content="width=device-width" />
       <meta name="description" content={description} />
 
+      {env.NEXT_PUBLIC_URL !== 'https://globalfoodscapes.org' && (
+        <meta name="robots" content="noindex" />
+      )}
+
       <meta name="og:title" content={title} />
       <meta name="og:description" content={description} />
       <meta name="og:type" content={type} />
