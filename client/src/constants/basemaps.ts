@@ -4,7 +4,7 @@ export const BASEMAPS = [
   {
     label: 'Clean',
     value: 'basemap-light',
-    preview: `https://api.mapbox.com/styles/v1/foodscapes/clisymb78003t01pncx558l3i/static/-100,40,0/96x64?access_token=${env.NEXT_PUBLIC_MAPBOX_API_TOKEN}&logo=false&attribution=false`,
+    preview: `https://api.mapbox.com/styles/v1/foodscapes/clix7rrba017m01pf4w3a404t/static/-100,40,0/96x64?access_token=${env.NEXT_PUBLIC_MAPBOX_API_TOKEN}&logo=false&attribution=false`,
     settings: {
       labels: 'labels-dark',
       boundaries: 'boundaries-dark',

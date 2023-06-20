@@ -1,5 +1,5 @@
 resource "aws_security_group" "lb" {
-  name        = "lb-sg"
+  name        = "lb-sg-${var.environment}"
   description = "Security group for the Application Load Balancer (ALB)"
   vpc_id      = var.vpc_id
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "lb" {
 }
 
 resource "aws_security_group" "ecs_tasks" {
-  name        = "ecs-tasks-sg"
+  name        = "ecs-tasks-sg-${var.environment}"
   description = "Allow TCP connections to apps from load balancer only"
   vpc_id      = var.vpc_id
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "ecs_tasks" {
 }
 
 resource "aws_lb" "load_balancer" {
-  name               = "alb"
+  name               = "alb-${var.environment}"
   subnets            = var.vpc_public_subnet_ids
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]

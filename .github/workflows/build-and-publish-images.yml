@@ -50,6 +50,7 @@ jobs:
         env:
           AWS_ECS_EXECUTION_ROLE_ARN: ${{ vars.AWS_ECS_EXECUTION_ROLE_ARN }}
           AWS_REGION: ${{ env.AWS_REGION }}
+          CONTAINER_NAME: ${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
         run: |
           envsubst < ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json.tpl > ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
 
@@ -61,7 +62,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{env.ECR_REGISTRY}}/${{env.REPOSITORY}}
+            ${{env.ECR_REGISTRY}}/${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
@@ -92,9 +93,9 @@ jobs:
             DATA_DEPRIVATION_INDEX_COG_CHECKSUM=${{ vars.DATA_DEPRIVATION_INDEX_COG_CHECKSUM }}
             TILER_ROOT_PATH=${{ vars.TILER_ROOT_PATH }}
             TILER_CORS_ORIGINS_REGEX=${{ vars.TILER_CORS_ORIGINS_REGEX }}
-            APP_NEXT_PUBLIC_URL=${{ github.ref != 'refs/heads/production' && vars.APP_NEXT_PUBLIC_URL_STAGING || vars.APP_NEXT_PUBLIC_URL_PRODUCTION }}
-            APP_NEXT_PUBLIC_API_URL=${{ vars.APP_NEXT_PUBLIC_API_URL }}
-            APP_NEXT_PUBLIC_TITILER_API_URL=${{ vars.APP_NEXT_PUBLIC_TITILER_API_URL }}
+            APP_NEXT_PUBLIC_URL=${{ github.ref != 'refs/heads/production' && vars.APP_STAGING_NEXT_PUBLIC_URL || vars.APP_PRODUCTION_NEXT_PUBLIC_URL }}
+            APP_NEXT_PUBLIC_API_URL=${{ github.ref != 'refs/heads/production' && vars.APP_STAGING_NEXT_PUBLIC_API_URL || vars.APP_PRODUCTION_NEXT_PUBLIC_API_URL }}
+            APP_NEXT_PUBLIC_TITILER_API_URL=${{ github.ref != 'refs/heads/production' && vars.APP_STAGING_NEXT_PUBLIC_TITILER_API_URL || vars.APP_PRODUCTION_NEXT_PUBLIC_TITILER_API_URL }}
             APP_NEXT_PUBLIC_MAPBOX_API_TOKEN=${{ vars.APP_NEXT_PUBLIC_MAPBOX_API_TOKEN }}
           tags: ${{ steps.meta.outputs.tags }}
 
@@ -105,13 +106,13 @@ jobs:
           CONTAINER_NAME: ${{ env.REPOSITORY }}
         with:
           task-definition: ${{ env.REPOSITORY }}/infrastructure/aws/ecs/task-definition.json
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.REPOSITORY }}:edge
+          container-name: ${{ env.CONTAINER_NAME }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
+          image: ${{ steps.login-ecr.outputs.registry }}/${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}:edge
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.REPOSITORY }}
-          cluster: ${{ env.AWS_ECS_CLUSTER }}
+          service: ${{ env.REPOSITORY }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
+          cluster: ${{ env.AWS_ECS_CLUSTER }}-${{ github.ref != 'refs/heads/production' && 'staging' || 'production' }}
           wait-for-service-stability: true
