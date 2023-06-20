@@ -76,6 +76,7 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
                   <button
                     type="button"
                     className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-navy-500 transition-all hover:bg-navy-200"
+                    aria-label="More info"
                   >
                     <Icon icon={INFO_SVG} className="h-6 w-6" />
                   </button>
@@ -106,6 +107,7 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
               <button
                 type="button"
                 className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-navy-500 transition-all hover:bg-navy-200"
+                aria-label="Download data"
                 onClick={handleDownload}
               >
                 <Icon icon={DOWNLOAD_SVG} className="h-5 w-5" />
@@ -129,7 +131,11 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="ml-1 flex h-7 items-center justify-center">
-                <Switch checked={layers.includes(id)} onCheckedChange={handleToggleLayer} />
+                <Switch
+                  aria-label="Switch layer"
+                  checked={layers.includes(id)}
+                  onCheckedChange={handleToggleLayer}
+                />
               </div>
             </TooltipTrigger>
             <TooltipPortal>

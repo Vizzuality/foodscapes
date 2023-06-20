@@ -123,7 +123,11 @@ const Sidebar = () => {
           </Tabs>
 
           <DialogTrigger asChild>
-            <button className="absolute bottom-16 left-full flex h-8 w-8 items-center justify-center bg-navy-500 hover:bg-navy-400">
+            <button
+              type="button"
+              aria-label={open ? 'Close sidebar' : 'Open sidebar'}
+              className="absolute bottom-16 left-full flex h-8 w-8 items-center justify-center bg-navy-500 hover:bg-navy-400"
+            >
               <Icon
                 icon={ARROW_LEFT_SVG}
                 className={cn({

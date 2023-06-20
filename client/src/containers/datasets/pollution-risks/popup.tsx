@@ -59,7 +59,7 @@ const PollutionRiskPopup = ({ event }: PollutionRiskPopupProps) => {
             {!DATA && <h3 className="text-sm font-light">No data</h3>}
             {!!DATA && (
               <h3 className="text-sm font-light">
-                {DATA === -1 && 'Not risk'}
+                {DATA === -1 && 'No risk'}
                 {DATA === 1 && 'Risk'}
               </h3>
             )}
