@@ -44,6 +44,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                 <PopoverTrigger asChild>
                   <TooltipTrigger
                     type="button"
+                    aria-label="Change layer opacity"
                     className={cn({
                       'pointer-events-none': popoverOpen,
                     })}
@@ -94,6 +95,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
             <Tooltip delayDuration={500}>
               <TooltipTrigger
                 type="button"
+                aria-label={visibility ? 'Hide layer' : 'Show layer'}
                 className={cn({
                   'pointer-events-none': popoverOpen,
                 })}
@@ -127,6 +129,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                 <DialogTrigger asChild>
                   <TooltipTrigger
                     type="button"
+                    aria-label="Show info"
                     className={cn({
                       'pointer-events-none': popoverOpen,
                     })}
@@ -162,6 +165,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
               <AccordionTrigger asChild>
                 <TooltipTrigger
                   type="button"
+                  aria-label={expand ? 'Collapse layer' : 'Expand layer'}
                   className={cn({
                     'pointer-events-none': popoverOpen,
                   })}
