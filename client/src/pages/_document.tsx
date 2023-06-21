@@ -12,7 +12,7 @@ class MyDocument extends Document {
 
   render(): JSX.Element {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <style type="text/css" dangerouslySetInnerHTML={{ __html: mediaStyles }} />
         </Head>
