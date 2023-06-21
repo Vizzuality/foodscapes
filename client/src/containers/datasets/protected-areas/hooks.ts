@@ -5,6 +5,8 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
+import { MAPBOX_TILESETS } from 'constants/mapbox';
+
 import { WDPA_CATEGORIES } from 'containers/datasets/protected-areas/constants';
 
 // interface UsePotectedAreasSourceProps {
@@ -25,7 +27,7 @@ export function useSource(): AnySourceData {
   return {
     id: 'protected-areas-source',
     type: 'vector',
-    url: 'mapbox://tncmapbox.c16ky46z',
+    url: MAPBOX_TILESETS.protected_areas,
   };
 }
 

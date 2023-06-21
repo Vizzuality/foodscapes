@@ -4,6 +4,8 @@ import { stepAtom } from 'store/home';
 
 import { useRecoilValue } from 'recoil';
 
+import { MAPBOX_STYLES } from 'constants/mapbox';
+
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
 import env from 'env.mjs';
@@ -19,7 +21,7 @@ const DEFAULT_PROPS: CustomMapProps = {
   },
   minZoom: 0,
   maxZoom: 5,
-  mapStyle: 'mapbox://styles/tncmapbox/clj4b2iun036l01qp9x66aw11',
+  mapStyle: MAPBOX_STYLES.globe,
 };
 
 const MapContainer = ({ currentId }) => {

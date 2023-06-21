@@ -18,6 +18,8 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { Bbox } from 'types/map';
 
+import { MAPBOX_STYLES } from 'constants/mapbox';
+
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
 import env from 'env.mjs';
@@ -38,11 +40,11 @@ const DEFAULT_PROPS: CustomMapProps = {
   },
   minZoom: 2,
   maxZoom: 20,
-  mapStyle: 'mapbox://styles/tncmapbox/clj4ay7fx01l901qidzl1dvgf',
+  mapStyle: MAPBOX_STYLES.explore,
 };
 
 const MapContainer = () => {
-  const { id, initialViewState, minZoom, maxZoom } = DEFAULT_PROPS;
+  const { id, initialViewState, minZoom, maxZoom, mapStyle } = DEFAULT_PROPS;
 
   const { [id]: map } = useMap();
 
@@ -124,7 +126,7 @@ const MapContainer = () => {
 
       <Map
         id={id}
-        mapStyle="mapbox://styles/tncmapbox/clj4ay7fx01l901qidzl1dvgf"
+        mapStyle={mapStyle}
         minZoom={minZoom}
         maxZoom={maxZoom}
         bounds={bounds}
