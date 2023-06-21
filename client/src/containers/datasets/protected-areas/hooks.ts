@@ -25,7 +25,7 @@ export function useSource(): AnySourceData {
   return {
     id: 'protected-areas-source',
     type: 'vector',
-    url: 'mapbox://foodscapes.895aslht',
+    url: 'mapbox://tncmapbox.c16ky46z',
   };
 }
 

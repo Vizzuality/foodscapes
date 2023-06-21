@@ -1,10 +1,8 @@
-import env from 'env.mjs';
-
 export const BASEMAPS = [
   {
     label: 'Clean',
     value: 'basemap-light',
-    preview: `https://api.mapbox.com/styles/v1/foodscapes/clix7rrba017m01pf4w3a404t/static/-100,40,0/96x64?access_token=${env.NEXT_PUBLIC_MAPBOX_API_TOKEN}&logo=false&attribution=false`,
+    preview: `/images/map/light.jpeg`,
     settings: {
       labels: 'labels-dark',
       boundaries: 'boundaries-dark',
@@ -14,7 +12,7 @@ export const BASEMAPS = [
   {
     label: 'Satellite',
     value: 'basemap-satellite',
-    preview: `https://api.mapbox.com/styles/v1/foodscapes/cliu3unp700do01p7exykcqt3/static/-100,40,0/96x64?access_token=${env.NEXT_PUBLIC_MAPBOX_API_TOKEN}&logo=false&attribution=false`,
+    preview: `/images/map/satellite.jpeg`,
     settings: {
       labels: 'labels-light',
       boundaries: 'boundaries-light',

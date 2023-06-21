@@ -38,7 +38,7 @@ const DEFAULT_PROPS: CustomMapProps = {
   },
   minZoom: 2,
   maxZoom: 20,
-  mapStyle: 'mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6',
+  mapStyle: 'mapbox://styles/tncmapbox/clj4ay7fx01l901qidzl1dvgf',
 };
 
 const MapContainer = () => {
@@ -124,7 +124,7 @@ const MapContainer = () => {
 
       <Map
         id={id}
-        mapStyle="mapbox://styles/foodscapes/clisymb78003t01pncx558l3i"
+        mapStyle="mapbox://styles/tncmapbox/clj4ay7fx01l901qidzl1dvgf"
         minZoom={minZoom}
         maxZoom={maxZoom}
         bounds={bounds}

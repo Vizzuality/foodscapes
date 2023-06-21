@@ -19,7 +19,7 @@ const DEFAULT_PROPS: CustomMapProps = {
   },
   minZoom: 0,
   maxZoom: 5,
-  mapStyle: 'mapbox://styles/foodscapes/clivj2bff00be01qyfvuq31hr',
+  mapStyle: 'mapbox://styles/tncmapbox/clj4b2iun036l01qp9x66aw11',
 };
 
 const MapContainer = ({ currentId }) => {

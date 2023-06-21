@@ -23,7 +23,7 @@ export function useSource(): AnySourceData {
   return {
     id: 'river-basins-source',
     type: 'vector',
-    url: 'mapbox://foodscapes.b2j4aojt',
+    url: 'mapbox://tncmapbox.2233n9ch',
   };
 }
 
