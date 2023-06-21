@@ -5,6 +5,8 @@ import { AnyLayer, AnySourceData } from 'mapbox-gl';
 import { Dataset } from 'types/datasets';
 import { LayerSettings } from 'types/layers';
 
+import { MAPBOX_TILESETS } from 'constants/mapbox';
+
 // interface UseRiverBasinsSourceProps {
 //   filters: FiltersProps;
 //   settings?: Partial<LayerSettings<'river-basins'>>;
@@ -23,7 +25,7 @@ export function useSource(): AnySourceData {
   return {
     id: 'river-basins-source',
     type: 'vector',
-    url: 'mapbox://foodscapes.b2j4aojt',
+    url: MAPBOX_TILESETS.river_basins,
   };
 }
 
