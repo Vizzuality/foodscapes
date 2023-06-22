@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
 import cn from 'lib/classnames';
 
 import { layersAtom } from 'store/explore-map';
@@ -31,12 +32,21 @@ const LayerItem = (props: Dataset) => {
     const index = lys.findIndex((ly) => ly === id);
     if (index === -1) {
       lys.unshift(id);
+
+      GAEvent({
+        action: 'select_layer',
+        params: {
+          id,
+          value: label,
+          from: 'layers',
+        },
+      });
     } else {
       lys.splice(index, 1);
     }
 
     setLayers(lys);
-  }, [id, layers, setLayers]);
+  }, [id, label, layers, setLayers]);
 
   return (
     <div
