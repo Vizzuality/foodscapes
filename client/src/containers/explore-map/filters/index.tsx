@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
 import cn from 'lib/classnames';
 
 import {
+  caseStudyAtom,
   climateRiskAtom,
   countryAtom,
   cropsAtom,
@@ -60,7 +62,14 @@ const Filters = () => {
   const setCountry = useSetRecoilState(countryAtom);
   const setProvince = useSetRecoilState(provinceAtom);
 
+  const setCaseStudy = useSetRecoilState(caseStudyAtom);
+
   const handleFiltersClick = useCallback(() => {
+    GAEvent({
+      action: 'filter_open',
+      params: {},
+    });
+
     setOpen(!open);
   }, [open, setOpen]);
 
@@ -75,6 +84,12 @@ const Filters = () => {
       setPollution([]);
       setCountry(null);
       setProvince(null);
+      setCaseStudy(null);
+
+      GAEvent({
+        action: 'filter_clear_all',
+        params: {},
+      });
 
       setOpen(!open);
     },
@@ -87,6 +102,7 @@ const Filters = () => {
       setPollution,
       setCountry,
       setProvince,
+      setCaseStudy,
       setOpen,
       open,
     ]

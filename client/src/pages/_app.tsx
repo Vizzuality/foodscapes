@@ -15,7 +15,7 @@ import { RecoilRoot } from 'recoil';
 import Layout from 'layouts/app';
 
 import RouteLoading from 'containers/route-loading';
-// import ThirdParty from 'containers/third-party';
+import ThirdParty from 'containers/third-party';
 
 import { MediaContextProvider } from 'components/media-query';
 import { TooltipProvider } from 'components/ui/tooltip';
@@ -92,8 +92,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
     [asPath]
   );
 
-  const handleRouteChangeCompleted = useCallback((url: string) => {
-    GAPage(url);
+  const handleRouteChangeCompleted = useCallback((path: string, { shallow }) => {
+    if (!shallow) GAPage(path);
 
     setRouteLoading((prevState) => ({
       ...prevState,
@@ -137,7 +137,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppPropsWithLayout)
                   <RouteLoading {...routeLoading} />
                   {/* Layout */}
                   {getLayout(<Component {...pageProps} />)}
-                  {/* <ThirdParty /> */}
+                  <ThirdParty />
                 </TooltipProvider>
               </MapProvider>
             </MediaContextProvider>

@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
+
+import { GAEvent } from 'lib/analytics/ga';
 
 import { filtersSelector, intensitiesAtom } from 'store/explore-map';
 
@@ -49,8 +51,39 @@ const FoodscapesIntensitiesWidget = () => {
   }, [data, intensitiesData]);
 
   const handleBarClick = (key: number) => {
-    setIntensities((prev) => getArrayValue(prev, key));
+    setIntensities((prev) => {
+      const newIntensities = getArrayValue(prev, key);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'intensities',
+          id: newIntensities,
+          value: newIntensities.map((c) => intensitiesData.find((d) => d.value === c)?.label),
+          from: 'chart',
+        },
+      });
+
+      return newIntensities;
+    });
   };
+
+  const handleIntensitiesChange = useCallback(
+    (values: number[]) => {
+      setIntensities(values);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'intensities',
+          id: values,
+          value: values.map((c) => intensitiesData.find((d) => d.value === c)?.label),
+          from: 'content',
+        },
+      });
+    },
+    [intensitiesData, setIntensities]
+  );
 
   return (
     <section className="space-y-4 py-10">
@@ -77,7 +110,7 @@ const FoodscapesIntensitiesWidget = () => {
             batchSelectionActive
             clearSelectionActive
             loading={intensitiesIsFetching}
-            onChange={(values) => setIntensities(values as number[])}
+            onChange={handleIntensitiesChange}
           />
           <div className="h-8">
             <Chart

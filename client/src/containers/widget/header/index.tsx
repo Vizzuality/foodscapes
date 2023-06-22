@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { layersAtom } from 'store/explore-map';
 
 import { TooltipPortal } from '@radix-ui/react-tooltip';
@@ -41,12 +43,21 @@ const WidgetHeader = ({ title, dataset }: WidgetHeaderProps) => {
     const index = lys.findIndex((ly) => ly === id);
     if (index === -1) {
       lys.unshift(id);
+
+      GAEvent({
+        action: 'select_layer',
+        params: {
+          id,
+          value: title,
+          from: 'content',
+        },
+      });
     } else {
       lys.splice(index, 1);
     }
 
     setLayers(lys);
-  }, [id, layers, setLayers]);
+  }, [id, title, layers, setLayers]);
 
   const handleDownload = useCallback(() => {
     downloadMutation.mutate(dataset.id, {
