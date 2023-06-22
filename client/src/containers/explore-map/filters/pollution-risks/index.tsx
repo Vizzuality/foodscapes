@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { filtersSelector, pollutionRiskAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -41,6 +43,24 @@ const PollutionRisksFilters = () => {
     }));
   }, [data, pollutionData]);
 
+  const handlePollutionChange = (value) => {
+    if (value === null) {
+      setPollution([]);
+    } else {
+      setPollution([value as number]);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'pollution_risk',
+          id: value,
+          value: value ? pollutionData?.find((c) => c.value === value)?.label : null,
+          from: 'filters',
+        },
+      });
+    }
+  };
+
   return (
     <div className="space-y-1">
       <p className="font-sans text-xs font-bold">Pollution</p>
@@ -60,13 +80,7 @@ const PollutionRisksFilters = () => {
           options={OPTIONS}
           loading={isFetching || pollutionIsFetching}
           value={pollution[0] ?? null}
-          onChange={(value) => {
-            if (value === null) {
-              setPollution([]);
-            } else {
-              setPollution([value as number]);
-            }
-          }}
+          onChange={handlePollutionChange}
           clearable
         />
       </FiltersContent>
