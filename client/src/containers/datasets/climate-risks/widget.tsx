@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { climateRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -57,7 +59,35 @@ const ClimateRiskWidget = () => {
       return setClimateChange([]);
     }
 
+    GAEvent({
+      action: 'filter_selected',
+      params: {
+        type: 'climate_risk',
+        id: d.id,
+        value: d.id ? climateData?.find((c) => c.value === d.id)?.label : null,
+        from: 'chart',
+      },
+    });
+
     setClimateChange([d.id]);
+  };
+
+  const handleClimateRiskChange = (value) => {
+    if (value === null) {
+      setClimateChange([]);
+    } else {
+      setClimateChange([value as number]);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'climate_risk',
+          id: value,
+          value: value ? climateData?.find((c) => c.value === value)?.label : null,
+          from: 'content',
+        },
+      });
+    }
   };
 
   return (
@@ -85,13 +115,7 @@ const ClimateRiskWidget = () => {
             options={OPTIONS}
             value={climateChange[0] ?? null}
             loading={isFetching || climateIsFetching}
-            onChange={(value) => {
-              if (value === null) {
-                setClimateChange([]);
-              } else {
-                setClimateChange([value as number]);
-              }
-            }}
+            onChange={handleClimateRiskChange}
             clearable
           />
 

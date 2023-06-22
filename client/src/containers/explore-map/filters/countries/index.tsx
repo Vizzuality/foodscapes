@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import {
   caseStudyAtom,
   countryAtom,
@@ -57,6 +59,16 @@ const CountriesFilters = () => {
       const C = countriesData?.find((c) => c.value === value);
       setCountry(value as number);
       setTmpBbox(C.bbox);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'country',
+          id: value,
+          value: value ? countriesData?.find((c) => c.value === value)?.label : null,
+          from: 'filters',
+        },
+      });
     }
     setProvince(null);
     setCaseStudy(null);

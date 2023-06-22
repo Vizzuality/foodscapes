@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import {
   provinceAtom,
   countryAtom,
@@ -98,6 +100,16 @@ const LocationRankingWidget = () => {
       const C = countriesData?.find((c) => c.value === value);
       setCountry(value as number);
       setTmpBbox(C.bbox);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'country',
+          id: value,
+          value: value ? C.label : null,
+          from: 'content',
+        },
+      });
     }
     setCaseStudy(null);
     setProvince(null);
@@ -110,6 +122,16 @@ const LocationRankingWidget = () => {
       const P = provincesData?.find((c) => c.value === value);
       setProvince(value as number);
       setTmpBbox(P.bbox);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'province',
+          id: value,
+          value: value ? P.label : null,
+          from: 'content',
+        },
+      });
     }
     setCaseStudy(null);
   };

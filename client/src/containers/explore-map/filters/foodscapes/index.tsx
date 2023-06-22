@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { filtersSelector, foodscapesAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -72,6 +74,23 @@ const FoodscapesFilters = () => {
     );
   }, [data, foodscapesGroupData, foodscapes]);
 
+  const handleFoodscapesChange = useCallback(
+    (values: number[]) => {
+      setFoodscapes(values);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'foodscapes',
+          id: values,
+          value: values.map((c) => foodscapesData.find((d) => d.value === c)?.label),
+          from: 'filters',
+        },
+      });
+    },
+    [foodscapesData, setFoodscapes]
+  );
+
   const handleSelectGroupOnChange = useCallback(
     (values: number[]) => {
       const newFoodscapes = [...foodscapes];
@@ -102,6 +121,16 @@ const FoodscapesFilters = () => {
       });
 
       setFoodscapes(newFoodscapes);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'foodscapes',
+          id: newFoodscapes,
+          value: newFoodscapes.map((c) => foodscapesData.find((d) => d.value === c)?.label),
+          from: 'filters',
+        },
+      });
     },
     [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
@@ -131,7 +160,7 @@ const FoodscapesFilters = () => {
             batchSelectionActive
             clearSelectionActive
             loading={foodscapesIsFetching || isFetching}
-            onChange={(values) => setFoodscapes(values as number[])}
+            onChange={handleFoodscapesChange}
           />
 
           <MultiSelect

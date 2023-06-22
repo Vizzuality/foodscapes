@@ -4,6 +4,8 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { cropsAtom, filtersSelector, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -92,7 +94,21 @@ const CropsWidget = () => {
   }, [data, cropsGroupData]);
 
   const handleBarClick = (key: number) => {
-    setCrops((prev) => getArrayValue(prev, key));
+    setCrops((prev) => {
+      const newCrops = getArrayValue(prev, key);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'crops',
+          id: newCrops,
+          value: newCrops.map((c) => cropsData.find((d) => d.value === c)?.label),
+          from: 'chart',
+        },
+      });
+
+      return newCrops;
+    });
   };
 
   const handleBarGroupClick = (key: number) => {
@@ -102,8 +118,39 @@ const CropsWidget = () => {
       })
       .map((d) => d.value);
 
-    setCrops((prev) => getArrayGroupValue(prev, ids));
+    setCrops((prev) => {
+      const newCrops = getArrayGroupValue(prev, ids);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'crops',
+          id: newCrops,
+          value: newCrops.map((c) => cropsData.find((d) => d.value === c)?.label),
+          from: 'chart',
+        },
+      });
+
+      return newCrops;
+    });
   };
+
+  const handleCropsChange = useCallback(
+    (values: number[]) => {
+      setCrops(values);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'crops',
+          id: values,
+          value: values.map((c) => cropsData.find((d) => d.value === c)?.label),
+          from: 'content',
+        },
+      });
+    },
+    [cropsData, setCrops]
+  );
 
   const handleSelectGroupOnChange = useCallback(
     (values: number[]) => {
@@ -134,6 +181,16 @@ const CropsWidget = () => {
       });
 
       setCrops(newCrops);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'crops',
+          id: newCrops,
+          value: newCrops.map((c) => cropsData.find((d) => d.value === c)?.label),
+          from: 'content',
+        },
+      });
     },
     [data, crops, cropsData, GROUPED_SELECTED, setCrops]
   );
@@ -188,7 +245,7 @@ const CropsWidget = () => {
                 batchSelectionActive
                 clearSelectionActive
                 loading={cropsIsFetching || isFetching}
-                onChange={(values) => setCrops(values as number[])}
+                onChange={handleCropsChange}
               />
               <div className="h-8">
                 <Chart

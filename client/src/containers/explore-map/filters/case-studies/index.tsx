@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import {
   caseStudyAtom,
   countryAtom,
@@ -46,6 +48,17 @@ const CaseStudiesFilters = () => {
     setCountry(null);
     setProvince(null);
     setCaseStudy(value);
+
+    GAEvent({
+      action: 'filter_selected',
+      params: {
+        type: 'case_study',
+        id: value,
+        value: value ? caseStudiesData?.find((c) => c.id === value)?.title : null,
+        from: 'filters',
+      },
+    });
+
     if (value) {
       const bbox = caseStudiesData?.find((c) => c.id === value)?.bbox;
       setTmpBbox(bbox);
