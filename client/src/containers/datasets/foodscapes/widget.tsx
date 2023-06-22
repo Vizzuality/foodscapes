@@ -4,6 +4,8 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { filtersSelector, foodscapesAtom, layersSettingsAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -93,7 +95,21 @@ const FoodscapesWidget = () => {
   }, [data, foodscapesGroupData, foodscapes]);
 
   const handleBarClick = (key: number) => {
-    setFoodscapes((prev) => getArrayValue(prev, key));
+    setFoodscapes((prev) => {
+      const newFoodscapes = getArrayValue(prev, key);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'foodscapes',
+          id: newFoodscapes,
+          value: newFoodscapes.map((c) => foodscapesData.find((d) => d.value === c)?.label),
+          from: 'chart',
+        },
+      });
+
+      return newFoodscapes;
+    });
   };
 
   const handleBarGroupClick = (key: number) => {
@@ -103,8 +119,39 @@ const FoodscapesWidget = () => {
       })
       .map((d) => d.value);
 
-    setFoodscapes((prev) => getArrayGroupValue(prev, ids));
+    setFoodscapes((prev) => {
+      const newFoodscapes = getArrayGroupValue(prev, ids);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'foodscapes',
+          id: newFoodscapes,
+          value: newFoodscapes.map((c) => foodscapesData.find((d) => d.value === c)?.label),
+          from: 'chart',
+        },
+      });
+
+      return newFoodscapes;
+    });
   };
+
+  const handleFoodscapesChange = useCallback(
+    (values: number[]) => {
+      setFoodscapes(values);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'foodscapes',
+          id: values,
+          value: values.map((c) => foodscapesData.find((d) => d.value === c)?.label),
+          from: 'content',
+        },
+      });
+    },
+    [foodscapesData, setFoodscapes]
+  );
 
   const handleSelectGroupOnChange = useCallback(
     (values: number[]) => {
@@ -136,6 +183,16 @@ const FoodscapesWidget = () => {
       });
 
       setFoodscapes(newFoodscapes);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'foodscapes',
+          id: newFoodscapes,
+          value: newFoodscapes.map((c) => foodscapesData.find((d) => d.value === c)?.label),
+          from: 'content',
+        },
+      });
     },
     [data, foodscapes, foodscapesData, GROUPED_SELECTED, setFoodscapes]
   );
@@ -193,7 +250,7 @@ const FoodscapesWidget = () => {
                 batchSelectionActive
                 clearSelectionActive
                 loading={foodscapesIsFetching || isFetching}
-                onChange={(values) => setFoodscapes(values as number[])}
+                onChange={handleFoodscapesChange}
               />
               <div className="h-8">
                 <Chart
