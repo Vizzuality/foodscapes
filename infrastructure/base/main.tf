@@ -22,6 +22,7 @@ module "bootstrap" {
 module "vpc" {
   source  = "./modules/vpc"
   region  = var.aws_region
+  availability_zones = ["${var.aws_region}a", "${var.aws_region}b"]
   project = var.project_name
   tags    = local.tags
 }
