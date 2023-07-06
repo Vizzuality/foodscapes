@@ -17,6 +17,21 @@ interface FoodscapesPopupProps {
   event: mapboxgl.MapLayerMouseEvent;
 }
 
+const NO_DATA_DICTIONARY = {
+  1: {
+    label: 'Areas with little or only subsistence food production',
+    parentLabel: 'Areas with little or only subsistence food production',
+  },
+  '2': {
+    label: 'Urbanized land',
+    parentLabel: 'Urbanized land',
+  },
+  '3': {
+    label: 'Inland water',
+    parentLabel: 'Inland water',
+  },
+};
+
 const FoodscapesPopup = ({ event, settings }: FoodscapesPopupProps) => {
   const { lngLat } = event;
   const DATASET = DATASETS.find((d) => d.id === 'foodscapes');
@@ -37,6 +52,10 @@ const FoodscapesPopup = ({ event, settings }: FoodscapesPopupProps) => {
     if (noPointData(pointData)) return null;
 
     const value = pointData[band];
+
+    if ([1, 2, 3].includes(value)) {
+      return NO_DATA_DICTIONARY[value];
+    }
 
     return foodscapesData.find((d) => d.value === value);
   }, [band, foodscapesData, pointData]);
