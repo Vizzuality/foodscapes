@@ -9,7 +9,19 @@
 
 - For the first run, use a local state file (as the S3 bucket for shared state
   won't have been created yet): comment out the `terraform` block in `main.tf`
-- Configure all the relevant Terraform variables in a `tfvars` file
+- Configure all the relevant Terraform variables in a `tfvars` file such as
+  `infrastructure/base/.tfvars` (examples below, to be adapted according to the
+  specific environment and setup for deployment)
+
+```
+environment = "live"
+domain = "globalfoodscapes.org"
+aws_region = "us-east-1"
+tf_state_bucket = "foodscapes-tnc-tfstate"
+allowed_account_id = "012345678901"
+deploy_production = true
+```
+
 - Set the following environment variables according to the AWS IAM credentials
   to be used:
   - `AwS_ACCESS_KEY_ID`
