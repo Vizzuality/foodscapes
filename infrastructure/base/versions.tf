@@ -14,5 +14,4 @@ terraform {
 provider "aws" {
   region              = var.aws_region
   allowed_account_ids = [var.allowed_account_id]
-  profile             = var.aws_cli_profile
 }
