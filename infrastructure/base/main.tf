@@ -1,9 +1,10 @@
-# @debt DRY this via Terragrunt: see remote_state in the root terragrunt.hcl
-# configuration.
+# Uncomment the following `terraform` block after creating the S3 bucket and
+# DynamoDB table for Terraform state management (see README.md)
 
 # terraform {
 #   backend "s3" {
-#     region         = "eu-west-3"
+#     # set this to match the region used project-wide (tfvar aws_region)
+#     region         = "us-east-1"
 #     key            = "core.tfstate"
 #     dynamodb_table = "aws-locks"
 #     encrypt        = true

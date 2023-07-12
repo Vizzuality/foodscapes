@@ -4,17 +4,22 @@
 
 - AWS CLI
 - Terraform
-- Terragrunt
 
 ## Quick start
 
 - For the first run, use a local state file (as the S3 bucket for shared state
   won't have been created yet): comment out the `terraform` block in `main.tf`
 - Configure all the relevant Terraform variables in a `tfvars` file
+- Set the following environment variables according to the AWS IAM credentials
+  to be used:
+  - `AwS_ACCESS_KEY_ID`
+  - `AWS_SECRET_ACCESS_KEY`
+  - `AWS_SESSION_TOKEN` (if using session credentials via `aws sts
+    get-session-token`)
 - `terraform init`
-- `terraform plan -var-file=./path/to/tfvars/file`
+- `terraform plan -var-file=./path/to/tfvars/file -out ./path/to/plan/file`
 - Review the plan
-- `terraform apply -var-file=./path/to/tfvars/file`
+- `terraform apply ./path/to/plan/file`
 - Cross-check the plan, confirm if ok
 
 ### ACM certificate validation
