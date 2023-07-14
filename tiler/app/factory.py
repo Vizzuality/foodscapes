@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-from typing import Type, Literal
 
-from rio_tiler.io import BaseReader, Reader
 from titiler.core import TilerFactory
 
 
