@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { climateRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -41,6 +43,24 @@ const ClimateRisksFilters = () => {
     }));
   }, [data, climateData]);
 
+  const handleClimateRiskChange = (value) => {
+    if (value === null) {
+      setClimateChange([]);
+    } else {
+      setClimateChange([value as number]);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'climate_risk',
+          id: value,
+          value: value ? climateData?.find((c) => c.value === value)?.label : null,
+          from: 'filters',
+        },
+      });
+    }
+  };
+
   return (
     <div className="space-y-1">
       <p className="font-sans text-xs font-bold">Climate change</p>
@@ -60,13 +80,7 @@ const ClimateRisksFilters = () => {
           loading={isFetching || climateIsFetching}
           options={OPTIONS}
           value={climateChange[0] ?? null}
-          onChange={(value) => {
-            if (value === null) {
-              setClimateChange([]);
-            } else {
-              setClimateChange([value as number]);
-            }
-          }}
+          onChange={handleClimateRiskChange}
           clearable
         />
       </FiltersContent>

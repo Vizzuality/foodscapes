@@ -1,3 +1,5 @@
+import { GAEvent } from 'lib/analytics/ga';
+
 import {
   caseStudyAtom,
   countryAtom,
@@ -40,6 +42,16 @@ const CaseStudiesList = () => {
     setProvince(null);
     setCaseStudy(caseStudy.id);
     setTmpBbox(caseStudy.bbox);
+
+    GAEvent({
+      action: 'filter_selected',
+      params: {
+        type: 'case_study',
+        id: caseStudy.id,
+        value: caseStudy.title,
+        from: 'content',
+      },
+    });
   };
 
   return (

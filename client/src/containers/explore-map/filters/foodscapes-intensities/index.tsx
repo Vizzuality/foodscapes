@@ -1,4 +1,6 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+
+import { GAEvent } from 'lib/analytics/ga';
 
 import { filtersSelector, intensitiesAtom } from 'store/explore-map';
 
@@ -38,6 +40,23 @@ const IntensitiesFilters = () => {
     }));
   }, [data, intensitiesData]);
 
+  const handleIntensitiesChange = useCallback(
+    (values: number[]) => {
+      setIntensities(values);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'intensities',
+          id: values,
+          value: values.map((c) => intensitiesData.find((d) => d.value === c)?.label),
+          from: 'filters',
+        },
+      });
+    },
+    [intensitiesData, setIntensities]
+  );
+
   return (
     <div className="space-y-1">
       <p className="font-sans text-xs font-bold">Foodscapes intensity</p>
@@ -59,7 +78,7 @@ const IntensitiesFilters = () => {
           batchSelectionActive
           clearSelectionActive
           loading={intensitiesIsFetching || isFetching}
-          onChange={(values) => setIntensities(values as number[])}
+          onChange={handleIntensitiesChange}
         />
       </FiltersContent>
     </div>

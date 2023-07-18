@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { pollutionRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -55,7 +57,35 @@ const PollutionRiskWidget = () => {
       return setPollution([]);
     }
 
+    GAEvent({
+      action: 'filter_selected',
+      params: {
+        type: 'pollution_risk',
+        id: d.id,
+        value: d.id ? pollutionData?.find((c) => c.value === d.id)?.label : null,
+        from: 'chart',
+      },
+    });
+
     setPollution([d.id]);
+  };
+
+  const handlePollutionChange = (value: number) => {
+    if (value === null) {
+      setPollution([]);
+    } else {
+      setPollution([value]);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'pollution_risk',
+          id: value,
+          value: value ? pollutionData?.find((c) => c.value === value)?.label : null,
+          from: 'content',
+        },
+      });
+    }
   };
 
   return (
@@ -82,13 +112,7 @@ const PollutionRiskWidget = () => {
             placeholder="Filter risk"
             options={OPTIONS}
             value={pollution[0] ?? null}
-            onChange={(value) => {
-              if (value === null) {
-                setPollution([]);
-              } else {
-                setPollution([value as number]);
-              }
-            }}
+            onChange={handlePollutionChange}
             clearable
           />
 

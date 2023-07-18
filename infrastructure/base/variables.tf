@@ -15,7 +15,6 @@ variable "domain" {
 }
 
 variable "aws_region" {
-  default     = "eu-west-3"
   type        = string
   description = "A valid AWS region to configure the underlying AWS SDK"
 }
@@ -34,12 +33,6 @@ variable "tf_state_bucket" {
 variable "allowed_account_id" {
   type        = string
   description = "Allowed AWS Account ID"
-}
-
-variable "aws_cli_profile" {
-  default     = "default"
-  type        = string
-  description = "Named profile to use when interfacing with the AWS API"
 }
 
 variable "deploy_production" {
