@@ -17,7 +17,7 @@ export const DATA_JSON = [
   },
   {
     id: 26,
-    label: 'Tropical grassland ecoregions suitable for silvopastoral',
+    label: 'Tropical grassland ecoregions suitable for parklands',
     value: 26,
     column: 'tropical_grassland_ecoregions_suitable_for_silvopastoral_area',
     color: '#94C072',
