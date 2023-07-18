@@ -2,6 +2,8 @@ import { useCallback, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { landUseRiskAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -56,10 +58,38 @@ const LandUseRiskWidget = () => {
         return setLandUseRisk([]);
       }
 
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'land_use_change',
+          id: v.id,
+          value: v.id ? landUseData?.find((c) => c.value === v.id)?.label : null,
+          from: 'content',
+        },
+      });
+
       return setLandUseRisk([v.id]);
     },
-    [landUseRisk, setLandUseRisk]
+    [landUseRisk, landUseData, setLandUseRisk]
   );
+
+  const handleLandUseChange = (value) => {
+    if (value === null) {
+      setLandUseRisk([]);
+    } else {
+      setLandUseRisk([value as number]);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'land_use_change',
+          id: value,
+          value: value ? landUseData?.find((c) => c.value === value)?.label : null,
+          from: 'content',
+        },
+      });
+    }
+  };
 
   return (
     <section className="space-y-4 py-10">
@@ -85,13 +115,7 @@ const LandUseRiskWidget = () => {
             placeholder="Filter risk"
             options={OPTIONS}
             value={landUseRisk[0] ?? null}
-            onChange={(value) => {
-              if (value === null) {
-                setLandUseRisk([]);
-              } else {
-                setLandUseRisk([value as number]);
-              }
-            }}
+            onChange={handleLandUseChange}
             clearable
           />
 

@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { cropsAtom, filtersSelector } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -73,6 +75,23 @@ const CropsFilters = () => {
     );
   }, [data, cropsGroupData, crops]);
 
+  const handleCropsChange = useCallback(
+    (values: number[]) => {
+      setCrops(values);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'crops',
+          id: values,
+          value: values.map((c) => cropsData.find((d) => d.value === c)?.label),
+          from: 'filters',
+        },
+      });
+    },
+    [cropsData, setCrops]
+  );
+
   const handleSelectGroupOnChange = useCallback(
     (values: number[]) => {
       const newCrops = [...crops];
@@ -102,6 +121,16 @@ const CropsFilters = () => {
       });
 
       setCrops(newCrops);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'crops',
+          id: newCrops,
+          value: newCrops.map((c) => cropsData.find((d) => d.value === c)?.label),
+          from: 'filters',
+        },
+      });
     },
     [data, crops, cropsData, GROUPED_SELECTED, setCrops]
   );
@@ -131,7 +160,7 @@ const CropsFilters = () => {
             batchSelectionActive
             clearSelectionActive
             loading={cropsIsFetching || isFetching}
-            onChange={(values) => setCrops(values as number[])}
+            onChange={handleCropsChange}
           />
 
           <MultiSelect

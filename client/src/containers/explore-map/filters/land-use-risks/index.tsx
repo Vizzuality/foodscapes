@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { GAEvent } from 'lib/analytics/ga';
+
 import { filtersSelector, landUseRiskAtom } from 'store/explore-map';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -41,6 +43,24 @@ const LandUseFilters = () => {
     }));
   }, [data, landUseData]);
 
+  const handleLandUseChange = (value) => {
+    if (value === null) {
+      setLandUseRisk([]);
+    } else {
+      setLandUseRisk([value as number]);
+
+      GAEvent({
+        action: 'filter_selected',
+        params: {
+          type: 'land_use_change',
+          id: value,
+          value: value ? landUseData?.find((c) => c.value === value)?.label : null,
+          from: 'filters',
+        },
+      });
+    }
+  };
+
   return (
     <div className="space-y-1">
       <p className="font-sans text-xs font-bold">Land use change</p>
@@ -60,13 +80,7 @@ const LandUseFilters = () => {
           options={OPTIONS}
           loading={isFetching || landUseIsFetching}
           value={landUseRisk[0] ?? null}
-          onChange={(value) => {
-            if (value === null) {
-              setLandUseRisk([]);
-            } else {
-              setLandUseRisk([value as number]);
-            }
-          }}
+          onChange={handleLandUseChange}
           clearable
         />
       </FiltersContent>
