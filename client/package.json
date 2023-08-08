@@ -15,7 +15,7 @@
     "cypress:run": "cypress run"
   },
   "engines": {
-    "node": "~18 || ~16"
+    "node": "~18.17"
   },
   "dependencies": {
     "@artsy/fresnel": "6.1.0",
