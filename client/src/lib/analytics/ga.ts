@@ -14,6 +14,11 @@ export const GAPage = (url: string): void => {
 // log specific events happening.
 export const GAEvent = ({ action, params }): void => {
   if (window.gtag) {
-    window.gtag('event', action, params);
+    const p = Object.keys(params).reduce((acc, key) => {
+      acc[`${action}_${key}`] = params[key];
+      return acc;
+    }, {});
+
+    window.gtag('event', action, p);
   }
 };
