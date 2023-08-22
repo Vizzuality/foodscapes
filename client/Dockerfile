@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM node:18.12.1-bullseye AS deps
+FROM node:18.17.0-bullseye AS deps
 
 WORKDIR /app
 COPY .yarn ./.yarn
