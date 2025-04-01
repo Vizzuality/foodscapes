@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM node:18.17.0-bullseye AS deps
+FROM node:22.14.0-slim AS deps
 
 WORKDIR /app
 COPY .yarn ./.yarn
@@ -11,7 +11,7 @@ RUN yarn install --immutable
 # RUN npm ci
 
 # Rebuild the source code only when needed
-FROM node:18.12.1-bullseye AS builder
+FROM node:22.14.0-slim AS builder
 
 ARG APP_NEXT_PUBLIC_URL
 ARG APP_NEXT_PUBLIC_API_URL
@@ -37,7 +37,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN yarn build
 
 # Production image, copy all the files and run next
-FROM node:18.12.1-bullseye AS runner
+FROM node:22.14.0-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
