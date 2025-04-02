@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.5-labs
-FROM python:3.11
+FROM python:3.12-slim-bookworm
 LABEL maintainer="hello@vizzuality.com"
 
 ENV NAME foodscapes-tiler
@@ -22,6 +22,15 @@ ARG DATA_DEPRIVATION_INDEX_COG_CHECKSUM
 ENV TILER_FOODSCAPES_COG_FILENAME ${TILER_FOODSCAPES_COG_FILENAME:-foodscapes_stack_cog_lzw.tif}
 ENV TILER_IRRECOVERABLE_CARBON_COG_FILENAME ${TILER_IRRECOVERABLE_CARBON_COG_FILENAME:-irrecoverable-carbon.tif}
 ENV TILER_DEPRIVATION_INDEX_COG_FILENAME ${TILER_DEPRIVATION_INDEX_COG_FILENAME:-deprivation-index.tif}
+
+# Requirement of fiona and gdal.
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends libexpat1; \
+    rm -rf /var/lib/apt/lists/*
+
+# Ref: https://stackoverflow.com/a/59812588
+ENV PYTHONUNBUFFERED=1
 
 RUN addgroup $USER && adduser --shell /bin/bash --disabled-password --ingroup $USER $USER
 
