@@ -7,7 +7,7 @@ def add_cors_middleware(app):
     # If we have a plain `*` (as a regexp: `\*`), use `allow_origins=["*"]` to
     # allow any origin, otherwise treat `TILER_CORS_ORIGINS_REGEX` as a regex
     # for `allow_origin_regex`.
-    if cors_origins_regex == "\*":
+    if cors_origins_regex == "\\*":
         app.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],
