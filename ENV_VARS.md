@@ -198,3 +198,24 @@ configured via environment variables. For details about the syntax for this
 checksum and how to calculate it, please see the relevant Dockerfile reference
 here:
 https://docs.docker.com/engine/reference/builder/#verifying-a-remote-file-checksum-add---checksumchecksum-http-src-dest.
+
+### Source files on Google Drive
+
+During the active development phase of this project, Google Drive was used
+to host revisions of COG files, for reasons of convenience for the team.
+
+As such, source URLs (see above) were configured with a special URL format
+that allowed to access files directly (bypassing an HTML UX to confirm the
+download even if the file cannot be scanned for viruses if they are larger than
+a given size). The format of these URLs was changed by Google at some point
+after the completion of the project.
+
+Updated URLs to allow `ADD`ing these files during the Docker build process can
+be retrieved on Google Drive (for example, inspecting the HTTP requests that
+are made when downloading the files via the web UI), but these are likely
+timestamped signed URLs, so when building and deploying the platform's services
+in the future, it may be necessary to update the environment variables with
+these URLs in order to ensure that the files are being downloaded as expected.
+
+A typical symptom of incorrect/expired URLs is that checksum checks (see above)
+will fail, even when the content of the files hasn't changed at all.
