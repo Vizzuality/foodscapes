@@ -29,7 +29,13 @@ const nextConfig = {
     RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED: 'false',
   },
   images: {
-    domains: ['api.mapbox.com'],
+    domains: [],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.mapbox.com',
+      },
+    ],
   },
   webpack(config) {
     config.module.rules.push({
