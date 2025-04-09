@@ -76,7 +76,7 @@
     "@visx/shape": "3.0.0",
     "@visx/tooltip": "3.1.2",
     "autoprefixer": "10.4.7",
-    "axios": "0.21.1",
+    "axios": "1.8.4",
     "chroma-js": "2.4.2",
     "classnames": "2.3.1",
     "cypress": "12.1.0",
@@ -89,7 +89,6 @@
     "glsl-noise": "0.0.0",
     "glslify": "7.1.1",
     "jsona": "1.9.2",
-    "jsonwebtoken": "8.5.1",
     "knex": "2.4.2",
     "lamina": "1.1.23",
     "mapbox-gl": "2.12.0",
@@ -112,8 +111,7 @@
     "three-stdlib": "2.21.8",
     "use-debounce": "6.0.1",
     "usehooks-ts": "2.9.1",
-    "validate.js": "0.13.1",
-    "zod": "3.21.4"
+    "zod": "3.22.3"
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.2.7",
