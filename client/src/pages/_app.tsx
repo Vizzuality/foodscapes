@@ -3,11 +3,11 @@ import { ReactElement, ReactNode, useCallback, useEffect, useState } from 'react
 import { MapProvider } from 'react-map-gl';
 
 import type { AppProps } from 'next/app';
+import { Domine, Public_Sans } from 'next/font/google';
 import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
 
-import { Domine, Public_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import { RecoilRoot } from 'recoil';
